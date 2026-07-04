@@ -7,9 +7,7 @@ import {
   FiAward, 
   FiStar,
   FiShoppingBag,
-  FiUsers,
-  FiChevronLeft,
-  FiChevronRight
+  FiUsers
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { productsApi, type Product } from '../lib/api';
@@ -57,7 +55,7 @@ const statsData = [
 ];
 
 // ============================================================
-// SECTION AVANTAGES AMÉLIORÉE
+// SECTION AVANTAGES
 // ============================================================
 
 const advantages = [
@@ -250,14 +248,11 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [totalSlides]);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
-
   return (
     <div className="bg-[#faf8f5]">
       
       {/* ============================================================ */}
-      {/* HERO */}
+      {/* HERO - SANS FLÈCHES */}
       {/* ============================================================ */}
       <section 
         className="relative overflow-hidden bg-black"
@@ -368,23 +363,10 @@ export default function Home() {
             </AnimatePresence>
           </div>
         </div>
-
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-        >
-          <FiChevronLeft className="w-5 h-5 text-white group-hover:scale-110 transition" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 hover:scale-110 group"
-        >
-          <FiChevronRight className="w-5 h-5 text-white group-hover:scale-110 transition" />
-        </button>
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 2: AVANTAGES AMÉLIORÉE */}
+      {/* SECTION 2: AVANTAGES */}
       {/* ============================================================ */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 md:px-12">
@@ -416,15 +398,12 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                {/* Ligne décorative en haut */}
                 <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${a.bg} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
                 
-                {/* Icône */}
                 <div className={`w-16 h-16 rounded-2xl ${a.bg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500`}>
                   <a.icon className={`w-8 h-8 ${a.color}`} />
                 </div>
                 
-                {/* Contenu */}
                 <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#1a6b3c] transition-colors duration-300">
                   {a.title}
                 </h3>
@@ -432,7 +411,6 @@ export default function Home() {
                   {a.text}
                 </p>
                 
-                {/* Indicateur de survol */}
                 <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-[#1a6b3c]/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <FiArrowRight className="w-4 h-4 text-[#1a6b3c]" />
                 </div>
