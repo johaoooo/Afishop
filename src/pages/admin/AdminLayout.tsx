@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  FiGrid, FiBox, FiShoppingBag, FiBookOpen, FiMail, FiLogOut, FiExternalLink,
+  FiGrid, FiBox, FiShoppingBag, FiBookOpen, FiMail, FiLogOut, FiExternalLink, FiUsers,
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 
@@ -10,6 +10,7 @@ const navItems = [
   { to: '/admin/commandes', label: 'Commandes', icon: FiShoppingBag },
   { to: '/admin/formations', label: 'Formations', icon: FiBookOpen },
   { to: '/admin/messages', label: 'Messages', icon: FiMail },
+  { to: '/admin/utilisateurs', label: 'Utilisateurs', icon: FiUsers },
 ];
 
 export function AdminLayout() {
@@ -24,7 +25,6 @@ export function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-[#f4f6f5] flex">
-      {/* Sidebar */}
       <aside className="w-64 shrink-0 bg-[#0d2818] text-white flex flex-col">
         <div className="px-6 py-6 border-b border-white/10">
           <p className="text-xs uppercase tracking-[0.2em] text-white/40 font-semibold">AFI Collection</p>
@@ -72,7 +72,6 @@ export function AdminLayout() {
         </div>
       </aside>
 
-      {/* Contenu principal */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
           <p className="text-xs text-gray-400 font-medium">

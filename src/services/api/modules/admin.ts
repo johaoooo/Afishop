@@ -1,7 +1,17 @@
 import { apiClient } from '../client';
 
 export const adminApi = {
-  // --- Commandes ---
+  // ============================================================
+  // STATISTIQUES
+  // ============================================================
+  getStats: async () => {
+    const { data } = await apiClient.get('/admin/stats');
+    return data;
+  },
+
+  // ============================================================
+  // COMMANDES
+  // ============================================================
   getAllOrders: async () => {
     const { data } = await apiClient.get('/orders/admin/all');
     return data.orders;
@@ -11,7 +21,9 @@ export const adminApi = {
     return data.order;
   },
 
-  // --- Produits ---
+  // ============================================================
+  // PRODUITS
+  // ============================================================
   getProducts: async () => {
     const { data } = await apiClient.get('/products');
     return data.products;
@@ -28,7 +40,24 @@ export const adminApi = {
     await apiClient.delete(`/products/${id}`);
   },
 
-  // --- Formations ---
+  // ============================================================
+  // UTILISATEURS
+  // ============================================================
+  getUsers: async () => {
+    const { data } = await apiClient.get('/admin/users');
+    return data.users;
+  },
+  updateUser: async (id: number, payload: any) => {
+    const { data } = await apiClient.put(`/admin/users/${id}`, payload);
+    return data.user;
+  },
+  deleteUser: async (id: number) => {
+    await apiClient.delete(`/admin/users/${id}`);
+  },
+
+  // ============================================================
+  // FORMATIONS
+  // ============================================================
   getTrainings: async () => {
     const { data } = await apiClient.get('/trainings');
     return data.trainings;
@@ -45,7 +74,9 @@ export const adminApi = {
     await apiClient.delete(`/trainings/${id}`);
   },
 
-  // --- Messages ---
+  // ============================================================
+  // MESSAGES
+  // ============================================================
   getMessages: async () => {
     const { data } = await apiClient.get('/messages');
     return data.messages;
@@ -53,5 +84,8 @@ export const adminApi = {
   markMessageAsRead: async (id: number) => {
     const { data } = await apiClient.patch(`/messages/${id}/read`);
     return data.message;
+  },
+  deleteMessage: async (id: number) => {
+    await apiClient.delete(`/messages/${id}`);
   },
 };

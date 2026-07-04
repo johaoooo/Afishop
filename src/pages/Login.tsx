@@ -6,7 +6,6 @@ import {
   FiEye, 
   FiEyeOff, 
   FiArrowLeft, 
-  
   FiCheckCircle 
 } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
@@ -42,7 +41,14 @@ export default function Login() {
     try {
       await login(email, password);
       toast.success('Connexion réussie ! Bienvenue 👋');
-      navigate(redirect);
+      
+      // Vérifier le rôle après connexion
+      const currentUser = useAuth().user;
+      if (currentUser?.role?.toLowerCase() === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate(redirect);
+      }
     } catch (error: any) {
       if (error instanceof ApiError) {
         toast.error(error.message);
@@ -56,7 +62,6 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex">
-      {/* ===== PANEL GAUCHE - IMAGE ===== */}
       <div className="hidden lg:flex lg:w-[55%] relative flex-col bg-gray-950 overflow-hidden">
         <img
           src="/src/assets/hero.png"
@@ -122,7 +127,6 @@ export default function Login() {
         </div>
       </div>
 
-      {/* ===== PANEL DROIT - FORMULAIRE ===== */}
       <div className="w-full lg:w-[45%] flex items-center justify-center bg-[#faf8f5] px-8 py-12 relative">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#1a6b3c]" />

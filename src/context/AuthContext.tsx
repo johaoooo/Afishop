@@ -16,21 +16,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Au chargement de l'app : si un token existe, on redemande le profil
   useEffect(() => {
     const token = localStorage.getItem('afi_token');
     const savedUser = localStorage.getItem('afi_user');
+    console.log('🔍 AuthProvider - token:', token);
+    console.log('🔍 AuthProvider - savedUser:', savedUser);
     if (token && savedUser) {
-      setUser(JSON.parse(savedUser));
+      try {
+        const parsedUser = JSON.parse(savedUser);
+        console.log('🔍 AuthProvider - parsedUser:', parsedUser);
+        setUser(parsedUser);
+      } catch (e) {
+        console.error('Erreur parsing user:', e);
+        localStorage.removeItem('afi_user');
+      }
     }
     setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
-    const { token, user } = await authApi.login(email, password);
+    console.log('🔍 login - email:', email);
+    const response = await authApi.login(email, password);
+    console.log('🔍 login - response:', response);
+    const { token, user } = response;
     localStorage.setItem('afi_token', token);
     localStorage.setItem('afi_user', JSON.stringify(user));
     setUser(user);
+    console.log('✅ Utilisateur connecté:', user);
   };
 
   const register = async (email: string, password: string, name: string) => {
@@ -48,7 +60,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, isLoading, login, register, logout }}
+      value={{ 
+        user, 
+        isAuthenticated: !!user, 
+        isLoading, 
+        login, 
+        register, 
+        logout 
+      }}
     >
       {children}
     </AuthContext.Provider>
