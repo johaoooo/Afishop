@@ -13,9 +13,17 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Account from './pages/Account';
 import Contact from './pages/Contact';
-import Formations from './pages/Formations';
 import About from './pages/About';
-import Trainings from './pages/Trainings';
+import Formations from './pages/Formations';
+
+// Admin imports
+import { AdminRoute } from './components/admin/AdminRoute';
+import { AdminLayout } from './pages/admin/AdminLayout';
+import { AdminDashboardHome } from './pages/admin/AdminDashboardHome';
+import { AdminProducts } from './pages/admin/AdminProducts';
+import { AdminOrders } from './pages/admin/AdminOrders';
+import { AdminMessages } from './pages/admin/AdminMessages';
+import { AdminTrainings } from './pages/admin/AdminTrainings';
 
 export default function App() {
   return (
@@ -24,6 +32,7 @@ export default function App() {
         <Toaster position="top-center" />
         <Layout>
           <Routes>
+            {/* Routes publiques */}
             <Route path="/" element={<Home />} />
             <Route path="/boutique" element={<Shop />} />
             <Route path="/produit/:id" element={<ProductDetail />} />
@@ -33,9 +42,24 @@ export default function App() {
             <Route path="/inscription" element={<Register />} />
             <Route path="/mon-compte" element={<Account />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/formations" element={<Formations />} />
             <Route path="/a-propos" element={<About />} />
-            <Route path="/formations" element={<Trainings />} />
+            <Route path="/formations" element={<Formations />} />
+
+            {/* Routes Admin */}
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminLayout />
+                </AdminRoute>
+              }
+            >
+              <Route index element={<AdminDashboardHome />} />
+              <Route path="produits" element={<AdminProducts />} />
+              <Route path="commandes" element={<AdminOrders />} />
+              <Route path="formations" element={<AdminTrainings />} />
+              <Route path="messages" element={<AdminMessages />} />
+            </Route>
           </Routes>
         </Layout>
       </CartProvider>
