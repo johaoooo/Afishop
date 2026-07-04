@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --color-forest: #1a6b3c;
+  --color-forest-dark: #14532d;
+  --color-leaf: #4ade80;
+  --color-cream: #faf8f5;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #1f2a24;
+  background: #ffffff;
+}
+
+/* ---- Signature element ---------------------------------------------
+   A woven lozenge frieze, evoking the diamond motifs found in West
+   African basket-weave and pagne textile borders. Used sparingly as a
+   section divider so it reads as a deliberate mark, not decoration. */
+.woven-divider {
+  height: 10px;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+      135deg,
+      var(--color-forest) 0px,
+      var(--color-forest) 5px,
+      transparent 5px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      var(--color-leaf) 0px,
+      var(--color-leaf) 5px,
+      transparent 5px,
+      transparent 10px
+    );
+  background-size: 14px 10px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: 0.9;
+}
+
+.woven-divider--thin {
+  height: 4px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
