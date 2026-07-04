@@ -56,29 +56,40 @@ const statsData = [
   { key: 'satisfaction', value: 98, suffix: '%', icon: FiStar, label: 'Taux de satisfaction' },
 ];
 
+// ============================================================
+// SECTION AVANTAGES AMÉLIORÉE
+// ============================================================
+
 const advantages = [
   { 
     icon: FiAward, 
     title: '100% Artisanal', 
     text: 'Chaque pièce est faite main par des artisans béninois talentueux.',
     bg: 'bg-amber-50',
-    color: 'text-amber-600'
+    color: 'text-amber-600',
+    border: 'hover:border-amber-200'
   },
   { 
     icon: FiTruck, 
     title: 'Livraison 48h', 
     text: 'Expédition rapide sur Cotonou, Abidjan, Dakar et toute l\'Afrique.',
     bg: 'bg-blue-50',
-    color: 'text-blue-600'
+    color: 'text-blue-600',
+    border: 'hover:border-blue-200'
   },
   { 
     icon: FiShield, 
     title: 'Paiement sécurisé', 
     text: 'Mobile Money, carte bancaire, virement — en toute confiance.',
     bg: 'bg-green-50',
-    color: 'text-green-600'
+    color: 'text-green-600',
+    border: 'hover:border-green-200'
   },
 ];
+
+// ============================================================
+// SUITE DES DONNÉES
+// ============================================================
 
 const featuredSections = [
   {
@@ -189,7 +200,7 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
       <div className="w-full lg:w-1/2 space-y-5">
         <div className="space-y-2">
           <span className="inline-block text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
-            — {section.badge}
+            {section.badge}
           </span>
           <h3 className="text-3xl md:text-4xl font-black text-gray-800 leading-tight tracking-tight">
             {section.title}
@@ -373,30 +384,57 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 2: AVANTAGES */}
+      {/* SECTION 2: AVANTAGES AMÉLIORÉE */}
       {/* ============================================================ */}
-      <section className="py-16 bg-white border-b border-gray-100">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6 md:px-12">
+          <motion.div 
+            className="text-center mb-14"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
+              Pourquoi AFI Collection
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-800 mt-2 tracking-tight">
+              Nos <span className="text-[#1a6b3c]">engagements</span>
+            </h2>
+            <p className="text-gray-400 mt-2 max-w-md mx-auto text-sm">
+              Trois piliers qui font la différence
+            </p>
+          </motion.div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {advantages.map((a, index) => (
               <motion.div
                 key={a.title}
-                className="group flex items-start gap-5 p-7 rounded-2xl bg-white hover:bg-gray-50/80 border border-gray-100/80 hover:border-[#1a6b3c]/10 transition-all duration-500 hover:shadow-md"
+                className="group relative p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className={`w-14 h-14 rounded-2xl ${a.bg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-500`}>
-                  <a.icon className={`w-7 h-7 ${a.color}`} />
+                {/* Ligne décorative en haut */}
+                <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${a.bg} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+                
+                {/* Icône */}
+                <div className={`w-16 h-16 rounded-2xl ${a.bg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500`}>
+                  <a.icon className={`w-8 h-8 ${a.color}`} />
                 </div>
-                <div>
-                  <p className="text-lg font-bold text-gray-800 group-hover:text-[#1a6b3c] transition-colors duration-300">
-                    {a.title}
-                  </p>
-                  <p className="text-gray-500 text-sm mt-1 leading-relaxed">
-                    {a.text}
-                  </p>
+                
+                {/* Contenu */}
+                <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#1a6b3c] transition-colors duration-300">
+                  {a.title}
+                </h3>
+                <p className="text-gray-500 text-sm mt-3 leading-relaxed">
+                  {a.text}
+                </p>
+                
+                {/* Indicateur de survol */}
+                <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-[#1a6b3c]/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <FiArrowRight className="w-4 h-4 text-[#1a6b3c]" />
                 </div>
               </motion.div>
             ))}
@@ -416,10 +454,8 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase flex items-center justify-center gap-4">
-              <span className="w-10 h-px bg-[#1a6b3c]/30" />
+            <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
               Notre univers
-              <span className="w-10 h-px bg-[#1a6b3c]/30" />
             </span>
             <h2 className="text-4xl md:text-5xl font-black text-gray-800 mt-3 tracking-tight">
               Découvrez <span className="text-[#1a6b3c]">notre histoire</span>
@@ -444,8 +480,7 @@ export default function Home() {
         <div className="container mx-auto px-6 md:px-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
             <div>
-              <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase flex items-center gap-2">
-                <span className="w-8 h-px bg-[#1a6b3c]" />
+              <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
                 Sélection
               </span>
               <h2 className="text-3xl md:text-4xl font-black text-gray-800 mt-2 tracking-tight">
