@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FiArrowLeft, FiCheckCircle, FiTruck, FiShield } from 'react-icons/fi';
+import { FiArrowLeft, FiTruck, FiShield } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -68,7 +68,6 @@ export default function Checkout() {
         </motion.h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Formulaire */}
           <motion.div 
             className="md:col-span-2 bg-white/90 backdrop-blur-sm border border-green-100 rounded-2xl p-6 shadow-sm"
             initial={{ opacity: 0, x: -20 }}
@@ -156,7 +155,6 @@ export default function Checkout() {
             </form>
           </motion.div>
 
-          {/* Résumé */}
           <motion.div 
             className="bg-white/90 backdrop-blur-sm border border-green-100 rounded-2xl p-6 h-fit shadow-sm"
             initial={{ opacity: 0, x: 20 }}

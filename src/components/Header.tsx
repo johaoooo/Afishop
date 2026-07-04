@@ -4,7 +4,6 @@ import {
   FiShoppingBag, 
   FiMenu, 
   FiX, 
-  FiUser, 
   FiLogOut, 
   FiPackage, 
   FiChevronDown,
@@ -30,7 +29,6 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Détecter le scroll pour l'ombre
   useEffect(() => {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -39,7 +37,6 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Fermer le menu utilisateur au clic extérieur
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
@@ -50,7 +47,6 @@ export function Header() {
     return () => document.removeEventListener('mousedown', onClick);
   }, []);
 
-  // Fermer les menus lors d'un changement de route
   useEffect(() => {
     setMenuOpen(false);
     setUserMenuOpen(false);
@@ -70,11 +66,7 @@ export function Header() {
     >
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link 
-            to="/" 
-            className="flex items-center gap-2 group shrink-0"
-          >
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
             <img 
               src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
               alt="AFI Collection" 
@@ -82,7 +74,6 @@ export function Header() {
             />
           </Link>
 
-          {/* Navigation Desktop - sans icônes */}
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <NavLink
@@ -102,9 +93,7 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Actions droite */}
           <div className="flex items-center gap-2 md:gap-3">
-            {/* Panier */}
             <Link
               to="/panier"
               aria-label="Panier"
@@ -118,7 +107,6 @@ export function Header() {
               )}
             </Link>
 
-            {/* Menu utilisateur Desktop */}
             <div className="hidden md:block relative" ref={userMenuRef}>
               {isAuthenticated && user ? (
                 <>
@@ -135,7 +123,6 @@ export function Header() {
                     <FiChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${userMenuOpen ? 'rotate-180' : ''}`} />
                   </button>
 
-                  {/* Dropdown utilisateur */}
                   {userMenuOpen && (
                     <div className="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden animate-fade-in-down">
                       <div className="px-4 py-3 border-b border-gray-100 bg-gray-50/50">
@@ -190,7 +177,6 @@ export function Header() {
               )}
             </div>
 
-            {/* Mobile menu button */}
             <button
               className="lg:hidden p-2.5 rounded-full text-gray-500 hover:text-[#1a6b3c] hover:bg-[#1a6b3c]/5 transition-all duration-300"
               onClick={() => setMenuOpen((v) => !v)}
@@ -201,7 +187,6 @@ export function Header() {
           </div>
         </div>
 
-        {/* Navigation Mobile - sans icônes */}
         <div 
           className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
             menuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
@@ -226,7 +211,6 @@ export function Header() {
               </NavLink>
             ))}
 
-            {/* Mobile auth */}
             <div className="border-t border-gray-100/50 pt-4 mt-2">
               {isAuthenticated && user ? (
                 <>
@@ -278,7 +262,6 @@ export function Header() {
         </div>
       </div>
 
-      {/* Animation CSS pour le dropdown */}
       <style>{`
         @keyframes fadeInDown {
           from {

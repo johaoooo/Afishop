@@ -6,7 +6,7 @@ import {
   FiEye, 
   FiEyeOff, 
   FiArrowLeft, 
-  FiShield,
+  
   FiCheckCircle 
 } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';

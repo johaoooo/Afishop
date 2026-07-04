@@ -9,7 +9,7 @@ import {
   FiBookOpen, 
   FiMapPin, 
   FiCalendar,
-  FiStar
+  
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { trainingsApi, type Training } from '../lib/api';

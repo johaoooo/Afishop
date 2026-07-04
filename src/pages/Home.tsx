@@ -8,15 +8,8 @@ import {
   FiStar,
   FiShoppingBag,
   FiUsers,
-  FiHeart,
-  FiGlobe,
-  FiClock,
   FiChevronLeft,
-  FiChevronRight,
-  FiMapPin,
-  FiEye,
-  FiPlay,
-  FiPause
+  FiChevronRight
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { productsApi, type Product } from '../lib/api';
@@ -175,7 +168,6 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.7, delay: index * 0.1, ease: "easeOut" }}
     >
-      {/* Image avec effet overlay */}
       <div className="w-full lg:w-1/2 group">
         <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/5">
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
@@ -194,7 +186,6 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
         </div>
       </div>
 
-      {/* Texte avec meilleure hiérarchie */}
       <div className="w-full lg:w-1/2 space-y-5">
         <div className="space-y-2">
           <span className="inline-block text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
@@ -255,7 +246,7 @@ export default function Home() {
     <div className="bg-[#faf8f5]">
       
       {/* ============================================================ */}
-      {/* HERO - NE PAS TOUCHER */}
+      {/* HERO */}
       {/* ============================================================ */}
       <section 
         className="relative overflow-hidden bg-black"
@@ -382,7 +373,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 2: AVANTAGES / USP - AMÉLIORÉ */}
+      {/* SECTION 2: AVANTAGES */}
       {/* ============================================================ */}
       <section className="py-16 bg-white border-b border-gray-100">
         <div className="container mx-auto px-6 md:px-12">
@@ -414,7 +405,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 3: FEATURED SECTIONS - AMÉLIORÉ */}
+      {/* SECTION 3: FEATURED SECTIONS */}
       {/* ============================================================ */}
       <section className="py-20 bg-[#faf8f5]">
         <div className="container mx-auto px-6 md:px-12">
@@ -447,7 +438,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 4: PRODUITS EN VEDETTE - AMÉLIORÉ */}
+      {/* SECTION 4: PRODUITS */}
       {/* ============================================================ */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 md:px-12">
@@ -510,7 +501,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 5: PARTENAIRES - AMÉLIORÉ */}
+      {/* SECTION 5: PARTENAIRES */}
       {/* ============================================================ */}
       <section className="py-20 bg-[#faf8f5] border-t border-gray-100">
         <div className="container mx-auto px-6 md:px-12">
@@ -561,7 +552,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 6: CTA FINAL - AMÉLIORÉ */}
+      {/* SECTION 6: CTA FINAL */}
       {/* ============================================================ */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 md:px-12">
@@ -572,7 +563,6 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            {/* Effets de fond */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-[#4ade80]/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#4ade80]/5 rounded-full blur-3xl" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl" />

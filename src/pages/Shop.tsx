@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiArrowRight, FiAward, FiTruck, FiShield, FiSearch, FiGrid, FiList, FiChevronDown } from 'react-icons/fi';
+import { FiAward, FiTruck, FiShield, FiSearch, FiGrid, FiList, FiChevronDown } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { productsApi, type Product } from '../lib/api';
 import { ProductCard } from '../components/ProductCard';
@@ -42,7 +41,6 @@ export default function Shop() {
     <div className="bg-[#f5f8f5] min-h-screen">
       {/* ===== HERO AVEC IMAGE ===== */}
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
-        {/* Image de fond */}
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441653/WhatsApp_Image_2026-05-03_at_13.15.44_e6xbcs.jpg"
           alt="Boutique AFI Collection"
@@ -52,15 +50,11 @@ export default function Shop() {
               'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200';
           }}
         />
-        
-        {/* Overlay pour lisibilité */}
         <div className="absolute inset-0 bg-black/40" />
-        
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }} />
-        
         <div className="container mx-auto px-6 md:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -116,7 +110,6 @@ export default function Shop() {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           <div className="flex flex-col md:flex-row gap-4 md:items-center">
-            {/* Recherche */}
             <div className="relative flex-1">
               <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
@@ -128,7 +121,6 @@ export default function Shop() {
               />
             </div>
 
-            {/* Catégories */}
             <div className="flex flex-wrap gap-2">
               {categories.map((c) => (
                 <button
@@ -145,7 +137,6 @@ export default function Shop() {
               ))}
             </div>
 
-            {/* Vue */}
             <div className="flex items-center gap-1 bg-gray-100 rounded-xl p-1 shrink-0">
               <button
                 onClick={() => setViewMode('grid')}
@@ -168,7 +159,6 @@ export default function Shop() {
             </div>
           </div>
 
-          {/* Résultats */}
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
             <span className="text-sm text-gray-500">
               {filtered.length} produit{filtered.length > 1 ? 's' : ''}
@@ -179,7 +169,6 @@ export default function Shop() {
           </div>
         </motion.div>
 
-        {/* ===== PRODUITS ===== */}
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {[...Array(8)].map((_, i) => (
