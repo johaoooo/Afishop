@@ -24,46 +24,45 @@ import { AdminProducts } from './pages/admin/AdminProducts';
 import { AdminOrders } from './pages/admin/AdminOrders';
 import { AdminMessages } from './pages/admin/AdminMessages';
 import { AdminTrainings } from './pages/admin/AdminTrainings';
-import { AdminUsers } from './pages/admin/AdminUsers';
 
 export default function App() {
   return (
     <AuthProvider>
       <CartProvider>
         <Toaster position="top-center" />
-        <Layout>
-          <Routes>
-            {/* Routes publiques */}
-            <Route path="/" element={<Home />} />
-            <Route path="/boutique" element={<Shop />} />
-            <Route path="/produit/:id" element={<ProductDetail />} />
-            <Route path="/panier" element={<Cart />} />
-            <Route path="/validation-commande" element={<Checkout />} />
-            <Route path="/connexion" element={<Login />} />
-            <Route path="/inscription" element={<Register />} />
-            <Route path="/mon-compte" element={<Account />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/a-propos" element={<About />} />
-            <Route path="/formations" element={<Formations />} />
+        
+        <Routes>
+          {/* Routes avec Layout (header + footer) */}
+          <Route path="/" element={<Layout><Home /></Layout>} />
+          <Route path="/boutique" element={<Layout><Shop /></Layout>} />
+          <Route path="/produit/:id" element={<Layout><ProductDetail /></Layout>} />
+          <Route path="/panier" element={<Layout><Cart /></Layout>} />
+          <Route path="/validation-commande" element={<Layout><Checkout /></Layout>} />
+          <Route path="/mon-compte" element={<Layout><Account /></Layout>} />
+          <Route path="/contact" element={<Layout><Contact /></Layout>} />
+          <Route path="/a-propos" element={<Layout><About /></Layout>} />
+          <Route path="/formations" element={<Layout><Formations /></Layout>} />
 
-            {/* Routes Admin */}
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <AdminLayout />
-                </AdminRoute>
-              }
-            >
-              <Route index element={<AdminDashboardHome />} />
-              <Route path="produits" element={<AdminProducts />} />
-              <Route path="commandes" element={<AdminOrders />} />
-              <Route path="formations" element={<AdminTrainings />} />
-              <Route path="utilisateurs" element={<AdminUsers />} />
-              <Route path="messages" element={<AdminMessages />} />
-            </Route>
-          </Routes>
-        </Layout>
+          {/* Routes sans Layout (header/footer) */}
+          <Route path="/connexion" element={<Login />} />
+          <Route path="/inscription" element={<Register />} />
+
+          {/* Routes Admin */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout />
+              </AdminRoute>
+            }
+          >
+            <Route index element={<AdminDashboardHome />} />
+            <Route path="produits" element={<AdminProducts />} />
+            <Route path="commandes" element={<AdminOrders />} />
+            <Route path="formations" element={<AdminTrainings />} />
+            <Route path="messages" element={<AdminMessages />} />
+          </Route>
+        </Routes>
       </CartProvider>
     </AuthProvider>
   );
