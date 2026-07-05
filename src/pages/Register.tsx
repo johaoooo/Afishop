@@ -65,7 +65,7 @@ export default function Register() {
       {/* ===== PANEL GAUCHE - IMAGE ===== */}
       <div className="hidden lg:flex lg:w-[55%] relative flex-col bg-gray-950 overflow-hidden">
         <img
-          src="/src/assets/hero.png"
+          src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783254004/tactt_eoh8nc.jpg"
           alt="Artisanat béninois"
           className="absolute inset-0 w-full h-full object-cover opacity-40"
           onError={(e) => {

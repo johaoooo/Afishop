@@ -34,7 +34,7 @@ export default function Contact() {
 
   const contactInfo = [
     { icon: FiMapPin, label: 'Adresse', value: 'Cotonou, Bénin', href: null },
-    { icon: FiPhone, label: 'Téléphone', value: '+229 97 00 00 00', href: 'tel:+22997000000' },
+    { icon: FiPhone, label: 'Téléphone', value: '+229 01 96 06 22 87', href: 'tel:+2290196062287' },
     { icon: FiMail, label: 'Email', value: 'contact@aficollection.com', href: 'mailto:contact@aficollection.com' },
   ];
 
@@ -118,7 +118,7 @@ export default function Contact() {
                     type="tel"
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    placeholder="97000000"
+                    placeholder="01 96 06 22 87"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
                   />
                 </div>
