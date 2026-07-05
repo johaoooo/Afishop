@@ -92,6 +92,11 @@ export const authApi = {
     }),
 
   me: () => request<{ user: User }>('/auth/me'),
+  updateProfile: (payload: { name?: string; currentPassword?: string; newPassword?: string }) =>
+    request<{ user: User }>('/auth/me', {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
 };
 
 // ---- Produits ---------------------------------------------------------
@@ -118,6 +123,25 @@ export const ordersApi = {
   getMine: () => request<{ count: number; orders: Order[] }>('/orders'),
 
   getById: (id: number | string) => request<{ order: Order }>(`/orders/${id}`),
+  downloadReceipt: async (id: number | string) => {
+    const token = localStorage.getItem('afi_token');
+    const res = await fetch(`${BASE_URL}/orders/${id}/receipt`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new ApiError(data.message || 'Impossible de télécharger le reçu');
+    }
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `recu-commande-${id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  },
 };
 
 // ---- Paiement (Kkiapay) -------------------------------------------------

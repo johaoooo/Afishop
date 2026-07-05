@@ -55,7 +55,7 @@ const statsData = [
 ];
 
 // ============================================================
-// SECTION AVANTAGES
+// SECTION AVANTAGES - AMÉLIORÉE
 // ============================================================
 
 const advantages = [
@@ -65,7 +65,7 @@ const advantages = [
     text: 'Chaque pièce est faite main par des artisans béninois talentueux.',
     bg: 'bg-amber-50',
     color: 'text-amber-600',
-    border: 'hover:border-amber-200'
+    delay: 0.1
   },
   { 
     icon: FiTruck, 
@@ -73,7 +73,7 @@ const advantages = [
     text: 'Expédition rapide sur Cotonou, Abidjan, Dakar et toute l\'Afrique.',
     bg: 'bg-blue-50',
     color: 'text-blue-600',
-    border: 'hover:border-blue-200'
+    delay: 0.2
   },
   { 
     icon: FiShield, 
@@ -81,7 +81,7 @@ const advantages = [
     text: 'Mobile Money, carte bancaire, virement — en toute confiance.',
     bg: 'bg-green-50',
     color: 'text-green-600',
-    border: 'hover:border-green-200'
+    delay: 0.3
   },
 ];
 
@@ -171,7 +171,7 @@ function AnimatedNumber({ target, suffix, duration = 2000 }: { target: number; s
 function FeatureSection({ section, index }: { section: typeof featuredSections[0], index: number }) {
   return (
     <motion.div 
-      className={`flex flex-col ${section.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-10 lg:gap-16 items-center py-14 ${index !== 0 ? 'border-t border-gray-100/80' : ''}`}
+      className={`flex flex-col ${section.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-16 items-center py-12 lg:py-16 ${index !== 0 ? 'border-t border-gray-100/80' : ''}`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -183,28 +183,29 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
           <img
             src={section.image}
             alt={section.title}
-            className="w-full h-80 md:h-[420px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            className="w-full h-64 sm:h-80 md:h-[420px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
                 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800';
             }}
           />
-          <div className="absolute top-5 left-5 z-20 bg-white/90 backdrop-blur-sm text-[#1a6b3c] text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-black/10">
+          <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm text-[#1a6b3c] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-black/10">
             {section.badge}
           </div>
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 space-y-5">
+      <div className="w-full lg:w-1/2 space-y-4 lg:space-y-5">
         <div className="space-y-2">
           <span className="inline-block text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
             {section.badge}
           </span>
-          <h3 className="text-3xl md:text-4xl font-black text-gray-800 leading-tight tracking-tight">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-800 leading-tight tracking-tight">
             {section.title}
           </h3>
         </div>
-        <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-lg">
+        <p className="text-gray-500 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg">
           {section.text}
         </p>
         <Link 
@@ -252,7 +253,7 @@ export default function Home() {
     <div className="bg-[#faf8f5]">
       
       {/* ============================================================ */}
-      {/* HERO - SANS FLÈCHES */}
+      {/* HERO - NON MODIFIÉ */}
       {/* ============================================================ */}
       <section 
         className="relative overflow-hidden bg-black"
@@ -366,12 +367,12 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 2: AVANTAGES */}
+      {/* SECTION 2: AVANTAGES - AMÉLIORÉ */}
       {/* ============================================================ */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 md:px-12">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
           <motion.div 
-            className="text-center mb-14"
+            className="text-center mb-10 sm:mb-14"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -380,7 +381,7 @@ export default function Home() {
             <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
               Pourquoi AFI Collection
             </span>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-800 mt-2 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-800 mt-2 tracking-tight">
               Nos <span className="text-[#1a6b3c]">engagements</span>
             </h2>
             <p className="text-gray-400 mt-2 max-w-md mx-auto text-sm">
@@ -392,7 +393,7 @@ export default function Home() {
             {advantages.map((a, index) => (
               <motion.div
                 key={a.title}
-                className="group relative p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
+                className="group relative p-6 sm:p-8 rounded-2xl bg-white border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -400,19 +401,19 @@ export default function Home() {
               >
                 <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${a.bg} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
                 
-                <div className={`w-16 h-16 rounded-2xl ${a.bg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500`}>
-                  <a.icon className={`w-8 h-8 ${a.color}`} />
+                <div className={`w-12 sm:w-16 h-12 sm:h-16 rounded-2xl ${a.bg} flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-500`}>
+                  <a.icon className={`w-6 sm:w-8 h-6 sm:h-8 ${a.color}`} />
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#1a6b3c] transition-colors duration-300">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 group-hover:text-[#1a6b3c] transition-colors duration-300">
                   {a.title}
                 </h3>
-                <p className="text-gray-500 text-sm mt-3 leading-relaxed">
+                <p className="text-gray-500 text-sm mt-2 sm:mt-3 leading-relaxed">
                   {a.text}
                 </p>
-                
-                <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-[#1a6b3c]/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <FiArrowRight className="w-4 h-4 text-[#1a6b3c]" />
+
+                <div className="absolute bottom-4 right-4 w-7 sm:w-8 h-7 sm:h-8 rounded-full bg-[#1a6b3c]/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <FiArrowRight className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#1a6b3c]" />
                 </div>
               </motion.div>
             ))}
@@ -421,12 +422,12 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 3: FEATURED SECTIONS */}
+      {/* SECTION 3: FEATURED SECTIONS - AMÉLIORÉ */}
       {/* ============================================================ */}
-      <section className="py-20 bg-[#faf8f5]">
-        <div className="container mx-auto px-6 md:px-12">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5]">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -435,7 +436,7 @@ export default function Home() {
             <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
               Notre univers
             </span>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-800 mt-3 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-800 mt-2 sm:mt-3 tracking-tight">
               Découvrez <span className="text-[#1a6b3c]">notre histoire</span>
             </h2>
             <p className="text-gray-400 mt-2 max-w-lg mx-auto text-sm">
@@ -443,7 +444,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {featuredSections.map((section, index) => (
               <FeatureSection key={section.id} section={section} index={index} />
             ))}
@@ -452,16 +453,16 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 4: PRODUITS */}
+      {/* SECTION 4: PRODUITS - AMÉLIORÉ */}
       {/* ============================================================ */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12">
             <div>
               <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
                 Sélection
               </span>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-800 mt-2 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-800 mt-1 sm:mt-2 tracking-tight">
                 Nos <span className="text-[#1a6b3c]">créations</span>
               </h2>
             </div>
@@ -478,11 +479,11 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {[...Array(4)].map((_, i) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+              {[...Array(8)].map((_, i) => (
                 <div key={i} className="bg-white rounded-2xl border border-gray-100 animate-pulse">
                   <div className="aspect-square bg-gray-200 rounded-t-2xl" />
-                  <div className="p-4 space-y-3">
+                  <div className="p-3 sm:p-4 space-y-3">
                     <div className="h-4 bg-gray-200 rounded w-3/4" />
                     <div className="h-3 bg-gray-200 rounded w-1/2" />
                     <div className="h-6 bg-gray-200 rounded w-1/3" />
@@ -491,19 +492,19 @@ export default function Home() {
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div className="text-center py-16 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100">
-              <FiShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <div className="text-center py-12 sm:py-16 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100">
+              <FiShoppingBag className="w-12 sm:w-16 h-12 sm:h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-400 text-sm">Aucun produit disponible pour le moment.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {products.map((p, index) => (
                 <motion.div
                   key={p.id}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.5) }}
                 >
                   <ProductCard product={p} />
                 </motion.div>
@@ -514,12 +515,12 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 5: PARTENAIRES */}
+      {/* SECTION 5: PARTENAIRES - AMÉLIORÉ */}
       {/* ============================================================ */}
-      <section className="py-20 bg-[#faf8f5] border-t border-gray-100">
-        <div className="container mx-auto px-6 md:px-12">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-100">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
           <motion.div
-            className="text-center mb-14"
+            className="text-center mb-10 sm:mb-14"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -528,7 +529,7 @@ export default function Home() {
             <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
               Nos partenaires
             </span>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-800 mt-2 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-800 mt-1 sm:mt-2 tracking-tight">
               Ils nous <span className="text-[#1a6b3c]">font confiance</span>
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto mt-2 text-sm">
@@ -536,17 +537,17 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
             {partners.map((partner, index) => (
               <motion.div
                 key={partner.id}
-                className="bg-white rounded-2xl p-6 flex items-center justify-center border border-gray-100/80 hover:border-[#1a6b3c]/20 hover:shadow-lg transition-all duration-400 hover:-translate-y-1.5"
+                className="bg-white rounded-2xl p-4 sm:p-6 flex items-center justify-center border border-gray-100/80 hover:border-[#1a6b3c]/20 hover:shadow-lg transition-all duration-400 hover:-translate-y-1.5"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.08 }}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.08, 0.5) }}
               >
-                <div className="w-full h-20 flex items-center justify-center">
+                <div className="w-full h-16 sm:h-20 flex items-center justify-center">
                   <img
                     src={partner.logo}
                     alt={partner.name}
@@ -565,39 +566,39 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 6: CTA FINAL */}
+      {/* SECTION 6: CTA FINAL - AMÉLIORÉ */}
       {/* ============================================================ */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 md:px-12">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
           <motion.div
-            className="max-w-5xl mx-auto text-center p-14 md:p-20 rounded-3xl relative overflow-hidden bg-gradient-to-br from-[#0d2818] via-[#1a6b3c] to-[#0d2818]"
+            className="max-w-5xl mx-auto text-center p-8 sm:p-12 md:p-16 lg:p-20 rounded-3xl relative overflow-hidden bg-gradient-to-br from-[#0d2818] via-[#1a6b3c] to-[#0d2818]"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <div className="absolute top-0 right-0 w-80 h-80 bg-[#4ade80]/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#4ade80]/5 rounded-full blur-3xl" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-48 sm:w-64 lg:w-80 h-48 sm:h-64 lg:h-80 bg-[#4ade80]/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-48 sm:w-64 lg:w-80 h-48 sm:h-64 lg:h-80 bg-[#4ade80]/5 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 lg:w-96 h-48 sm:h-64 lg:w-96 bg-white/5 rounded-full blur-3xl" />
             
             <div className="relative z-10">
-              <span className="inline-block text-[#4ade80] text-xs font-bold tracking-[0.3em] uppercase mb-4">
+              <span className="inline-block text-[#4ade80] text-xs font-bold tracking-[0.3em] uppercase mb-3 sm:mb-4">
                 Rejoignez-nous
               </span>
-              <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-2xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight max-w-2xl mx-auto">
                 Prêt à découvrir <br className="hidden sm:block" />
                 <span className="text-[#4ade80]">l'artisanat</span> béninois ?
               </h2>
-              <p className="text-green-100/80 text-base md:text-lg mt-4 max-w-xl mx-auto leading-relaxed">
+              <p className="text-green-100/80 text-sm sm:text-base md:text-lg mt-3 sm:mt-4 max-w-xl mx-auto leading-relaxed">
                 Rejoignez-nous et soutenez les artisans talentueux d'Afrique de l'Ouest.
               </p>
               <Link 
                 to="/boutique" 
-                className="inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-[#1a6b3c] px-10 py-4.5 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-black/20 hover:shadow-[#4ade80]/20 text-base group mt-8"
+                className="inline-flex items-center gap-2 sm:gap-3 bg-white hover:bg-gray-50 text-[#1a6b3c] px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-4.5 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-black/20 hover:shadow-[#4ade80]/20 text-sm sm:text-base group mt-6 sm:mt-8"
               >
-                <FiShoppingBag className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                <FiShoppingBag className="w-4 sm:w-5 h-4 sm:h-5 group-hover:rotate-12 transition-transform duration-300" />
                 <span>Découvrir la boutique</span>
-                <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <FiArrowRight className="w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
             </div>
           </motion.div>

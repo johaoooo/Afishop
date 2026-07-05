@@ -19,12 +19,12 @@ export function ProductCard({ product }: { product: Product }) {
       to={`/produit/${product.id}`}
       className="group block bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300"
     >
-      <div className="aspect-square bg-gray-50 overflow-hidden relative">
+      <div className="aspect-square bg-gray-50 overflow-hidden relative flex items-center justify-center">
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
           onError={(e) => {
             (e.target as HTMLImageElement).src = 'https://placehold.co/400x400/1a6b3c/ffffff?text=AFI';
           }}
@@ -36,17 +36,17 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <div className="p-4">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-forest">{product.category}</p>
+        <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a6b3c]">{product.category}</p>
         <h3 className="font-bold text-gray-800 text-sm mt-0.5 line-clamp-1">{product.name}</h3>
         <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-          <span className="font-bold text-forest text-base">
+          <span className="font-bold text-[#1a6b3c] text-base">
             {product.price.toLocaleString('fr-FR')} FCFA
           </span>
           <button
             onClick={handleAdd}
             disabled={!inStock}
             aria-label="Ajouter au panier"
-            className="w-9 h-9 rounded-full bg-forest hover:bg-forest-dark disabled:opacity-30 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
+            className="w-9 h-9 rounded-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-30 disabled:cursor-not-allowed text-white flex items-center justify-center transition-colors"
           >
             <FiShoppingBag className="w-4 h-4" />
           </button>
