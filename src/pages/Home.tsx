@@ -96,7 +96,8 @@ const featuredSections = [
     title: 'Un savoir-faire ancestral',
     text: 'Chaque fil raconte une histoire. Découvrez l\'art du tissage traditionnel, où la patience et la passion donnent vie à des étoffes uniques.',
     reverse: false,
-    badge: 'Savoir-faire'
+    badge: 'Savoir-faire',
+    objectFit: 'object-cover'
   },
   {
     id: 2,
@@ -104,7 +105,8 @@ const featuredSections = [
     title: 'Nos collections à votre rencontre',
     text: 'Présents lors des grands rendez-vous de l\'artisanat, nous célébrons la richesse de notre culture à travers des expositions vibrantes et modernes.',
     reverse: true,
-    badge: 'Événements'
+    badge: 'Événements',
+    objectFit: 'object-cover object-top'
   },
   {
     id: 3,
@@ -112,7 +114,8 @@ const featuredSections = [
     title: 'Tisser l\'avenir au féminin',
     text: 'Au-delà de l\'art, Aficollection s\'engage pour l\'autonomisation des femmes à travers des formations pratiques aux métiers du macramé et de l\'artisanat.',
     reverse: false,
-    badge: 'Engagement'
+    badge: 'Engagement',
+    objectFit: 'object-cover'
   },
   {
     id: 4,
@@ -120,7 +123,8 @@ const featuredSections = [
     title: 'Le cœur d\'Aficollection',
     text: 'Une équipe passionnée, unie par le désir de valoriser le patrimoine local et de propulser l\'artisanat africain vers de nouveaux horizons.',
     reverse: true,
-    badge: 'Notre équipe'
+    badge: 'Notre équipe',
+    objectFit: 'object-cover'
   },
   {
     id: 5,
@@ -128,7 +132,8 @@ const featuredSections = [
     title: 'Des mains d\'or, des pièces uniques',
     text: 'Derrière chaque produit se cache le talent d\'une artisane dévouée. En achetant chez nous, vous soutenez directement leur travail et leur indépendance.',
     reverse: false,
-    badge: 'Nos artisans'
+    badge: 'Nos artisans',
+    objectFit: 'object-cover'
   },
 ];
 
@@ -183,7 +188,7 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
           <img
             src={section.image}
             alt={section.title}
-            className="w-full h-64 sm:h-80 md:h-[420px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            className={`w-full h-64 sm:h-80 md:h-[420px] ${section.objectFit || 'object-cover'} group-hover:scale-105 transition-transform duration-700 ease-out`}
             loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
