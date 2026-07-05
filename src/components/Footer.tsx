@@ -34,9 +34,9 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Votre email"
-                className="flex-1 px-5 py-3 rounded-l-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/50 focus:border-transparent transition-all"
+                className="flex-1 min-w-0 px-5 py-3 rounded-l-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/50 focus:border-transparent transition-all"
               />
-              <button className="px-6 py-3 bg-[#1a6b3c] hover:bg-[#14532d] rounded-r-xl transition-colors duration-300 flex items-center gap-2 font-semibold text-sm">
+              <button className="shrink-0 px-4 sm:px-6 py-3 bg-[#1a6b3c] hover:bg-[#14532d] rounded-r-xl transition-colors duration-300 flex items-center gap-2 font-semibold text-sm">
                 <FiSend className="w-4 h-4" />
                 <span className="hidden sm:inline">S'abonner</span>
               </button>
