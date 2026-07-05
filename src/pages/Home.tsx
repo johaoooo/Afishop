@@ -55,7 +55,7 @@ const statsData = [
 ];
 
 // ============================================================
-// SECTION AVANTAGES - AMÉLIORÉE
+// SECTION AVANTAGES
 // ============================================================
 
 const advantages = [
@@ -258,7 +258,7 @@ export default function Home() {
     <div className="bg-[#faf8f5]">
       
       {/* ============================================================ */}
-      {/* HERO - NON MODIFIÉ */}
+      {/* HERO */}
       {/* ============================================================ */}
       <section 
         className="relative overflow-hidden bg-black"
@@ -372,7 +372,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 2: AVANTAGES - AMÉLIORÉ */}
+      {/* SECTION 2: AVANTAGES */}
       {/* ============================================================ */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
@@ -407,7 +407,7 @@ export default function Home() {
                 <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl ${a.bg} scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
                 
                 <div className={`w-12 sm:w-16 h-12 sm:h-16 rounded-2xl ${a.bg} flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-500`}>
-                  <a.icon className={`w-6 sm:w-8 h-6 sm:h-8 ${a.color}`} />
+                  <a.icon className="w-6 sm:w-8 h-6 sm:h-8 text-[#1a6b3c]" />
                 </div>
                 
                 <h3 className="text-lg sm:text-xl font-bold text-gray-800 group-hover:text-[#1a6b3c] transition-colors duration-300">
@@ -427,7 +427,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 3: FEATURED SECTIONS - AMÉLIORÉ */}
+      {/* SECTION 3: FEATURED SECTIONS */}
       {/* ============================================================ */}
       <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5]">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
@@ -458,7 +458,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 4: PRODUITS - AMÉLIORÉ */}
+      {/* SECTION 4: PRODUITS */}
       {/* ============================================================ */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
@@ -520,7 +520,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 5: PARTENAIRES - AMÉLIORÉ */}
+      {/* SECTION 5: PARTENAIRES */}
       {/* ============================================================ */}
       <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
@@ -571,7 +571,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 6: CTA FINAL - AMÉLIORÉ */}
+      {/* SECTION 6: CTA FINAL */}
       {/* ============================================================ */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
