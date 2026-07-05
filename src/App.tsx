@@ -24,6 +24,7 @@ import { AdminProducts } from './pages/admin/AdminProducts';
 import { AdminOrders } from './pages/admin/AdminOrders';
 import { AdminMessages } from './pages/admin/AdminMessages';
 import { AdminTrainings } from './pages/admin/AdminTrainings';
+import { AdminUsers } from './pages/admin/AdminUsers';
 
 export default function App() {
   return (
@@ -61,6 +62,7 @@ export default function App() {
             <Route path="commandes" element={<AdminOrders />} />
             <Route path="formations" element={<AdminTrainings />} />
             <Route path="messages" element={<AdminMessages />} />
+            <Route path="utilisateurs" element={<AdminUsers />} />
           </Route>
         </Routes>
       </CartProvider>
