@@ -39,11 +39,9 @@ export default function Login() {
 
     setIsLoading(true);
     try {
-      await login(email, password);
+      const currentUser = await login(email, password);
       toast.success('Connexion réussie ! Bienvenue 👋');
-      
-      // Vérifier le rôle après connexion
-      const currentUser = useAuth().user;
+
       if (currentUser?.role?.toLowerCase() === 'admin') {
         navigate('/admin');
       } else {

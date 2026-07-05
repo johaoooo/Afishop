@@ -5,7 +5,7 @@ interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   register: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
 }
@@ -35,14 +35,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    console.log('🔍 login - email:', email);
     const response = await authApi.login(email, password);
-    console.log('🔍 login - response:', response);
     const { token, user } = response;
     localStorage.setItem('afi_token', token);
     localStorage.setItem('afi_user', JSON.stringify(user));
     setUser(user);
-    console.log('✅ Utilisateur connecté:', user);
+    return user; // renvoyé directement pour éviter de relire un contexte pas encore à jour
   };
 
   const register = async (email: string, password: string, name: string) => {
