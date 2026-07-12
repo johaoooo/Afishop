@@ -17,6 +17,8 @@ export default function Checkout() {
   const [submitting, setSubmitting] = useState(false);
   const [pendingOrder, setPendingOrder] = useState<Order | null>(null);
   const [widgetLoading, setWidgetLoading] = useState(false);
+  const [kkiapayLoaded, setKkiapayLoaded] = useState(false);
+  const pendingOrderRef = useRef<Order | null>(null);
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -26,8 +28,18 @@ export default function Checkout() {
   });
 
   const kkiapay = useKKiaPay();
-  const kkiapayReady = kkiapay.openKkiapayWidget !== (() => {});
-  const listenersReady = useRef(false);
+
+  // Détecter quand la vraie bibliothèque Kkiapay remplace les no-op
+  useEffect(() => {
+    if (kkiapay.openKkiapayWidget.name) {
+      setKkiapayLoaded(true);
+    }
+  }, [kkiapay]);
+
+  // Maintenir le ref à jour pour éviter les stale closures
+  useEffect(() => {
+    pendingOrderRef.current = pendingOrder;
+  }, [pendingOrder]);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -42,12 +54,10 @@ export default function Checkout() {
     }
   }, [items, navigate, pendingOrder]);
 
-  // Enregistrer les listeners Kkiapay UNE SEULE FOIS au montage de la page
+  // Enregistrer les listeners UNE SEULE FOIS, en utilisant le ref (pas de stale closure)
   useEffect(() => {
-    if (listenersReady.current) return;
-
     kkiapay.addSuccessListener(async ({ transactionId }: { transactionId: string }) => {
-      const orderId = pendingOrder?.id;
+      const orderId = pendingOrderRef.current?.id;
       if (!orderId) return;
       try {
         await paymentsApi.verify(transactionId, orderId);
@@ -68,8 +78,6 @@ export default function Checkout() {
       setPendingOrder(null);
       toast.error('Le paiement a été annulé ou a échoué. Votre commande reste en attente.');
     });
-
-    listenersReady.current = true;
   }, []);
 
   if (isLoading || !isAuthenticated || (items.length === 0 && !pendingOrder)) return null;
@@ -77,7 +85,7 @@ export default function Checkout() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!kkiapayReady) {
+    if (!kkiapayLoaded) {
       toast.error('Plateforme de paiement pas encore prête. Veuillez réessayer dans quelques secondes.');
       return;
     }
@@ -87,6 +95,7 @@ export default function Checkout() {
       const orderItems = items.map((i) => ({ productId: i.productId, quantity: i.quantity }));
       const { order } = await ordersApi.create(orderItems, address);
       setPendingOrder(order);
+      pendingOrderRef.current = order;
       setSubmitting(false);
       setWidgetLoading(true);
 
@@ -212,7 +221,7 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {!kkiapayReady && (
+              {!kkiapayLoaded && (
                 <div className="flex items-center gap-2 text-amber-700 bg-amber-50 rounded-xl px-4 py-3 text-sm">
                   <FiLoader className="w-4 h-4 animate-spin" />
                   Initialisation du paiement sécurisé…
@@ -221,7 +230,7 @@ export default function Checkout() {
 
               <button
                 type="submit"
-                disabled={submitting || !kkiapayReady}
+                disabled={submitting || !kkiapayLoaded}
                 className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4"
               >
                 {submitting ? 'Création de la commande…' : `Payer ${total.toLocaleString('fr-FR')} FCFA`}
