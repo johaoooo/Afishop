@@ -59,22 +59,36 @@ export class ApiError extends Error {
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem('afi_token');
 
-  const res = await fetch(`${BASE_URL}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
 
-  const data = await res.json().catch(() => ({}));
+  try {
+    const res = await fetch(`${BASE_URL}${path}`, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+    });
 
-  if (!res.ok || data.status === 'error') {
-    throw new ApiError(data.message || 'Une erreur est survenue', data.errors);
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || data.status === 'error') {
+      throw new ApiError(data.message || 'Une erreur est survenue', data.errors);
+    }
+
+    return data;
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    if ((error as Error).name === 'AbortError') {
+      throw new ApiError('Le serveur ne répond pas. Vérifiez votre connexion ou réessayez.');
+    }
+    throw new ApiError('Impossible de contacter le serveur. Vérifiez que le backend est démarré.');
+  } finally {
+    clearTimeout(timeout);
   }
-
-  return data;
 }
 
 // ---- Auth -----------------------------------------------------------
