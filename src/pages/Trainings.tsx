@@ -46,7 +46,7 @@ export default function Trainings() {
                   <p className="text-gray-500 text-sm mt-2 line-clamp-2">{t.description}</p>
                   <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
                     <span className="text-xs text-gray-400">📚 {t.modules?.length || 0} modules</span>
-                    <span className="font-bold text-forest">{t.price.toLocaleString('fr-FR')} FCFA</span>
+                    <span className="font-bold text-forest">{t.price}</span>
                   </div>
                   <Link
                     to={`/formations/${t.id}`}
