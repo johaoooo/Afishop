@@ -16,21 +16,29 @@ declare global {
     closeKkiapayWidget: () => void;
     addSuccessListener: (fn: (data: { transactionId: string }) => void) => void;
     addFailedListener: (fn: () => void) => void;
+    __kkiapaySdkLoaded?: boolean;
   }
 }
 
+let sdkLoadPromise: Promise<void> | null = null;
+
 function loadKkiapaySdk(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (typeof window.openKkiapayWidget !== 'undefined') {
-      resolve();
-      return;
-    }
+  if (sdkLoadPromise) return sdkLoadPromise;
+  if (typeof window.openKkiapayWidget !== 'undefined') {
+    sdkLoadPromise = Promise.resolve();
+    return sdkLoadPromise;
+  }
+  sdkLoadPromise = new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = KKIAPAY_CDN;
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error('Impossible de charger le SDK Kkiapay'));
+    script.onerror = () => {
+      sdkLoadPromise = null;
+      reject(new Error('Impossible de charger le SDK Kkiapay'));
+    };
     document.head.appendChild(script);
   });
+  return sdkLoadPromise;
 }
 
 export default function Checkout() {
@@ -43,11 +51,10 @@ export default function Checkout() {
   const [sdkReady, setSdkReady] = useState(false);
   const [sdkError, setSdkError] = useState(false);
   const pendingOrderRef = useRef<Order | null>(null);
-  const loadingRef = useRef(false);
 
   const retryLoadSdk = useCallback(() => {
     setSdkError(false);
-    loadingRef.current = false;
+    sdkLoadPromise = null;
     loadKkiapaySdk()
       .then(() => setSdkReady(true))
       .catch(() => setSdkError(true));
@@ -60,12 +67,8 @@ export default function Checkout() {
     phone: '',
   });
 
-  // Charger le SDK Kkiapay dynamiquement au montage,
-  // puis enregistrer les listeners une fois le SDK prêt
+  // Charger le SDK Kkiapay dynamiquement au montage
   useEffect(() => {
-    if (loadingRef.current) return;
-    loadingRef.current = true;
-
     loadKkiapaySdk()
       .then(() => {
         setSdkReady(true);
