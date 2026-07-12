@@ -49,10 +49,25 @@ export default function Checkout() {
   });
 
   useEffect(() => {
+    console.log('[Kkiapay] SDK présent au mount:', !!window.openKkiapayWidget);
+    console.log('[Kkiapay] addSuccessListener:', typeof window.addSuccessListener);
+    console.log('[Kkiapay] customElements kkiapay-widget:', !!customElements.get('kkiapay-widget'));
+    console.log('[Kkiapay] iframe préexistante dans body:', !!document.querySelector('iframe[src*="kkiapay"]'));
+    console.log('[Kkiapay] API_URL:', import.meta.env.VITE_API_URL);
+
     if (!window.openKkiapayWidget) {
+      console.log('[Kkiapay] SDK absent, injection dynamique...');
       injectKkiapayScript()
-        .then(() => setSdkOk(true))
-        .catch(() => setSdkError(true));
+        .then(() => {
+          console.log('[Kkiapay] Injection réussie');
+          setSdkOk(true);
+        })
+        .catch((err) => {
+          console.error('[Kkiapay] Injection échouée:', err);
+          setSdkError(true);
+        });
+    } else {
+      console.log('[Kkiapay] SDK déjà disponible (script synchrone)');
     }
   }, []);
 
@@ -84,6 +99,8 @@ export default function Checkout() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log('[Kkiapay] handleSubmit - SDK disponible:', !!window.openKkiapayWidget);
+
     if (!window.openKkiapayWidget) {
       toast.error('Plateforme de paiement pas encore prête. Veuillez patienter.');
       return;
@@ -92,7 +109,9 @@ export default function Checkout() {
     setSubmitting(true);
     try {
       const orderItems = items.map((i) => ({ productId: i.productId, quantity: i.quantity }));
+      console.log('[Kkiapay] Création commande...');
       const { order } = await ordersApi.create(orderItems, address);
+      console.log('[Kkiapay] Commande créée:', order.id, 'total:', order.total);
       setPendingOrder(order);
       pendingOrderRef.current = order;
       setSubmitting(false);
@@ -100,10 +119,12 @@ export default function Checkout() {
 
       if (!listenersSet.current) {
         listenersSet.current = true;
+        console.log('[Kkiapay] Enregistrement listeners...');
 
         window.addSuccessListener?.(({ transactionId }: { transactionId: string }) => {
           const orderId = pendingOrderRef.current?.id;
           if (!orderId) return;
+          console.log('[Kkiapay] SUCCESS transactionId:', transactionId);
           paymentsApi.verify(transactionId, orderId)
             .then(() => {
               clearCart();
@@ -116,6 +137,7 @@ export default function Checkout() {
         });
 
         window.addFailedListener?.(() => {
+          console.log('[Kkiapay] FAILED');
           setWidgetLoading(false);
           setPendingOrder(null);
           toast.error('Le paiement a été annulé ou a échoué. Votre commande reste en attente.');
@@ -123,6 +145,8 @@ export default function Checkout() {
       }
 
       setTimeout(() => {
+        console.log('[Kkiapay] Appel openKkiapayWidget...');
+        console.log('[Kkiapay] iframe dans body avant appel:', !!document.querySelector('iframe[src*="kkiapay"]'));
         try {
           window.openKkiapayWidget!({
             amount: order.total,
@@ -134,13 +158,23 @@ export default function Checkout() {
             reason: `Commande AFI Collection #${order.id}`,
             data: String(order.id),
           });
+          console.log('[Kkiapay] openKkiapayWidget appelé sans erreur');
+          console.log('[Kkiapay] iframe dans body après appel:', !!document.querySelector('iframe[src*="kkiapay"]'));
+          // Vérifier le DOM après un délai
+          setTimeout(() => {
+            const iframes = document.querySelectorAll('iframe');
+            console.log('[Kkiapay] iframes dans body après 1s:', iframes.length);
+            iframes.forEach((f, i) => console.log(`[Kkiapay] iframe ${i}:`, f.src, f.style.cssText));
+          }, 1000);
         } catch (err) {
+          console.error('[Kkiapay] ERREUR openKkiapayWidget:', err);
           setWidgetLoading(false);
           setPendingOrder(null);
           toast.error("Erreur lors de l'ouverture du paiement. Veuillez réessayer.");
         }
       }, 500);
     } catch (err) {
+      console.error('[Kkiapay] ERREUR création commande:', err);
       toast.error(err instanceof ApiError ? err.message : 'Erreur lors de la création de la commande');
       setSubmitting(false);
     }
