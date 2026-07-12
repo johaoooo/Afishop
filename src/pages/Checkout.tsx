@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiArrowLeft, FiTruck, FiShield, FiLoader, FiRefreshCw } from 'react-icons/fi';
 import { motion } from 'framer-motion';
@@ -12,33 +12,21 @@ const KKIAPAY_CDN = 'https://cdn.kkiapay.me/k.js';
 
 declare global {
   interface Window {
-    openKkiapayWidget: (config: Record<string, unknown>) => void;
-    closeKkiapayWidget: () => void;
-    addSuccessListener: (fn: (data: { transactionId: string }) => void) => void;
-    addFailedListener: (fn: () => void) => void;
-    __kkiapaySdkLoaded?: boolean;
+    openKkiapayWidget?: (config: Record<string, unknown>) => void;
+    closeKkiapayWidget?: () => void;
+    addSuccessListener?: (fn: (data: { transactionId: string }) => void) => void;
+    addFailedListener?: (fn: () => void) => void;
   }
 }
 
-let sdkLoadPromise: Promise<void> | null = null;
-
-function loadKkiapaySdk(): Promise<void> {
-  if (sdkLoadPromise) return sdkLoadPromise;
-  if (typeof window.openKkiapayWidget !== 'undefined') {
-    sdkLoadPromise = Promise.resolve();
-    return sdkLoadPromise;
-  }
-  sdkLoadPromise = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = KKIAPAY_CDN;
-    script.onload = () => resolve();
-    script.onerror = () => {
-      sdkLoadPromise = null;
-      reject(new Error('Impossible de charger le SDK Kkiapay'));
-    };
-    document.head.appendChild(script);
+function injectKkiapayScript(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = KKIAPAY_CDN;
+    s.onload = () => resolve();
+    s.onerror = () => reject(new Error('Échec SDK Kkiapay'));
+    document.head.appendChild(s);
   });
-  return sdkLoadPromise;
 }
 
 export default function Checkout() {
@@ -48,17 +36,10 @@ export default function Checkout() {
   const [submitting, setSubmitting] = useState(false);
   const [pendingOrder, setPendingOrder] = useState<Order | null>(null);
   const [widgetLoading, setWidgetLoading] = useState(false);
-  const [sdkReady, setSdkReady] = useState(false);
+  const [sdkOk, setSdkOk] = useState(!!window.openKkiapayWidget);
   const [sdkError, setSdkError] = useState(false);
   const pendingOrderRef = useRef<Order | null>(null);
-
-  const retryLoadSdk = useCallback(() => {
-    setSdkError(false);
-    sdkLoadPromise = null;
-    loadKkiapaySdk()
-      .then(() => setSdkReady(true))
-      .catch(() => setSdkError(true));
-  }, []);
+  const listenersSet = useRef(false);
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -67,36 +48,20 @@ export default function Checkout() {
     phone: '',
   });
 
-  // Charger le SDK Kkiapay dynamiquement au montage
   useEffect(() => {
-    loadKkiapaySdk()
-      .then(() => {
-        setSdkReady(true);
-
-        window.addSuccessListener?.(({ transactionId }: { transactionId: string }) => {
-          const orderId = pendingOrderRef.current?.id;
-          if (!orderId) return;
-          paymentsApi.verify(transactionId, orderId)
-            .then(() => {
-              clearCart();
-              toast.success('Paiement confirmé ! Merci pour votre commande');
-              navigate(`/mon-compte?commande=${orderId}`);
-            })
-            .catch(() => {
-              toast.error('Le paiement a été reçu mais la vérification a échoué. Contactez le support.');
-            });
-        });
-
-        window.addFailedListener?.(() => {
-          setWidgetLoading(false);
-          setPendingOrder(null);
-          toast.error('Le paiement a été annulé ou a échoué. Votre commande reste en attente.');
-        });
-      })
-      .catch(() => setSdkError(true));
+    if (!window.openKkiapayWidget) {
+      injectKkiapayScript()
+        .then(() => setSdkOk(true))
+        .catch(() => setSdkError(true));
+    }
   }, []);
 
-  // Maintenir le ref à jour
+  useEffect(() => {
+    return () => {
+      window.closeKkiapayWidget?.();
+    };
+  }, []);
+
   useEffect(() => {
     pendingOrderRef.current = pendingOrder;
   }, [pendingOrder]);
@@ -119,8 +84,8 @@ export default function Checkout() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!sdkReady) {
-      toast.error('Plateforme de paiement pas encore prête. Veuillez patienter quelques instants.');
+    if (!window.openKkiapayWidget) {
+      toast.error('Plateforme de paiement pas encore prête. Veuillez patienter.');
       return;
     }
 
@@ -133,10 +98,33 @@ export default function Checkout() {
       setSubmitting(false);
       setWidgetLoading(true);
 
-      // Petit délai pour laisser le SDK s'initialiser complètement
+      if (!listenersSet.current) {
+        listenersSet.current = true;
+
+        window.addSuccessListener?.(({ transactionId }: { transactionId: string }) => {
+          const orderId = pendingOrderRef.current?.id;
+          if (!orderId) return;
+          paymentsApi.verify(transactionId, orderId)
+            .then(() => {
+              clearCart();
+              toast.success('Paiement confirmé ! Merci pour votre commande');
+              navigate(`/mon-compte?commande=${orderId}`);
+            })
+            .catch(() => {
+              toast.error('Le paiement a été reçu mais la vérification a échoué. Contactez le support.');
+            });
+        });
+
+        window.addFailedListener?.(() => {
+          setWidgetLoading(false);
+          setPendingOrder(null);
+          toast.error('Le paiement a été annulé ou a échoué. Votre commande reste en attente.');
+        });
+      }
+
       setTimeout(() => {
         try {
-          window.openKkiapayWidget({
+          window.openKkiapayWidget!({
             amount: order.total,
             key: KKIAPAY_PUBLIC_KEY,
             sandbox: true,
@@ -149,12 +137,22 @@ export default function Checkout() {
         } catch (err) {
           setWidgetLoading(false);
           setPendingOrder(null);
-          toast.error('Erreur lors de l\'ouverture du paiement. Veuillez réessayer.');
+          toast.error("Erreur lors de l'ouverture du paiement. Veuillez réessayer.");
         }
       }, 500);
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : 'Erreur lors de la création de la commande');
       setSubmitting(false);
+    }
+  };
+
+  const retry = async () => {
+    setSdkError(false);
+    try {
+      await injectKkiapayScript();
+      setSdkOk(true);
+    } catch {
+      setSdkError(true);
     }
   };
 
@@ -264,10 +262,10 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {!sdkReady && !sdkError && (
+              {!sdkOk && !sdkError && (
                 <div className="flex items-center gap-2 text-amber-700 bg-amber-50 rounded-xl px-4 py-3 text-sm">
                   <FiLoader className="w-4 h-4 animate-spin" />
-                  Initialisation du paiement sécurisé…
+                  Chargement de la plateforme de paiement…
                 </div>
               )}
 
@@ -276,7 +274,7 @@ export default function Checkout() {
                   <span className="flex-1">Échec du chargement de la plateforme de paiement.</span>
                   <button
                     type="button"
-                    onClick={retryLoadSdk}
+                    onClick={retry}
                     className="flex items-center gap-1 font-semibold text-red-700 hover:text-red-900 transition-colors"
                   >
                     <FiRefreshCw className="w-4 h-4" /> Réessayer
@@ -286,7 +284,7 @@ export default function Checkout() {
 
               <button
                 type="submit"
-                disabled={submitting || !sdkReady}
+                disabled={submitting || !sdkOk}
                 className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4"
               >
                 {submitting ? 'Création de la commande…' : `Payer ${total.toLocaleString('fr-FR')} FCFA`}
