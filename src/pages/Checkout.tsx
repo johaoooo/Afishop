@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiArrowLeft, FiTruck, FiShield } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { useKKiaPay } from 'kkiapay-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { ordersApi, ApiError } from '../lib/api';
+import { ordersApi, paymentsApi, ApiError, type Order } from '../lib/api';
 import toast from 'react-hot-toast';
+
+const KKIAPAY_PUBLIC_KEY = import.meta.env.VITE_KKIAPAY_PUBLIC_KEY;
 
 export default function Checkout() {
   const navigate = useNavigate();
   const { items, total, clearCart } = useCart();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [pendingOrder, setPendingOrder] = useState<Order | null>(null);
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -19,6 +23,8 @@ export default function Checkout() {
     country: 'Bénin',
     phone: '',
   });
+
+  const { openKkiapayWidget, addSuccessListener, addFailedListener } = useKKiaPay();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -28,24 +34,58 @@ export default function Checkout() {
   }, [isAuthenticated, isLoading, navigate]);
 
   useEffect(() => {
-    if (items.length === 0) {
+    if (items.length === 0 && !pendingOrder) {
       navigate('/panier');
     }
-  }, [items, navigate]);
+  }, [items, navigate, pendingOrder]);
 
-  if (isLoading || !isAuthenticated || items.length === 0) return null;
+  // Écoute la confirmation du paiement Kkiapay, une seule fois
+  useEffect(() => {
+    addSuccessListener(async ({ transactionId }: { transactionId: string }) => {
+      if (!pendingOrder) return;
+      try {
+        await paymentsApi.verify(transactionId, pendingOrder.id);
+        clearCart();
+        toast.success('Paiement confirmé ! Merci pour votre commande 🎉');
+        navigate(`/mon-compte?commande=${pendingOrder.id}`);
+      } catch (err) {
+        toast.error(
+          err instanceof ApiError
+            ? err.message
+            : 'Le paiement a été reçu mais la vérification a échoué. Contactez le support.'
+        );
+      }
+    });
+
+    addFailedListener(() => {
+      toast.error('Le paiement a été annulé ou a échoué. Votre commande reste en attente.');
+    });
+  }, [pendingOrder, addSuccessListener, addFailedListener, clearCart, navigate]);
+
+  if (isLoading || !isAuthenticated || (items.length === 0 && !pendingOrder)) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
+      // 1. Créer la commande côté backend (statut "pending", stock déjà décrémenté)
       const orderItems = items.map((i) => ({ productId: i.productId, quantity: i.quantity }));
       const { order } = await ordersApi.create(orderItems, address);
-      clearCart();
-      toast.success('Commande créée avec succès ! 🎉');
-      navigate(`/mon-compte?commande=${order.id}`);
+      setPendingOrder(order);
+
+      // 2. Ouvrir le widget de paiement Kkiapay avec le montant exact de la commande
+      openKkiapayWidget({
+        amount: order.total,
+        key: KKIAPAY_PUBLIC_KEY,
+        sandbox: true, // ⚠️ à repasser à false pour la production réelle
+        phone: address.phone,
+        email: user?.email,
+        name: user?.name,
+        reason: `Commande AFI Collection #${order.id}`,
+        data: String(order.id),
+      });
     } catch (err) {
-      toast.error(err instanceof ApiError ? err.message : 'Erreur lors de la commande');
+      toast.error(err instanceof ApiError ? err.message : 'Erreur lors de la création de la commande');
     } finally {
       setLoading(false);
     }
@@ -58,7 +98,7 @@ export default function Checkout() {
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour au panier
         </Link>
 
-        <motion.h1 
+        <motion.h1
           className="text-3xl font-black text-gray-800 mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,7 +108,7 @@ export default function Checkout() {
         </motion.h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <motion.div 
+          <motion.div
             className="md:col-span-2 bg-white/90 backdrop-blur-sm border border-green-100 rounded-2xl p-6 shadow-sm"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -150,12 +190,16 @@ export default function Checkout() {
                 disabled={loading}
                 className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4"
               >
-                {loading ? 'Création en cours…' : `Valider la commande (${total.toLocaleString('fr-FR')} FCFA)`}
+                {loading ? 'Création en cours…' : `Payer ${total.toLocaleString('fr-FR')} FCFA`}
               </button>
+
+              <p className="text-xs text-gray-400 text-center">
+                Mode test (sandbox) — aucun montant réel ne sera débité.
+              </p>
             </form>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="bg-white/90 backdrop-blur-sm border border-green-100 rounded-2xl p-6 h-fit shadow-sm"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -182,7 +226,7 @@ export default function Checkout() {
               </div>
               <div className="flex items-center gap-2">
                 <FiShield className="w-4 h-4 text-[#1a6b3c]" />
-                <span>Paiement sécurisé</span>
+                <span>Paiement sécurisé via Kkiapay</span>
               </div>
             </div>
           </motion.div>

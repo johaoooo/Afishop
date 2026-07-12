@@ -168,7 +168,7 @@ export interface Training {
   title: string;
   description: string;
   duration: string;
-  price: number;
+  price: string;
   modules: string[];
   students: number;
   image: string;
