@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FiArrowLeft, FiTruck, FiShield } from 'react-icons/fi';
+import { FiArrowLeft, FiTruck, FiShield, FiLoader } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useKKiaPay } from 'kkiapay-react';
 import { useCart } from '../context/CartContext';
@@ -14,8 +14,9 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { items, total, clearCart } = useCart();
   const { user, isAuthenticated, isLoading } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [pendingOrder, setPendingOrder] = useState<Order | null>(null);
+  const [widgetLoading, setWidgetLoading] = useState(false);
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -24,7 +25,9 @@ export default function Checkout() {
     phone: '',
   });
 
-  const { openKkiapayWidget, addSuccessListener, addFailedListener } = useKKiaPay();
+  const kkiapay = useKKiaPay();
+  const kkiapayReady = kkiapay.openKkiapayWidget !== (() => {});
+  const listenersReady = useRef(false);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -39,15 +42,18 @@ export default function Checkout() {
     }
   }, [items, navigate, pendingOrder]);
 
-  // Écoute la confirmation du paiement Kkiapay, une seule fois
+  // Enregistrer les listeners Kkiapay UNE SEULE FOIS au montage de la page
   useEffect(() => {
-    addSuccessListener(async ({ transactionId }: { transactionId: string }) => {
-      if (!pendingOrder) return;
+    if (listenersReady.current) return;
+
+    kkiapay.addSuccessListener(async ({ transactionId }: { transactionId: string }) => {
+      const orderId = pendingOrder?.id;
+      if (!orderId) return;
       try {
-        await paymentsApi.verify(transactionId, pendingOrder.id);
+        await paymentsApi.verify(transactionId, orderId);
         clearCart();
         toast.success('Paiement confirmé ! Merci pour votre commande 🎉');
-        navigate(`/mon-compte?commande=${pendingOrder.id}`);
+        navigate(`/mon-compte?commande=${orderId}`);
       } catch (err) {
         toast.error(
           err instanceof ApiError
@@ -57,27 +63,37 @@ export default function Checkout() {
       }
     });
 
-    addFailedListener(() => {
+    kkiapay.addFailedListener(() => {
+      setWidgetLoading(false);
+      setPendingOrder(null);
       toast.error('Le paiement a été annulé ou a échoué. Votre commande reste en attente.');
     });
-  }, [pendingOrder, addSuccessListener, addFailedListener, clearCart, navigate]);
+
+    listenersReady.current = true;
+  }, []);
 
   if (isLoading || !isAuthenticated || (items.length === 0 && !pendingOrder)) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+
+    if (!kkiapayReady) {
+      toast.error('Plateforme de paiement pas encore prête. Veuillez réessayer dans quelques secondes.');
+      return;
+    }
+
+    setSubmitting(true);
     try {
-      // 1. Créer la commande côté backend (statut "pending", stock déjà décrémenté)
       const orderItems = items.map((i) => ({ productId: i.productId, quantity: i.quantity }));
       const { order } = await ordersApi.create(orderItems, address);
       setPendingOrder(order);
+      setSubmitting(false);
+      setWidgetLoading(true);
 
-      // 2. Ouvrir le widget de paiement Kkiapay avec le montant exact de la commande
-      openKkiapayWidget({
+      kkiapay.openKkiapayWidget({
         amount: order.total,
         key: KKIAPAY_PUBLIC_KEY,
-        sandbox: true, // ⚠️ à repasser à false pour la production réelle
+        sandbox: true,
         phone: address.phone,
         email: user?.email,
         name: user?.name,
@@ -86,10 +102,21 @@ export default function Checkout() {
       });
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : 'Erreur lors de la création de la commande');
-    } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
+
+  if (widgetLoading) {
+    return (
+      <div className="min-h-screen bg-[#f5f8f5] flex items-center justify-center">
+        <div className="text-center">
+          <FiLoader className="w-10 h-10 text-[#1a6b3c] animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 font-semibold">Redirection vers le paiement sécurisé…</p>
+          <p className="text-gray-400 text-sm mt-1">Veuillez patienter</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen py-12">
@@ -185,12 +212,19 @@ export default function Checkout() {
                 </div>
               </div>
 
+              {!kkiapayReady && (
+                <div className="flex items-center gap-2 text-amber-700 bg-amber-50 rounded-xl px-4 py-3 text-sm">
+                  <FiLoader className="w-4 h-4 animate-spin" />
+                  Initialisation du paiement sécurisé…
+                </div>
+              )}
+
               <button
                 type="submit"
-                disabled={loading}
+                disabled={submitting || !kkiapayReady}
                 className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4"
               >
-                {loading ? 'Création en cours…' : `Payer ${total.toLocaleString('fr-FR')} FCFA`}
+                {submitting ? 'Création de la commande…' : `Payer ${total.toLocaleString('fr-FR')} FCFA`}
               </button>
 
               <p className="text-xs text-gray-400 text-center">
