@@ -302,7 +302,7 @@ export default function Home() {
                 exit={{ opacity: 0, y: -40 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                <h1 className="text-xl md:text-3xl lg:text-4xl font-black text-white leading-[1.1] tracking-tight drop-shadow-2xl">
+                <h1 className="text-2xl md:text-4xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight drop-shadow-2xl">
                   {slides[currentSlide].title}
                   <br />
                   <span className="text-[#4ade80] drop-shadow-2xl">
@@ -311,7 +311,7 @@ export default function Home() {
                 </h1>
 
                 <motion.p 
-                  className="text-white/80 text-sm md:text-base mt-3 max-w-xl leading-relaxed drop-shadow-xl"
+                  className="text-white/80 text-base md:text-lg mt-4 max-w-xl leading-relaxed drop-shadow-xl"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
