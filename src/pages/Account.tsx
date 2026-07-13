@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import {
-  FiPackage, FiUser, FiLogOut, FiDownload, FiLock, FiCheck,
+  FiPackage, FiUser, FiLogOut, FiDownload, FiLock, FiCheck, FiHeart, FiTrash2, FiShoppingBag,
 } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
-import { ordersApi, authApi, ApiError, type Order } from '../lib/api';
+import { ordersApi, authApi, productsApi, ApiError, type Order, type Product } from '../lib/api';
+import { getFavorites, toggleFavorite } from '../lib/favorites';
 import toast from 'react-hot-toast';
 
 const statusColors: Record<string, string> = {
@@ -136,7 +137,7 @@ function ProfileTab() {
     e.preventDefault();
     setSaving(true);
     try {
-      const payload: any = {};
+      const payload: Record<string, string> = {};
       if (name !== user?.name) payload.name = name;
       if (newPassword) {
         payload.currentPassword = currentPassword;
@@ -229,10 +230,108 @@ function ProfileTab() {
   );
 }
 
+function FavoritesTab() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const favIds = getFavorites();
+    if (favIds.length === 0) {
+      setLoading(false);
+      return;
+    }
+    productsApi
+      .getAll()
+      .then((data) => setProducts(data.products.filter((p: Product) => favIds.includes(p.id))))
+      .catch(() => toast.error('Erreur lors du chargement des favoris'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleRemove = (id: number) => {
+    toggleFavorite(id);
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+    toast('Produit retiré des favoris');
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="w-12 h-12 bg-gray-200 rounded-full mb-4" />
+          <div className="h-4 bg-gray-200 rounded w-32 mb-2" />
+          <div className="h-3 bg-gray-200 rounded w-48" />
+        </div>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center shadow-sm">
+        <FiHeart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+        <h3 className="text-lg font-bold text-gray-800">Aucun favori</h3>
+        <p className="text-gray-400 text-sm mt-1">Vous n'avez pas encore de produits favoris.</p>
+        <Link
+          to="/boutique"
+          className="inline-block mt-4 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-2.5 rounded-xl transition text-sm"
+        >
+          Découvrir la boutique
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {products.map((product) => (
+        <div key={product.id} className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition flex items-center gap-4">
+          <Link to={`/produit/${product.id}`} className="shrink-0">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-20 h-20 rounded-xl object-contain bg-gray-50"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = 'https://placehold.co/200x200/1a6b3c/ffffff?text=AFI';
+              }}
+            />
+          </Link>
+          <div className="flex-1 min-w-0">
+            <Link to={`/produit/${product.id}`} className="hover:underline">
+              <h4 className="font-bold text-gray-800 text-sm truncate">{product.name}</h4>
+            </Link>
+            <p className="text-[#1a6b3c] font-bold text-sm mt-1">
+              {product.price.toLocaleString('fr-FR')} FCFA
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link
+              to={`/produit/${product.id}`}
+              className="w-9 h-9 rounded-full bg-[#1a6b3c]/10 text-[#1a6b3c] flex items-center justify-center hover:bg-[#1a6b3c]/20 transition"
+              aria-label="Voir le produit"
+            >
+              <FiShoppingBag className="w-4 h-4" />
+            </Link>
+            <button
+              onClick={() => handleRemove(product.id)}
+              className="w-9 h-9 rounded-full bg-red-50 text-red-400 flex items-center justify-center hover:bg-red-100 hover:text-red-600 transition"
+              aria-label="Retirer des favoris"
+            >
+              <FiTrash2 className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Account() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [tab, setTab] = useState<'orders' | 'profile'>('orders');
+  const [searchParams] = useSearchParams();
+  const [tab, setTab] = useState<'orders' | 'profile' | 'favorites'>(
+    searchParams.get('favoris') === 'true' ? 'favorites' : 'orders'
+  );
 
   useEffect(() => {
     if (!user) {
@@ -270,6 +369,15 @@ export default function Account() {
                   Mes commandes
                 </button>
                 <button
+                  onClick={() => setTab('favorites')}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold text-sm transition ${
+                    tab === 'favorites' ? 'bg-[#1a6b3c]/10 text-[#1a6b3c]' : 'text-gray-500 hover:bg-gray-50'
+                  }`}
+                >
+                  <FiHeart className="w-4 h-4" />
+                  Mes favoris
+                </button>
+                <button
                   onClick={() => setTab('profile')}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold text-sm transition ${
                     tab === 'profile' ? 'bg-[#1a6b3c]/10 text-[#1a6b3c]' : 'text-gray-500 hover:bg-gray-50'
@@ -292,9 +400,9 @@ export default function Account() {
           {/* Contenu */}
           <div className="md:col-span-3">
             <h1 className="text-2xl font-black text-gray-800 mb-6">
-              {tab === 'orders' ? 'Mes commandes' : 'Mon profil'}
+              {tab === 'orders' ? 'Mes commandes' : tab === 'favorites' ? 'Mes favoris' : 'Mon profil'}
             </h1>
-            {tab === 'orders' ? <OrdersTab /> : <ProfileTab />}
+            {tab === 'orders' ? <OrdersTab /> : tab === 'favorites' ? <FavoritesTab /> : <ProfileTab />}
           </div>
         </div>
       </div>

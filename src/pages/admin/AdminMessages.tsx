@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { FiMail } from 'react-icons/fi';
-import { adminApi } from '../../services/api/modules/admin';
+import { adminApi, type Message } from '../../lib/api';
 import toast from 'react-hot-toast';
 
 export function AdminMessages() {
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selected, setSelected] = useState<any | null>(null);
+  const [selected, setSelected] = useState<Message | null>(null);
 
   const load = async () => {
     setLoading(true);
     try {
-      setMessages(await adminApi.getMessages());
+      const data = await adminApi.getMessages();
+      setMessages(data.messages);
     } catch (error: any) {
       toast.error(error.message || 'Erreur lors du chargement des messages');
     } finally {
@@ -21,7 +22,7 @@ export function AdminMessages() {
 
   useEffect(() => { load(); }, []);
 
-  const openMessage = async (m: any) => {
+  const openMessage = async (m: Message) => {
     setSelected(m);
     if (!m.read) {
       try {

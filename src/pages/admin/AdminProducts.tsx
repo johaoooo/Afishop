@@ -1,23 +1,33 @@
 import { useEffect, useState } from 'react';
 import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
-import { adminApi } from '../../services/api/modules/admin';
+import { adminApi, type Product } from '../../lib/api';
 import toast from 'react-hot-toast';
 
-const EMPTY_FORM = { name: '', description: '', price: '', category: '', brand: '', image: '', stock: '' };
+interface ProductForm {
+  name: string;
+  description: string;
+  price: string;
+  category: string;
+  brand: string;
+  image: string;
+  stock: string;
+}
+
+const EMPTY_FORM: ProductForm = { name: '', description: '', price: '', category: '', brand: '', image: '', stock: '' };
 
 export function AdminProducts() {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState<ProductForm>(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
     setLoading(true);
     try {
       const data = await adminApi.getProducts();
-      setProducts(data);
+      setProducts(data.products);
     } catch (error: any) {
       toast.error(error.message || 'Erreur lors du chargement des produits');
     } finally {
@@ -33,7 +43,7 @@ export function AdminProducts() {
     setModalOpen(true);
   };
 
-  const openEdit = (p: any) => {
+  const openEdit = (p: Product) => {
     setEditingId(p.id);
     setForm({
       name: p.name, description: p.description, price: String(p.price),
@@ -178,7 +188,7 @@ export function AdminProducts() {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">Image (chemin ou URL)</label>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">Image (URL)</label>
                 <input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="/afi.jpeg" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]" />
               </div>
             </div>

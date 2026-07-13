@@ -1,22 +1,33 @@
 import { useEffect, useState } from 'react';
 import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
-import { adminApi } from '../../services/api/modules/admin';
+import { adminApi, type Training } from '../../lib/api';
 import toast from 'react-hot-toast';
 
-const EMPTY_FORM = { title: '', description: '', duration: '', price: '', image: '', color: '#1a6b3c', modulesText: '' };
+interface TrainingForm {
+  title: string;
+  description: string;
+  duration: string;
+  price: string;
+  image: string;
+  color: string;
+  modulesText: string;
+}
+
+const EMPTY_FORM: TrainingForm = { title: '', description: '', duration: '', price: '', image: '', color: '#1a6b3c', modulesText: '' };
 
 export function AdminTrainings() {
-  const [trainings, setTrainings] = useState<any[]>([]);
+  const [trainings, setTrainings] = useState<Training[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState<TrainingForm>(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
     setLoading(true);
     try {
-      setTrainings(await adminApi.getTrainings());
+      const data = await adminApi.getTrainings();
+      setTrainings(data.trainings);
     } catch (error: any) {
       toast.error(error.message || 'Erreur lors du chargement des formations');
     } finally {
@@ -32,7 +43,7 @@ export function AdminTrainings() {
     setModalOpen(true);
   };
 
-  const openEdit = (t: any) => {
+  const openEdit = (t: Training) => {
     setEditingId(t.id);
     setForm({
       title: t.title, description: t.description, duration: t.duration, price: t.price,
@@ -150,7 +161,7 @@ export function AdminTrainings() {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">Image (chemin ou URL)</label>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">Image (URL)</label>
                 <input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="/afi2.jpeg" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]" />
               </div>
               <div>

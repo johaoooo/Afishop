@@ -8,7 +8,7 @@ import {
   ResponsiveContainer, PieChart, Pie, Cell,
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip
 } from 'recharts';
-import { adminApi } from '../../services/api/modules/admin';
+import { adminApi, type Order, type Product, type AdminUser } from '../../lib/api';
 import toast from 'react-hot-toast';
 
 const STATUS_LABELS: Record<string, string> = {
@@ -31,9 +31,9 @@ const CHART_COLORS = ['#1a6b3c', '#4ade80', '#3b82f6', '#f59e0b', '#ef4444'];
 
 export function AdminDashboardHome() {
   const [loading, setLoading] = useState(true);
-  const [orders, setOrders] = useState<any[]>([]);
-  const [products, setProducts] = useState<any[]>([]);
-  const [users, setUsers] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -43,9 +43,9 @@ export function AdminDashboardHome() {
           adminApi.getProducts(),
           adminApi.getUsers(),
         ]);
-        setOrders(ordersData || []);
-        setProducts(productsData || []);
-        setUsers(usersData || []);
+        setOrders(ordersData.orders || []);
+        setProducts(productsData.products || []);
+        setUsers(usersData.users || []);
       } catch (error: any) {
         toast.error(error.message || 'Erreur lors du chargement');
       } finally {

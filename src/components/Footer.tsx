@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   FiFacebook, 
@@ -12,9 +13,40 @@ import {
   FiSend,
   FiClock
 } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+
+  const handleNewsletter = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+
+    setNewsletterLoading(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Abonné Newsletter',
+          email: newsletterEmail,
+          subject: 'Inscription newsletter',
+          message: 'Nouvelle inscription à la newsletter depuis le footer.',
+        }),
+      });
+
+      if (!response.ok) throw new Error('Erreur');
+
+      toast.success('Inscription réussie ! Merci de votre intérêt 🎉');
+      setNewsletterEmail('');
+    } catch {
+      toast.error('Erreur lors de l\'inscription. Veuillez réessayer.');
+    } finally {
+      setNewsletterLoading(false);
+    }
+  };
 
   return (
     <footer className="bg-[#0d2818] text-white">
@@ -30,17 +62,31 @@ export function Footer() {
                 Recevez nos actualités et offres exclusives
               </p>
             </div>
-            <div className="flex w-full md:w-auto max-w-md">
+            <form onSubmit={handleNewsletter} className="flex w-full md:w-auto max-w-md">
               <input
                 type="email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
                 placeholder="Votre email"
+                required
                 className="flex-1 min-w-0 px-5 py-3 rounded-l-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/50 focus:border-transparent transition-all"
               />
-              <button className="shrink-0 px-4 sm:px-6 py-3 bg-[#1a6b3c] hover:bg-[#14532d] rounded-r-xl transition-colors duration-300 flex items-center gap-2 font-semibold text-sm">
-                <FiSend className="w-4 h-4" />
-                <span className="hidden sm:inline">S'abonner</span>
+              <button
+                type="submit"
+                disabled={newsletterLoading}
+                className="shrink-0 px-4 sm:px-6 py-3 bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 rounded-r-xl transition-colors duration-300 flex items-center gap-2 font-semibold text-sm"
+              >
+                {newsletterLoading ? (
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                ) : (
+                  <FiSend className="w-4 h-4" />
+                )}
+                <span className="hidden sm:inline">{newsletterLoading ? 'Envoi...' : 'S\'abonner'}</span>
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>

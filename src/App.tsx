@@ -15,6 +15,12 @@ import Account from './pages/Account';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import Formations from './pages/Formations';
+import LegalMentions from './pages/LegalMentions';
+import Privacy from './pages/Privacy';
+import CGV from './pages/CGV';
+import Services from './pages/Services';
+import ForgotPassword from './pages/ForgotPassword';
+import Terms from './pages/Terms';
 
 // Admin imports
 import { AdminRoute } from './components/admin/AdminRoute';
@@ -43,10 +49,16 @@ export default function App() {
           <Route path="/contact" element={<Layout><Contact /></Layout>} />
           <Route path="/a-propos" element={<Layout><About /></Layout>} />
           <Route path="/formations" element={<Layout><Formations /></Layout>} />
+          <Route path="/mentions-legales" element={<Layout><LegalMentions /></Layout>} />
+          <Route path="/confidentialite" element={<Layout><Privacy /></Layout>} />
+          <Route path="/cgv" element={<Layout><CGV /></Layout>} />
+          <Route path="/services" element={<Layout><Services /></Layout>} />
+          <Route path="/conditions" element={<Layout><Terms /></Layout>} />
 
           {/* Routes sans Layout (header/footer) */}
           <Route path="/connexion" element={<Login />} />
           <Route path="/inscription" element={<Register />} />
+          <Route path="/mot-passe-oublie" element={<ForgotPassword />} />
 
           {/* Routes Admin */}
           <Route

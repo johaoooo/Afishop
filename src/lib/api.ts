@@ -38,6 +38,7 @@ export interface Order {
   phone?: string;
   createdAt: string;
   OrderItem: OrderItem[];
+  User?: { name: string; email: string };
 }
 
 export interface User {
@@ -194,4 +195,86 @@ export interface Training {
 export const trainingsApi = {
   getAll: () => request<{ count: number; trainings: Training[] }>('/trainings'),
   getById: (id: number | string) => request<{ training: Training }>(`/trainings/${id}`),
+};
+
+// ---- Admin -----------------------------------------------------------
+export interface Message {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string;
+  subject?: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
+}
+
+export interface AdminUser extends User {
+  isActive: boolean;
+  createdAt: string;
+}
+
+export interface DashboardStats {
+  users: number;
+  products: number;
+  orders: number;
+  revenue: number;
+  messages: number;
+  trainings: number;
+}
+
+export const adminApi = {
+  getStats: () => request<DashboardStats>('/admin/stats'),
+
+  getAllOrders: () => request<{ count: number; orders: Order[] }>('/orders/admin/all'),
+
+  updateOrderStatus: (id: number, status: string) =>
+    request<{ order: Order }>(`/orders/${id}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
+    }),
+
+  getProducts: () => request<{ count: number; products: Product[] }>('/products'),
+
+  createProduct: (payload: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) =>
+    request<{ product: Product }>('/products', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  updateProduct: (id: number, payload: Partial<Product>) =>
+    request<{ product: Product }>(`/products/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+
+  deleteProduct: (id: number) =>
+    request<{ message: string }>(`/products/${id}`, { method: 'DELETE' }),
+
+  getUsers: () => request<{ users: AdminUser[] }>('/admin/users'),
+
+  deleteUser: (id: number) =>
+    request<{ message: string }>(`/admin/users/${id}`, { method: 'DELETE' }),
+
+  getTrainings: () => request<{ count: number; trainings: Training[] }>('/trainings'),
+
+  createTraining: (payload: Omit<Training, 'id' | 'createdAt' | 'updatedAt' | 'students'>) =>
+    request<{ training: Training }>('/trainings', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  updateTraining: (id: number, payload: Partial<Training>) =>
+    request<{ training: Training }>(`/trainings/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+
+  deleteTraining: (id: number) =>
+    request<{ message: string }>(`/trainings/${id}`, { method: 'DELETE' }),
+
+  getMessages: () => request<{ messages: Message[] }>('/messages'),
+
+  markMessageAsRead: (id: number) =>
+    request<{ message: Message }>(`/messages/${id}/read`, { method: 'PATCH' }),
 };

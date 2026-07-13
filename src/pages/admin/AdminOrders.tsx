@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { adminApi } from '../../services/api/modules/admin';
+import { adminApi, type Order } from '../../lib/api';
 import toast from 'react-hot-toast';
 
 const STATUSES = ['pending', 'paid', 'shipped', 'delivered', 'cancelled'];
@@ -13,14 +13,15 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export function AdminOrders() {
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
 
   const load = async () => {
     setLoading(true);
     try {
-      setOrders(await adminApi.getAllOrders());
+      const data = await adminApi.getAllOrders();
+      setOrders(data.orders);
     } catch (error: any) {
       toast.error(error.message || 'Erreur lors du chargement des commandes');
     } finally {
@@ -76,7 +77,7 @@ export function AdminOrders() {
                     <p className="text-xs text-gray-400">{o.User?.email}</p>
                   </td>
                   <td className="px-5 py-3 text-gray-600">
-                    {o.OrderItem?.map((item: any) => (
+                    {o.OrderItem?.map((item) => (
                       <p key={item.id} className="text-xs">{item.quantity}× {item.Product?.name}</p>
                     ))}
                   </td>

@@ -94,7 +94,7 @@ export default function ProductDetail() {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-cover hover:scale-105 transition duration-700"
+                className="w-full h-full object-contain p-4 hover:scale-105 transition duration-700"
                 onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/600x600/1a6b3c/ffffff?text=AFI'; }}
               />
             </div>

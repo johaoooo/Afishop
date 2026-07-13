@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { FiTrash2, FiSearch } from 'react-icons/fi';
-import { adminApi } from '../../services/api/modules/admin';
+import { adminApi, type AdminUser } from '../../lib/api';
 import toast from 'react-hot-toast';
 
 export function AdminUsers() {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
@@ -12,7 +12,7 @@ export function AdminUsers() {
     setLoading(true);
     try {
       const data = await adminApi.getUsers();
-      setUsers(data);
+      setUsers(data.users);
     } catch (error: any) {
       toast.error(error.message || 'Erreur lors du chargement des utilisateurs');
     } finally {
