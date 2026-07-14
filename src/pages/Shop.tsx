@@ -16,19 +16,23 @@ const SORT_OPTIONS = [
 ];
 
 const CATEGORIES = [
-  { id: 'sacs-macrame', label: 'Sacs macramé' },
-  { id: 'sandales-macrame', label: 'Sandales macramé' },
-  { id: 'pagnes-tisses', label: 'Pagnes tissés' },
-  { id: 'pagnes-teintes', label: 'Pagnes teintés' },
+  { id: 'sacs', label: 'Sacs macramé' },
+  { id: 'chaussures', label: 'Sandales macramé' },
+  { id: 'pagnes', label: 'Pagnes' },
+  { id: 'accessoires', label: 'Accessoires' },
+  { id: 'tissus', label: 'Tissus' },
+  { id: 'vetements', label: 'Vêtements' },
   { id: 'decoration', label: 'Décoration & Ameublement' },
 ];
 
 const CATEGORY_MAP: Record<string, string[]> = {
-  'sacs-macrame': ['Sacs macramé', 'Sac macramé', 'Macramé'],
-  'sandales-macrame': ['Sandales macramé', 'Sandale macramé', 'Macramé'],
-  'pagnes-tisses': ['Pagnes tissés', 'Pagne tissé', 'Tissé', 'Tissés'],
-  'pagnes-teintes': ['Pagnes teintés', 'Pagne teinté', 'Teinté', 'Teintés'],
-  'decoration': ['Décoration', 'Ameublement', 'Décoration & Ameublement', 'Maison'],
+  'sacs': ['sacs', 'sac'],
+  'chaussures': ['chaussures', 'chaussure', 'sandales', 'sandale'],
+  'pagnes': ['pagnes', 'pagne'],
+  'accessoires': ['accessoires', 'accessoire'],
+  'tissus': ['tissus', 'tissu'],
+  'vetements': ['vêtements', 'vetements', 'vêtement', 'vetement'],
+  'decoration': ['décoration', 'decoration', 'ameublement', 'maison'],
 };
 
 export default function Shop() {
@@ -95,10 +99,21 @@ export default function Shop() {
 
   const CategorySidebar = () => (
     <div className="space-y-1">
+      <button
+        onClick={() => setSelectedCategory('tous')}
+        className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+          selectedCategory === 'tous'
+            ? 'bg-[#1a6b3c] text-white shadow-sm shadow-[#1a6b3c]/20'
+            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+        }`}
+      >
+        <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+        <span className="flex-1 text-left truncate font-bold">Toutes</span>
+        <span className="text-[10px] font-semibold text-gray-400">{products.length}</span>
+      </button>
       {catOpen && CATEGORIES.map((cat) => {
         const isActive = selectedCategory === cat.id;
         const catCount = products.filter((p) => {
-          if (cat.id === 'tous') return true;
           const keywords = CATEGORY_MAP[cat.id] || [];
           return keywords.some(k => p.category?.toLowerCase().includes(k.toLowerCase()));
         }).length;

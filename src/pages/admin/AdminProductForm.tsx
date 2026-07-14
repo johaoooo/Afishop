@@ -16,6 +16,16 @@ interface ProductForm {
 
 const EMPTY_FORM: ProductForm = { name: '', description: '', price: '', category: '', brand: '', image: '', stock: '' };
 
+const CATEGORY_OPTIONS = [
+  { value: 'sacs', label: 'Sacs macramé' },
+  { value: 'chaussures', label: 'Sandales macramé' },
+  { value: 'pagnes', label: 'Pagnes' },
+  { value: 'accessoires', label: 'Accessoires' },
+  { value: 'tissus', label: 'Tissus' },
+  { value: 'vetements', label: 'Vêtements' },
+  { value: 'decoration', label: 'Décoration & Ameublement' },
+];
+
 export function AdminProductForm() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -134,7 +144,12 @@ export function AdminProductForm() {
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-500 mb-1.5">Catégorie</label>
-            <input value={form.category} onChange={(e) => update('category', e.target.value)} placeholder="ex: Sacs macramé" className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
+            <select value={form.category} onChange={(e) => update('category', e.target.value)} className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white">
+              <option value="">Sélectionner une catégorie</option>
+              {CATEGORY_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-500 mb-1.5">Marque</label>
