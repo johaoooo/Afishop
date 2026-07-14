@@ -224,87 +224,97 @@ export default function Formations() {
               <p className="text-gray-400 text-sm mt-2">Revenez plus tard pour découvrir nos formations.</p>
             </div>
           ) : (
-            <div className="space-y-6">
-              {displayTrainings.map((training, index) => (
-                <motion.div
-                  key={training.id}
-                  className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-green-100"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {displayTrainings.map((training, index) => {
+                const accent = training.color || '#1a6b3c';
+                const imgSrc = training.image?.startsWith('/')
+                  ? `http://localhost:5000${training.image}`
+                  : training.image || 'https://placehold.co/600x400/1a6b3c/ffffff?text=AFI';
+
+                return (
+                  <motion.div
+                    key={training.id}
+                    className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
                     {/* Image */}
-                    <div className="md:col-span-1 h-64 md:h-auto relative overflow-hidden">
+                    <div className="relative h-52 overflow-hidden shrink-0">
                       <img
-                        src={training.image || 'https://placehold.co/600x400/1a6b3c/ffffff?text=AFI'}
+                        src={imgSrc}
                         alt={training.title}
-                        className="w-full h-full object-cover hover:scale-105 transition duration-700"
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
                             'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:bg-gradient-to-r md:from-black/30 md:via-transparent md:to-transparent" />
-                      
-                      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-bold text-[#1a6b3c] flex items-center gap-1">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
+                      <div className="absolute top-3 left-3 flex items-center gap-2 text-xs font-bold bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm" style={{ color: accent }}>
                         <FiClock className="w-3 h-3" />
                         {training.duration || '3 mois'}
+                      </div>
+
+                      <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm">
+                        <FiUsers className="w-3 h-3" style={{ color: accent }} />
+                        <span className="text-xs font-bold text-gray-700">{training.students}</span>
                       </div>
                     </div>
 
                     {/* Contenu */}
-                    <div className="md:col-span-2 p-6 md:p-8">
-                      <h2 className="text-2xl md:text-3xl font-black text-gray-800 mb-2">
+                    <div className="flex-1 p-5 flex flex-col">
+                      <h3 className="text-lg font-black text-gray-800 mb-1.5 leading-tight group-hover:opacity-80 transition">
                         {training.title}
-                      </h2>
+                      </h3>
 
-                      <p className="text-gray-600 mb-4 leading-relaxed">{training.description}</p>
+                      <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">
+                        {training.description}
+                      </p>
 
-                      <div className="flex flex-wrap gap-3 mb-4">
-                        <span className="inline-flex items-center gap-1.5 text-xs bg-[#1a6b3c]/10 text-[#1a6b3c] font-semibold px-3 py-1.5 rounded-full">
-                          <FiUsers className="w-3 h-3" />
-                          {training.students || 12} places
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 text-xs bg-amber-50 text-amber-600 font-semibold px-3 py-1.5 rounded-full">
-                          <FiAward className="w-3 h-3" />
-                          {training.price.toLocaleString('fr-FR')} FCFA
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 text-xs bg-blue-50 text-blue-600 font-semibold px-3 py-1.5 rounded-full">
-                          <FiBookOpen className="w-3 h-3" />
-                          {training.modules?.length || 0} modules
-                        </span>
+                      {/* Prix */}
+                      <div className="flex items-center gap-1.5 mb-3">
+                        <FiAward className="w-4 h-4 shrink-0" style={{ color: accent }} />
+                        <span className="text-sm font-bold text-gray-800">{training.price}</span>
                       </div>
 
+                      {/* Modules */}
                       {training.modules && training.modules.length > 0 && (
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">
-                          {training.modules.slice(0, 4).map((detail, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                              <span className="text-[#1a6b3c] font-bold mt-0.5">✦</span>
-                              <span>{detail}</span>
-                            </li>
+                        <div className="space-y-1.5 mb-4">
+                          {training.modules.slice(0, 3).map((mod, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-xs text-gray-500">
+                              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: accent }} />
+                              <span className="truncate">{mod}</span>
+                            </div>
                           ))}
-                          {training.modules.length > 4 && (
-                            <li className="flex items-start gap-2 text-sm text-gray-400">
-                              <span className="text-[#1a6b3c] font-bold mt-0.5">✦</span>
-                              <span>+ {training.modules.length - 4} modules supplémentaires</span>
-                            </li>
+                          {training.modules.length > 3 && (
+                            <div className="flex items-center gap-2 text-xs text-gray-400">
+                              <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-gray-300" />
+                              <span>+{training.modules.length - 3} modules</span>
+                            </div>
                           )}
-                        </ul>
+                        </div>
                       )}
 
-                      <Link
-                        to="/contact"
-                        className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-semibold px-6 py-2.5 rounded-full transition-colors duration-300 text-sm"
-                      >
-                        S'inscrire
-                        <FiArrowRight className="w-4 h-4" />
-                      </Link>
+                      {/* Spacer + CTA */}
+                      <div className="mt-auto">
+                        <Link
+                          to="/contact"
+                          className="inline-flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-full transition-all duration-300 text-sm group/btn"
+                          style={{ backgroundColor: accent }}
+                          onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(0.85)'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.filter = 'none'; }}
+                        >
+                          S'inscrire
+                          <FiArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           )}
         </div>
