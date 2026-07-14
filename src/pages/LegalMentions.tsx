@@ -38,7 +38,7 @@ export default function LegalMentions() {
               <ul className="mt-2 space-y-1">
                 <li><strong>Raison sociale :</strong> AFI Collection SARL</li>
                 <li><strong>Siège social :</strong> Cotonou, Bénin</li>
-                <li><strong>Email :</strong> contact@aficollection.com</li>
+                <li><strong>Email :</strong> afiavitossa@gmail.com</li>
                 <li><strong>Téléphone :</strong> +229 97 00 00 00</li>
               </ul>
             </div>
@@ -73,7 +73,7 @@ export default function LegalMentions() {
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full">
                   <FiMail className="w-4 h-4 text-[#1a6b3c]" />
-                  <span className="text-sm">contact@aficollection.com</span>
+                  <span className="text-sm">afiavitossa@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full">
                   <FiPhone className="w-4 h-4 text-[#1a6b3c]" />

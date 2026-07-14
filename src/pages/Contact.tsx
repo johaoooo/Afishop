@@ -35,7 +35,7 @@ export default function Contact() {
   const contactInfo = [
     { icon: FiMapPin, label: 'Adresse', value: 'Cotonou, Bénin', href: null },
     { icon: FiPhone, label: 'Téléphone', value: '+229 01 96 06 22 87', href: 'tel:+2290196062287' },
-    { icon: FiMail, label: 'Email', value: 'contact@aficollection.com', href: 'mailto:contact@aficollection.com' },
+    { icon: FiMail, label: 'Email', value: 'afiavitossa@gmail.com', href: 'mailto:afiavitossa@gmail.com' },
   ];
 
   return (

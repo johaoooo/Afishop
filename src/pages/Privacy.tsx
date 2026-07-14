@@ -149,7 +149,7 @@ export default function Privacy() {
               </p>
               <div className="mt-3 flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full w-fit">
                 <FiMail className="w-4 h-4 text-[#1a6b3c]" />
-                <span className="text-sm">contact@aficollection.com</span>
+                <span className="text-sm">afiavitossa@gmail.com</span>
               </div>
             </div>
           </div>

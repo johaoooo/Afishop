@@ -103,7 +103,7 @@ export default function Terms() {
                 Pour toute question relative à ces conditions, contactez-nous :
               </p>
               <p className="text-sm">
-                <strong>Email :</strong> contact@aficollection.com
+                <strong>Email :</strong> afiavitossa@gmail.com
               </p>
             </div>
           </div>
