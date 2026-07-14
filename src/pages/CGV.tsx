@@ -122,7 +122,7 @@ export default function CGV() {
               <p>
                 Pour toute question ou réclamation, notre service client est disponible :</p>
               <ul className="mt-2 space-y-1">
-                <li>Par email : afiavitossa@gmail.com</li>
+                <li>Par email : maisonaficollections@gmail.com</li>
                 <li>Par téléphone : +229 97 00 00 00</li>
                 <li>Du lundi au samedi, de 8h à 18h</li>
               </ul>

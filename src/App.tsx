@@ -20,6 +20,7 @@ import Privacy from './pages/Privacy';
 import CGV from './pages/CGV';
 import Services from './pages/Services';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Terms from './pages/Terms';
 
 // Admin imports
@@ -32,6 +33,7 @@ import { AdminOrders } from './pages/admin/AdminOrders';
 import { AdminMessages } from './pages/admin/AdminMessages';
 import { AdminTrainings } from './pages/admin/AdminTrainings';
 import { AdminUsers } from './pages/admin/AdminUsers';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -60,6 +62,7 @@ export default function App() {
           <Route path="/connexion" element={<Login />} />
           <Route path="/inscription" element={<Register />} />
           <Route path="/mot-passe-oublie" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
           {/* Routes Admin */}
           <Route
@@ -79,6 +82,9 @@ export default function App() {
             <Route path="messages" element={<AdminMessages />} />
             <Route path="utilisateurs" element={<AdminUsers />} />
           </Route>
+
+          {/* 404 */}
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </CartProvider>
     </AuthProvider>

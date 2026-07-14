@@ -184,7 +184,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-3 text-white/40 hover:text-white/70 transition-colors duration-300 group">
                 <FiMail className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0 mt-0.5" />
-                <span className="text-sm">afiavitossa@gmail.com</span>
+                <span className="text-sm">maisonaficollections@gmail.com</span>
               </li>
               <li className="flex items-start gap-3 text-white/40 hover:text-white/70 transition-colors duration-300 group">
                 <FiClock className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0 mt-0.5" />
