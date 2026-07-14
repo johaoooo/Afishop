@@ -65,11 +65,8 @@ export function AdminProductForm() {
         await new Promise((resolve) => { script.onload = resolve; });
       }
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/cloudinary/sign`);
-      const { signature, timestamp, cloudName, apiKey } = await res.json();
-
       const ml = window.cloudinary!.createMediaLibrary(
-        { cloud_name: cloudName, api_key: apiKey, timestamp, signature },
+        { cloud_name: 'dzxesa3wi', api_key: '464856446246634' },
         {
           insertHandler: (data) => {
             if (data.assets?.length > 0) {
