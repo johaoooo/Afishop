@@ -224,7 +224,7 @@ export default function Formations() {
               <p className="text-gray-400 text-sm mt-2">Revenez plus tard pour découvrir nos formations.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
               {displayTrainings.map((training, index) => {
                 const accent = training.color || '#1a6b3c';
                 const imgSrc = training.image?.startsWith('/')
@@ -241,7 +241,7 @@ export default function Formations() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
                     {/* Image */}
-                    <div className="relative h-52 overflow-hidden shrink-0">
+                    <div className="relative aspect-[16/9] overflow-hidden shrink-0 bg-gray-100">
                       <img
                         src={imgSrc}
                         alt={training.title}
