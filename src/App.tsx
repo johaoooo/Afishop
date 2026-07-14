@@ -27,6 +27,7 @@ import { AdminRoute } from './components/admin/AdminRoute';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminDashboardHome } from './pages/admin/AdminDashboardHome';
 import { AdminProducts } from './pages/admin/AdminProducts';
+import { AdminProductForm } from './pages/admin/AdminProductForm';
 import { AdminOrders } from './pages/admin/AdminOrders';
 import { AdminMessages } from './pages/admin/AdminMessages';
 import { AdminTrainings } from './pages/admin/AdminTrainings';
@@ -71,6 +72,8 @@ export default function App() {
           >
             <Route index element={<AdminDashboardHome />} />
             <Route path="produits" element={<AdminProducts />} />
+            <Route path="produits/nouveau" element={<AdminProductForm />} />
+            <Route path="produits/:id/modifier" element={<AdminProductForm />} />
             <Route path="commandes" element={<AdminOrders />} />
             <Route path="formations" element={<AdminTrainings />} />
             <Route path="messages" element={<AdminMessages />} />
