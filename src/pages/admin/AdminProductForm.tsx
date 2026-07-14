@@ -1,18 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FiImage, FiArrowLeft, FiSave } from 'react-icons/fi';
+import { FiUpload, FiArrowLeft, FiSave } from 'react-icons/fi';
 import { adminApi, type Product } from '../../lib/api';
 import toast from 'react-hot-toast';
-
-declare global {
-  interface Window {
-    cloudinary?: {
-      createMediaLibrary: (config: Record<string, unknown>, options: { insertHandler: (data: { assets: Array<{ secure_url: string; public_id: string }> }) => void }) => {
-        show: () => void;
-      };
-    };
-  }
-}
 
 interface ProductForm {
   name: string;
@@ -33,6 +23,8 @@ export function AdminProductForm() {
   const [form, setForm] = useState<ProductForm>(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(isEdit);
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -54,31 +46,26 @@ export function AdminProductForm() {
       .finally(() => setLoading(false));
   }, [id, navigate]);
 
-  const openCloudinary = useCallback(() => {
-    const scriptId = 'cloudinary-media-library';
-    const loadWidget = async () => {
-      if (!document.getElementById(scriptId)) {
-        const script = document.createElement('script');
-        script.id = scriptId;
-        script.src = 'https://media-library.cloudinary.com/global/all.js';
-        document.head.appendChild(script);
-        await new Promise((resolve) => { script.onload = resolve; });
-      }
-
-      const ml = window.cloudinary!.createMediaLibrary(
-        { cloud_name: 'dzxesa3wi', api_key: '464856446246634' },
-        {
-          insertHandler: (data) => {
-            if (data.assets?.length > 0) {
-              setForm((prev) => ({ ...prev, image: data.assets[0].secure_url }));
-            }
-          },
-        },
-      );
-      ml.show();
-    };
-    loadWidget();
-  }, []);
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${baseUrl}/api/upload`, { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Erreur upload');
+      setForm((prev) => ({ ...prev, image: data.url }));
+      toast.success('Image téléchargée');
+    } catch (err: any) {
+      toast.error(err.message || 'Erreur lors de l\'upload');
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = '';
+    }
+  };
 
   const handleSave = async () => {
     if (!form.name || !form.description || !form.price || !form.category || !form.brand || !form.image) {
@@ -156,9 +143,10 @@ export function AdminProductForm() {
           <div className="col-span-2">
             <label className="block text-xs font-semibold text-gray-500 mb-1.5">Image</label>
             <div className="flex gap-2">
-              <input value={form.image} onChange={(e) => update('image', e.target.value)} placeholder="URL ou sélectionner depuis Cloudinary" className="flex-1 px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
-              <button type="button" onClick={openCloudinary} className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap">
-                <FiImage className="w-4 h-4" /> Cloudinary
+              <input value={form.image} onChange={(e) => update('image', e.target.value)} placeholder="Lien URL de l'image" className="flex-1 px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
+              <input ref={fileRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+              <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap">
+                <FiUpload className="w-4 h-4" /> {uploading ? 'Upload...' : 'Upload'}
               </button>
             </div>
             {form.image && (
