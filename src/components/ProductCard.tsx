@@ -86,6 +86,9 @@ export function ProductCard({ product }: { product: Product }) {
         <h3 className="font-semibold text-gray-800 text-sm line-clamp-1 group-hover:text-[#1a6b3c] transition-colors">
           {product.name}
         </h3>
+        <p className="text-[11px] text-gray-400 mt-1 line-clamp-2 leading-relaxed">
+          {product.description}
+        </p>
         <div className="flex items-center justify-between mt-2">
           <span className="font-bold text-[#1a6b3c] text-sm">
             {product.price.toLocaleString('fr-FR')} FCFA
