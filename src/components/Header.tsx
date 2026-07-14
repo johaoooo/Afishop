@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { 
-  FiShoppingBag, 
+  FiShoppingCart,
   FiMenu, 
   FiX, 
   FiLogOut, 
@@ -99,7 +99,7 @@ export function Header() {
               aria-label="Panier"
               className="relative p-2.5 rounded-full text-gray-500 hover:text-[#1a6b3c] hover:bg-[#1a6b3c]/5 transition-all duration-300 group"
             >
-              <FiShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <FiShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
               {count > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 bg-[#1a6b3c] text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-lg shadow-[#1a6b3c]/25">
                   {count > 99 ? '99+' : count}

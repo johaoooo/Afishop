@@ -1,7 +1,17 @@
-import { useEffect, useState } from 'react';
-import { FiPlus, FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
+import { useEffect, useState, useCallback } from 'react';
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiImage } from 'react-icons/fi';
 import { adminApi, type Product } from '../../lib/api';
 import toast from 'react-hot-toast';
+
+declare global {
+  interface Window {
+    cloudinary?: {
+      createMediaLibrary: (config: Record<string, unknown>, options: { insertHandler: (data: { assets: Array<{ secure_url: string; public_id: string }> }) => void }) => {
+        show: () => void;
+      };
+    };
+  }
+}
 
 interface ProductForm {
   name: string;
@@ -75,6 +85,35 @@ export function AdminProducts() {
       setSaving(false);
     }
   };
+
+  const openCloudinary = useCallback(() => {
+    const scriptId = 'cloudinary-media-library';
+    const loadWidget = async () => {
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.src = 'https://media-library.cloudinary.com/global/all.js';
+        document.head.appendChild(script);
+        await new Promise((resolve) => { script.onload = resolve; });
+      }
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/cloudinary/sign`);
+      const { signature, timestamp, cloudName, apiKey } = await res.json();
+
+      const ml = window.cloudinary!.createMediaLibrary(
+        { cloud_name: cloudName, api_key: apiKey, timestamp, signature },
+        {
+          insertHandler: (data) => {
+            if (data.assets?.length > 0) {
+              setForm((prev) => ({ ...prev, image: data.assets[0].secure_url }));
+            }
+          },
+        },
+      );
+      ml.show();
+    };
+    loadWidget();
+  }, []);
 
   const handleDelete = async (id: number, name: string) => {
     if (!confirm(`Supprimer "${name}" ? Cette action est irréversible.`)) return;
@@ -188,8 +227,16 @@ export function AdminProducts() {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">Image (URL)</label>
-                <input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="/afi.jpeg" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]" />
+                <label className="block text-xs font-semibold text-gray-500 mb-1">Image</label>
+                <div className="flex gap-2">
+                  <input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="URL ou sélectionner depuis Cloudinary" className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]" />
+                  <button type="button" onClick={openCloudinary} className="flex items-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap">
+                    <FiImage className="w-4 h-4" /> Cloudinary
+                  </button>
+                </div>
+                {form.image && (
+                  <img src={form.image} alt="" className="mt-2 h-20 w-20 rounded-lg object-cover border border-gray-200" />
+                )}
               </div>
             </div>
             <div className="px-6 py-4 border-t border-gray-100 flex justify-end gap-3">

@@ -29,7 +29,7 @@ const slides = [
   },
   { 
     id: 2, 
-    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1782907157/meuble_gopyp6.jpg',
+    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1784014275/WhatsApp_Image_2026-07-14_at_08.29.54_rsd6nr.jpg',
     title: 'Artisanat Africain',
     subtitle: 'Authenticité et savoir-faire',
     description: 'Chaque pièce raconte l\'histoire d\'un artisan et de son héritage.',
