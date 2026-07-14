@@ -10,7 +10,7 @@ import {
   FiUsers
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { productsApi, type Product } from '../lib/api';
+import { productsApi, trainingsApi, type Product, type Training } from '../lib/api';
 import { ProductCard } from '../components/ProductCard';
 
 // ============================================================
@@ -234,16 +234,22 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [trainings, setTrainings] = useState<Training[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
   const totalSlides = slides.length;
 
   useEffect(() => {
-    productsApi
-      .getAll()
-      .then((data) => setProducts(data.products.slice(0, 8)))
-      .catch(() => setProducts([]))
+    Promise.all([
+      productsApi.getAll(),
+      trainingsApi.getAll(),
+    ])
+      .then(([pData, tData]) => {
+        setProducts(pData.products.slice(0, 8));
+        setTrainings(tData.trainings || []);
+      })
+      .catch(() => { setProducts([]); setTrainings([]); })
       .finally(() => setLoading(false));
   }, []);
 
@@ -520,9 +526,97 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 5: PARTENAIRES */}
+      {/* SECTION 5: FORMATIONS */}
       {/* ============================================================ */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-100">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5]">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
+          <motion.div 
+            className="text-center mb-8 sm:mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
+              CFP Dorcas
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-800 mt-1 sm:mt-2 tracking-tight">
+              Nos <span className="text-[#1a6b3c]">formations</span>
+            </h2>
+            <p className="text-gray-400 mt-1 text-sm max-w-lg mx-auto">
+              Développez vos compétences artisanales avec nos formations professionnelles
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {trainings.slice(0, 4).map((t, index) => {
+              const accent = t.color || '#1a6b3c';
+              const imgSrc = t.image?.startsWith('/')
+                ? `http://localhost:5000${t.image}`
+                : t.image || 'https://placehold.co/600x400/1a6b3c/ffffff?text=AFI';
+              return (
+                <motion.div
+                  key={t.id}
+                  className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-400 border border-gray-100 flex flex-col"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: Math.min(index * 0.08, 0.4) }}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                    <img
+                      src={imgSrc}
+                      alt={t.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 text-[10px] font-bold shadow-sm" style={{ color: accent }}>
+                      {t.duration || '3 mois'}
+                    </div>
+                  </div>
+                  <div className="p-4 flex-1 flex flex-col">
+                    <h3 className="text-sm font-black text-gray-800 mb-1 leading-tight">{t.title}</h3>
+                    <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-3 flex-1">{t.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-gray-700">{t.price}</span>
+                      <span className="text-[10px] text-gray-400 font-medium">{t.students} étudiants</span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <motion.div 
+            className="text-center mt-8 sm:mt-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <Link 
+              to="/formations" 
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#1a6b3c] hover:text-[#14532d] group"
+            >
+              <span className="relative">
+                Voir toutes nos formations
+                <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-[#1a6b3c] group-hover:w-full transition-all duration-300" />
+              </span>
+              <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* SECTION 6: PARTENAIRES */}
+      {/* ============================================================ */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-white border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
           <motion.div
             className="text-center mb-10 sm:mb-14"
@@ -571,7 +665,7 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 6: CTA FINAL */}
+      {/* SECTION 7: CTA FINAL */}
       {/* ============================================================ */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
