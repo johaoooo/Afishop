@@ -23,8 +23,12 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="text-center"
           >
-            <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
-              <span className="text-3xl font-black text-white">AFI</span>
+            <div className="w-32 h-32 flex items-center justify-center mx-auto mb-4">
+              <img
+                src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png"
+                alt="AFI Collection"
+                className="w-full h-auto object-contain"
+              />
             </div>
             <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
               AFI Collection
