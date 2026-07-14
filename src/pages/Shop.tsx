@@ -17,23 +17,29 @@ const SORT_OPTIONS = [
 ];
 
 const CATEGORIES = [
-  { id: 'sacs', label: 'Sacs macramé' },
-  { id: 'chaussures', label: 'Sandales macramé' },
-  { id: 'pagnes', label: 'Pagnes' },
-  { id: 'accessoires', label: 'Accessoires' },
-  { id: 'tissus', label: 'Tissus' },
-  { id: 'vetements', label: 'Vêtements' },
-  { id: 'decoration', label: 'Décoration & Ameublement' },
+  { id: 'sac-macrame', label: 'Sac Macramé' },
+  { id: 'sandale-macrame', label: 'Sandale Macramé' },
+  { id: 'tricotage', label: 'Tricotage' },
+  { id: 'agroalimentaire', label: 'Agroalimentaire' },
+  { id: 'decoration', label: 'Décoration' },
+  { id: 'ameublement', label: 'Ameublement' },
+  { id: 'teinture-pagne', label: 'Teinture de Pagne' },
+  { id: 'tissage-pagne', label: 'Tissage de Pagne' },
+  { id: 'mode-accessoires', label: 'Mode et Accessoires' },
+  { id: 'couture', label: 'Couture' },
 ];
 
 const CATEGORY_MAP: Record<string, string[]> = {
-  'sacs': ['sacs', 'sac'],
-  'chaussures': ['chaussures', 'chaussure', 'sandales', 'sandale'],
-  'pagnes': ['pagnes', 'pagne'],
-  'accessoires': ['accessoires', 'accessoire'],
-  'tissus': ['tissus', 'tissu'],
-  'vetements': ['vêtements', 'vetements', 'vêtement', 'vetement'],
-  'decoration': ['décoration', 'decoration', 'ameublement', 'maison'],
+  'sac-macrame': ['sac', 'macramé', 'macrame'],
+  'sandale-macrame': ['sandale', 'macramé', 'macrame'],
+  'tricotage': ['tricotage', 'tricot'],
+  'agroalimentaire': ['agroalimentaire', 'alimentaire'],
+  'decoration': ['décoration', 'decoration'],
+  'ameublement': ['ameublement', 'ameubleument', 'meuble'],
+  'teinture-pagne': ['teinture', 'pagne'],
+  'tissage-pagne': ['tissage', 'pagne'],
+  'mode-accessoires': ['mode', 'accessoires', 'accessoire'],
+  'couture': ['couture'],
 };
 
 export default function Shop() {

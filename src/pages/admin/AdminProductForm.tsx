@@ -17,13 +17,16 @@ interface ProductForm {
 const EMPTY_FORM: ProductForm = { name: '', description: '', price: '', category: '', brand: '', image: '', stock: '' };
 
 const CATEGORY_OPTIONS = [
-  { value: 'sacs', label: 'Sacs macramé' },
-  { value: 'chaussures', label: 'Sandales macramé' },
-  { value: 'pagnes', label: 'Pagnes' },
-  { value: 'accessoires', label: 'Accessoires' },
-  { value: 'tissus', label: 'Tissus' },
-  { value: 'vetements', label: 'Vêtements' },
-  { value: 'decoration', label: 'Décoration & Ameublement' },
+  { value: 'sac-macrame', label: 'Sac Macramé' },
+  { value: 'sandale-macrame', label: 'Sandale Macramé' },
+  { value: 'tricotage', label: 'Tricotage' },
+  { value: 'agroalimentaire', label: 'Agroalimentaire' },
+  { value: 'decoration', label: 'Décoration' },
+  { value: 'ameublement', label: 'Ameublement' },
+  { value: 'teinture-pagne', label: 'Teinture de Pagne' },
+  { value: 'tissage-pagne', label: 'Tissage de Pagne' },
+  { value: 'mode-accessoires', label: 'Mode et Accessoires' },
+  { value: 'couture', label: 'Couture' },
 ];
 
 export function AdminProductForm() {
