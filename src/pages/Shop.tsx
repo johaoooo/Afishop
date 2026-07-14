@@ -224,8 +224,8 @@ export default function Shop() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex gap-8 items-start">
           {/* ===== SIDEBAR FILTRES (DESKTOP) ===== */}
-          <aside className="hidden lg:block w-44 shrink-0 self-start">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3 sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto">
+          <aside className="hidden lg:block w-44 shrink-0 sticky top-28 self-start max-h-[calc(100vh-8rem)] overflow-y-auto">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3">
               <div className="flex items-center gap-2 mb-3 pb-3 border-b border-gray-100">
                 <FiFilter className="w-3.5 h-3.5 text-[#1a6b3c]" />
                 <span className="font-bold text-gray-800 text-xs uppercase tracking-wider">
