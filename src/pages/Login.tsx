@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
@@ -60,6 +61,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex">
+      <SEO title="Connexion" description="Connectez-vous à votre compte AFI Collection pour gérer vos commandes et votre profil." />
       <div className="hidden lg:flex lg:w-[55%] relative flex-col bg-gray-950 overflow-hidden">
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563931/slide01_gwdcug.png"

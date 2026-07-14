@@ -116,9 +116,13 @@ export const authApi = {
 
 // ---- Produits ---------------------------------------------------------
 export const productsApi = {
-  getAll: (filters?: { category?: string; brand?: string; search?: string }) => {
-    const params = new URLSearchParams(filters as Record<string, string>).toString();
-    return request<{ count: number; products: Product[] }>(`/products${params ? `?${params}` : ''}`);
+  getAll: (filters?: { category?: string; brand?: string; search?: string; page?: number; limit?: number }) => {
+    const params = new URLSearchParams();
+    if (filters) {
+      Object.entries(filters).forEach(([k, v]) => { if (v !== undefined && v !== '') params.set(k, String(v)); });
+    }
+    const qs = params.toString();
+    return request<{ count: number; total: number; page: number; totalPages: number; products: Product[] }>(`/products${qs ? `?${qs}` : ''}`);
   },
 
   getById: (id: number | string) => request<{ product: Product }>(`/products/${id}`),

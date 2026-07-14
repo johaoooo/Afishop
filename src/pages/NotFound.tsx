@@ -1,9 +1,11 @@
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import { FiHome, FiArrowLeft } from 'react-icons/fi';
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center px-6">
+      <SEO title="Page introuvable" description="La page que vous cherchez n'existe pas ou a été déplacée." />
       <div className="text-center max-w-md">
         <div className="text-8xl font-black text-[#1a6b3c]/10 mb-4 select-none">404</div>
         <h1 className="text-3xl font-black text-gray-800 mb-2">Page introuvable</h1>

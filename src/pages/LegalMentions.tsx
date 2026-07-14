@@ -1,9 +1,11 @@
+import SEO from '../components/SEO';
 import { motion } from 'framer-motion';
 import { FiShield, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 
 export default function LegalMentions() {
   return (
     <div className="bg-[#faf8f5] min-h-screen">
+      <SEO title="Mentions Légales" description="Mentions légales d'AFI Collection, boutique artisanale basée au Bénin." />
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',

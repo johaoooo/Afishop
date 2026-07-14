@@ -1,6 +1,7 @@
+import SEO from '../components/SEO';
 import { useEffect, useState, useRef } from 'react';
 import { 
-  FiSearch, FiGrid, FiList, FiChevronDown,
+  FiSearch, FiGrid, FiList, FiChevronDown, FiChevronLeft, FiChevronRight,
   FiTag, FiArrowUp, FiArrowDown, FiX, FiFilter
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
@@ -44,6 +45,8 @@ export default function Shop() {
   const [sortBy, setSortBy] = useState('newest');
   const [sortOpen, setSortOpen] = useState(false);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const perPage = 9;
   const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,6 +94,11 @@ export default function Shop() {
       default: return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
     }
   });
+
+  const totalPages = Math.max(1, Math.ceil(sorted.length / perPage));
+  const paginated = sorted.slice((page - 1) * perPage, page * perPage);
+
+  useEffect(() => { setPage(1); }, [selectedCategory, search, sortBy]);
 
   const currentSort = SORT_OPTIONS.find(o => o.value === sortBy) || SORT_OPTIONS[0];
   const selectedCat = CATEGORIES.find(c => c.id === selectedCategory);
@@ -143,6 +151,7 @@ export default function Shop() {
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen">
+      <SEO title="Boutique" description="Explorez notre collection de sacs macramé, sandales, pagnes, accessoires, tissus et vêtements africains fabriqués à la main au Bénin." />
       {/* ===== HERO ===== */}
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-16 md:py-20 overflow-hidden">
         <img
@@ -354,7 +363,7 @@ export default function Shop() {
                   </div>
                 ))}
               </div>
-            ) : sorted.length === 0 ? (
+            ) : paginated.length === 0 ? (
               <motion.div
                 className="bg-white rounded-2xl shadow-sm border border-gray-100 p-16 text-center"
                 initial={{ opacity: 0, y: 20 }}
@@ -379,7 +388,7 @@ export default function Shop() {
                   ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'
                   : 'grid-cols-1 gap-4'
               }`}>
-                {sorted.map((p, index) => (
+                {paginated.map((p, index) => (
                   <motion.div
                     key={p.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -392,6 +401,38 @@ export default function Shop() {
               </div>
             )}
           </div>
+
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-10">
+              <button
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="p-2 rounded-lg border border-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 transition"
+              >
+                <FiChevronLeft size={18} />
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`w-10 h-10 rounded-lg text-sm font-medium transition ${
+                    p === page
+                      ? 'bg-indigo-600 text-white'
+                      : 'border border-gray-300 hover:bg-gray-100'
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+              <button
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="p-2 rounded-lg border border-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-100 transition"
+              >
+                <FiChevronRight size={18} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

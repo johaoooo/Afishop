@@ -1,9 +1,11 @@
+import SEO from '../components/SEO';
 import { motion } from 'framer-motion';
 import { FiCheckCircle, FiShield, FiAlertCircle } from 'react-icons/fi';
 
 export default function Terms() {
   return (
     <div className="bg-[#faf8f5] min-h-screen">
+      <SEO title="Conditions d'Utilisation" description="Conditions d'utilisation d'AFI Collection. Règles et obligations pour l'utilisation de notre boutique en ligne." />
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',

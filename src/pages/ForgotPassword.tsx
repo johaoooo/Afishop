@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail, FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
@@ -40,6 +41,7 @@ export default function ForgotPassword() {
 
   return (
     <div className="min-h-screen flex">
+      <SEO title="Mot de passe oublié" description="Réinitialisez votre mot de passe AFI Collection." />
       <div className="hidden lg:flex lg:w-[55%] relative flex-col bg-gray-950 overflow-hidden">
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783254004/tactt_eoh8nc.jpg"

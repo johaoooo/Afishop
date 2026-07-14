@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { FiHeart, FiUsers, FiAward, FiEye, FiArrowRight, FiMapPin, FiCalendar, FiCheckCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -12,6 +13,7 @@ export default function About() {
 
   return (
     <div className="bg-[#faf8f5] min-h-screen">
+      <SEO title="À Propos" description="Découvrez l'histoire d'AFI Collection, notre mission de valoriser l'artisanat béninois et notre communauté d'artisans talentueux." />
       {/* ===== HERO ===== */}
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 

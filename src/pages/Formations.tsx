@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -66,6 +67,7 @@ export default function Formations() {
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen">
+      <SEO title="Formations" description="Découvrez nos formations artisanales : macramé, tissage, fabrication de sandales et bien plus. Apprenez un métier d'art au Bénin avec AFI Collection." />
       {/* ===== HERO ===== */}
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
         {/* Image de fond */}

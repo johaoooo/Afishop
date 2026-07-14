@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FiLock, FiEye, FiEyeOff, FiCheckCircle, FiArrowLeft } from 'react-icons/fi';
@@ -69,6 +70,7 @@ export default function ResetPassword() {
 
   return (
     <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center px-6">
+      <SEO title="Réinitialisation mot de passe" description="Réinitialisez votre mot de passe AFI Collection." />
       <div className="w-full max-w-sm">
         <Link to="/connexion" className="inline-flex items-center gap-2 text-gray-400 hover:text-[#1a6b3c] text-sm font-medium transition-colors mb-8 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour à la connexion

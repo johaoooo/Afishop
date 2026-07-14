@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { Layout } from './components/Layout';
+import PageTransition from './components/PageTransition';
 
 import Home from './pages/Home';
 import Shop from './pages/Shop';
@@ -43,26 +44,26 @@ export default function App() {
         
         <Routes>
           {/* Routes avec Layout (header + footer) */}
-          <Route path="/" element={<Layout><Home /></Layout>} />
-          <Route path="/boutique" element={<Layout><Shop /></Layout>} />
-          <Route path="/produit/:id" element={<Layout><ProductDetail /></Layout>} />
-          <Route path="/panier" element={<Layout><Cart /></Layout>} />
-          <Route path="/validation-commande" element={<Layout><Checkout /></Layout>} />
-          <Route path="/mon-compte" element={<Layout><Account /></Layout>} />
-          <Route path="/contact" element={<Layout><Contact /></Layout>} />
-          <Route path="/a-propos" element={<Layout><About /></Layout>} />
-          <Route path="/formations" element={<Layout><Formations /></Layout>} />
-          <Route path="/mentions-legales" element={<Layout><LegalMentions /></Layout>} />
-          <Route path="/confidentialite" element={<Layout><Privacy /></Layout>} />
-          <Route path="/cgv" element={<Layout><CGV /></Layout>} />
-          <Route path="/services" element={<Layout><Services /></Layout>} />
-          <Route path="/conditions" element={<Layout><Terms /></Layout>} />
+          <Route path="/" element={<Layout><PageTransition><Home /></PageTransition></Layout>} />
+          <Route path="/boutique" element={<Layout><PageTransition><Shop /></PageTransition></Layout>} />
+          <Route path="/produit/:id" element={<Layout><PageTransition><ProductDetail /></PageTransition></Layout>} />
+          <Route path="/panier" element={<Layout><PageTransition><Cart /></PageTransition></Layout>} />
+          <Route path="/validation-commande" element={<Layout><PageTransition><Checkout /></PageTransition></Layout>} />
+          <Route path="/mon-compte" element={<Layout><PageTransition><Account /></PageTransition></Layout>} />
+          <Route path="/contact" element={<Layout><PageTransition><Contact /></PageTransition></Layout>} />
+          <Route path="/a-propos" element={<Layout><PageTransition><About /></PageTransition></Layout>} />
+          <Route path="/formations" element={<Layout><PageTransition><Formations /></PageTransition></Layout>} />
+          <Route path="/mentions-legales" element={<Layout><PageTransition><LegalMentions /></PageTransition></Layout>} />
+          <Route path="/confidentialite" element={<Layout><PageTransition><Privacy /></PageTransition></Layout>} />
+          <Route path="/cgv" element={<Layout><PageTransition><CGV /></PageTransition></Layout>} />
+          <Route path="/services" element={<Layout><PageTransition><Services /></PageTransition></Layout>} />
+          <Route path="/conditions" element={<Layout><PageTransition><Terms /></PageTransition></Layout>} />
 
           {/* Routes sans Layout (header/footer) */}
-          <Route path="/connexion" element={<Login />} />
-          <Route path="/inscription" element={<Register />} />
-          <Route path="/mot-passe-oublie" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/connexion" element={<PageTransition><Login /></PageTransition>} />
+          <Route path="/inscription" element={<PageTransition><Register /></PageTransition>} />
+          <Route path="/mot-passe-oublie" element={<PageTransition><ForgotPassword /></PageTransition>} />
+          <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
 
           {/* Routes Admin */}
           <Route
@@ -84,7 +85,7 @@ export default function App() {
           </Route>
 
           {/* 404 */}
-          <Route path="*" element={<Layout><NotFound /></Layout>} />
+          <Route path="*" element={<Layout><PageTransition><NotFound /></PageTransition></Layout>} />
         </Routes>
       </CartProvider>
     </AuthProvider>

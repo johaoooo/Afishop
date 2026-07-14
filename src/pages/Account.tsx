@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useEffect, useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import {
@@ -343,6 +344,7 @@ export default function Account() {
 
   return (
     <div className="bg-[#faf8f5] min-h-screen">
+      <SEO title="Mon Compte" description="Gérez vos commandes, votre profil et vos informations personnelles sur AFI Collection." />
       <div className="container mx-auto px-6 md:px-12 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Sidebar */}

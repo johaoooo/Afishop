@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -262,6 +263,10 @@ export default function Home() {
 
   return (
     <div className="bg-[#faf8f5]">
+      <SEO
+        title="Boutique Artisanale"
+        description="Découvrez AFI Collection, votre boutique artisanale de sacs macramé, sandales, pagnes, accessoires et tissus africains. Livraison 48h au Bénin."
+      />
       
       {/* ============================================================ */}
       {/* HERO */}

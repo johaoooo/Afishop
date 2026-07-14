@@ -1,9 +1,11 @@
+import SEO from '../components/SEO';
 import { motion } from 'framer-motion';
 import { FiFileText, FiShoppingBag, FiRefreshCw, FiCreditCard, FiTruck } from 'react-icons/fi';
 
 export default function CGV() {
   return (
     <div className="bg-[#faf8f5] min-h-screen">
+      <SEO title="Conditions Générales de Vente" description="Conditions générales de vente d'AFI Collection. Informations sur les commandes, livraisons et retours." />
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',

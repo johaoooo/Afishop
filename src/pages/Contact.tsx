@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FiMail, FiMapPin, FiPhone, FiSend, FiCheckCircle, FiArrowRight } from 'react-icons/fi';
@@ -40,6 +41,7 @@ export default function Contact() {
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen">
+      <SEO title="Contact" description="Contactez AFI Collection pour toute question sur nos produits artisanaux, commandes personnalisées ou partenariats." />
       {/* ===== HERO ===== */}
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 

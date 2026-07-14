@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
@@ -62,6 +63,7 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex">
+      <SEO title="Inscription" description="Créez votre compte AFI Collection pour passer commande et suivre vos achats." />
       {/* ===== PANEL GAUCHE - IMAGE ===== */}
       <div className="hidden lg:flex lg:w-[55%] relative flex-col bg-gray-950 overflow-hidden">
         <img

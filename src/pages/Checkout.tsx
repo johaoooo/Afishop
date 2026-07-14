@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiArrowLeft, FiTruck, FiShield, FiLoader, FiRefreshCw } from 'react-icons/fi';
@@ -204,6 +205,7 @@ export default function Checkout() {
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen py-12">
+      <SEO title="Validation de commande" description="Finalisez votre commande AFI Collection. Livraison rapide et paiement sécurisé au Bénin." />
       <div className="container mx-auto px-6 md:px-12 max-w-5xl">
         <Link to="/panier" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1a6b3c] mb-6 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour au panier

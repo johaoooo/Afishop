@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
 import { motion } from 'framer-motion';
@@ -10,6 +11,7 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <div className="bg-[#f5f8f5] min-h-screen py-16">
+        <SEO title="Panier" description="Votre panier AFI Collection est vide. Parcourez notre boutique artisanale." />
         <div className="container mx-auto px-6 md:px-12">
           <motion.div 
             className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-16 text-center border border-green-100 max-w-lg mx-auto"
@@ -36,6 +38,7 @@ export default function Cart() {
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen py-12">
+      <SEO title="Panier" description="Consultez votre panier AFI Collection et finalisez votre commande d'articles artisanaux." />
       <div className="container mx-auto px-6 md:px-12">
         <Link to="/boutique" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1a6b3c] mb-6 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Continuer mes achats
