@@ -50,8 +50,8 @@ const slides = [
 
 const statsData = [
   { key: 'clients', value: 500, suffix: '+', icon: FiUsers, label: 'Clients satisfaits' },
-  { key: 'products', value: 150, suffix: '+', icon: FiShoppingBag, label: 'Produits uniques' },
-  { key: 'artisans', value: 50, suffix: '+', icon: FiAward, label: 'Artisans partenaires' },
+  { key: 'products', value: 500, suffix: '+', icon: FiShoppingBag, label: 'Produits uniques' },
+  { key: 'artisans', value: 2000, suffix: '+', icon: FiAward, label: 'Artisans partenaires' },
   { key: 'satisfaction', value: 98, suffix: '%', icon: FiStar, label: 'Taux de satisfaction' },
 ];
 
@@ -71,7 +71,7 @@ const advantages = [
   { 
     icon: FiTruck, 
     title: 'Livraison 48h', 
-    text: 'Expédition rapide sur Cotonou, Abidjan, Dakar et toute l\'Afrique.',
+    text: 'Expédition rapide sur Abomey-Calavi, Abidjan, Dakar et toute l\'Afrique.',
     bg: 'bg-blue-50',
     color: 'text-blue-600',
     delay: 0.2

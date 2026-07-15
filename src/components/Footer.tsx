@@ -176,7 +176,7 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-white/40 hover:text-white/70 transition-colors duration-300 group">
                 <FiMapPin className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0 mt-0.5" />
-                <span className="text-sm">Cotonou, Bénin</span>
+                <span className="text-sm">Abomey-Calavi, Bénin</span>
               </li>
               <li className="flex items-start gap-3 text-white/40 hover:text-white/70 transition-colors duration-300 group">
                 <FiPhone className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0 mt-0.5" />
@@ -244,7 +244,7 @@ export function Footer() {
           <div className="flex items-center gap-4 text-white/20 text-xs">
             <span>Artisanat béninois</span>
             <span className="w-px h-3 bg-white/10" />
-            <span>Made with <FiHeart className="w-3 h-3 inline text-[#4ade80]/30" /> in Cotonou</span>
+            <span>Made with <FiHeart className="w-3 h-3 inline text-[#4ade80]/30" /> in Abomey-Calavi</span>
           </div>
         </div>
       </div>

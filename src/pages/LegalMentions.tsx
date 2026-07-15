@@ -39,7 +39,7 @@ export default function LegalMentions() {
               <p>Le site <strong className="text-[#1a6b3c]">AFI Collection</strong> est édité par :</p>
               <ul className="mt-2 space-y-1">
                 <li><strong>Raison sociale :</strong> AFI Collection SARL</li>
-                <li><strong>Siège social :</strong> Cotonou, Bénin</li>
+                <li><strong>Siège social :</strong> Abomey-Calavi, Bénin</li>
                 <li><strong>Email :</strong> maisonaficollections@gmail.com</li>
                 <li><strong>Téléphone :</strong> +229 97 00 00 00</li>
               </ul>
@@ -83,7 +83,7 @@ export default function LegalMentions() {
                 </div>
                 <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full">
                   <FiMapPin className="w-4 h-4 text-[#1a6b3c]" />
-                  <span className="text-sm">Cotonou, Bénin</span>
+                  <span className="text-sm">Abomey-Calavi, Bénin</span>
                 </div>
               </div>
             </div>

@@ -123,7 +123,7 @@ export default function Register() {
             </ul>
           </div>
 
-          <p className="text-white/25 text-xs">© {new Date().getFullYear()} AFI Collection · Cotonou, Bénin</p>
+          <p className="text-white/25 text-xs">© {new Date().getFullYear()} AFI Collection · Abomey-Calavi, Bénin</p>
         </div>
       </div>
 

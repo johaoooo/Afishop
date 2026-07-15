@@ -135,7 +135,7 @@ export default function Formations() {
               <div className="flex flex-wrap gap-4 mt-6">
                 <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full">
                   <FiMapPin className="w-4 h-4 text-[#1a6b3c]" />
-                  <span className="text-sm text-gray-600">Cotonou, Bénin</span>
+                  <span className="text-sm text-gray-600">Abomey-Calavi, Bénin</span>
                 </div>
                 <div className="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-full">
                   <FiCalendar className="w-4 h-4 text-[#1a6b3c]" />

@@ -239,7 +239,7 @@ export default function Checkout() {
                   required
                   value={address.street}
                   onChange={(e) => setAddress({ ...address, street: e.target.value })}
-                  placeholder="Ex: Avenue Jean-Paul II, Cotonou"
+                  placeholder="Ex: Avenue Jean-Paul II, Abomey-Calavi"
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
                 />
               </div>
@@ -254,7 +254,7 @@ export default function Checkout() {
                     required
                     value={address.city}
                     onChange={(e) => setAddress({ ...address, city: e.target.value })}
-                    placeholder="Cotonou"
+                    placeholder="Abomey-Calavi"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
                   />
                 </div>

@@ -100,7 +100,7 @@ export default function CGV() {
               </h2>
               <p>
                 Les commandes sont livrées à l'adresse indiquée par le client lors de la commande. 
-                Les délais de livraison sont de 24 à 48 heures pour Cotonou et de 3 à 7 jours 
+                Les délais de livraison sont de 24 à 48 heures pour Abomey-Calavi et de 3 à 7 jours 
                 pour les autres villes du Bénin. AFI Collection ne saurait être tenue responsable 
                 des retards indépendants de sa volonté.
               </p>

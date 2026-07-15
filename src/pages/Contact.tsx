@@ -34,7 +34,7 @@ export default function Contact() {
   };
 
   const contactInfo = [
-    { icon: FiMapPin, label: 'Adresse', value: 'Cotonou, Bénin', href: null },
+    { icon: FiMapPin, label: 'Adresse', value: 'Abomey-Calavi, Bénin', href: null },
     { icon: FiPhone, label: 'Téléphone', value: '+229 01 96 06 22 87', href: 'tel:+2290196062287' },
     { icon: FiMail, label: 'Email', value: 'maisonaficollections@gmail.com', href: 'mailto:maisonaficollections@gmail.com' },
   ];

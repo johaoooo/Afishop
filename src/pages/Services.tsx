@@ -6,7 +6,7 @@ import { FiArrowRight } from 'react-icons/fi';
 
 export default function Services() {
   const services = [
-    { icon: FiTruck, title: 'Livraison rapide', desc: 'Livraison en 24-48h à Cotonou et 3-7 jours dans tout le Bénin. Suivi de commande en temps réel.' },
+    { icon: FiTruck, title: 'Livraison rapide', desc: 'Livraison en 24-48h à Abomey-Calavi et 3-7 jours dans tout le Bénin. Suivi de commande en temps réel.' },
     { icon: FiPackage, title: 'Emballage soigné', desc: 'Chaque produit est emballé avec soin dans un écrin aux couleurs d\'AFI Collection.' },
     { icon: FiRefreshCw, title: 'Retours faciles', desc: 'Vous disposez de 7 jours pour retourner un produit qui ne vous conviendrait pas.' },
     { icon: FiHeadphones, title: 'Service client', desc: 'Notre équipe est disponible du lundi au samedi pour répondre à toutes vos questions.' },

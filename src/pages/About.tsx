@@ -58,7 +58,7 @@ export default function About() {
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>
                   <strong className="text-[#1a6b3c]">AFI Collection</strong> est née d'une conviction profonde : 
-                  l'artisanat africain mérite d'être célébré et valorisé. Fondée à Cotonou, notre entreprise 
+                  l'artisanat africain mérite d'être célébré et valorisé. Fondée à Abomey-Calavi, notre entreprise 
                   s'est donné pour mission de mettre en lumière le savoir-faire exceptionnel des artisans 
                   béninois.
                 </p>
@@ -68,7 +68,7 @@ export default function About() {
                   d'une culture riche et vibrante.
                 </p>
                 <p>
-                  Aujourd'hui, nous collaborons avec plus de <strong className="text-[#1a6b3c]">50 artisans</strong> 
+                  Aujourd'hui, nous collaborons avec <strong className="text-[#1a6b3c]">des milliers d'artisans</strong> 
                   à travers tout le Bénin, et nous sommes fiers de proposer des créations uniques qui allient 
                   tradition et modernité.
                 </p>
@@ -76,7 +76,7 @@ export default function About() {
               <div className="flex flex-wrap gap-4 mt-6">
                 <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full">
                   <FiMapPin className="w-4 h-4 text-[#1a6b3c]" />
-                  <span className="text-sm text-gray-600">Cotonou, Bénin</span>
+                  <span className="text-sm text-gray-600">Abomey-Calavi, Bénin</span>
                 </div>
                 <div className="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-full">
                   <FiCalendar className="w-4 h-4 text-[#1a6b3c]" />

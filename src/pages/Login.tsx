@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 
 const features = [
   { icon: FiCheckCircle, text: 'Authentification sécurisée par JWT' },
-  { icon: FiCheckCircle, text: 'Suivi de livraison en 48h sur Cotonou' },
+  { icon: FiCheckCircle, text: 'Suivi de livraison en 48h sur Abomey-Calavi' },
   { icon: FiCheckCircle, text: 'Paiements mobiles & cartes sécurisés' },
 ];
 
@@ -123,7 +123,7 @@ export default function Login() {
             </ul>
           </div>
 
-          <p className="text-white/25 text-xs">© {new Date().getFullYear()} AFI Collection · Cotonou, Bénin</p>
+          <p className="text-white/25 text-xs">© {new Date().getFullYear()} AFI Collection · Abomey-Calavi, Bénin</p>
         </div>
       </div>
 
