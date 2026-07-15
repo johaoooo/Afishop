@@ -51,7 +51,7 @@ const slides = [
 const statsData = [
   { key: 'clients', value: 500, suffix: '+', icon: FiUsers, label: 'Clients satisfaits' },
   { key: 'products', value: 500, suffix: '+', icon: FiShoppingBag, label: 'Produits uniques' },
-  { key: 'artisans', value: 2000, suffix: '+', icon: FiAward, label: 'Artisans partenaires' },
+  { key: 'artisans', value: 1000, suffix: '+', icon: FiAward, label: 'Artisans partenaires' },
   { key: 'satisfaction', value: 98, suffix: '%', icon: FiStar, label: 'Taux de satisfaction' },
 ];
 
