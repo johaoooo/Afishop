@@ -1,60 +1,42 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
-  const [show, setShow] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShow(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    const start = Date.now();
+    const duration = 2000;
+    const update = () => {
+      const elapsed = Date.now() - start;
+      const pct = Math.min(elapsed / duration, 1);
+      setProgress(pct);
+      if (pct < 1) requestAnimationFrame(update);
+      else onFinish();
+    };
+    const raf = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(raf);
+  }, [onFinish]);
 
   return (
-    <AnimatePresence onExitComplete={onFinish}>
-      {show && (
-        <motion.div
-          className="fixed inset-0 z-[9999] bg-[#0d2818] flex flex-col items-center justify-center"
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: 'easeInOut' }}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="text-center"
-          >
-            <div className="w-32 h-32 flex items-center justify-center mx-auto mb-4">
-              <img
-                src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png"
-                alt="AFI Collection"
-                className="w-full h-auto object-contain"
-              />
-            </div>
-            <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-              AFI Collection
-            </h1>
-            <p className="text-white/50 text-sm mt-2 font-medium tracking-[0.15em] uppercase">
-              Artisanat Béninois
-            </p>
-          </motion.div>
+    <div className="fixed inset-0 z-[9999] bg-[#0d2818] flex flex-col items-center justify-center">
+      <div className="w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center mb-10">
+        <img
+          src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png"
+          alt="AFI Collection"
+          className="w-full h-auto object-contain drop-shadow-2xl"
+        />
+      </div>
 
-          <motion.div
-            className="mt-10 flex gap-1.5"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            {[0, 1, 2].map((i) => (
-              <motion.span
-                key={i}
-                className="w-2 h-2 rounded-full bg-white"
-                animate={{ opacity: [0.2, 1, 0.2] }}
-                transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
-              />
-            ))}
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      <div className="w-40 sm:w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-[#4ade80] to-[#22c55e] rounded-full transition-none"
+          style={{ width: `${progress * 100}%` }}
+        />
+      </div>
+
+      <p className="text-white/40 text-xs mt-2 font-mono tabular-nums">
+        {Math.round(progress * 100)}%
+      </p>
+    </div>
   );
 }
