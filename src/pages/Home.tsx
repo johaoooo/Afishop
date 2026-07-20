@@ -348,7 +348,7 @@ export default function Home() {
                 exit={{ opacity: 0, y: -40 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-white leading-[1.1] tracking-tight drop-shadow-2xl">
+                <h1 className="text-4xl md:text-4xl lg:text-5xl font-black text-white leading-[1.1] tracking-tight drop-shadow-2xl">
                   {slides[currentSlide].title}
                   <br />
                   <span className="text-[#4ade80] drop-shadow-2xl">
@@ -387,7 +387,7 @@ export default function Home() {
                 </motion.div>
 
                 <motion.div 
-                  className="flex flex-wrap gap-4 sm:gap-6 mt-6 pt-6 border-t border-white/10"
+                  className="hidden md:flex flex-wrap gap-4 sm:gap-6 mt-6 pt-6 border-t border-white/10"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
