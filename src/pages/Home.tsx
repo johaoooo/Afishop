@@ -1,5 +1,5 @@
 import SEO from '../components/SEO';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   FiArrowRight, 
@@ -275,6 +275,27 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
   const totalSlides = slides.length;
+  const testimonialRef = useRef<HTMLDivElement>(null);
+  const partnerRef = useRef<HTMLDivElement>(null);
+  const [autoScrollPaused, setAutoScrollPaused] = useState(false);
+
+  const autoScroll = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
+    if (!ref.current || autoScrollPaused) return;
+    const el = ref.current;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll <= 0) return;
+    if (el.scrollLeft >= maxScroll - 1) {
+      el.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      el.scrollBy({ left: el.clientWidth * 0.5, behavior: 'smooth' });
+    }
+  }, [autoScrollPaused]);
+
+  useEffect(() => {
+    const ti = setInterval(() => autoScroll(testimonialRef), 3000);
+    const pi = setInterval(() => autoScroll(partnerRef), 3000);
+    return () => { clearInterval(ti); clearInterval(pi); };
+  }, [autoScroll]);
 
   useEffect(() => {
     Promise.all([
@@ -676,7 +697,12 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
+          <div
+            ref={partnerRef}
+            className="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0 scrollbar-hide"
+            onMouseEnter={() => setAutoScrollPaused(true)}
+            onMouseLeave={() => setAutoScrollPaused(false)}
+          >
             {partners.map((partner, index) => (
               <motion.div
                 key={partner.id}
@@ -727,7 +753,12 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
+          <div
+            ref={testimonialRef}
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0 scrollbar-hide"
+            onMouseEnter={() => setAutoScrollPaused(true)}
+            onMouseLeave={() => setAutoScrollPaused(false)}
+          >
             {testimonials.map((t, index) => (
               <motion.div
                 key={t.id}
