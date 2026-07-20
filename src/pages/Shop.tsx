@@ -17,29 +17,21 @@ const SORT_OPTIONS = [
 ];
 
 const CATEGORIES = [
-  { id: 'sac-macrame', label: 'Sac Macramé' },
-  { id: 'sandale-macrame', label: 'Sandale Macramé' },
-  { id: 'tricotage', label: 'Tricotage' },
-  { id: 'agroalimentaire', label: 'Agroalimentaire' },
-  { id: 'decoration', label: 'Décoration' },
-  { id: 'ameublement', label: 'Ameublement' },
+  { id: 'macrame-tricot', label: 'Macramé & Tricotage' },
   { id: 'teinture-pagne', label: 'Teinture de Pagne' },
-  { id: 'tissage-pagne', label: 'Tissage de Pagne' },
-  { id: 'mode-accessoires', label: 'Mode et Accessoires' },
-  { id: 'couture', label: 'Couture' },
+  { id: 'decoration-artisanale', label: 'Décoration Artisanale' },
+  { id: 'mode-accessoires', label: 'Mode & Accessoires' },
+  { id: 'sesame', label: 'Sésame' },
+  { id: 'soja', label: 'Soja' },
 ];
 
 const CATEGORY_MAP: Record<string, string[]> = {
-  'sac-macrame': ['sac', 'macramé', 'macrame'],
-  'sandale-macrame': ['sandale', 'macramé', 'macrame'],
-  'tricotage': ['tricotage', 'tricot'],
-  'agroalimentaire': ['agroalimentaire', 'alimentaire'],
-  'decoration': ['décoration', 'decoration'],
-  'ameublement': ['ameublement', 'ameubleument', 'meuble'],
-  'teinture-pagne': ['teinture', 'pagne'],
-  'tissage-pagne': ['tissage', 'pagne'],
-  'mode-accessoires': ['mode', 'accessoires', 'accessoire'],
-  'couture': ['couture'],
+  'macrame-tricot': ['macramé', 'macrame', 'tricot', 'tricotage', 'porte-clés', 'porte cle', 'panier', 'set de table'],
+  'teinture-pagne': ['teinture', 'pagne', 'motif traditionnel'],
+  'decoration-artisanale': ['décoration', 'decoration', 'artisanale', 'cadre', 'rideau', 'centre de table'],
+  'mode-accessoires': ['mode', 'accessoire', 'accessoires', 'sac', 'valise', 'chaussure', 'pagne tissé'],
+  'sesame': ['sésame', 'sesame', 'chips', 'épice', 'farine'],
+  'soja': ['soja', 'farine', 'épice', 'produit dérivé'],
 };
 
 export default function Shop() {
@@ -157,7 +149,7 @@ export default function Shop() {
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen">
-      <SEO title="Boutique" description="Explorez notre collection de sacs macramé, sandales, pagnes, accessoires, tissus et vêtements africains fabriqués à la main au Bénin." />
+      <SEO title="Boutique" description="Découvrez nos créations artisanales : macramé, tricotage, teinture de pagne, décoration artisanale, mode et accessoires, et produits agroalimentaires (sésame, soja). AFI Collection — l'élégance artisanale au service de la tradition." />
       {/* ===== HERO ===== */}
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-16 md:py-20 overflow-hidden">
         <img

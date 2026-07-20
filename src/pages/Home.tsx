@@ -138,6 +138,41 @@ const featuredSections = [
   },
 ];
 
+const testimonials = [
+  {
+    id: 1,
+    name: 'Aminata Diallo',
+    role: 'Cliente fidèle',
+    avatar: 'https://res.cloudinary.com/dzxesa3wi/image/upload/w_150,c_fill,ar_1:1,g_auto/v1/avatars/avatar1',
+    content: 'J\'ai découvert AFI Collection lors d\'une exposition à Cotonou. Depuis, je ne cesse de commander leurs sacs macramé. La qualité est exceptionnelle et chaque pièce raconte une histoire unique.',
+    rating: 5
+  },
+  {
+    id: 2,
+    name: 'Koffi Mensah',
+    role: 'Artisan partenaire',
+    avatar: 'https://res.cloudinary.com/dzxesa3wi/image/upload/w_150,c_fill,ar_1:1,g_auto/v1/avatars/avatar2',
+    content: 'Collaborer avec AFI Collection a changé ma vie. Leur plateforme m\'a permis de vendre mes créations dans toute l\'Afrique de l\'Ouest et de vivre dignement de mon art.',
+    rating: 5
+  },
+  {
+    id: 3,
+    name: 'Marie-Claire Adjovi',
+    role: 'Cliente',
+    avatar: 'https://res.cloudinary.com/dzxesa3wi/image/upload/w_150,c_fill,ar_1:1,g_auto/v1/avatars/avatar3',
+    content: 'Les sandales artisanales sont magnifiques et tellement confortables ! La livraison a été rapide et le service client impeccable. Je recommande les yeux fermés.',
+    rating: 5
+  },
+  {
+    id: 4,
+    name: 'Jean-Baptiste Ouedraogo',
+    role: 'Client régulier',
+    avatar: 'https://res.cloudinary.com/dzxesa3wi/image/upload/w_150,c_fill,ar_1:1,g_auto/v1/avatars/avatar4',
+    content: 'Offrir un produit AFI Collection, c\'est offrir un morceau d\'Afrique. J\'ai commandé plusieurs pagnes pour des cadeaux et mes proches ont été ravis. Un véritable savoir-faire béninois.',
+    rating: 5
+  },
+];
+
 const partners = [
   { id: 1, name: 'GRAAD', logo: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1782579417/WhatsApp_Image_2026-06-27_at_17.56.06_wnsfvn.jpg' },
   { id: 2, name: 'ODEVOD', logo: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1782577860/WhatsApp_Image_2026-06-27_at_17.21.27_ecgftx.jpg' },
@@ -670,7 +705,68 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION 7: CTA FINAL */}
+      {/* SECTION 7: TEMOIGNAGES */}
+      {/* ============================================================ */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5]">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
+          <motion.div
+            className="text-center mb-10 sm:mb-14"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-[#1a6b3c] text-xs font-bold tracking-[0.2em] uppercase">
+              Témoignages
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-800 mt-1 sm:mt-2 tracking-tight">
+              Ce qu'ils <span className="text-[#1a6b3c]">disent de nous</span>
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto mt-2 text-sm">
+              Des clients et partenaires partagent leur expérience avec AFI Collection
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {testimonials.map((t, index) => (
+              <motion.div
+                key={t.id}
+                className="group bg-white rounded-2xl p-6 sm:p-7 border border-gray-100/80 hover:border-[#1a6b3c]/20 hover:shadow-xl transition-all duration-400 flex flex-col"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: Math.min(index * 0.1, 0.5) }}
+              >
+                <div className="flex items-center gap-1 mb-3 sm:mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <FiStar
+                      key={i}
+                      className={`w-3.5 h-3.5 ${i < t.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`}
+                    />
+                  ))}
+                </div>
+
+                <p className="text-gray-500 text-sm leading-relaxed flex-1 italic">
+                  &ldquo;{t.content}&rdquo;
+                </p>
+
+                <div className="flex items-center gap-3 mt-4 sm:mt-5 pt-4 border-t border-gray-100">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#1a6b3c] to-[#4ade80] flex items-center justify-center text-white text-xs font-bold shrink-0">
+                    {t.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-gray-800 truncate">{t.name}</p>
+                    <p className="text-xs text-gray-400 truncate">{t.role}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* SECTION 8: CTA FINAL */}
       {/* ============================================================ */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
