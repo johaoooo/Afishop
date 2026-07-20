@@ -727,11 +727,11 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
             {testimonials.map((t, index) => (
               <motion.div
                 key={t.id}
-                className="group bg-white rounded-2xl p-6 sm:p-7 border border-gray-100/80 hover:border-[#1a6b3c]/20 hover:shadow-xl transition-all duration-400 flex flex-col"
+                className="group bg-white rounded-2xl p-6 sm:p-7 border border-gray-100/80 hover:border-[#1a6b3c]/20 hover:shadow-xl transition-all duration-400 flex flex-col min-w-[280px] sm:min-w-[320px] md:min-w-0 snap-center"
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
