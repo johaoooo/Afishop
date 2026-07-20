@@ -676,11 +676,11 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+          <div className="flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
             {partners.map((partner, index) => (
               <motion.div
                 key={partner.id}
-                className="bg-white rounded-2xl p-4 sm:p-6 flex items-center justify-center border border-gray-100/80 hover:border-[#1a6b3c]/20 hover:shadow-lg transition-all duration-400 hover:-translate-y-1.5"
+                className="bg-white rounded-2xl p-4 sm:p-6 flex items-center justify-center border border-gray-100/80 hover:border-[#1a6b3c]/20 hover:shadow-lg transition-all duration-400 hover:-translate-y-1.5 min-w-[180px] sm:min-w-[200px] md:min-w-0 snap-center"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
