@@ -193,7 +193,8 @@ export default function Shop() {
         description="Découvrez nos créations artisanales : macramé, tricotage, teinture de pagne, décoration artisanale, mode et accessoires, et produits agroalimentaires (sésame, soja). AFI Collection — l'élégance artisanale au service de la tradition." 
       />
 
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-16 md:py-20 overflow-hidden">
+      {/* ===== HERO ===== */}
+      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441653/WhatsApp_Image_2026-05-03_at_13.15.44_e6xbcs.jpg"
           alt="Boutique AFI Collection"
@@ -204,14 +205,23 @@ export default function Shop() {
           }}
         />
         <div className="absolute inset-0 bg-black/40" />
-        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
-          <motion.h1 
+        <div className="absolute inset-0 opacity-5" style={{ 
+          backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }} />
+        <div className="container mx-auto px-6 md:px-12 relative z-10">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black text-white"
+            transition={{ duration: 0.6 }}
           >
-            La boutique
-          </motion.h1>
+            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+              La boutique
+            </h1>
+            <p className="text-white/80 text-base max-w-md mt-3">
+              Toutes nos créations artisanales, en un seul endroit.
+            </p>
+          </motion.div>
         </div>
       </div>
 
