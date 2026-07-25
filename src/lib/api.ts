@@ -257,6 +257,12 @@ export const adminApi = {
 
   getUsers: () => request<{ users: AdminUser[] }>('/admin/users'),
 
+  updateUser: (id: number, payload: { role?: string; isActive?: boolean }) =>
+    request<{ user: AdminUser }>(`/admin/users/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+
   deleteUser: (id: number) =>
     request<{ message: string }>(`/admin/users/${id}`, { method: 'DELETE' }),
 
