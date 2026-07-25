@@ -59,12 +59,13 @@ body {
   }
 }
 
-/* Empêche le scroll horizontal parasite sur mobile */
+/* Empêche le scroll horizontal parasite sur mobile sans casser position: sticky */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100vw;
 }
 
 #root {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
+
