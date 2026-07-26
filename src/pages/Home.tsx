@@ -9,8 +9,6 @@ import {
   FiStar,
   FiShoppingBag,
   FiUsers,
-  FiChevronLeft,
-  FiChevronRight,
   FiHeadphones,
   FiCheckCircle
 } from 'react-icons/fi';
