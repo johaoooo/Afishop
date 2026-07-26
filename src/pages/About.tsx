@@ -23,11 +23,13 @@ export default function About() {
       <SEO title="À Propos | AFI Collection" description="Découvrez l'histoire d'AFI Collection, notre mission de valoriser l'artisanat béninois et notre communauté d'artisans talentueux." />
 
       {/* ===== HERO ===== */}
-      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-16 md:py-20 text-white overflow-hidden shadow-md">
-        <div className="absolute inset-0 opacity-10" style={{ 
-          backgroundImage: 'radial-gradient(circle at 50% 50%, #4ade80 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }} />
+      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-20 md:py-28 text-white overflow-hidden shadow-md">
+        <img
+          src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200"
+          alt="AFI Collection - Artisanat béninois"
+          className="absolute inset-0 w-full h-full object-cover opacity-25"
+        />
+        <div className="absolute inset-0 bg-black/40" />
         
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
           <motion.div
