@@ -386,12 +386,12 @@ export default function Home() {
                   </Link>
                 </div>
 
-                {/* Compact Stat Bar */}
+                {/* Compact Stat Bar - Clean layout without glassmorphism */}
                 <div className="hidden sm:grid grid-cols-4 gap-3 pt-4 mt-2 border-t border-white/15">
                   {statsData.map((stat) => {
                     const IconComponent = stat.icon;
                     return (
-                      <div key={stat.key} className="flex items-center gap-2 text-white bg-white/5 backdrop-blur-md p-2 rounded-xl border border-white/10">
+                      <div key={stat.key} className="flex items-center gap-2 text-white bg-black/35 p-2 rounded-xl border border-white/10">
                         <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
                           <IconComponent className="w-3.5 h-3.5" />
                         </div>

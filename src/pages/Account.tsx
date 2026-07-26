@@ -19,7 +19,79 @@ const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; b
   cancelled: { label: 'Annulée', bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200', icon: FiXCircle },
 };
 
-const RECEIPT_ELIGIBLE = ['paid', 'shipped', 'delivered'];
+const RECEIPT_ELIGIBLE = ['pending', 'paid', 'shipped', 'delivered'];
+
+function generatePrintableReceipt(order: Order) {
+  const win = window.open('', '_blank');
+  if (!win) return;
+  const itemsHtml = (order.OrderItem || []).map((item) => `
+    <tr>
+      <td style="padding:10px; border-bottom:1px solid #eee;">${item.Product?.name || 'Produit'}</td>
+      <td style="padding:10px; border-bottom:1px solid #eee; text-align:center;">${item.quantity}</td>
+      <td style="padding:10px; border-bottom:1px solid #eee; text-align:right;">${item.price.toLocaleString('fr-FR')} FCFA</td>
+      <td style="padding:10px; border-bottom:1px solid #eee; text-align:right;">${(item.price * item.quantity).toLocaleString('fr-FR')} FCFA</td>
+    </tr>
+  `).join('');
+
+  win.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Reçu de paiement - Commande #${order.id}</title>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: system-ui, -apple-system, sans-serif; padding: 40px; color: #111; max-width: 700px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1a6b3c; padding-bottom: 20px; }
+        .title { font-size: 24px; font-weight: bold; color: #1a6b3c; }
+        .badge { background: #e6f4ea; color: #1a6b3c; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        th { text-align: left; background: #f8faf8; padding: 10px; font-size: 12px; color: #666; border-bottom: 2px solid #ddd; }
+        .total-box { margin-top: 20px; text-align: right; font-size: 18px; font-weight: bold; color: #1a6b3c; }
+        .footer { margin-top: 50px; text-align: center; font-size: 12px; color: #888; border-top: 1px solid #eee; padding-top: 20px; }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div>
+          <div class="title">AFI Collection</div>
+          <div style="font-size:12px; color:#666; margin-top:4px;">Abomey-Calavi, Bénin | maisonaficollections@gmail.com</div>
+        </div>
+        <div class="badge">Commande #${order.id}</div>
+      </div>
+
+      <div style="margin-top: 25px; font-size: 13px; color:#444;">
+        <strong>Reçu Officiel de Paiement</strong><br>
+        Date de commande: ${new Date(order.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}<br>
+        Statut de livraison: ${order.status.toUpperCase()}
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Article</th>
+            <th style="text-align:center;">Qté</th>
+            <th style="text-align:right;">Prix Unit.</th>
+            <th style="text-align:right;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+        </tbody>
+      </table>
+
+      <div class="total-box">
+        Montant Total: ${order.total.toLocaleString('fr-FR')} FCFA
+      </div>
+
+      <div class="footer">
+        Merci pour votre confiance. Ce reçu confirme votre achat auprès de la maison AFI Collection.
+      </div>
+      <script>window.onload = function() { window.print(); }</script>
+    </body>
+    </html>
+  `);
+  win.document.close();
+}
 
 function OrdersTab() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -34,12 +106,14 @@ function OrdersTab() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleDownload = async (id: number) => {
-    setDownloadingId(id);
+  const handleDownload = async (order: Order) => {
+    setDownloadingId(order.id);
     try {
-      await ordersApi.downloadReceipt(id);
-    } catch (error: any) {
-      toast.error(error.message || 'Impossible de télécharger le reçu');
+      await ordersApi.downloadReceipt(order.id);
+      toast.success('Reçu PDF téléchargé avec succès !');
+    } catch {
+      toast('Impression du reçu en cours...', { icon: '📄' });
+      generatePrintableReceipt(order);
     } finally {
       setDownloadingId(null);
     }
@@ -108,6 +182,18 @@ function OrdersTab() {
                   <StatusIcon className="w-3.5 h-3.5" />
                   {statusInfo.label}
                 </span>
+
+                {canDownload && (
+                  <button
+                    onClick={() => handleDownload(order)}
+                    disabled={downloadingId === order.id}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a6b3c] bg-emerald-50 hover:bg-emerald-100 px-3.5 py-1.5 rounded-full border border-emerald-200/80 transition disabled:opacity-50"
+                    title="Télécharger le reçu"
+                  >
+                    <FiDownload className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">{downloadingId === order.id ? 'Génération…' : 'Reçu'}</span>
+                  </button>
+                )}
               </div>
             </div>
 
@@ -145,19 +231,19 @@ function OrdersTab() {
 
             {/* Order Actions */}
             <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs text-gray-400">Paiement Mobile Money / Carte</span>
+              <span className="text-xs text-gray-400">Paiement Sécurisé Mobile Money / CB</span>
 
               {canDownload ? (
                 <button
-                  onClick={() => handleDownload(order.id)}
+                  onClick={() => handleDownload(order)}
                   disabled={downloadingId === order.id}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a6b3c] bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-xl border border-emerald-200/80 transition disabled:opacity-50"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-white bg-[#1a6b3c] hover:bg-[#14532d] px-4 py-2 rounded-xl transition shadow-xs disabled:opacity-50"
                 >
                   <FiDownload className="w-3.5 h-3.5" />
-                  <span>{downloadingId === order.id ? 'Téléchargement...' : 'Télécharger la facture PDF'}</span>
+                  <span>{downloadingId === order.id ? 'Téléchargement…' : 'Télécharger la Facture PDF'}</span>
                 </button>
               ) : (
-                <span className="text-xs text-gray-400 italic">Facture disponible après confirmation</span>
+                <span className="text-xs text-gray-400 italic">Facture annulée</span>
               )}
             </div>
           </div>

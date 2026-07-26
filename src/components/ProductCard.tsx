@@ -31,13 +31,13 @@ export function ProductCard({ product }: { product: Product }) {
       to={`/produit/${product.id}`}
       className="group block bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-xs hover:shadow-xl hover:border-emerald-500/20 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
     >
-      {/* Image Container with 4:5 mobile / square desktop aspect ratio */}
-      <div className="aspect-[4/5] sm:aspect-square bg-gray-100 overflow-hidden relative w-full">
+      {/* Image Container with 4:5 mobile / square desktop aspect ratio - Full Image Visible */}
+      <div className="aspect-[4/5] sm:aspect-square bg-[#faf8f5] overflow-hidden relative w-full flex items-center justify-center p-2">
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out"
           onError={(e) => {
             (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
           }}
