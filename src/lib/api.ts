@@ -77,7 +77,19 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok || data.status === 'error') {
-      throw new ApiError(data.message || 'Une erreur est survenue', data.errors);
+      // Auto-nettoyage des sessions expirées sur HTTP 401
+      if (res.status === 401) {
+        localStorage.removeItem('afi_token');
+        localStorage.removeItem('afi_user');
+        if (!window.location.pathname.includes('/connexion')) {
+          const currentPath = encodeURIComponent(window.location.pathname);
+          window.location.href = `/connexion?redirect=${currentPath}`;
+        }
+      }
+      const errorMsg = data.errors && Array.isArray(data.errors) && data.errors.length > 0
+        ? data.errors.map((e: any) => e.message).join(' • ')
+        : data.message || 'Une erreur est survenue';
+      throw new ApiError(errorMsg, data.errors);
     }
 
     return data;

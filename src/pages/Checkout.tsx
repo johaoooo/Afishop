@@ -1,33 +1,29 @@
 import SEO from '../components/SEO';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FiArrowLeft, FiTruck, FiShield, FiLoader, FiRefreshCw } from 'react-icons/fi';
+import { FiArrowLeft, FiTruck, FiShield } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { ordersApi, paymentsApi, ApiError, type Order } from '../lib/api';
 import toast from 'react-hot-toast';
 
-const KKIAPAY_PUBLIC_KEY = import.meta.env.VITE_KKIAPAY_PUBLIC_KEY;
-const KKIAPAY_CDN = 'https://cdn.kkiapay.me/k.js';
-
 declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'kkiapay-widget': any;
+    }
+  }
   interface Window {
+    FedaPay?: {
+      init: (selectorOrOptions: any, options?: any) => any;
+      CHECKOUT_COMPLETED?: string;
+    };
     openKkiapayWidget?: (config: Record<string, unknown>) => void;
     closeKkiapayWidget?: () => void;
     addSuccessListener?: (fn: (data: { transactionId: string }) => void) => void;
     addFailedListener?: (fn: () => void) => void;
   }
-}
-
-function injectKkiapayScript(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = KKIAPAY_CDN;
-    s.onload = () => resolve();
-    s.onerror = () => reject(new Error('Échec SDK Kkiapay'));
-    document.head.appendChild(s);
-  });
 }
 
 export default function Checkout() {
@@ -36,11 +32,6 @@ export default function Checkout() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const [submitting, setSubmitting] = useState(false);
   const [pendingOrder, setPendingOrder] = useState<Order | null>(null);
-  const [widgetLoading, setWidgetLoading] = useState(false);
-  const [sdkOk, setSdkOk] = useState(!!window.openKkiapayWidget);
-  const [sdkError, setSdkError] = useState(false);
-  const pendingOrderRef = useRef<Order | null>(null);
-  const listenersSet = useRef(false);
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -48,39 +39,6 @@ export default function Checkout() {
     country: 'Bénin',
     phone: '',
   });
-
-  useEffect(() => {
-    console.log('[Kkiapay] SDK présent au mount:', !!window.openKkiapayWidget);
-    console.log('[Kkiapay] addSuccessListener:', typeof window.addSuccessListener);
-    console.log('[Kkiapay] customElements kkiapay-widget:', !!customElements.get('kkiapay-widget'));
-    console.log('[Kkiapay] iframe préexistante dans body:', !!document.querySelector('iframe[src*="kkiapay"]'));
-    console.log('[Kkiapay] API_URL:', import.meta.env.VITE_API_URL);
-
-    if (!window.openKkiapayWidget) {
-      console.log('[Kkiapay] SDK absent, injection dynamique...');
-      injectKkiapayScript()
-        .then(() => {
-          console.log('[Kkiapay] Injection réussie');
-          setSdkOk(true);
-        })
-        .catch((err) => {
-          console.error('[Kkiapay] Injection échouée:', err);
-          setSdkError(true);
-        });
-    } else {
-      console.log('[Kkiapay] SDK déjà disponible (script synchrone)');
-    }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      window.closeKkiapayWidget?.();
-    };
-  }, []);
-
-  useEffect(() => {
-    pendingOrderRef.current = pendingOrder;
-  }, [pendingOrder]);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -97,111 +55,69 @@ export default function Checkout() {
 
   if (isLoading || !isAuthenticated || (items.length === 0 && !pendingOrder)) return null;
 
+  const FEDAPAY_PUBLIC_KEY = import.meta.env.VITE_FEDAPAY_PUBLIC_KEY || 'pk_sandbox_DI3uszKPCm0nuxSZjgdNJhf7';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log('[Kkiapay] handleSubmit - SDK disponible:', !!window.openKkiapayWidget);
-
-    if (!window.openKkiapayWidget) {
-      toast.error('Plateforme de paiement pas encore prête. Veuillez patienter.');
+    if (!window.FedaPay) {
+      toast.error('Plateforme FedaPay pas encore disponible. Veuillez rafraîchir la page.');
       return;
     }
 
     setSubmitting(true);
     try {
       const orderItems = items.map((i) => ({ productId: i.productId, quantity: i.quantity }));
-      console.log('[Kkiapay] Création commande...');
       const { order } = await ordersApi.create(orderItems, address);
-      console.log('[Kkiapay] Commande créée:', order.id, 'total:', order.total);
       setPendingOrder(order);
-      pendingOrderRef.current = order;
-      setSubmitting(false);
-      setWidgetLoading(true);
 
-      if (!listenersSet.current) {
-        listenersSet.current = true;
-        console.log('[Kkiapay] Enregistrement listeners...');
+      const cleanPhone = address.phone ? address.phone.replace(/\D/g, '') : '';
 
-        window.addSuccessListener?.(({ transactionId }: { transactionId: string }) => {
-          const orderId = pendingOrderRef.current?.id;
-          if (!orderId) return;
-          console.log('[Kkiapay] SUCCESS transactionId:', transactionId);
-          paymentsApi.verify(transactionId, orderId)
-            .then(() => {
+      const widget = window.FedaPay.init({
+        public_key: FEDAPAY_PUBLIC_KEY,
+        transaction: {
+          amount: Math.round(order.total),
+          description: `Commande AFI #${order.id}`,
+          custom_metadata: { order_id: String(order.id) }
+        },
+        customer: {
+          email: user?.email || 'client@aficollection.com',
+          lastname: user?.name || 'Client',
+          firstname: 'AFI',
+          ...(cleanPhone ? { phone_number: { number: cleanPhone, country: 'bj' } } : {})
+        },
+        onComplete: async (response: any) => {
+          if (response && response.reason === 'CHECKOUT_COMPLETED') {
+            try {
+              const res = await paymentsApi.verify(response.transaction.id, order.id);
               clearCart();
-              toast.success('Paiement confirmé ! Merci pour votre commande');
-              navigate(`/mon-compte?commande=${orderId}`);
-            })
-            .catch(() => {
-              toast.error('Le paiement a été reçu mais la vérification a échoué. Contactez le support.');
-            });
-        });
-
-        window.addFailedListener?.(() => {
-          console.log('[Kkiapay] FAILED');
-          setWidgetLoading(false);
-          setPendingOrder(null);
-          toast.error('Le paiement a été annulé ou a échoué. Votre commande reste en attente.');
-        });
-      }
-
-      setTimeout(() => {
-        console.log('[Kkiapay] Appel openKkiapayWidget...');
-        console.log('[Kkiapay] iframe dans body avant appel:', !!document.querySelector('iframe[src*="kkiapay"]'));
-        try {
-          window.openKkiapayWidget!({
-            amount: order.total,
-            key: KKIAPAY_PUBLIC_KEY,
-            sandbox: true,
-            phone: address.phone,
-            email: user?.email,
-            name: user?.name,
-            reason: `Commande AFI Collection #${order.id}`,
-            data: String(order.id),
-          });
-          console.log('[Kkiapay] openKkiapayWidget appelé sans erreur');
-          console.log('[Kkiapay] iframe dans body après appel:', !!document.querySelector('iframe[src*="kkiapay"]'));
-          // Vérifier le DOM après un délai
-          setTimeout(() => {
-            const iframes = document.querySelectorAll('iframe');
-            console.log('[Kkiapay] iframes dans body après 1s:', iframes.length);
-            iframes.forEach((f, i) => console.log(`[Kkiapay] iframe ${i}:`, f.src, f.style.cssText));
-          }, 1000);
-        } catch (err) {
-          console.error('[Kkiapay] ERREUR openKkiapayWidget:', err);
-          setWidgetLoading(false);
-          setPendingOrder(null);
-          toast.error("Erreur lors de l'ouverture du paiement. Veuillez réessayer.");
+              toast.success('Paiement FedaPay confirmé ! 🎉');
+              navigate(`/mon-compte?commande=${res.order.id}`);
+            } catch (err: any) {
+              toast.error(err?.message || 'Erreur lors de la vérification du paiement FedaPay');
+            }
+          } else {
+            toast.error('Le paiement FedaPay a été annulé');
+          }
+          setSubmitting(false);
         }
-      }, 500);
-    } catch (err) {
-      console.error('[Kkiapay] ERREUR création commande:', err);
-      toast.error(err instanceof ApiError ? err.message : 'Erreur lors de la création de la commande');
+      });
+
+      if (widget && typeof widget.open === 'function') {
+        widget.open();
+      }
       setSubmitting(false);
+    } catch (error) {
+      setSubmitting(false);
+      if (error instanceof ApiError) {
+        toast.error(error.message);
+      } else {
+        toast.error('Une erreur est survenue lors de la création de la commande');
+      }
     }
   };
 
-  const retry = async () => {
-    setSdkError(false);
-    try {
-      await injectKkiapayScript();
-      setSdkOk(true);
-    } catch {
-      setSdkError(true);
-    }
-  };
 
-  if (widgetLoading) {
-    return (
-      <div className="min-h-screen bg-[#f5f8f5] flex items-center justify-center">
-        <div className="text-center">
-          <FiLoader className="w-10 h-10 text-[#1a6b3c] animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 font-semibold">Redirection vers le paiement sécurisé…</p>
-          <p className="text-gray-400 text-sm mt-1">Veuillez patienter</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-[#f5f8f5] min-h-screen py-12">
@@ -298,32 +214,12 @@ export default function Checkout() {
                 </div>
               </div>
 
-              {!sdkOk && !sdkError && (
-                <div className="flex items-center gap-2 text-amber-700 bg-amber-50 rounded-xl px-4 py-3 text-sm">
-                  <FiLoader className="w-4 h-4 animate-spin" />
-                  Chargement de la plateforme de paiement…
-                </div>
-              )}
-
-              {sdkError && (
-                <div className="flex items-center gap-3 text-red-700 bg-red-50 rounded-xl px-4 py-3 text-sm">
-                  <span className="flex-1">Échec du chargement de la plateforme de paiement.</span>
-                  <button
-                    type="button"
-                    onClick={retry}
-                    className="flex items-center gap-1 font-semibold text-red-700 hover:text-red-900 transition-colors"
-                  >
-                    <FiRefreshCw className="w-4 h-4" /> Réessayer
-                  </button>
-                </div>
-              )}
-
               <button
                 type="submit"
-                disabled={submitting || !sdkOk}
+                disabled={submitting}
                 className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4"
               >
-                {submitting ? 'Création de la commande…' : `Payer ${total.toLocaleString('fr-FR')} FCFA`}
+                {submitting ? 'Création de la commande…' : `Valider et Payer avec FedaPay (${total.toLocaleString('fr-FR')} FCFA)`}
               </button>
 
               <p className="text-xs text-gray-400 text-center">
