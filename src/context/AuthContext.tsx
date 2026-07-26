@@ -18,20 +18,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const token = localStorage.getItem('afi_token');
-    const savedUser = localStorage.getItem('afi_user');
-    console.log('🔍 AuthProvider - token:', token);
-    console.log('🔍 AuthProvider - savedUser:', savedUser);
-    if (token && savedUser) {
-      try {
-        const parsedUser = JSON.parse(savedUser);
-        console.log('🔍 AuthProvider - parsedUser:', parsedUser);
-        setUser(parsedUser);
-      } catch (e) {
-        console.error('Erreur parsing user:', e);
-        localStorage.removeItem('afi_user');
-      }
+    if (!token) {
+      setIsLoading(false);
+      return;
     }
-    setIsLoading(false);
+
+    authApi
+      .me()
+      .then((data) => {
+        const serverUser = data.user || data;
+        setUser(serverUser);
+        localStorage.setItem('afi_user', JSON.stringify(serverUser));
+      })
+      .catch(() => {
+        localStorage.removeItem('afi_token');
+        localStorage.removeItem('afi_user');
+        setUser(null);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   const login = async (email: string, password: string) => {

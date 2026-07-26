@@ -46,6 +46,7 @@ export interface User {
   email: string;
   name: string;
   role: string;
+  avatar?: string;
 }
 
 // Petite classe d'erreur pour transporter le message + les erreurs de champ
@@ -119,7 +120,7 @@ export const authApi = {
     }),
 
   me: () => request<{ user: User }>('/auth/me'),
-  updateProfile: (payload: { name?: string; currentPassword?: string; newPassword?: string }) =>
+  updateProfile: (payload: { name?: string; avatar?: string; currentPassword?: string; newPassword?: string }) =>
     request<{ user: User }>('/auth/me', {
       method: 'PUT',
       body: JSON.stringify(payload),

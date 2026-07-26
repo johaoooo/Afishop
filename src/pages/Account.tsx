@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import {
   FiPackage, FiUser, FiLogOut, FiDownload, FiLock, FiCheck, FiHeart, FiTrash2,
-  FiClock, FiCheckCircle, FiTruck, FiXCircle, FiShield, FiArrowRight, FiPlus
+  FiClock, FiCheckCircle, FiTruck, FiXCircle, FiShield, FiArrowRight, FiPlus, FiCamera
 } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
@@ -364,9 +364,27 @@ function FavoritesTab() {
 function ProfileTab() {
   const { user } = useAuth();
   const [name, setName] = useState(user?.name || '');
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar || '');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [saving, setSaving] = useState(false);
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image trop volumineuse (maximum 5 Mo)');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result as string;
+      setAvatarUrl(base64);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -374,6 +392,7 @@ function ProfileTab() {
     try {
       const payload: Record<string, string> = {};
       if (name !== user?.name) payload.name = name;
+      if (avatarUrl !== user?.avatar) payload.avatar = avatarUrl;
       if (newPassword) {
         payload.currentPassword = currentPassword;
         payload.newPassword = newPassword;
@@ -386,7 +405,7 @@ function ProfileTab() {
 
       const { user: updatedUser } = await authApi.updateProfile(payload);
       localStorage.setItem('afi_user', JSON.stringify(updatedUser));
-      toast.success('Profil mis à jour avec succès');
+      toast.success('Profil et photo mis à jour avec succès !');
       setCurrentPassword('');
       setNewPassword('');
     } catch (error: any) {
@@ -402,6 +421,50 @@ function ProfileTab() {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-xs space-y-6">
+      
+      {/* Photo de profil Uploader */}
+      <div className="flex items-center gap-5 p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100/60">
+        <div className="relative group shrink-0">
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt={user?.name}
+              className="w-20 h-20 rounded-2xl object-cover border-2 border-white shadow-md"
+            />
+          ) : (
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] text-white font-black text-2xl flex items-center justify-center border-2 border-white shadow-md">
+              {user?.name?.[0]?.toUpperCase() || 'U'}
+            </div>
+          )}
+
+          <label
+            htmlFor="avatar-upload"
+            className="absolute -bottom-1 -right-1 bg-white text-[#1a6b3c] p-2 rounded-full border border-gray-200 shadow-md cursor-pointer hover:bg-emerald-50 transition hover:scale-105"
+            title="Changer la photo de profil"
+          >
+            <FiCamera className="w-4 h-4" />
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className="hidden"
+            />
+          </label>
+        </div>
+
+        <div>
+          <h3 className="font-extrabold text-sm text-gray-900">Photo de Profil</h3>
+          <p className="text-xs text-gray-500 mt-0.5">Format JPG, PNG ou WEBP. Maximum 5 Mo.</p>
+          <label
+            htmlFor="avatar-upload"
+            className="inline-block text-xs font-bold text-[#1a6b3c] hover:underline cursor-pointer mt-1.5"
+          >
+            Téléverser une photo
+          </label>
+        </div>
+      </div>
+
       <div>
         <h2 className="text-base font-black text-gray-900 mb-1 flex items-center gap-2">
           <FiUser className="w-4 h-4 text-[#1a6b3c]" /> Informations personnelles
@@ -497,11 +560,15 @@ export default function Account() {
       <SEO title="Mon Compte Client" description="Gérez vos commandes, votre profil et vos favoris sur AFI Collection." />
       
       {/* Dashboard Top Banner */}
-      <div className="bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] text-white py-10 shadow-lg">
+      <div className="bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] text-[#fff] py-10 shadow-lg">
         <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] text-white font-black text-xl flex items-center justify-center shadow-lg shadow-black/20 border-2 border-white/20 shrink-0">
-              {user.name?.[0]?.toUpperCase() || 'U'}
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] text-white font-black text-xl flex items-center justify-center shadow-lg shadow-black/20 border-2 border-white/20 shrink-0 overflow-hidden">
+              {user.avatar ? (
+                <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+              ) : (
+                user.name?.[0]?.toUpperCase() || 'U'
+              )}
             </div>
             <div>
               <div className="flex items-center gap-2">

@@ -412,35 +412,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Slide Controls */}
-        <div className="absolute bottom-5 right-6 md:right-12 z-30 flex items-center gap-2.5">
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition"
-            aria-label="Slide précédent"
-          >
-            <FiChevronLeft className="w-4 h-4" />
-          </button>
-          <div className="flex gap-1.5">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === idx ? 'w-6 bg-[#4ade80]' : 'w-2 bg-white/40'
-                }`}
-                aria-label={`Aller au slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-          <button
-            onClick={() => setCurrentSlide((prev) => (prev + 1) % totalSlides)}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition"
-            aria-label="Slide suivant"
-          >
-            <FiChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+
       </section>
 
       {/* ============================================================ */}
