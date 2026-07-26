@@ -92,7 +92,7 @@ export function Footer() {
       </div>
 
       <div className="container mx-auto px-6 md:px-12 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.1fr_0.7fr_1.5fr_1fr] gap-6 lg:gap-8">
           
           {/* ===== COLONNE 1 - Logo & Description ===== */}
           <div className="space-y-4">
@@ -169,7 +169,7 @@ export function Footer() {
           </div>
 
           {/* ===== COLONNE 3 - Contact ===== */}
-          <div>
+          <div className="min-w-0">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-5">
               Contact
             </h4>
@@ -182,9 +182,14 @@ export function Footer() {
                 <FiPhone className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0 mt-0.5" />
                 <span className="text-sm">+229 01 96 06 22 87</span>
               </li>
-              <li className="flex items-start gap-3 text-white/40 hover:text-white/70 transition-colors duration-300 group">
-                <FiMail className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0 mt-0.5" />
-                <span className="text-sm">maisonaficollections@gmail.com</span>
+              <li className="flex items-center gap-2.5 text-white/40 hover:text-white/70 transition-colors duration-300 group">
+                <FiMail className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0" />
+                <a 
+                  href="mailto:maisonaficollections@gmail.com" 
+                  className="text-xs sm:text-sm whitespace-nowrap hover:underline text-white/60 hover:text-white transition-colors font-medium tracking-tight"
+                >
+                  maisonaficollections@gmail.com
+                </a>
               </li>
               <li className="flex items-start gap-3 text-white/40 hover:text-white/70 transition-colors duration-300 group">
                 <FiClock className="w-4 h-4 text-[#4ade80]/50 group-hover:text-[#4ade80] shrink-0 mt-0.5" />
@@ -194,7 +199,7 @@ export function Footer() {
           </div>
 
           {/* ===== COLONNE 4 - Informations ===== */}
-          <div>
+          <div className="min-w-0">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-5">
               Informations
             </h4>

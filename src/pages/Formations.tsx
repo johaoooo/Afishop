@@ -6,11 +6,9 @@ import {
   FiUsers, 
   FiAward, 
   FiClock, 
-  FiCheckCircle, 
   FiBookOpen, 
   FiMapPin, 
-  FiCalendar,
-  
+  FiCalendar
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { trainingsApi, type Training } from '../lib/api';
@@ -29,7 +27,7 @@ export default function Formations() {
   useEffect(() => {
     trainingsApi
       .getAll()
-      .then((data) => setTrainings(data.trainings))
+      .then((data) => setTrainings(data.trainings || []))
       .catch(() => setTrainings([]))
       .finally(() => setLoading(false));
   }, []);
@@ -66,253 +64,214 @@ export default function Formations() {
   const displayTrainings = trainings.length > 0 ? trainings : defaultTrainings;
 
   return (
-    <div className="bg-[#f5f8f5] min-h-screen">
-      <SEO title="Formations" description="Découvrez nos formations artisanales : macramé, tissage, fabrication de sandales et bien plus. Apprenez un métier d'art au Bénin avec AFI Collection." />
-      {/* ===== HERO ===== */}
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
-        {/* Image de fond */}
+    <div className="bg-[#f8faf8] min-h-screen text-gray-900 pb-20">
+      <SEO title="Formations Artisanales | AFI Collection" description="Découvrez nos formations artisanales : macramé, tissage, fabrication de sandales et teinture au Bénin avec le CFP Dorcas & AFI Collection." />
+
+      {/* ===== HERO (Hauteur équivalente à la Boutique) ===== */}
+      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-20 md:py-28 text-white overflow-hidden shadow-md">
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1782717374/WhatsApp_Image_2026-06-29_at_08.08.43_jc7ddz.jpg"
           alt="Formation artisanale"
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          className="absolute inset-0 w-full h-full object-cover opacity-25"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
               'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200';
           }}
         />
-        
-        {/* Overlay pour lisibilité */}
         <div className="absolute inset-0 bg-black/40" />
         
-        <div className="absolute inset-0 opacity-5" style={{ 
-          backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }} />
-        
-        <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
+            className="space-y-2"
           >
-            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
-              Nos formations
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
+              Nos Formations <span className="text-[#4ade80]">Artisanales</span>
             </h1>
-            <p className="text-white/80 text-base max-w-md mt-3">
-              Développez vos compétences artisanales avec nos formations professionnelles.
+            <p className="text-white/80 text-sm sm:text-base font-medium max-w-md mx-auto pt-1">
+              Développez des compétences professionnelles et maîtrisez un métier d'art au Bénin.
             </p>
           </motion.div>
         </div>
       </div>
 
       {/* ===== CONTENEUR PRINCIPAL ===== */}
-      <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20">
-        {/* ===== BANDEAU PRÉSENTATION ===== */}
+      <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 space-y-10">
+        
+        {/* ===== BANDEAU PRÉSENTATION CFP DORCAS ===== */}
         <motion.div
-          className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-8 md:p-10 border border-green-100 mb-8"
+          className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-xs"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div>
-              <span className="text-[#1a6b3c] text-xs font-bold tracking-widest uppercase">
-                CFP Dorcas
-              </span>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-800 mt-3 mb-4">
-                L'excellence au service <br />
-                <span className="text-[#1a6b3c]">de la formation</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4">
+              <h2 className="text-2xl sm:text-3xl font-black text-gray-900 leading-tight">
+                Le Centre de Formation <br />
+                <span className="text-[#1a6b3c]">CFP Dorcas</span>
               </h2>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                Le Centre de Formation Professionnelle (CFP) Dorcas est une institution dédiée à la transmission 
-                des savoir-faire artisanaux et à la professionnalisation des métiers d'art au Bénin.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Créé par des artisans passionnés, le CFP Dorcas forme chaque année des dizaines de jeunes 
-                talents aux métiers de l'artisanat traditionnel, alliant techniques ancestrales et innovation.
-              </p>
-              <div className="flex flex-wrap gap-4 mt-6">
-                <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-full">
-                  <FiMapPin className="w-4 h-4 text-[#1a6b3c]" />
-                  <span className="text-sm text-gray-600">Abomey-Calavi, Bénin</span>
+              
+              <div className="space-y-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                <p>
+                  Le <strong className="text-gray-900 font-bold">Centre de Formation Professionnelle (CFP) Dorcas</strong> est 
+                  une institution dédiée à la transmission des savoir-faire artisanaux et à la professionnalisation 
+                  des métiers d'art au Bénin.
+                </p>
+                <p>
+                  Créé par des maîtres artisans passionnés, le CFP Dorcas forme chaque année des jeunes et des adultes 
+                  aux métiers du macramé, du tricotage, de la teinture et du travail du cuir, alliant tradition et innovation.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex items-center gap-2 bg-emerald-50 text-[#1a6b3c] px-4 py-2 rounded-2xl text-xs font-bold border border-emerald-100">
+                  <FiMapPin className="w-4 h-4" />
+                  <span>Abomey-Calavi, Bénin</span>
                 </div>
-                <div className="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-full">
-                  <FiCalendar className="w-4 h-4 text-[#1a6b3c]" />
-                  <span className="text-sm text-gray-600">Inscriptions ouvertes</span>
+                <div className="flex items-center gap-2 bg-amber-50 text-amber-800 px-4 py-2 rounded-2xl text-xs font-bold border border-amber-100">
+                  <FiCalendar className="w-4 h-4" />
+                  <span>Inscriptions Ouvertes</span>
                 </div>
               </div>
             </div>
+
             <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-xl h-72 bg-gray-100 flex items-center justify-center p-4">
+              <div className="rounded-3xl overflow-hidden shadow-lg bg-[#1a6b3c]/5 border border-gray-100 flex items-center justify-center p-3">
                 <img
                   src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441633/WhatsApp_Image_2026-05-03_at_13.13.55_xrgmtq.jpg"
                   alt="CFP Dorcas - Centre de formation"
-                  className="w-full h-full object-contain hover:scale-105 transition duration-700"
+                  className="w-full h-auto max-h-[380px] rounded-2xl object-contain hover:scale-102 transition duration-700"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
                       'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600';
                   }}
                 />
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-[#1a6b3c] text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg flex items-center gap-2">
-                <FiCheckCircle className="w-4 h-4" />
-                Certifié
-              </div>
             </div>
           </div>
         </motion.div>
 
-        {/* ===== STATS ===== */}
-        <motion.div
-          className="mb-12 grid grid-cols-2 md:grid-cols-4 gap-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              className="bg-white/90 backdrop-blur-sm rounded-2xl p-5 text-center border border-green-100 hover:shadow-lg transition"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div className="flex items-center justify-center gap-2">
-                <stat.icon className="w-5 h-5 text-[#1a6b3c]" />
-                <p className="text-2xl font-black text-gray-800">{stat.value}</p>
+        {/* ===== STATS GRID ===== */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <div key={index} className="bg-white rounded-3xl p-6 border border-gray-100 shadow-xs text-center space-y-2">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#1a6b3c] flex items-center justify-center mx-auto">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <p className="text-2xl sm:text-3xl font-black text-gray-900 font-mono">{stat.value}</p>
+                <p className="text-xs font-bold text-gray-500">{stat.label}</p>
               </div>
-              <p className="text-xs text-gray-500 mt-1">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+            );
+          })}
+        </div>
 
         {/* ===== LISTE DES FORMATIONS ===== */}
-        <div className="mb-12">
-          <div className="text-center mb-10">
-            <span className="text-[#1a6b3c] text-xs font-bold tracking-widest uppercase">
-              Nos formations
-            </span>
-            <h2 className="text-3xl md:text-4xl font-black text-gray-800 mt-3">
-              Filières <span className="text-[#1a6b3c]">disponibles</span>
+        <div className="space-y-6">
+          <div className="text-center space-y-1">
+            <h2 className="text-xl sm:text-2xl font-black text-gray-900">
+              Filières & Programmes de Formation
             </h2>
-            <p className="text-gray-500 mt-1">Des formations professionnelles pour tous les niveaux</p>
+            <p className="text-xs text-gray-500">Des programmes pratiques encadrés par des professionnels</p>
           </div>
 
           {loading ? (
-            <div className="space-y-6">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden border border-green-100 animate-pulse">
-                  <div className="grid grid-cols-1 md:grid-cols-3">
-                    <div className="md:col-span-1 h-64 md:h-auto bg-gray-200" />
-                    <div className="md:col-span-2 p-6 md:p-8 space-y-4">
-                      <div className="h-6 bg-gray-200 rounded w-3/4" />
-                      <div className="h-4 bg-gray-200 rounded w-full" />
-                      <div className="flex gap-2">
-                        <div className="h-6 bg-gray-200 rounded w-20" />
-                        <div className="h-6 bg-gray-200 rounded w-20" />
-                      </div>
-                    </div>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="bg-white rounded-3xl border border-gray-100 animate-pulse overflow-hidden p-6 space-y-4">
+                  <div className="h-48 bg-gray-200 rounded-2xl" />
+                  <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  <div className="h-3 bg-gray-200 rounded w-1/2" />
                 </div>
               ))}
             </div>
           ) : displayTrainings.length === 0 ? (
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-16 text-center border border-green-100">
+            <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-xs">
               <FiBookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-gray-800">Aucune formation disponible</h3>
-              <p className="text-gray-400 text-sm mt-2">Revenez plus tard pour découvrir nos formations.</p>
+              <h3 className="text-lg font-black text-gray-900">Aucune formation enregistrée</h3>
             </div>
           ) : (
-            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {displayTrainings.map((training, index) => {
-                const accent = training.color || '#1a6b3c';
                 const imgSrc = training.image?.startsWith('/')
                   ? `http://localhost:5000${training.image}`
-                  : training.image || 'https://placehold.co/600x400/1a6b3c/ffffff?text=AFI';
+                  : training.image || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
 
                 return (
                   <motion.div
                     key={training.id}
-                    className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col"
-                    initial={{ opacity: 0, y: 30 }}
+                    className="group bg-white rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 border border-gray-100 flex flex-col justify-between"
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
-                    {/* Image */}
-                    <div className="relative aspect-[16/9] overflow-hidden shrink-0 bg-gray-100">
-                      <img
-                        src={imgSrc}
-                        alt={training.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    <div className="space-y-4 p-5 sm:p-6">
+                      {/* Image */}
+                      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-gray-100 border border-gray-100">
+                        <img
+                          src={imgSrc}
+                          alt={training.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
+                          }}
+                        />
+                        <div className="absolute top-3 left-3 flex items-center gap-1.5 text-xs font-bold bg-white/90 backdrop-blur-md rounded-full px-3 py-1 text-[#1a6b3c] shadow-xs">
+                          <FiClock className="w-3.5 h-3.5" />
+                          <span>{training.duration || '3 mois'}</span>
+                        </div>
 
-                      <div className="absolute top-3 left-3 flex items-center gap-2 text-xs font-bold bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm" style={{ color: accent }}>
-                        <FiClock className="w-3 h-3" />
-                        {training.duration || '3 mois'}
+                        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-md rounded-full px-3 py-1 shadow-xs text-xs font-bold text-gray-800">
+                          <FiUsers className="w-3.5 h-3.5 text-[#1a6b3c]" />
+                          <span>{training.students} places</span>
+                        </div>
                       </div>
 
-                      <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm">
-                        <FiUsers className="w-3 h-3" style={{ color: accent }} />
-                        <span className="text-xs font-bold text-gray-700">{training.students}</span>
+                      {/* Content */}
+                      <div className="space-y-2">
+                        <h3 className="text-lg font-black text-gray-900 group-hover:text-[#1a6b3c] transition-colors">
+                          {training.title}
+                        </h3>
+
+                        <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
+                          {training.description}
+                        </p>
+
+                        <div className="pt-2 flex items-center gap-2">
+                          <FiAward className="w-4 h-4 text-[#1a6b3c]" />
+                          <span className="text-sm font-black text-[#1a6b3c] font-mono">
+                            {typeof training.price === 'number' ? `${training.price.toLocaleString('fr-FR')} FCFA` : training.price}
+                          </span>
+                        </div>
+
+                        {/* Modules */}
+                        {training.modules && training.modules.length > 0 && (
+                          <div className="pt-2 space-y-1.5">
+                            {training.modules.slice(0, 3).map((mod, idx) => (
+                              <div key={idx} className="flex items-center gap-2 text-xs text-gray-600">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#1a6b3c] shrink-0" />
+                                <span className="truncate">{mod}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Contenu */}
-                    <div className="flex-1 p-5 flex flex-col">
-                      <h3 className="text-lg font-black text-gray-800 mb-1.5 leading-tight group-hover:opacity-80 transition">
-                        {training.title}
-                      </h3>
-
-                      <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">
-                        {training.description}
-                      </p>
-
-                      {/* Prix */}
-                      <div className="flex items-center gap-1.5 mb-3">
-                        <FiAward className="w-4 h-4 shrink-0" style={{ color: accent }} />
-                        <span className="text-sm font-bold text-gray-800">{training.price}</span>
-                      </div>
-
-                      {/* Modules */}
-                      {training.modules && training.modules.length > 0 && (
-                        <div className="space-y-1.5 mb-4">
-                          {training.modules.slice(0, 3).map((mod, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-xs text-gray-500">
-                              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: accent }} />
-                              <span className="truncate">{mod}</span>
-                            </div>
-                          ))}
-                          {training.modules.length > 3 && (
-                            <div className="flex items-center gap-2 text-xs text-gray-400">
-                              <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-gray-300" />
-                              <span>+{training.modules.length - 3} modules</span>
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Spacer + CTA */}
-                      <div className="mt-auto">
-                        <Link
-                          to="/contact"
-                          className="inline-flex items-center gap-2 text-white font-semibold px-5 py-2.5 rounded-full transition-all duration-300 text-sm group/btn"
-                          style={{ backgroundColor: accent }}
-                          onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(0.85)'; }}
-                          onMouseLeave={(e) => { e.currentTarget.style.filter = 'none'; }}
-                        >
-                          S'inscrire
-                          <FiArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                        </Link>
-                      </div>
+                    <div className="p-5 sm:p-6 pt-0">
+                      <Link
+                        to="/contact"
+                        className="w-full inline-flex items-center justify-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-3 rounded-2xl transition text-xs shadow-md shadow-[#1a6b3c]/20 hover:scale-102"
+                      >
+                        <span>S'inscrire à cette formation</span>
+                        <FiArrowRight className="w-4 h-4" />
+                      </Link>
                     </div>
                   </motion.div>
                 );
@@ -321,42 +280,37 @@ export default function Formations() {
           )}
         </div>
 
-        {/* ===== CTA FINAL ===== */}
+        {/* ===== CALL TO ACTION ===== */}
         <motion.div
-          className="p-8 md:p-12 rounded-3xl text-center bg-[#1a6b3c] relative overflow-hidden mb-12"
+          className="p-8 sm:p-12 rounded-3xl text-center bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] text-white space-y-4 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-3xl" />
-          
-          <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-black text-white mb-4">
-              Prêt à <span className="text-green-300">démarrer</span> votre formation ?
-            </h2>
-            <p className="text-green-100 max-w-2xl mx-auto leading-relaxed mb-6">
-              Rejoignez le CFP Dorcas et développez des compétences professionnelles 
-              dans l'artisanat traditionnel béninois.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-[#1a6b3c] font-bold px-8 py-3.5 rounded-full transition-colors duration-300"
-              >
-                Nous contacter
-                <FiArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/boutique"
-                className="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-bold px-8 py-3.5 rounded-full transition-colors duration-300"
-              >
-                Découvrir la boutique
-              </Link>
-            </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-white">
+            Prêt à démarrer votre formation ?
+          </h2>
+          <p className="text-emerald-100 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
+            Rejoignez le CFP Dorcas et développez des compétences artisanales de haut niveau au Bénin.
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center pt-2">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-white hover:bg-emerald-50 text-[#1a6b3c] font-bold px-8 py-3.5 rounded-full transition-all shadow-lg hover:scale-105 text-xs sm:text-sm"
+            >
+              <span>Nous contacter</span>
+              <FiArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/boutique"
+              className="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-bold px-8 py-3.5 rounded-full transition text-xs sm:text-sm"
+            >
+              <span>Découvrir la boutique</span>
+            </Link>
           </div>
         </motion.div>
+
       </div>
     </div>
   );
