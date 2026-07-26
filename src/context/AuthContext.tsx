@@ -8,6 +8,7 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<User>;
   register: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -60,6 +61,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
+  const refreshUser = async () => {
+    try {
+      const data = await authApi.me();
+      const serverUser = data.user || data;
+      setUser(serverUser);
+      localStorage.setItem('afi_user', JSON.stringify(serverUser));
+    } catch {
+      // silencieux
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{ 
@@ -68,7 +80,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isLoading, 
         login, 
         register, 
-        logout 
+        logout,
+        refreshUser,
       }}
     >
       {children}

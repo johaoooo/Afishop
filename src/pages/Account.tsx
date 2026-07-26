@@ -362,7 +362,7 @@ function FavoritesTab() {
 }
 
 function ProfileTab() {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const [name, setName] = useState(user?.name || '');
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar || '');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -403,8 +403,8 @@ function ProfileTab() {
         return;
       }
 
-      const { user: updatedUser } = await authApi.updateProfile(payload);
-      localStorage.setItem('afi_user', JSON.stringify(updatedUser));
+      await authApi.updateProfile(payload);
+      await refreshUser();
       toast.success('Profil et photo mis à jour avec succès !');
       setCurrentPassword('');
       setNewPassword('');
