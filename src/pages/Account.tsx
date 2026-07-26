@@ -538,7 +538,7 @@ function ProfileTab() {
 }
 
 export default function Account() {
-  const { user, logout } = useAuth();
+  const { user, isLoading, logout } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [tab, setTab] = useState<'orders' | 'profile' | 'favorites'>(
@@ -546,10 +546,18 @@ export default function Account() {
   );
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !isLoading) {
       navigate('/connexion?redirect=/mon-compte');
     }
-  }, [user, navigate]);
+  }, [user, isLoading, navigate]);
+
+  if (isLoading) {
+    return (
+      <div className="bg-[#f8faf8] min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-[#1a6b3c] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (!user) return null;
 
