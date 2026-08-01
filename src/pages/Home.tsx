@@ -384,20 +384,20 @@ export default function Home() {
                   </Link>
                 </div>
 
-                {/* Compact Stat Bar - Clean layout without glassmorphism */}
-                <div className="hidden sm:grid grid-cols-4 gap-3 pt-4 mt-2 border-t border-white/15">
+                {/* Compact Stat Bar - Fully transparent floating layout (no background cards) */}
+                <div className="hidden sm:grid grid-cols-4 gap-4 pt-4 mt-2 border-t border-white/20">
                   {statsData.map((stat) => {
                     const IconComponent = stat.icon;
                     return (
-                      <div key={stat.key} className="flex items-center gap-2 text-white bg-black/35 p-2 rounded-xl border border-white/10">
-                        <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
-                          <IconComponent className="w-3.5 h-3.5" />
+                      <div key={stat.key} className="flex items-center gap-2.5 text-white">
+                        <div className="text-[#4ade80] shrink-0">
+                          <IconComponent className="w-4 h-4" />
                         </div>
                         <div>
-                          <p className="text-sm font-black text-white leading-none">
+                          <p className="text-sm sm:text-base font-black text-white leading-none drop-shadow-sm">
                             <AnimatedNumber target={stat.value} suffix={stat.suffix} />
                           </p>
-                          <p className="text-[9px] text-white/70 font-semibold uppercase tracking-wider mt-0.5">
+                          <p className="text-[9px] sm:text-[10px] text-white/80 font-semibold uppercase tracking-wider mt-0.5 drop-shadow-xs">
                             {stat.label}
                           </p>
                         </div>
