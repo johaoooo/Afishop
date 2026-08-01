@@ -558,7 +558,7 @@ export default function Home() {
 
           {/* Main Story Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
-            {/* Interactive Image Slider Box */}
+            {/* Interactive Image Slider Box - Perfectly framed & proportioned */}
             <motion.div 
               className="lg:col-span-6 relative group"
               initial={{ opacity: 0, x: -30 }}
@@ -566,59 +566,82 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/15 aspect-[4/3] bg-black">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/15 h-[400px] sm:h-[460px] lg:h-[500px] bg-[#07160c]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={impactSlideIndex}
                     className="absolute inset-0"
-                    initial={{ opacity: 0, scale: 1.04 }}
+                    initial={{ opacity: 0, scale: 1.05 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                   >
                     <img 
                       src={socialImpactStory.images[impactSlideIndex].url} 
                       alt={socialImpactStory.images[impactSlideIndex].alt} 
-                      className="w-full h-full object-cover"
+                      className={`w-full h-full object-cover ${impactSlideIndex === 0 ? 'object-center sm:object-top' : 'object-center'}`}
                     />
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
 
-                {/* Slider Controls */}
-                <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
-                  <button 
-                    onClick={() => setImpactSlideIndex((prev) => (prev - 1 + socialImpactStory.images.length) % socialImpactStory.images.length)}
-                    className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-105"
-                    aria-label="Image précédente"
-                  >
-                    <FiChevronLeft className="w-4 h-4" />
-                  </button>
-                  <span className="text-[10px] font-bold text-white bg-black/60 px-2.5 py-1 rounded-full border border-white/20 backdrop-blur-md font-mono">
-                    {impactSlideIndex + 1} / {socialImpactStory.images.length}
-                  </span>
-                  <button 
-                    onClick={() => setImpactSlideIndex((prev) => (prev + 1) % socialImpactStory.images.length)}
-                    className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-105"
-                    aria-label="Image suivante"
-                  >
-                    <FiChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Slide Caption Badge */}
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="text-[10px] font-bold text-emerald-300 bg-[#1a6b3c]/90 px-3 py-1 rounded-full shadow-md backdrop-blur-md border border-emerald-400/30">
+                {/* Top Controls & Navigation */}
+                <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-bold text-emerald-300 bg-[#1a6b3c]/90 px-3.5 py-1 rounded-full shadow-md backdrop-blur-md border border-emerald-400/30">
                     {socialImpactStory.images[impactSlideIndex].label}
                   </span>
+
+                  <div className="flex items-center gap-1.5">
+                    <button 
+                      onClick={() => setImpactSlideIndex(0)}
+                      className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
+                        impactSlideIndex === 0 
+                          ? 'bg-emerald-500 text-white border-emerald-400' 
+                          : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
+                      }`}
+                    >
+                      Photo 1
+                    </button>
+                    <button 
+                      onClick={() => setImpactSlideIndex(1)}
+                      className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
+                        impactSlideIndex === 1 
+                          ? 'bg-purple-600 text-white border-purple-400' 
+                          : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
+                      }`}
+                    >
+                      Photo 2
+                    </button>
+                  </div>
                 </div>
 
-                {/* Quote Overlay */}
-                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 bg-black/50 backdrop-blur-md rounded-2xl border border-white/15">
-                  <p className="text-xs font-medium text-white/95 italic leading-relaxed">
+                {/* Left/Right Arrow Navigation overlay */}
+                <button 
+                  onClick={() => setImpactSlideIndex((prev) => (prev - 1 + socialImpactStory.images.length) % socialImpactStory.images.length)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-110"
+                  aria-label="Image précédente"
+                >
+                  <FiChevronLeft className="w-5 h-5" />
+                </button>
+
+                <button 
+                  onClick={() => setImpactSlideIndex((prev) => (prev + 1) % socialImpactStory.images.length)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-110"
+                  aria-label="Image suivante"
+                >
+                  <FiChevronRight className="w-5 h-5" />
+                </button>
+
+                {/* Quote & Slide Indicator Overlay at Bottom */}
+                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 bg-black/60 backdrop-blur-md rounded-2xl border border-white/15 space-y-2">
+                  <p className="text-xs sm:text-sm font-medium text-white/95 italic leading-relaxed">
                     &ldquo;{socialImpactStory.quote}&rdquo;
                   </p>
+                  <div className="flex items-center justify-between text-[10px] text-emerald-300 font-semibold pt-1 border-t border-white/10">
+                    <span>{socialImpactStory.images[impactSlideIndex].alt}</span>
+                    <span className="font-mono text-white/70">{impactSlideIndex + 1} sur 2</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
