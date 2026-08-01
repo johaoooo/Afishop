@@ -1,7 +1,7 @@
 import SEO from '../components/SEO';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FiArrowLeft, FiTruck, FiShield } from 'react-icons/fi';
+import { FiArrowLeft, FiTruck, FiShield, FiCheckCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -15,14 +15,10 @@ declare global {
     }
   }
   interface Window {
-    FedaPay?: {
-      init: (selectorOrOptions: any, options?: any) => any;
-      CHECKOUT_COMPLETED?: string;
-    };
     openKkiapayWidget?: (config: Record<string, unknown>) => void;
     closeKkiapayWidget?: () => void;
     addSuccessListener?: (fn: (data: { transactionId: string }) => void) => void;
-    addFailedListener?: (fn: () => void) => void;
+    addFailedListener?: (fn: (error: any) => void) => void;
   }
 }
 
@@ -53,15 +49,45 @@ export default function Checkout() {
     }
   }, [items, navigate, pendingOrder]);
 
+  // KKiaPay Success and Failed Listeners
+  useEffect(() => {
+    const handleSuccess = async (data: { transactionId: string }) => {
+      if (pendingOrder) {
+        try {
+          const res = await paymentsApi.verify(data.transactionId, pendingOrder.id);
+          clearCart();
+          toast.success('Paiement KKiaPay confirmé avec succès ! 🎉');
+          navigate(`/mon-compte?commande=${res.order.id}`);
+        } catch (err: any) {
+          toast.error(err?.message || 'Erreur lors de la vérification du paiement KKiaPay');
+        } finally {
+          setSubmitting(false);
+        }
+      }
+    };
+
+    const handleFailed = () => {
+      toast.error('Le paiement KKiaPay a échoué ou a été annulé.');
+      setSubmitting(false);
+    };
+
+    if (window.addSuccessListener) {
+      window.addSuccessListener(handleSuccess);
+    }
+    if (window.addFailedListener) {
+      window.addFailedListener(handleFailed);
+    }
+  }, [pendingOrder, navigate, clearCart]);
+
   if (isLoading || !isAuthenticated || (items.length === 0 && !pendingOrder)) return null;
 
-  const FEDAPAY_PUBLIC_KEY = import.meta.env.VITE_FEDAPAY_PUBLIC_KEY || 'pk_sandbox_DI3uszKPCm0nuxSZjgdNJhf7';
+  const KKIAPAY_PUBLIC_KEY = import.meta.env.VITE_KKIAPAY_PUBLIC_KEY || '9f4857b0e11811e99e03d3c75abf1d6b';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!window.FedaPay) {
-      toast.error('Plateforme FedaPay pas encore disponible. Veuillez rafraîchir la page.');
+    if (!window.openKkiapayWidget) {
+      toast.error('Le service de paiement KKiaPay se charge. Veuillez patienter un instant.');
       return;
     }
 
@@ -73,40 +99,18 @@ export default function Checkout() {
 
       const cleanPhone = address.phone ? address.phone.replace(/\D/g, '') : '';
 
-      const widget = window.FedaPay.init({
-        public_key: FEDAPAY_PUBLIC_KEY,
-        transaction: {
-          amount: Math.round(order.total),
-          description: `Commande AFI #${order.id}`,
-          custom_metadata: { order_id: String(order.id) }
-        },
-        customer: {
-          email: user?.email || 'client@aficollection.com',
-          lastname: user?.name || 'Client',
-          firstname: 'AFI',
-          ...(cleanPhone ? { phone_number: { number: cleanPhone, country: 'bj' } } : {})
-        },
-        onComplete: async (response: any) => {
-          if (response && response.reason === 'CHECKOUT_COMPLETED') {
-            try {
-              const res = await paymentsApi.verify(response.transaction.id, order.id);
-              clearCart();
-              toast.success('Paiement FedaPay confirmé ! 🎉');
-              navigate(`/mon-compte?commande=${res.order.id}`);
-            } catch (err: any) {
-              toast.error(err?.message || 'Erreur lors de la vérification du paiement FedaPay');
-            }
-          } else {
-            toast.error('Le paiement FedaPay a été annulé');
-          }
-          setSubmitting(false);
-        }
+      // Trigger KKiaPay Sandbox Widget
+      window.openKkiapayWidget({
+        amount: Math.round(order.total),
+        key: KKIAPAY_PUBLIC_KEY,
+        sandbox: true,
+        phone: cleanPhone,
+        name: user?.name || 'Client AFI',
+        email: user?.email || 'client@aficollection.com',
+        data: String(order.id),
+        theme: '#1a6b3c',
+        position: 'center'
       });
-
-      if (widget && typeof widget.open === 'function') {
-        widget.open();
-      }
-      setSubmitting(false);
     } catch (error) {
       setSubmitting(false);
       if (error instanceof ApiError) {
@@ -117,11 +121,9 @@ export default function Checkout() {
     }
   };
 
-
-
   return (
     <div className="bg-[#f5f8f5] min-h-screen py-12">
-      <SEO title="Validation de commande" description="Finalisez votre commande AFI Collection. Livraison rapide et paiement sécurisé au Bénin." />
+      <SEO title="Validation de commande" description="Finalisez votre commande AFI Collection. Livraison rapide et paiement sécurisé KKiaPay au Bénin." />
       <div className="container mx-auto px-6 md:px-12 max-w-5xl">
         <Link to="/panier" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1a6b3c] mb-6 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour au panier
@@ -201,7 +203,7 @@ export default function Checkout() {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                    Téléphone <span className="text-red-500">*</span>
+                    Téléphone (Mobile Money) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -217,14 +219,14 @@ export default function Checkout() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4"
+                className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4 flex items-center justify-center gap-2"
               >
-                {submitting ? 'Création de la commande…' : `Valider et Payer avec FedaPay (${total.toLocaleString('fr-FR')} FCFA)`}
+                {submitting ? 'Création de la commande…' : `Payer avec KKiaPay (${total.toLocaleString('fr-FR')} FCFA)`}
               </button>
 
-              <p className="text-xs text-gray-400 text-center">
-                Mode test (sandbox) — aucun montant réel ne sera débité.
-              </p>
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center text-xs text-emerald-800 font-medium">
+                <span className="font-bold">Mode Sandbox (Test KKiaPay)</span> — MTN Mobile Money, Moov, Celtiis & Carte. Aucun montant réel ne sera débité.
+              </div>
             </form>
           </motion.div>
 
@@ -251,11 +253,15 @@ export default function Checkout() {
             <div className="mt-6 space-y-2 text-xs text-gray-400">
               <div className="flex items-center gap-2">
                 <FiTruck className="w-4 h-4 text-[#1a6b3c]" />
-                <span>Livraison 48h</span>
+                <span>Livraison 48h au Bénin</span>
               </div>
               <div className="flex items-center gap-2">
                 <FiShield className="w-4 h-4 text-[#1a6b3c]" />
-                <span>Paiement sécurisé via Kkiapay</span>
+                <span>Paiement sécurisé via KKiaPay</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FiCheckCircle className="w-4 h-4 text-[#1a6b3c]" />
+                <span>Confirmation instantanée par SMS / E-mail</span>
               </div>
             </div>
           </motion.div>
