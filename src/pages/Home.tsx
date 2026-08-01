@@ -434,7 +434,7 @@ export default function Home() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
-                <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight drop-shadow-lg">
+                <h1 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-black text-white leading-tight tracking-tight drop-shadow-lg">
                   {slides[currentSlide].title}
                   <br />
                   <span className="text-[#4ade80]">
@@ -442,7 +442,7 @@ export default function Home() {
                   </span>
                 </h1>
 
-                <p className="text-white/90 text-sm sm:text-base max-w-lg leading-relaxed font-normal drop-shadow">
+                <p className="text-white/90 text-xs sm:text-sm max-w-md leading-relaxed font-normal drop-shadow">
                   {slides[currentSlide].description}
                 </p>
 
