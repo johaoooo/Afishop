@@ -10,7 +10,9 @@ import {
   FiShoppingBag,
   FiUsers,
   FiHeadphones,
-  FiCheckCircle
+  FiCheckCircle,
+  FiChevronLeft,
+  FiChevronRight
 } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { productsApi, trainingsApi, type Product, type Training } from '../lib/api';
@@ -54,8 +56,20 @@ const socialImpactStory = {
   badge: "Inclusion & Égalité des Chances",
   title: "Le macramé comme levier d'autonomie pour les communautés sourdes et malentendantes",
   subtitle: "Célébrer la résilience et le talent : le silence n'est pas un obstacle à la création.",
-  mainImage: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg",
-  detailImage: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_fsbvtp.jpg",
+  images: [
+    {
+      id: 1,
+      url: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg",
+      alt: "Artisane sourde-muette assemblant un sac macramé sur cadre en bois",
+      label: "Assemblage minutieux sur cadre en bois"
+    },
+    {
+      id: 2,
+      url: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_fsbvtp.jpg",
+      alt: "Détail du tressage macramé aux cordes fuchsia et naturelles",
+      label: "Nouage de précision & touches rose fuchsia"
+    }
+  ],
   text: "Une image puissante qui capture l'essence de notre engagement en faveur de l'inclusion. Dans nos ateliers de formation, cette jeune artisane sourde-muette est pleinement concentrée sur l'assemblage minutieux d'un sac en macramé sur un cadre en bois traditionnel. Sous ses doigts agiles, cordes et motifs aux touches rose fuchsia se transforment en une œuvre unique, symbole de sa créativité et de son avenir.",
   quote: "Chaque nœud est un pas vers l'indépendance financière, la confiance en soi et l'intégration sociale.",
   cards: [
@@ -308,7 +322,15 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
   const [activeCategory, setActiveCategory] = useState('toutes');
+  const [impactSlideIndex, setImpactSlideIndex] = useState(0);
   const totalSlides = slides.length;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setImpactSlideIndex((prev) => (prev + 1) % socialImpactStory.images.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
   const testimonialRef = useRef<HTMLDivElement>(null);
   const partnerRef = useRef<HTMLDivElement>(null);
   const [autoScrollPaused, setAutoScrollPaused] = useState(false);
@@ -536,7 +558,7 @@ export default function Home() {
 
           {/* Main Story Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
-            {/* Image Box */}
+            {/* Interactive Image Slider Box */}
             <motion.div 
               className="lg:col-span-6 relative group"
               initial={{ opacity: 0, x: -30 }}
@@ -544,15 +566,57 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-[4/3]">
-                <img 
-                  src={socialImpactStory.mainImage} 
-                  alt="Artisane sourde-muette tissant le macramé" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/40 backdrop-blur-md rounded-2xl border border-white/15">
-                  <p className="text-xs font-medium text-white/90 italic">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/15 aspect-[4/3] bg-black">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={impactSlideIndex}
+                    className="absolute inset-0"
+                    initial={{ opacity: 0, scale: 1.04 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                  >
+                    <img 
+                      src={socialImpactStory.images[impactSlideIndex].url} 
+                      alt={socialImpactStory.images[impactSlideIndex].alt} 
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+
+                {/* Slider Controls */}
+                <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
+                  <button 
+                    onClick={() => setImpactSlideIndex((prev) => (prev - 1 + socialImpactStory.images.length) % socialImpactStory.images.length)}
+                    className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-105"
+                    aria-label="Image précédente"
+                  >
+                    <FiChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="text-[10px] font-bold text-white bg-black/60 px-2.5 py-1 rounded-full border border-white/20 backdrop-blur-md font-mono">
+                    {impactSlideIndex + 1} / {socialImpactStory.images.length}
+                  </span>
+                  <button 
+                    onClick={() => setImpactSlideIndex((prev) => (prev + 1) % socialImpactStory.images.length)}
+                    className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-105"
+                    aria-label="Image suivante"
+                  >
+                    <FiChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Slide Caption Badge */}
+                <div className="absolute top-4 left-4 z-20">
+                  <span className="text-[10px] font-bold text-emerald-300 bg-[#1a6b3c]/90 px-3 py-1 rounded-full shadow-md backdrop-blur-md border border-emerald-400/30">
+                    {socialImpactStory.images[impactSlideIndex].label}
+                  </span>
+                </div>
+
+                {/* Quote Overlay */}
+                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 bg-black/50 backdrop-blur-md rounded-2xl border border-white/15">
+                  <p className="text-xs font-medium text-white/95 italic leading-relaxed">
                     &ldquo;{socialImpactStory.quote}&rdquo;
                   </p>
                 </div>
