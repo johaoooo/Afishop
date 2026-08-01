@@ -66,10 +66,9 @@ const socialImpactStory = {
     },
     {
       id: 2,
-      url: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_fsbvtp.jpg",
+      url: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_1_mu9zgn.jpg",
       alt: "Détail du tressage macramé aux cordes fuchsia et naturelles",
-      label: "Nouage de précision & touches rose fuchsia",
-      fit: "object-contain bg-[#05140b] p-1"
+      fit: "object-cover object-center"
     }
   ],
   text: "Une image puissante qui capture l'essence de notre engagement en faveur de l'inclusion. Dans nos ateliers de formation, cette jeune artisane sourde-muette est pleinement concentrée sur l'assemblage minutieux d'un sac en macramé sur un cadre en bois traditionnel. Sous ses doigts agiles, cordes et motifs aux touches rose fuchsia se transforment en une œuvre unique, symbole de sa créativité et de son avenir.",
@@ -546,10 +545,6 @@ export default function Home() {
 
         <div className="container mx-auto px-4 md:px-12 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-500/30 uppercase tracking-widest mb-3">
-              <FiUsers className="w-3.5 h-3.5" />
-              {socialImpactStory.badge}
-            </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
               {socialImpactStory.title}
             </h2>
@@ -589,33 +584,27 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
 
                 {/* Top Controls & Navigation */}
-                <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-bold text-emerald-300 bg-[#1a6b3c]/90 px-3.5 py-1 rounded-full shadow-md backdrop-blur-md border border-emerald-400/30">
-                    {socialImpactStory.images[impactSlideIndex].label}
-                  </span>
-
-                  <div className="flex items-center gap-1.5">
-                    <button 
-                      onClick={() => setImpactSlideIndex(0)}
-                      className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
-                        impactSlideIndex === 0 
-                          ? 'bg-emerald-500 text-white border-emerald-400' 
-                          : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
-                      }`}
-                    >
-                      Photo 1
-                    </button>
-                    <button 
-                      onClick={() => setImpactSlideIndex(1)}
-                      className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
-                        impactSlideIndex === 1 
-                          ? 'bg-purple-600 text-white border-purple-400' 
-                          : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
-                      }`}
-                    >
-                      Photo 2
-                    </button>
-                  </div>
+                <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
+                  <button 
+                    onClick={() => setImpactSlideIndex(0)}
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
+                      impactSlideIndex === 0 
+                        ? 'bg-emerald-500 text-white border-emerald-400' 
+                        : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
+                    }`}
+                  >
+                    Photo 1
+                  </button>
+                  <button 
+                    onClick={() => setImpactSlideIndex(1)}
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
+                      impactSlideIndex === 1 
+                        ? 'bg-purple-600 text-white border-purple-400' 
+                        : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
+                    }`}
+                  >
+                    Photo 2
+                  </button>
                 </div>
 
                 {/* Left/Right Arrow Navigation overlay */}
@@ -703,10 +692,7 @@ export default function Home() {
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="space-y-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-                    {card.badge}
-                  </span>
+                <div className="space-y-1.5">
                   <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
                     {card.title}
                   </h3>
