@@ -492,12 +492,12 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* SECTION AVANTAGES */}
+      {/* SECTION AVANTAGES (ALIGNÉS HORIZONTALEMENT SUR 1 SEULE LIGNE) */}
       {/* ============================================================ */}
-      <section className="py-12 lg:py-16 bg-white">
+      <section className="py-8 sm:py-12 lg:py-16 bg-white">
         <div className="container mx-auto px-4 md:px-12">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+          <div className="text-center mb-6 sm:mb-10">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
               Les engagements <span className="text-[#1a6b3c]">AFI Collection</span>
             </h2>
             <p className="text-gray-500 mt-1 max-w-md mx-auto text-xs sm:text-sm">
@@ -505,28 +505,29 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* Horizontal Single Line Layout */}
+          <div className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 lg:grid lg:grid-cols-4 lg:gap-5 -mx-4 px-4 sm:mx-0 sm:px-0">
             {advantages.map((a, index) => (
               <motion.div
                 key={a.title}
-                className="group relative p-5 rounded-2xl bg-white border border-gray-100 hover:border-emerald-500/30 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="shrink-0 w-[240px] sm:w-[260px] lg:w-auto snap-center group relative p-4 sm:p-5 rounded-2xl bg-white border border-gray-100 hover:border-emerald-500/30 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.06 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
               >
                 <div>
-                  <div className={`w-12 h-12 rounded-xl ${a.bg} border flex items-center justify-center mb-4 group-hover:scale-105 transition-transform`}>
-                    <a.icon className="w-6 h-6" />
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${a.bg} border flex items-center justify-center mb-3 group-hover:scale-105 transition-transform`}>
+                    <a.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <h3 className="text-sm font-bold text-gray-900 group-hover:text-[#1a6b3c] transition-colors">
+                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-[#1a6b3c] transition-colors leading-snug">
                     {a.title}
                   </h3>
-                  <p className="text-gray-500 text-xs mt-1.5 leading-relaxed">
+                  <p className="text-gray-500 text-[11px] sm:text-xs mt-1.5 leading-relaxed line-clamp-3">
                     {a.text}
                   </p>
                 </div>
-                <div className="mt-3 pt-2.5 border-t border-gray-50 flex items-center text-[11px] font-semibold text-[#1a6b3c]">
+                <div className="mt-3 pt-2 border-t border-gray-50 flex items-center text-[10px] sm:text-[11px] font-semibold text-[#1a6b3c]">
                   <span>Garantie AFI</span>
                   <FiCheckCircle className="w-3 h-3 ml-1" />
                 </div>
