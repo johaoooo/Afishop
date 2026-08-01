@@ -68,7 +68,7 @@ const socialImpactStory = {
       id: 2,
       url: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_1_mu9zgn.jpg",
       alt: "Détail du tressage macramé aux cordes fuchsia et naturelles",
-      fit: "object-cover object-center"
+      fit: "object-cover object-top"
     }
   ],
   text: "Une image puissante qui capture l'essence de notre engagement en faveur de l'inclusion. Dans nos ateliers de formation, cette jeune artisane sourde-muette est pleinement concentrée sur l'assemblage minutieux d'un sac en macramé sur un cadre en bois traditionnel. Sous ses doigts agiles, cordes et motifs aux touches rose fuchsia se transforment en une œuvre unique, symbole de sa créativité et de son avenir.",
