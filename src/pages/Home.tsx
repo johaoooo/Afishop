@@ -803,24 +803,27 @@ export default function Home() {
       {/* ============================================================ */}
       {/* SECTION PRODUITS VEDETTES */}
       {/* ============================================================ */}
-      <section className="py-12 lg:py-16 bg-white">
+      <section className="py-10 sm:py-14 lg:py-16 bg-white">
         <div className="container mx-auto px-4 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div>
-              <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a6b3c] block mb-1">
+                Fait main au Bénin
+              </span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
                 Nos <span className="text-[#1a6b3c]">créations artisanales</span>
               </h2>
             </div>
 
             {/* Filter Category Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 md:pb-0 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
               {categoriesList.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3 py-1 rounded-full text-xs font-bold capitalize shrink-0 transition-all ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold capitalize shrink-0 transition-all ${
                     activeCategory === cat
-                      ? 'bg-[#1a6b3c] text-white shadow-sm'
+                      ? 'bg-[#1a6b3c] text-white shadow-sm scale-105'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
@@ -831,12 +834,12 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="bg-white rounded-2xl border border-gray-100 animate-pulse overflow-hidden">
-                  <div className="aspect-square bg-gray-200" />
-                  <div className="p-4 space-y-3">
-                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  <div className="aspect-[4/5] bg-gray-200" />
+                  <div className="p-3 space-y-2">
+                    <div className="h-3.5 bg-gray-200 rounded w-3/4" />
                     <div className="h-3 bg-gray-200 rounded w-1/2" />
                   </div>
                 </div>
@@ -854,14 +857,14 @@ export default function Home() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
               {filteredProducts.map((p, index) => (
                 <motion.div
                   key={p.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.3) }}
+                  transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.25) }}
                 >
                   <ProductCard product={p} />
                 </motion.div>
