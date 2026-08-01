@@ -61,13 +61,15 @@ const socialImpactStory = {
       id: 1,
       url: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg",
       alt: "Artisane sourde-muette assemblant un sac macramé sur cadre en bois",
-      label: "Assemblage minutieux sur cadre en bois"
+      label: "Assemblage minutieux sur cadre en bois",
+      fit: "object-cover object-top"
     },
     {
       id: 2,
       url: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_fsbvtp.jpg",
       alt: "Détail du tressage macramé aux cordes fuchsia et naturelles",
-      label: "Nouage de précision & touches rose fuchsia"
+      label: "Nouage de précision & touches rose fuchsia",
+      fit: "object-contain bg-[#05140b] p-1"
     }
   ],
   text: "Une image puissante qui capture l'essence de notre engagement en faveur de l'inclusion. Dans nos ateliers de formation, cette jeune artisane sourde-muette est pleinement concentrée sur l'assemblage minutieux d'un sac en macramé sur un cadre en bois traditionnel. Sous ses doigts agiles, cordes et motifs aux touches rose fuchsia se transforment en une œuvre unique, symbole de sa créativité et de son avenir.",
@@ -579,7 +581,7 @@ export default function Home() {
                     <img 
                       src={socialImpactStory.images[impactSlideIndex].url} 
                       alt={socialImpactStory.images[impactSlideIndex].alt} 
-                      className={`w-full h-full object-cover ${impactSlideIndex === 0 ? 'object-center sm:object-top' : 'object-center'}`}
+                      className={`w-full h-full ${socialImpactStory.images[impactSlideIndex].fit || 'object-cover object-center'}`}
                     />
                   </motion.div>
                 </AnimatePresence>
