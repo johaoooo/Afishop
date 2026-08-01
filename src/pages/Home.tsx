@@ -25,30 +25,85 @@ const slides = [
     id: 1, 
     image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563938/slidee_npenrh.png',
     title: 'AFI Collection',
-    subtitle: 'L\'Élégance Artisanale',
+    subtitle: 'L\'Élégance Artisanale & Inclusive',
     description: 'Des créations uniques faites main avec passion par nos maîtres artisans béninois.',
     cta: 'Découvrir la boutique',
     ctaLink: '/boutique'
   },
   { 
     id: 2, 
-    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1784014275/WhatsApp_Image_2026-07-14_at_08.29.54_rsd6nr.jpg',
-    title: 'Artisanat Africain',
-    subtitle: 'Authenticité & Prestige',
-    description: 'Chaque objet raconte l\'histoire vivante de notre patrimoine et de nos traditions.',
-    cta: 'En savoir plus',
+    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg',
+    title: 'Autonomisation & Inclusion',
+    subtitle: 'Le Macramé pour les Communautés Sourdes',
+    description: 'Offrir des outils concrets d\'indépendance financière et célébrer la résilience à travers l\'artisanat.',
+    cta: 'Notre engagement social',
     ctaLink: '/a-propos'
   },
   { 
     id: 3, 
-    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563939/slide3_zsjt4w.png',
-    title: 'Teinture & Textile',
-    subtitle: 'Couleurs d\'Afrique',
-    description: 'Étoffes d\'exception teintes aux pigments naturels et tissées au fil de la passion.',
-    cta: 'Voir les pagnes',
-    ctaLink: '/boutique'
+    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.53.13_syzpyy.jpg',
+    title: 'Savoir-Faire & Terroir',
+    subtitle: 'Du Grain au Klui-Klui Traditionnel',
+    description: 'Une aventure humaine et gourmande : de la torréfaction collective au foyer au Klui-Klui croustillant.',
+    cta: 'Découvrir le terroir',
+    ctaLink: '/boutique?cat=agroalimentaire'
   },
 ];
+
+const socialImpactStory = {
+  badge: "Inclusion & Égalité des Chances",
+  title: "Le macramé comme levier d'autonomie pour les communautés sourdes et malentendantes",
+  subtitle: "Célébrer la résilience et le talent : le silence n'est pas un obstacle à la création.",
+  mainImage: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg",
+  detailImage: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_fsbvtp.jpg",
+  text: "Une image puissante qui capture l'essence de notre engagement en faveur de l'inclusion. Dans nos ateliers de formation, cette jeune artisane sourde-muette est pleinement concentrée sur l'assemblage minutieux d'un sac en macramé sur un cadre en bois traditionnel. Sous ses doigts agiles, cordes et motifs aux touches rose fuchsia se transforment en une œuvre unique, symbole de sa créativité et de son avenir.",
+  quote: "Chaque nœud est un pas vers l'indépendance financière, la confiance en soi et l'intégration sociale.",
+  cards: [
+    {
+      id: 1,
+      title: "Fierté et accomplissement : la remise des créations",
+      image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785575610/WhatsApp_Image_2026-08-01_at_10.09.08_1_crzxkb.jpg",
+      text: "Une magnifique photo de groupe marquant l'aboutissement de notre atelier de formation ! Entourés des formateurs et encadrants, les participants présentent avec fierté leurs sacs artisanaux uniques aux couleurs vibrantes.",
+      badge: "Formation CFP Dorcas"
+    },
+    {
+      id: 2,
+      title: "La fierté du travail accompli avec passion",
+      image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.51.43_ykpwvs.jpg",
+      text: "Un sourire rayonnant qui en dit long ! Vêtue d'une élégante tenue en pagne, cette participante présente son sac macramé confectionné avec soin, illustrant la parfaite maîtrise des techniques de nouage.",
+      badge: "Savoir-faire Maîtrisé"
+    }
+  ]
+};
+
+const terroirStory = {
+  badge: "Gastronomie & Terroir Béninois",
+  title: "Du grain au croustillant : le Klui-Klui d'exception",
+  subtitle: "Une tradition gourmande façonnée par des mains expertes au cœur de nos communautés.",
+  steps: [
+    {
+      number: "01",
+      title: "Au cœur de nos communautés",
+      subtitle: "Torréfaction au foyer traditionnel",
+      image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.53.13_syzpyy.jpg",
+      text: "Réunies autour du foyer traditionnel, ces femmes mettent en commun leur énergie et leur expertise pour la torréfaction artisanale des arachides. Cet instant d'apprentissage et d'entraide capture l'essence du dynamisme local."
+    },
+    {
+      number: "02",
+      title: "La magie du geste",
+      subtitle: "Extraction & malaxage traditionnel",
+      image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573441/WhatsApp_Image_2026-08-01_at_08.48.24_1_z0ovdv.jpg",
+      text: "Dans ce grand bassin en aluminium, les mains expertes s'activent pour malaxer une pâte d'arachide onctueuse au ton beige doré. Un travail manuel patient qui libère tous les arômes d'une recette séculaire."
+    },
+    {
+      number: "03",
+      title: "Le Klui-Klui traditionnel",
+      subtitle: "Snack gourmand & authentique",
+      image: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573444/WhatsApp_Image_2026-08-01_at_08.31.11_2_x6h3lg.jpg",
+      text: "Bâtonnets d'arachide croustillants, dorés à souhait, façonnés puis frits après l'extraction de l'huile. Snack emblématique, sain et gourmand, reflet de la rigueur de nos artisanes."
+    }
+  ]
+};
 
 const statsData = [
   { key: 'clients', value: 500, suffix: '+', icon: FiUsers, label: 'Clients satisfaits' },
@@ -454,6 +509,200 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* SECTION IMPACT SOCIAL & INCLUSION (COMMUNAUTÉS SOURDES) */}
+      {/* ============================================================ */}
+      <section className="py-14 lg:py-20 bg-gradient-to-b from-[#091a10] via-[#0d2818] to-[#07150c] text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+
+        <div className="container mx-auto px-4 md:px-12 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-500/30 uppercase tracking-widest mb-3">
+              <FiUsers className="w-3.5 h-3.5" />
+              {socialImpactStory.badge}
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
+              {socialImpactStory.title}
+            </h2>
+            <p className="text-emerald-200/80 mt-2 text-xs sm:text-sm">
+              {socialImpactStory.subtitle}
+            </p>
+          </div>
+
+          {/* Main Story Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+            {/* Image Box */}
+            <motion.div 
+              className="lg:col-span-6 relative group"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-[4/3]">
+                <img 
+                  src={socialImpactStory.mainImage} 
+                  alt="Artisane sourde-muette tissant le macramé" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/40 backdrop-blur-md rounded-2xl border border-white/15">
+                  <p className="text-xs font-medium text-white/90 italic">
+                    &ldquo;{socialImpactStory.quote}&rdquo;
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Description & Impact Points */}
+            <motion.div 
+              className="lg:col-span-6 space-y-5"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="space-y-4 text-gray-200 text-sm sm:text-base leading-relaxed">
+                <p>
+                  {socialImpactStory.text}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs">
+                  <p className="text-xl sm:text-2xl font-black text-emerald-400">100%</p>
+                  <p className="text-xs text-gray-300 font-medium">Inclusion & Formation</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs">
+                  <p className="text-xl sm:text-2xl font-black text-purple-400">Autonomie</p>
+                  <p className="text-xs text-gray-300 font-medium">Financière & Sociale</p>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <Link
+                  to="/formations"
+                  className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-3 rounded-full transition-all shadow-lg hover:scale-105 text-xs sm:text-sm"
+                >
+                  <span>En savoir plus sur nos ateliers inclusifs</span>
+                  <FiArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Cards Showcase: Remise des créations & Fierté du fait main */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
+            {socialImpactStory.cards.map((card) => (
+              <motion.div
+                key={card.id}
+                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 flex flex-col sm:flex-row gap-4 p-4 items-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="w-full sm:w-2/5 aspect-[4/3] rounded-xl overflow-hidden shrink-0">
+                  <img 
+                    src={card.image} 
+                    alt={card.title} 
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                    {card.badge}
+                  </span>
+                  <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
+                    {card.title}
+                  </h3>
+                  <p className="text-xs text-gray-300 leading-relaxed">
+                    {card.text}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* SECTION SAVOIR-FAIRE TERROIR & KLUI-KLUI */}
+      {/* ============================================================ */}
+      <section className="py-14 lg:py-20 bg-[#faf8f5]">
+        <div className="container mx-auto px-4 md:px-12">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-700 text-xs font-bold border border-amber-500/20 uppercase tracking-widest mb-3">
+              <FiAward className="w-3.5 h-3.5" />
+              {terroirStory.badge}
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 tracking-tight leading-tight">
+              {terroirStory.title}
+            </h2>
+            <p className="text-gray-600 mt-2 text-xs sm:text-sm">
+              {terroirStory.subtitle}
+            </p>
+          </div>
+
+          {/* 3 Step Process Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {terroirStory.steps.map((step, idx) => (
+              <motion.div
+                key={step.number}
+                className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-amber-950/5 flex flex-col justify-between group"
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+              >
+                <div>
+                  <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                    <img 
+                      src={step.image} 
+                      alt={step.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute top-3 left-3 bg-[#1a6b3c] text-white text-xs font-black px-3 py-1 rounded-full shadow-md">
+                      Étape {step.number}
+                    </div>
+                  </div>
+
+                  <div className="p-6 space-y-2">
+                    <p className="text-xs font-bold text-amber-700 uppercase tracking-wider">
+                      {step.subtitle}
+                    </p>
+                    <h3 className="text-lg font-black text-gray-900 leading-snug group-hover:text-[#1a6b3c] transition-colors">
+                      {step.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed pt-1">
+                      {step.text}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-6 pb-6 pt-0">
+                  <div className="border-t border-gray-100 pt-3 flex items-center justify-between text-xs font-bold text-[#1a6b3c]">
+                    <span>100% Naturel & Artisanal</span>
+                    <FiCheckCircle className="w-4 h-4 text-emerald-600" />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Link
+              to="/boutique"
+              className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-7 py-3 rounded-full transition shadow-md shadow-[#1a6b3c]/20 hover:scale-105 text-xs sm:text-sm"
+            >
+              <span>Découvrir nos produits agroalimentaires du terroir</span>
+              <FiArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
