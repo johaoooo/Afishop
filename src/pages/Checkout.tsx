@@ -1,5 +1,5 @@
 import SEO from '../components/SEO';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FiArrowLeft, FiTruck, FiShield, FiCheckCircle } from 'react-icons/fi';
 import { motion } from 'framer-motion';
@@ -28,6 +28,8 @@ export default function Checkout() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const [submitting, setSubmitting] = useState(false);
   const [pendingOrder, setPendingOrder] = useState<Order | null>(null);
+  const pendingOrderRef = useRef<Order | null>(null);
+
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -44,17 +46,18 @@ export default function Checkout() {
   }, [isAuthenticated, isLoading, navigate]);
 
   useEffect(() => {
-    if (items.length === 0 && !pendingOrder) {
+    if (items.length === 0 && !pendingOrderRef.current) {
       navigate('/panier');
     }
-  }, [items, navigate, pendingOrder]);
+  }, [items, navigate]);
 
   // KKiaPay Success and Failed Listeners
   useEffect(() => {
     const handleSuccess = async (data: { transactionId: string }) => {
-      if (pendingOrder) {
+      const order = pendingOrderRef.current;
+      if (order) {
         try {
-          const res = await paymentsApi.verify(data.transactionId, pendingOrder.id);
+          const res = await paymentsApi.verify(data.transactionId, order.id);
           clearCart();
           toast.success('Paiement KKiaPay confirmé avec succès ! 🎉');
           navigate(`/mon-compte?commande=${res.order.id}`);
@@ -77,7 +80,7 @@ export default function Checkout() {
     if (window.addFailedListener) {
       window.addFailedListener(handleFailed);
     }
-  }, [pendingOrder, navigate, clearCart]);
+  }, [navigate, clearCart]);
 
   if (isLoading || !isAuthenticated || (items.length === 0 && !pendingOrder)) return null;
 
@@ -95,6 +98,7 @@ export default function Checkout() {
     try {
       const orderItems = items.map((i) => ({ productId: i.productId, quantity: i.quantity }));
       const { order } = await ordersApi.create(orderItems, address);
+      pendingOrderRef.current = order;
       setPendingOrder(order);
 
       const cleanPhone = address.phone ? address.phone.replace(/\D/g, '') : '';

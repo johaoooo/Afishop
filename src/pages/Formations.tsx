@@ -68,7 +68,7 @@ export default function Formations() {
       <SEO title="Formations Artisanales | AFI Collection" description="Découvrez nos formations artisanales : macramé, tissage, fabrication de sandales et teinture au Bénin avec le CFP Dorcas & AFI Collection." />
 
       {/* ===== HERO (Hauteur équivalente à la Boutique) ===== */}
-      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-20 md:py-28 text-white overflow-hidden shadow-md">
+      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-12 sm:py-16 md:py-28 text-white overflow-hidden shadow-md">
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1782717374/WhatsApp_Image_2026-06-29_at_08.08.43_jc7ddz.jpg"
           alt="Formation artisanale"

@@ -194,7 +194,7 @@ export default function Shop() {
       />
 
       {/* ===== HERO ===== */}
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-12 sm:py-16 md:py-28 overflow-hidden">
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441653/WhatsApp_Image_2026-05-03_at_13.15.44_e6xbcs.jpg"
           alt="Boutique AFI Collection"

@@ -392,8 +392,7 @@ export default function Home() {
       {/* HERO SLIDER (TEXTE VISIBLE SANS SCROLL) */}
       {/* ============================================================ */}
       <section 
-        className="relative overflow-hidden bg-black"
-        style={{ height: 'calc(100vh - 80px)', minHeight: 560, maxHeight: 840 }}
+        className="relative overflow-hidden bg-black h-[360px] sm:h-[480px] md:h-[calc(100vh-80px)] min-h-[340px] md:min-h-[560px] max-h-[500px] md:max-h-[840px]"
       >
         <AnimatePresence mode="wait">
           {slides.map((s, i) => (

@@ -17,7 +17,7 @@ export default function Services() {
   return (
     <div className="bg-[#faf8f5] min-h-screen">
       <SEO title="Services" description="Découvrez tous nos services : livraison rapide au Bénin, retours faciles, service client et paiement sécurisé." />
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-12 sm:py-16 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
           backgroundSize: '40px 40px',

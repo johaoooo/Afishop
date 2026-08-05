@@ -59,7 +59,7 @@ export default function Contact() {
       <SEO title="Contactez-nous | AFI Collection" description="Contactez l'équipe AFI Collection pour toute question sur nos créations artisanales, commandes sur-mesure ou formations." />
 
       {/* ===== HERO (comme la page Formations) ===== */}
-      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-16 md:py-24 text-white overflow-hidden shadow-md">
+      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-10 sm:py-14 md:py-24 text-white overflow-hidden shadow-md">
         <img
           src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
           alt="Contact AFI Collection"

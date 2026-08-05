@@ -6,7 +6,7 @@ export default function Privacy() {
   return (
     <div className="bg-[#faf8f5] min-h-screen">
       <SEO title="Politique de Confidentialité" description="Politique de confidentialité d'AFI Collection. Comment nous protégeons vos données personnelles." />
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-20 md:py-28 overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-10 sm:py-14 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
           backgroundSize: '40px 40px',
