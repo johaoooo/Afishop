@@ -83,6 +83,12 @@ export function ProductCard({ product }: { product: Product }) {
           {product.name}
         </h3>
 
+        {product.description && (
+          <p className="text-[11px] sm:text-xs text-gray-500 line-clamp-2 leading-relaxed">
+            {product.description}
+          </p>
+        )}
+
         <div className="flex items-center justify-between pt-1">
           <span className="font-black text-[#1a6b3c] text-xs sm:text-sm font-mono">
             {product.price.toLocaleString('fr-FR')} FCFA
