@@ -14,7 +14,7 @@ import { ApiError } from '../lib/api';
 import toast from 'react-hot-toast';
 
 const features = [
-  { icon: FiCheckCircle, text: 'Authentification sécurisée par JWT' },
+  { icon: FiCheckCircle, text: 'Connexion 100% sécurisée' },
   { icon: FiCheckCircle, text: 'Suivi de livraison en 48h sur Abomey-Calavi' },
   { icon: FiCheckCircle, text: 'Paiements mobiles & cartes sécurisés' },
 ];
