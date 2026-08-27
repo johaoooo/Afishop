@@ -19,6 +19,8 @@ declare global {
     closeKkiapayWidget?: () => void;
     addSuccessListener?: (fn: (data: { transactionId: string }) => void) => void;
     addFailedListener?: (fn: (error: any) => void) => void;
+    addKkiapayCloseListener?: (fn: () => void) => void;
+    addPaymentAbortedListener?: (fn: () => void) => void;
   }
 }
 
@@ -51,9 +53,10 @@ export default function Checkout() {
     }
   }, [items, navigate]);
 
-  // KKiaPay Success and Failed Listeners
+  // KKiaPay Listeners
   useEffect(() => {
     const handleSuccess = async (data: { transactionId: string }) => {
+      console.log('✅ [KKiaPay Success Event]:', data);
       const order = pendingOrderRef.current;
       if (order) {
         try {
@@ -62,6 +65,7 @@ export default function Checkout() {
           toast.success('Paiement KKiaPay confirmé avec succès ! 🎉');
           navigate(`/mon-compte?commande=${res.order.id}`);
         } catch (err: any) {
+          console.error('❌ [KKiaPay Verification Error]:', err);
           toast.error(err?.message || 'Erreur lors de la vérification du paiement KKiaPay');
         } finally {
           setSubmitting(false);
@@ -69,8 +73,14 @@ export default function Checkout() {
       }
     };
 
-    const handleFailed = () => {
+    const handleFailed = (err?: any) => {
+      console.warn('⚠️ [KKiaPay Failed Event]:', err);
       toast.error('Le paiement KKiaPay a échoué ou a été annulé.');
+      setSubmitting(false);
+    };
+
+    const handleClose = () => {
+      console.log('ℹ️ [KKiaPay Closed Event]');
       setSubmitting(false);
     };
 
@@ -80,11 +90,17 @@ export default function Checkout() {
     if (window.addFailedListener) {
       window.addFailedListener(handleFailed);
     }
+    if (window.addKkiapayCloseListener) {
+      window.addKkiapayCloseListener(handleClose);
+    }
+    if (window.addPaymentAbortedListener) {
+      window.addPaymentAbortedListener(handleClose);
+    }
   }, [navigate, clearCart]);
 
   if (isLoading || !isAuthenticated || (items.length === 0 && !pendingOrder)) return null;
 
-  const KKIAPAY_PUBLIC_KEY = import.meta.env.VITE_KKIAPAY_PUBLIC_KEY || '9f4857b0e11811e99e03d3c75abf1d6b';
+  const KKIAPAY_PUBLIC_KEY = import.meta.env.VITE_KKIAPAY_PUBLIC_KEY || 'da52a61056cd11f193801de6de503f5f';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,20 +117,30 @@ export default function Checkout() {
       pendingOrderRef.current = order;
       setPendingOrder(order);
 
-      const cleanPhone = address.phone ? address.phone.replace(/\D/g, '') : '';
+      // Clean phone number (8 digits for Bénin)
+      let cleanPhone = address.phone ? address.phone.replace(/\D/g, '') : '';
+      if (cleanPhone.startsWith('229') && cleanPhone.length > 8) {
+        cleanPhone = cleanPhone.slice(3);
+      }
 
-      // Trigger KKiaPay Sandbox Widget
-      window.openKkiapayWidget({
-        amount: Math.round(order.total),
+      const paymentAmount = Math.max(1, Math.round(order.total || total || 1));
+
+      const kkiapayConfig = {
+        amount: paymentAmount,
         key: KKIAPAY_PUBLIC_KEY,
         sandbox: true,
-        phone: cleanPhone,
-        name: user?.name || 'Client AFI',
-        email: user?.email || 'client@aficollection.com',
+        phone: cleanPhone || '97000000',
+        name: (user?.name && user.name.trim()) || 'Client AFI',
+        email: (user?.email && user.email.trim()) || 'client@aficollection.com',
         data: String(order.id),
         theme: '#1a6b3c',
         position: 'center'
-      });
+      };
+
+      console.log('🚀 [KKiaPay Launch Params]:', kkiapayConfig);
+
+      // Trigger KKiaPay Sandbox Widget
+      window.openKkiapayWidget(kkiapayConfig);
     } catch (error) {
       setSubmitting(false);
       if (error instanceof ApiError) {
