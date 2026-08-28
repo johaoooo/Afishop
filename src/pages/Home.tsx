@@ -22,36 +22,6 @@ import { ProductCard } from '../components/ProductCard';
 // DONNÉES
 // ============================================================
 
-const slides = [
-  { 
-    id: 1, 
-    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563938/slidee_npenrh.png',
-    title: 'AFI Collection',
-    subtitle: 'L\'Élégance Artisanale & Inclusive',
-    description: 'Des créations uniques faites main avec passion par nos maîtres artisans béninois.',
-    cta: 'Découvrir la boutique',
-    ctaLink: '/boutique'
-  },
-  { 
-    id: 2, 
-    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg',
-    title: 'Autonomisation & Inclusion',
-    subtitle: 'Le Macramé pour les Communautés Sourdes',
-    description: 'Offrir des outils concrets d\'indépendance financière et célébrer la résilience à travers l\'artisanat.',
-    cta: 'Notre engagement social',
-    ctaLink: '/a-propos'
-  },
-  { 
-    id: 3, 
-    image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.53.13_syzpyy.jpg',
-    title: 'Savoir-Faire & Terroir',
-    subtitle: 'Du Grain au Klui-Klui Traditionnel',
-    description: 'Une aventure humaine et gourmande : de la torréfaction collective au foyer au Klui-Klui croustillant.',
-    cta: 'Découvrir le terroir',
-    ctaLink: '/boutique?cat=agroalimentaire'
-  },
-];
-
 const socialImpactStory = {
   badge: "Inclusion & Égalité des Chances",
   title: "Le macramé comme levier d'autonomie pour les communautés sourdes et malentendantes",
@@ -320,11 +290,8 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
   const [activeCategory, setActiveCategory] = useState('toutes');
   const [impactSlideIndex, setImpactSlideIndex] = useState(0);
-  const totalSlides = slides.length;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -367,13 +334,6 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [totalSlides]);
-
   const categoriesList = ['toutes', 'macramé', 'teinture', 'décoration', 'accessoires', 'sésame', 'soja'];
 
   const filteredProducts = useMemo(() => {
@@ -389,105 +349,113 @@ export default function Home() {
       />
       
       {/* ============================================================ */}
-      {/* HERO SLIDER (TEXTE VISIBLE SANS SCROLL) */}
+      {/* HERO SECTION - Style Saveurs d'Agojié adapté AFI Collection */}
       {/* ============================================================ */}
-      <section 
-        className="relative overflow-hidden bg-black h-[360px] sm:h-[480px] md:h-[calc(100vh-80px)] min-h-[340px] md:min-h-[560px] max-h-[500px] md:max-h-[840px]"
-      >
-        <AnimatePresence mode="wait">
-          {slides.map((s, i) => (
-            i === currentSlide && (
-              <motion.div
-                key={s.id}
-                className="absolute inset-0"
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.03 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
+      <section className="hero-afi">
+        {/* Arrière-plan fixe avec animation Ken Burns */}
+        <div 
+          className="hero-afi-bg" 
+          style={{ backgroundImage: `url('https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563939/slide3_zsjt4w.png')` }}
+        />
+
+        {/* Voiles et ambiance lumineuse */}
+        <div className="hero-afi-overlay" />
+        <div className="hero-afi-orb hero-afi-orb--one" />
+        <div className="hero-afi-orb hero-afi-orb--two" />
+        <div className="hero-afi-grain" />
+
+        {/* Contenu 2 Colonnes */}
+        <div className="hero-afi-container container mx-auto px-4 sm:px-6 lg:px-12 w-full">
+          <div className="hero-afi-grid">
+            
+            {/* Colonne Gauche : Textes & Actions */}
+            <div className="hero-afi-text-content space-y-4">
+              {/* Titre principal */}
+              <motion.h1 
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="hero-afi-title text-left"
               >
-                <img
-                  src={imgErrors[s.id] ? 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600' : s.image}
-                  alt={s.title}
-                  onError={() => setImgErrors((prev) => ({ ...prev, [s.id]: true }))}
-                  className="w-full h-full object-cover"
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                />
-              </motion.div>
-            )
-          ))}
-        </AnimatePresence>
+                <span className="hero-afi-title-top">Tisser l'avenir,</span>
+                <span className="hero-afi-title-accent">valoriser le local</span>
+              </motion.h1>
 
-        <div className="absolute inset-0 z-10 bg-black/45" />
-        <div className="absolute inset-0 z-15 bg-gradient-to-r from-black/85 via-black/55 to-transparent" />
-        <div className="absolute inset-0 z-15 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-
-        {/* Content Container - Carefully proportioned */}
-        <div className="absolute inset-0 z-20 flex items-center">
-          <div className="container mx-auto px-6 md:px-12 w-full">
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={currentSlide}
-                className="max-w-xl text-left space-y-3"
+              {/* Description */}
+              <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="hero-afi-description text-left"
               >
-                <h1 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-black text-white leading-tight tracking-tight drop-shadow-lg">
-                  {slides[currentSlide].title}
-                  <br />
-                  <span className="text-[#4ade80]">
-                    {slides[currentSlide].subtitle}
-                  </span>
-                </h1>
+                Maroquinerie d'art AFISAC, tissages et pagnes AFI Textile, bijoux AFI Mode, agroalimentaire et formations d'excellence au CFP Dorcas · L'artisanat d'exception béninois rayonnant à l'international.
+              </motion.p>
 
-                <p className="text-white/90 text-xs sm:text-sm max-w-md leading-relaxed font-normal drop-shadow">
-                  {slides[currentSlide].description}
-                </p>
+              {/* Boutons d'action */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 justify-start"
+              >
+                <Link 
+                  to="/boutique" 
+                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold shadow-lg shadow-[#1a6b3c]/40 hover:shadow-xl hover:shadow-[#1a6b3c]/50 transform hover:-translate-y-0.5 transition-all text-xs sm:text-sm tracking-wide"
+                >
+                  <span>Découvrir la boutique</span>
+                  <FiArrowRight className="w-4 h-4" />
+                </Link>
 
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <Link
-                    to={slides[currentSlide].ctaLink}
-                    className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-5 py-2.5 rounded-full transition-all duration-300 text-xs sm:text-sm shadow-lg shadow-[#1a6b3c]/30 hover:scale-105 group"
-                  >
-                    <span>{slides[currentSlide].cta}</span>
-                    <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    to="/formations"
-                    className="inline-flex items-center gap-2 border-2 border-white/50 hover:border-white text-white hover:bg-white/10 font-bold px-5 py-2.5 rounded-full transition-all duration-300 text-xs sm:text-sm backdrop-blur-xs hover:scale-105"
-                  >
-                    <span>Nos Formations CFP</span>
-                  </Link>
-                </div>
+                <Link 
+                  to="/formations" 
+                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-[#fbbf24] backdrop-blur-md font-semibold transition-all transform hover:-translate-y-0.5 text-xs sm:text-sm"
+                >
+                  <FiAward className="text-[#fbbf24] w-4 h-4" />
+                  <span>Nos Formations CFP</span>
+                </Link>
 
-                {/* Compact Stat Bar - Fully transparent floating layout (no background cards) */}
-                <div className="hidden sm:grid grid-cols-4 gap-4 pt-4 mt-2 border-t border-white/20">
-                  {statsData.map((stat) => {
-                    const IconComponent = stat.icon;
-                    return (
-                      <div key={stat.key} className="flex items-center gap-2.5 text-white">
-                        <div className="text-[#4ade80] shrink-0">
-                          <IconComponent className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <p className="text-sm sm:text-base font-black text-white leading-none drop-shadow-sm">
-                            <AnimatedNumber target={stat.value} suffix={stat.suffix} />
-                          </p>
-                          <p className="text-[9px] sm:text-[10px] text-white/80 font-semibold uppercase tracking-wider mt-0.5 drop-shadow-xs">
-                            {stat.label}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                <Link 
+                  to="/a-propos" 
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-300 hover:text-[#fbbf24] transition-colors font-medium px-2 py-2"
+                >
+                  <span>Notre Histoire</span>
+                  <span>→</span>
+                </Link>
               </motion.div>
-            </AnimatePresence>
+
+              {/* Puces de réassurance / Statistiques */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 mt-2 border-t border-white/15"
+              >
+                {statsData.map((stat) => {
+                  const IconComponent = stat.icon;
+                  return (
+                    <div key={stat.key} className="flex items-center gap-2 text-white">
+                      <div className="text-[#4ade80] shrink-0">
+                        <IconComponent className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm sm:text-base font-black text-white leading-none drop-shadow-sm">
+                          <AnimatedNumber target={stat.value} suffix={stat.suffix} />
+                        </p>
+                        <p className="text-[9px] sm:text-[10px] text-white/80 font-semibold uppercase tracking-wider mt-0.5">
+                          {stat.label}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </div>
+
           </div>
         </div>
 
-
+        {/* Fondu subtil vers la section suivante */}
+        <div className="hero-afi-fade" />
       </section>
 
       {/* ============================================================ */}

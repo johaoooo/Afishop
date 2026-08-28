@@ -58,14 +58,14 @@ export default function Contact() {
     <div className="bg-[#f8faf8] min-h-screen text-gray-900 pb-20">
       <SEO title="Contactez-nous | AFI Collection" description="Contactez l'équipe AFI Collection pour toute question sur nos créations artisanales, commandes sur-mesure ou formations." />
 
-      {/* ===== HERO (comme la page Formations) ===== */}
-      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-10 sm:py-14 md:py-24 text-white overflow-hidden shadow-md">
+      {/* ===== HERO ===== */}
+      <div className="relative py-14 sm:py-20 md:py-32 text-white overflow-hidden shadow-md">
         <img
-          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200"
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600"
           alt="Contact AFI Collection"
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
+          className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-black/20" />
         
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
           <motion.div
@@ -74,10 +74,10 @@ export default function Contact() {
             transition={{ duration: 0.4 }}
             className="space-y-2"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
-              Contactez-<span className="text-[#4ade80]">nous</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white drop-shadow-md">
+              Contactez-<span className="text-[#fbbf24]">nous</span>
             </h1>
-            <p className="text-white/80 text-sm sm:text-base font-medium max-w-md mx-auto pt-1">
+            <p className="text-white/90 text-sm sm:text-base font-medium max-w-md mx-auto pt-1 drop-shadow-sm">
               Une question sur une création, une commande sur-mesure ou nos formations ? Notre équipe est à votre écoute.
             </p>
           </motion.div>

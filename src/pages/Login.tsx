@@ -66,20 +66,14 @@ export default function Login() {
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563931/slide01_gwdcug.png"
           alt="Artisanat béninois"
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          className="absolute inset-0 w-full h-full object-cover opacity-80 filter brightness-[0.95] contrast-[1.05]"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
               'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200';
           }}
         />
         
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-950/90 via-gray-950/60 to-[#1a6b3c]/20" />
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{ 
-            backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-950/75 via-gray-950/45 to-transparent" />
 
         <div className="relative z-10 flex flex-col justify-between h-full p-10">
           <Link

@@ -23,13 +23,13 @@ export default function About() {
       <SEO title="À Propos | AFI Collection" description="Découvrez l'histoire d'AFI Collection, notre mission de valoriser l'artisanat béninois et notre communauté d'artisans talentueux." />
 
       {/* ===== HERO ===== */}
-      <div className="relative bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] py-12 sm:py-16 md:py-28 text-white overflow-hidden shadow-md">
+      <div className="relative py-14 sm:py-20 md:py-32 text-white overflow-hidden shadow-md">
         <img
-          src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200"
+          src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600"
           alt="AFI Collection - Artisanat béninois"
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
+          className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-black/20" />
         
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
           <motion.div
@@ -38,10 +38,10 @@ export default function About() {
             transition={{ duration: 0.4 }}
             className="space-y-2"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white">
-              À Propos de <span className="text-[#4ade80]">AFI Collection</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white drop-shadow-md">
+              À Propos de <span className="text-[#fbbf24]">AFI Collection</span>
             </h1>
-            <p className="text-white/80 text-sm sm:text-base font-medium max-w-md mx-auto pt-1">
+            <p className="text-white/90 text-sm sm:text-base font-medium max-w-md mx-auto pt-1 drop-shadow-sm">
               L'excellence de l'artisanat béninois, entre passion, tradition et modernité.
             </p>
           </motion.div>

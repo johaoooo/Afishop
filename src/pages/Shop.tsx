@@ -194,31 +194,27 @@ export default function Shop() {
       />
 
       {/* ===== HERO ===== */}
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-12 sm:py-16 md:py-28 overflow-hidden">
+      <div className="relative py-14 sm:py-20 md:py-32 overflow-hidden shadow-md">
         <img
           src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441653/WhatsApp_Image_2026-05-03_at_13.15.44_e6xbcs.jpg"
           alt="Boutique AFI Collection"
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
               'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200';
           }}
         />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 opacity-5" style={{ 
-          backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent" />
         <div className="container mx-auto px-6 md:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight drop-shadow-md">
               La boutique
             </h1>
-            <p className="text-white/80 text-base max-w-md mt-3">
+            <p className="text-white/90 text-base max-w-md mt-3 font-medium drop-shadow-sm">
               Toutes nos créations artisanales, en un seul endroit.
             </p>
           </motion.div>
