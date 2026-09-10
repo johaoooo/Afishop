@@ -8,15 +8,16 @@ import {
   FiAward, 
   FiStar,
   FiShoppingBag,
-  FiUsers,
   FiHeadphones,
   FiCheckCircle,
   FiChevronLeft,
   FiChevronRight
 } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
+import { FaWhatsapp } from 'react-icons/fa';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { productsApi, trainingsApi, type Product, type Training } from '../lib/api';
 import { ProductCard } from '../components/ProductCard';
+import { AFI_IMAGES, AFI_FALLBACK_PRODUCT, AFI_FALLBACK_PHOTO } from '../lib/images';
 
 // ============================================================
 // DONNÉES
@@ -90,19 +91,12 @@ const terroirStory = {
   ]
 };
 
-const statsData = [
-  { key: 'clients', value: 500, suffix: '+', icon: FiUsers, label: 'Clients satisfaits' },
-  { key: 'products', value: 500, suffix: '+', icon: FiShoppingBag, label: 'Produits uniques' },
-  { key: 'artisans', value: 1000, suffix: '+', icon: FiAward, label: 'Artisans partenaires' },
-  { key: 'satisfaction', value: 98, suffix: '%', icon: FiStar, label: 'Satisfaction' },
-];
-
 const advantages = [
   { 
     icon: FiAward, 
     title: '100% Artisanal & Fait Main', 
     text: 'Créations authentiques façonnées par des maîtres artisans béninois au savoir-faire d\'exception.',
-    bg: 'bg-emerald-500/10 text-emerald-600 border-emerald-200/60',
+    bg: 'bg-[#028444]/15 text-[#05a855] border-[#028444]/40',
     delay: 0.1
   },
   { 
@@ -215,40 +209,17 @@ const partners = [
 // COMPOSANTS AUXILIAIRES
 // ============================================================
 
-function AnimatedNumber({ target, suffix, duration = 2000 }: { target: number; suffix: string; duration?: number }) {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    let startTime: number;
-    let animationFrame: number;
-
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCurrent(Math.floor(progress * target));
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate);
-      }
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [target, duration]);
-
-  return <span>{current.toLocaleString('fr-FR')}{suffix}</span>;
-}
-
 function FeatureSection({ section, index }: { section: typeof featuredSections[0]; index: number }) {
   return (
     <motion.div 
-      className={`flex flex-col ${section.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-6 lg:gap-12 items-center py-10 lg:py-14 ${index !== 0 ? 'border-t border-gray-200/60' : ''}`}
+      className={`flex flex-col ${section.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-6 lg:gap-12 items-center py-10 lg:py-14 ${index !== 0 ? 'border-t border-white/10' : ''}`}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="w-full lg:w-1/2 group">
-        <div className="relative rounded-3xl overflow-hidden shadow-lg shadow-black/5 border border-gray-100">
+        <div className="relative rounded-3xl overflow-hidden shadow-xl border border-white/15 bg-black/40">
           <img
             src={section.image}
             alt={section.title}
@@ -256,29 +227,213 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
             loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
-                'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800';
+                AFI_IMAGES.exposition;
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-50 group-hover:opacity-30 transition-opacity" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
         </div>
       </div>
 
       <div className="w-full lg:w-1/2 space-y-4">
-        <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-tight tracking-tight">
           {section.title}
         </h3>
-        <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+        <p className="text-white/60 text-sm sm:text-base leading-relaxed">
           {section.text}
         </p>
         <Link 
           to="/boutique" 
-          className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white text-xs font-bold px-5 py-2.5 rounded-full transition-all duration-300 shadow-md shadow-[#1a6b3c]/20 hover:scale-105"
+          className="btn-raised btn-sm"
         >
           <span>Découvrir nos créations</span>
           <FiArrowRight className="w-4 h-4" />
         </Link>
       </div>
     </motion.div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// COMPOSANTS DU HERO POP INSPIRÉ DU SITE DU PORT 3002
+// (EN VERT DU LOGO AFI : #028444 & #05a855)
+// ═══════════════════════════════════════════════════════════
+
+const HERO_SLOGANS = [
+  { before: "Maison d'artisanat d'art & créations ", highlight: "FAIT MAIN" },
+  { before: "Maroquinerie de prestige & macramé ", highlight: "BÉNINOIS" },
+  { before: "Inclusion des sourds & formations certifiées ", highlight: "CFP DORCAS" },
+  { before: "Saveurs authentiques du terroir & klui-klui ", highlight: "D'AGONLIN" },
+];
+
+const HERO_AVATARS = [
+  { name: "Pelagie A.", img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.51.43_ykpwvs.jpg" },
+  { name: "Dorcas D.", img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg" },
+  { name: "Victoire K.", img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785575610/WhatsApp_Image_2026-08-01_at_10.09.08_1_crzxkb.jpg" },
+  { name: "Bernadette M.", img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.53.13_syzpyy.jpg" },
+];
+
+const HERO_GALLERY_ITEMS = [
+  {
+    id: 1,
+    title: "Sac Macramé Fuchsia & Naturel",
+    type: "Maroquinerie d'Art",
+    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_1_mu9zgn.jpg",
+    url: "/boutique"
+  },
+  {
+    id: 2,
+    title: "Sac Banane Artisanal Tissé",
+    type: "Accessoires & Mode",
+    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.51.43_ykpwvs.jpg",
+    url: "/boutique"
+  },
+  {
+    id: 3,
+    title: "Atelier Macramé & Inclusion Sociale",
+    type: "CFP Dorcas",
+    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg",
+    url: "/formations"
+  },
+  {
+    id: 4,
+    title: "Klui-Klui d'Agonlin Croustillant",
+    type: "Terroir Béninois",
+    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573444/WhatsApp_Image_2026-08-01_at_08.31.11_2_x6h3lg.jpg",
+    url: "/boutique"
+  },
+  {
+    id: 5,
+    title: "Exposition & Salons d'Art",
+    type: "Collection AFI",
+    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441621/WhatsApp_Image_2026-05-03_at_13.03.09_2_cujxnk.jpg",
+    url: "/boutique"
+  },
+  {
+    id: 6,
+    title: "Remise des Diplômes & Créations",
+    type: "Impact Social",
+    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785575610/WhatsApp_Image_2026-08-01_at_10.09.08_1_crzxkb.jpg",
+    url: "/formations"
+  }
+];
+
+function HeroSloganCycle() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((i) => (i + 1) % HERO_SLOGANS.length), 3500);
+    return () => clearInterval(id);
+  }, []);
+
+  const { before, highlight } = HERO_SLOGANS[index];
+
+  return (
+    <div className="mb-4 sm:mb-6 max-w-5xl mx-auto min-h-[4.8rem] sm:min-h-[6.2rem] flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.h1
+          key={index}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -18 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
+          className="font-black italic uppercase text-white text-center leading-[1.18] tracking-tight m-0 text-2xl sm:text-4xl md:text-5xl lg:text-[3.5rem]"
+          style={{ textShadow: '4px 4px 0px rgba(0,0,0,0.7)' }}
+        >
+          {before}
+          <span
+            className="inline-block bg-[#028444] text-white px-3.5 py-0.5 sm:px-4 sm:py-1 rounded-lg border-[3px] border-black shadow-[5px_5px_0px_#fff,0_0_32px_rgba(5,168,85,0.45)] not-italic rotate-[-2deg] ml-2"
+            style={{ textShadow: 'none' }}
+          >
+            {highlight}
+          </span>
+        </motion.h1>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function CircularProjectsGallery() {
+  const [active, setActive] = useState(0);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const id = setInterval(() => setActive((a) => (a + 1) % HERO_GALLERY_ITEMS.length), 2800);
+    return () => clearInterval(id);
+  }, [reduceMotion]);
+
+  const order = HERO_GALLERY_ITEMS.map((_, i) => {
+    let rel = i - active;
+    if (rel > HERO_GALLERY_ITEMS.length / 2) rel -= HERO_GALLERY_ITEMS.length;
+    if (rel < -HERO_GALLERY_ITEMS.length / 2) rel += HERO_GALLERY_ITEMS.length;
+    return rel;
+  });
+
+  const CARD_W = 320;
+  const CARD_H = 172;
+  const STEP = CARD_W * 0.72;
+
+  return (
+    <div className="relative h-[210px] sm:h-[235px] w-full max-w-[100vw] overflow-hidden flex items-center justify-center [perspective:1200px]">
+      {HERO_GALLERY_ITEMS.map((p, i) => {
+        const rel = order[i];
+        const abs = Math.abs(rel);
+        const x = rel * STEP;
+        const y = abs * 14;
+        const rot = rel * 8;
+        const scale = 1 - abs * 0.13;
+        const opacity = abs > 2 ? 0 : 1 - abs * 0.18;
+        const isActive = rel === 0;
+
+        return (
+          <motion.div
+            key={p.id}
+            animate={{ x, y, rotate: rot, scale, opacity }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => setActive(i)}
+            style={{
+              position: 'absolute',
+              width: CARD_W,
+              height: CARD_H,
+              borderRadius: 14,
+              overflow: 'hidden',
+              zIndex: 10 - abs,
+              cursor: 'pointer',
+              border: isActive
+                ? '2px solid #05a855'
+                : '1px solid rgba(255,255,255,0.14)',
+              boxShadow: isActive
+                ? '0 0 0 3px rgba(5, 168, 85, 0.35), 0 16px 40px rgba(0,0,0,0.85)'
+                : '0 6px 20px rgba(0,0,0,0.5)',
+              transformStyle: 'preserve-3d',
+            }}
+          >
+            <img
+              src={p.img}
+              alt={p.title}
+              className="w-full h-full object-cover object-center"
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: isActive
+                  ? 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)'
+                  : 'rgba(0, 0, 0, 0.65)',
+              }}
+            />
+            <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 text-left">
+              <div className="font-extrabold text-white text-xs sm:text-sm tracking-tight line-clamp-1">
+                {p.title}
+              </div>
+              <div className="text-[10px] sm:text-xs font-bold text-[#05a855] mt-0.5">
+                {p.type}
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -292,6 +447,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('toutes');
   const [impactSlideIndex, setImpactSlideIndex] = useState(0);
+
+  const heroMidRef = useRef<HTMLDivElement>(null);
+  const heroGalleryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -342,132 +500,185 @@ export default function Home() {
   }, [products, activeCategory]);
 
   return (
-    <div className="bg-[#f8faf8] text-gray-900 overflow-x-clip">
+    <div className="bg-[#070b08] text-white overflow-x-clip">
       <SEO
-        title="Boutique Artisanale"
-        description="Découvrez AFI Collection, votre boutique artisanale de sacs macramé, sandales, pagnes, accessoires et produits agroalimentaires du Bénin. Livraison 48h."
+        title="Boutique Artisanale & Maroquinerie d'Art"
+        description="Découvrez AFI Collection, maison d'artisanat d'art béninois : sacs macramé faits main, sandales, pagnes, agroalimentaire et formations certifiées CFP Dorcas. Livraison 48h."
       />
       
       {/* ============================================================ */}
-      {/* HERO SECTION - Style Saveurs d'Agojié adapté AFI Collection */}
+      {/* HERO SECTION - Style Copié du Port 3002 en VERT DU LOGO AFI */}
       {/* ============================================================ */}
-      <section className="hero-afi">
-        {/* Arrière-plan fixe avec animation Ken Burns */}
-        <div 
-          className="hero-afi-bg" 
-          style={{ backgroundImage: `url('https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563939/slide3_zsjt4w.png')` }}
-        />
-
-        {/* Voiles et ambiance lumineuse */}
-        <div className="hero-afi-overlay" />
-        <div className="hero-afi-orb hero-afi-orb--one" />
-        <div className="hero-afi-orb hero-afi-orb--two" />
-        <div className="hero-afi-grain" />
-
-        {/* Contenu 2 Colonnes */}
-        <div className="hero-afi-container container mx-auto px-4 sm:px-6 lg:px-12 w-full">
-          <div className="hero-afi-grid">
-            
-            {/* Colonne Gauche : Textes & Actions */}
-            <div className="hero-afi-text-content space-y-4">
-              {/* Titre principal */}
-              <motion.h1 
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="hero-afi-title text-left"
-              >
-                <span className="hero-afi-title-top">Tisser l'avenir,</span>
-                <span className="hero-afi-title-accent">valoriser le local</span>
-              </motion.h1>
-
-              {/* Description */}
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="hero-afi-description text-left"
-              >
-                Maroquinerie d'art AFISAC, tissages et pagnes AFI Textile, bijoux AFI Mode, agroalimentaire et formations d'excellence au CFP Dorcas · L'artisanat d'exception béninois rayonnant à l'international.
-              </motion.p>
-
-              {/* Boutons d'action */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 justify-start"
-              >
-                <Link 
-                  to="/boutique" 
-                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold shadow-lg shadow-[#1a6b3c]/40 hover:shadow-xl hover:shadow-[#1a6b3c]/50 transform hover:-translate-y-0.5 transition-all text-xs sm:text-sm tracking-wide"
-                >
-                  <span>Découvrir la boutique</span>
-                  <FiArrowRight className="w-4 h-4" />
-                </Link>
-
-                <Link 
-                  to="/formations" 
-                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/30 hover:border-[#fbbf24] backdrop-blur-md font-semibold transition-all transform hover:-translate-y-0.5 text-xs sm:text-sm"
-                >
-                  <FiAward className="text-[#fbbf24] w-4 h-4" />
-                  <span>Nos Formations CFP</span>
-                </Link>
-
-                <Link 
-                  to="/a-propos" 
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-gray-300 hover:text-[#fbbf24] transition-colors font-medium px-2 py-2"
-                >
-                  <span>Notre Histoire</span>
-                  <span>→</span>
-                </Link>
-              </motion.div>
-
-              {/* Puces de réassurance / Statistiques */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 mt-2 border-t border-white/15"
-              >
-                {statsData.map((stat) => {
-                  const IconComponent = stat.icon;
-                  return (
-                    <div key={stat.key} className="flex items-center gap-2 text-white">
-                      <div className="text-[#4ade80] shrink-0">
-                        <IconComponent className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="text-sm sm:text-base font-black text-white leading-none drop-shadow-sm">
-                          <AnimatedNumber target={stat.value} suffix={stat.suffix} />
-                        </p>
-                        <p className="text-[9px] sm:text-[10px] text-white/80 font-semibold uppercase tracking-wider mt-0.5">
-                          {stat.label}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </motion.div>
-            </div>
-
-          </div>
+      <section 
+        className="relative min-h-[92vh] lg:min-h-[100vh] w-full overflow-hidden flex flex-col justify-between items-center bg-[#070b08] pt-24 sm:pt-28 pb-6"
+        onMouseMove={(e) => {
+          const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+          const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+          if (heroMidRef.current) {
+            heroMidRef.current.style.transform = `translate3d(${x * 16}px, ${y * 12}px, 0)`;
+          }
+          if (heroGalleryRef.current) {
+            heroGalleryRef.current.style.transform = `translate3d(${x * -18}px, ${y * -8}px, 0)`;
+          }
+        }}
+      >
+        {/* Calque Fond Arrière-Plan avec texture grille et demi-teinte */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <img
+            src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563939/slide3_zsjt4w.png"
+            alt="Artisanes AFI Collection"
+            className="w-full h-full object-cover filter blur-[2px] scale-105 opacity-80"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-[#070b08]/50 to-[#070b08]" />
+          <div className="grid-bg absolute inset-0 opacity-10 pointer-events-none" />
+          <div className="halftone-bg absolute top-0 right-0 w-1/2 h-1/2 opacity-10 pointer-events-none" />
         </div>
 
-        {/* Fondu subtil vers la section suivante */}
-        <div className="hero-afi-fade" />
+        {/* Particules Lumineuses Flottantes */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          {[
+            { left: '10%', top: '20%', s: 5, dur: 4.2, dy: 0 },
+            { left: '26%', top: '68%', s: 4, dur: 5.4, dy: 1 },
+            { left: '52%', top: '16%', s: 6, dur: 4.8, dy: 0.5 },
+            { left: '74%', top: '75%', s: 4, dur: 6.0, dy: 1.5 },
+            { left: '88%', top: '22%', s: 5, dur: 3.8, dy: 0.2 },
+          ].map((p, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-[#05a855] shadow-[0_0_12px_#05a855]"
+              style={{ left: p.left, top: p.top, width: p.s, height: p.s, opacity: 0.35 }}
+              animate={{ y: [0, -22, 0] }}
+              transition={{ duration: p.dur, repeat: Infinity, ease: 'easeInOut', delay: p.dy }}
+            />
+          ))}
+        </div>
+
+        {/* Contenu Central : Titre, Slogan, Avatars, Boutons */}
+        <div
+          ref={heroMidRef}
+          className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center transition-transform duration-100 ease-out"
+        >
+          {/* Slogan Cyclique */}
+          <HeroSloganCycle />
+
+          {/* Paragraphe descriptif centré */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="text-white/75 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 leading-relaxed"
+          >
+            Maison d'artisanat d'art béninois : sacs en macramé uniques, tissages traditionnels, agroalimentaire du terroir et formation d'excellence au CFP Dorcas.
+          </motion.p>
+
+          {/* AvatarGroup Réassurance Sociale */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="flex items-center justify-center gap-3 mb-6"
+          >
+            <div className="flex -space-x-2.5 overflow-hidden p-1">
+              {HERO_AVATARS.map((c, i) => (
+                <img
+                  key={i}
+                  src={c.img}
+                  alt={c.name}
+                  className="inline-block h-8 w-8 sm:h-9 sm:w-9 rounded-full ring-2 ring-black object-cover border border-white/20"
+                />
+              ))}
+            </div>
+            <div className="text-left">
+              <div className="font-black italic text-xs sm:text-sm text-white uppercase leading-tight tracking-tight">
+                Artisanes & Maîtres d'art
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold text-[#05a855]">
+                150+ femmes formées & 500+ créations uniques
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Boutons d'Action Néo-Brutalistes */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+          >
+            <a
+              href="https://wa.me/2290197222880"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-raised btn-xl"
+            >
+              <FaWhatsapp className="w-5 h-5 text-white" />
+              <span>Commander sur WhatsApp</span>
+              <FiArrowRight className="w-4 h-4" />
+            </a>
+
+            <Link
+              to="/boutique"
+              className="btn-ghost btn-xl"
+            >
+              <span>Explorer la boutique</span>
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Galerie Circulaire 3D Ancrée en bas du Hero */}
+        <div
+          ref={heroGalleryRef}
+          className="w-full relative z-20 mt-6 sm:mt-8 transition-transform duration-100 ease-out"
+        >
+          <CircularProjectsGallery />
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="relative z-20 flex flex-col items-center opacity-40 pointer-events-none mt-2">
+          <span className="text-[9px] tracking-widest uppercase font-bold text-white mb-1">Scroll</span>
+          <motion.div
+            animate={{ scaleY: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.6, repeat: Infinity }}
+            className="w-0.5 h-6 bg-white/40 rounded-full"
+          />
+        </div>
       </section>
+
+      {/* ── Marquee strip réassurance façon port 3002 en vert du logo AFI ── */}
+      <div className="bg-[#028444] text-white font-black italic uppercase py-3 overflow-hidden border-y-[3px] border-black shadow-[0_4px_24px_rgba(5,168,85,0.4)]">
+        <div className="marquee-container">
+          <div className="marquee-content text-xs sm:text-sm tracking-wider flex items-center gap-8">
+            <span>✦ MACRAMÉ D'ART FAIT MAIN</span>
+            <span>✦ 100% ARTISANAT BÉNINOIS</span>
+            <span>✦ FORMATIONS CFP DORCAS INCLUSIVES</span>
+            <span>✦ LIVRAISON 48H BÉNIN & AFRIQUE</span>
+            <span>✦ PAIEMENT SÉCURISÉ MOBILE MONEY KKIAPAY</span>
+            <span>✦ ATELIER ABOMEY-CALAVI</span>
+            <span>✦ MACRAMÉ D'ART FAIT MAIN</span>
+            <span>✦ 100% ARTISANAT BÉNINOIS</span>
+            <span>✦ FORMATIONS CFP DORCAS INCLUSIVES</span>
+            <span>✦ LIVRAISON 48H BÉNIN & AFRIQUE</span>
+            <span>✦ PAIEMENT SÉCURISÉ MOBILE MONEY KKIAPAY</span>
+            <span>✦ ATELIER ABOMEY-CALAVI</span>
+          </div>
+        </div>
+      </div>
 
       {/* ============================================================ */}
       {/* SECTION AVANTAGES (ALIGNÉS HORIZONTALEMENT SUR 1 SEULE LIGNE) */}
       {/* ============================================================ */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-white">
-        <div className="container mx-auto px-4 md:px-12">
+      <section className="py-8 sm:py-12 lg:py-16 pop-night relative overflow-hidden">
+        <div className="pop-halftone absolute inset-0 opacity-[0.06] pointer-events-none" />
+        <div className="container mx-auto px-4 md:px-12 relative">
           <div className="text-center mb-6 sm:mb-10">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-              Les engagements <span className="text-[#1a6b3c]">AFI Collection</span>
+            <span className="text-xs font-black uppercase tracking-widest text-[#05a855]">Nos engagements</span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black italic uppercase text-white tracking-tight mt-3">
+              <span className="pop-ghost-wrap">
+                <span className="pop-ghost" aria-hidden="true">AFI Collection</span>
+                Les engagements <span className="text-[#05a855]">AFI Collection</span>
+              </span>
             </h2>
-            <p className="text-gray-500 mt-1 max-w-md mx-auto text-xs sm:text-sm">
+            <p className="text-white/50 mt-2 max-w-md mx-auto text-xs sm:text-sm">
               L'alliance de la qualité artisanale et de la satisfaction client
             </p>
           </div>
@@ -477,24 +688,24 @@ export default function Home() {
             {advantages.map((a, index) => (
               <motion.div
                 key={a.title}
-                className="shrink-0 w-[240px] sm:w-[260px] lg:w-auto snap-center group relative p-4 sm:p-5 rounded-2xl bg-white border border-gray-100 hover:border-emerald-500/30 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                className="pop-card shrink-0 w-[240px] sm:w-[260px] lg:w-auto snap-center group relative p-4 sm:p-5 flex flex-col justify-between"
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
                 <div>
-                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${a.bg} border flex items-center justify-center mb-3 group-hover:scale-105 transition-transform`}>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#028444] border-2 border-black shadow-[2px_2px_0px_#000] text-white flex items-center justify-center mb-3 group-hover:scale-105 group-hover:rotate-6 transition-transform">
                     <a.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-[#1a6b3c] transition-colors leading-snug">
+                  <h3 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#05a855] transition-colors leading-snug">
                     {a.title}
                   </h3>
-                  <p className="text-gray-500 text-[11px] sm:text-xs mt-1.5 leading-relaxed line-clamp-3">
+                  <p className="text-white/50 text-[11px] sm:text-xs mt-1.5 leading-relaxed line-clamp-3">
                     {a.text}
                   </p>
                 </div>
-                <div className="mt-3 pt-2 border-t border-gray-50 flex items-center text-[10px] sm:text-[11px] font-semibold text-[#1a6b3c]">
+                <div className="mt-3 pt-2 border-t border-white/10 flex items-center text-[10px] sm:text-[11px] font-bold text-[#05a855]">
                   <span>Garantie AFI</span>
                   <FiCheckCircle className="w-3 h-3 ml-1" />
                 </div>
@@ -507,23 +718,27 @@ export default function Home() {
       {/* ============================================================ */}
       {/* SECTION IMPACT SOCIAL & INCLUSION (COMMUNAUTÉS SOURDES) */}
       {/* ============================================================ */}
-      <section className="py-14 lg:py-20 bg-gradient-to-b from-[#091a10] via-[#0d2818] to-[#07150c] text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      <section className="py-14 lg:py-20 bg-gradient-to-b from-[#070b08] via-[#121914] to-[#070b08] text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#028444]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#05a855]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-4 md:px-12 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
-              {socialImpactStory.title}
+            <span className="text-xs font-black uppercase tracking-widest text-[#05a855] mb-2 inline-block">Engagement Citoyen</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase text-white tracking-tight leading-tight mt-1">
+              <span className="pop-ghost-wrap">
+                <span className="pop-ghost" aria-hidden="true">Impact Social</span>
+                {socialImpactStory.title}
+              </span>
             </h2>
-            <p className="text-emerald-200/80 mt-2 text-xs sm:text-sm">
+            <p className="text-white/60 mt-2 text-xs sm:text-sm max-w-xl mx-auto">
               {socialImpactStory.subtitle}
             </p>
           </div>
 
           {/* Main Story Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
-            {/* Interactive Image Slider Box - Perfectly framed & proportioned */}
+            {/* Interactive Image Slider Box */}
             <motion.div 
               className="lg:col-span-6 relative group"
               initial={{ opacity: 0, x: -30 }}
@@ -531,15 +746,15 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/15 h-[400px] sm:h-[460px] lg:h-[500px] bg-[#07160c]">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-white/15 h-[400px] sm:h-[460px] lg:h-[500px] bg-[#121914]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={impactSlideIndex}
-                    className="absolute inset-0"
                     initial={{ opacity: 0, scale: 1.05 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.97 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-full h-full relative"
                   >
                     <img 
                       src={socialImpactStory.images[impactSlideIndex].url} 
@@ -555,30 +770,30 @@ export default function Home() {
                 <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
                   <button 
                     onClick={() => setImpactSlideIndex(0)}
-                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
+                    className={`px-3 py-1 rounded-full text-[10px] font-black italic uppercase transition-all backdrop-blur-md border ${
                       impactSlideIndex === 0 
-                        ? 'bg-emerald-500 text-white border-emerald-400' 
+                        ? 'bg-[#028444] text-white border-black shadow-[2px_2px_0px_#000]' 
                         : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
                     }`}
                   >
-                    Photo 1
+                    Atelier Macramé
                   </button>
                   <button 
                     onClick={() => setImpactSlideIndex(1)}
-                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all backdrop-blur-md border ${
+                    className={`px-3 py-1 rounded-full text-[10px] font-black italic uppercase transition-all backdrop-blur-md border ${
                       impactSlideIndex === 1 
-                        ? 'bg-purple-600 text-white border-purple-400' 
+                        ? 'bg-[#028444] text-white border-black shadow-[2px_2px_0px_#000]' 
                         : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
                     }`}
                   >
-                    Photo 2
+                    Remise des dons
                   </button>
                 </div>
 
                 {/* Left/Right Arrow Navigation overlay */}
                 <button 
                   onClick={() => setImpactSlideIndex((prev) => (prev - 1 + socialImpactStory.images.length) % socialImpactStory.images.length)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-110"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-[#028444] hover:text-white text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-110"
                   aria-label="Image précédente"
                 >
                   <FiChevronLeft className="w-5 h-5" />
@@ -586,18 +801,18 @@ export default function Home() {
 
                 <button 
                   onClick={() => setImpactSlideIndex((prev) => (prev + 1) % socialImpactStory.images.length)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-110"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-[#028444] hover:text-white text-white backdrop-blur-md flex items-center justify-center border border-white/20 transition-all hover:scale-110"
                   aria-label="Image suivante"
                 >
                   <FiChevronRight className="w-5 h-5" />
                 </button>
 
                 {/* Quote & Slide Indicator Overlay at Bottom */}
-                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 bg-black/60 backdrop-blur-md rounded-2xl border border-white/15 space-y-2">
+                <div className="absolute bottom-4 left-4 right-4 z-20 p-4 bg-black/75 backdrop-blur-md rounded-2xl border border-white/15 space-y-2">
                   <p className="text-xs sm:text-sm font-medium text-white/95 italic leading-relaxed">
                     &ldquo;{socialImpactStory.quote}&rdquo;
                   </p>
-                  <div className="flex items-center justify-between text-[10px] text-emerald-300 font-semibold pt-1 border-t border-white/10">
+                  <div className="flex items-center justify-between text-[10px] text-[#05a855] font-bold pt-1 border-t border-white/10">
                     <span>{socialImpactStory.images[impactSlideIndex].alt}</span>
                     <span className="font-mono text-white/70">{impactSlideIndex + 1} sur 2</span>
                   </div>
@@ -613,27 +828,27 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="space-y-4 text-gray-200 text-sm sm:text-base leading-relaxed">
+              <div className="space-y-4 text-white/80 text-sm sm:text-base leading-relaxed">
                 <p>
                   {socialImpactStory.text}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                  <p className="text-xl sm:text-2xl font-black text-emerald-400">100%</p>
-                  <p className="text-xs text-gray-300 font-medium">Inclusion & Formation</p>
+                <div className="p-4 rounded-2xl bg-[#121914] border border-white/10">
+                  <p className="text-xl sm:text-2xl font-black text-[#05a855]">100%</p>
+                  <p className="text-xs text-white/70 font-medium">Inclusion & Formation</p>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                  <p className="text-xl sm:text-2xl font-black text-purple-400">Autonomie</p>
-                  <p className="text-xs text-gray-300 font-medium">Financière & Sociale</p>
+                <div className="p-4 rounded-2xl bg-[#121914] border border-white/10">
+                  <p className="text-xl sm:text-2xl font-black text-white">Autonomie</p>
+                  <p className="text-xs text-white/70 font-medium">Financière & Sociale</p>
                 </div>
               </div>
 
               <div className="pt-2">
                 <Link
                   to="/formations"
-                  className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-3 rounded-full transition-all shadow-lg hover:scale-105 text-xs sm:text-sm"
+                  className="btn-raised"
                 >
                   <span>En savoir plus sur nos ateliers inclusifs</span>
                   <FiArrowRight className="w-4 h-4" />
@@ -647,24 +862,24 @@ export default function Home() {
             {socialImpactStory.cards.map((card) => (
               <motion.div
                 key={card.id}
-                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-300 flex flex-col sm:flex-row gap-4 p-4 items-center"
+                className="pop-card flex flex-col sm:flex-row gap-4 p-4 items-center group"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4 }}
               >
-                <div className="w-full sm:w-2/5 aspect-[4/3] rounded-xl overflow-hidden shrink-0">
+                <div className="w-full sm:w-2/5 aspect-[4/3] rounded-xl overflow-hidden shrink-0 border border-white/10">
                   <img 
                     src={card.image} 
                     alt={card.title} 
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
+                  <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-[#05a855] transition-colors leading-snug">
                     {card.title}
                   </h3>
-                  <p className="text-xs text-gray-300 leading-relaxed">
+                  <p className="text-xs text-white/60 leading-relaxed">
                     {card.text}
                   </p>
                 </div>
@@ -677,13 +892,18 @@ export default function Home() {
       {/* ============================================================ */}
       {/* SECTION SAVOIR-FAIRE TERROIR & KLUI-KLUI */}
       {/* ============================================================ */}
-      <section className="py-14 lg:py-20 bg-[#faf8f5]">
-        <div className="container mx-auto px-4 md:px-12">
+      <section className="py-14 lg:py-20 pop-night relative overflow-hidden">
+        <div className="pop-halftone absolute inset-0 opacity-[0.05] pointer-events-none" />
+        <div className="container mx-auto px-4 md:px-12 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 tracking-tight leading-tight">
-              {terroirStory.title}
+            <span className="text-xs font-black uppercase tracking-widest text-[#05a855] mb-2 inline-block">Terroir Béninois</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase text-white tracking-tight leading-tight mt-1">
+              <span className="pop-ghost-wrap">
+                <span className="pop-ghost" aria-hidden="true">Savoir-Faire</span>
+                {terroirStory.title}
+              </span>
             </h2>
-            <p className="text-gray-600 mt-2 text-xs sm:text-sm">
+            <p className="text-white/60 mt-2 text-xs sm:text-sm max-w-xl mx-auto">
               {terroirStory.subtitle}
             </p>
           </div>
@@ -693,41 +913,41 @@ export default function Home() {
             {terroirStory.steps.map((step, idx) => (
               <motion.div
                 key={step.number}
-                className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-amber-950/5 flex flex-col justify-between group"
+                className="pop-card flex flex-col justify-between group overflow-hidden"
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
               >
                 <div>
-                  <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-black/40 border-b border-white/10">
                     <img 
                       src={step.image} 
                       alt={step.title} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute top-3 left-3 bg-[#1a6b3c] text-white text-xs font-black px-3 py-1 rounded-full shadow-md">
+                    <div className="absolute top-3 left-3 bg-[#028444] text-white text-xs font-black italic uppercase px-3 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000]">
                       Étape {step.number}
                     </div>
                   </div>
 
                   <div className="p-6 space-y-2">
-                    <p className="text-xs font-bold text-amber-700 uppercase tracking-wider">
+                    <p className="text-xs font-black uppercase tracking-wider text-[#05a855]">
                       {step.subtitle}
                     </p>
-                    <h3 className="text-lg font-black text-gray-900 leading-snug group-hover:text-[#1a6b3c] transition-colors">
+                    <h3 className="text-lg font-black text-white leading-snug group-hover:text-[#05a855] transition-colors">
                       {step.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed pt-1">
+                    <p className="text-xs sm:text-sm text-white/60 leading-relaxed pt-1">
                       {step.text}
                     </p>
                   </div>
                 </div>
 
                 <div className="px-6 pb-6 pt-0">
-                  <div className="border-t border-gray-100 pt-3 flex items-center justify-between text-xs font-bold text-[#1a6b3c]">
+                  <div className="border-t border-white/10 pt-3 flex items-center justify-between text-xs font-bold text-[#05a855]">
                     <span>100% Naturel & Artisanal</span>
-                    <FiCheckCircle className="w-4 h-4 text-emerald-600" />
+                    <FiCheckCircle className="w-4 h-4 text-[#05a855]" />
                   </div>
                 </div>
               </motion.div>
@@ -737,7 +957,7 @@ export default function Home() {
           <div className="text-center mt-10">
             <Link
               to="/boutique"
-              className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-7 py-3 rounded-full transition shadow-md shadow-[#1a6b3c]/20 hover:scale-105 text-xs sm:text-sm"
+              className="btn-raised"
             >
               <span>Découvrir nos produits agroalimentaires du terroir</span>
               <FiArrowRight className="w-4 h-4" />
@@ -749,13 +969,17 @@ export default function Home() {
       {/* ============================================================ */}
       {/* SECTION UNIVERSE & ENGAGEMENT */}
       {/* ============================================================ */}
-      <section className="py-12 lg:py-16 bg-[#f4f7f4]">
+      <section className="py-12 lg:py-16 pop-night relative overflow-hidden border-t border-white/10">
         <div className="container mx-auto px-4 md:px-12">
           <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-4xl font-black text-gray-900 tracking-tight">
-              Découvrez <span className="text-[#1a6b3c]">notre histoire</span>
+            <span className="text-xs font-black uppercase tracking-widest text-[#05a855] mb-2 inline-block">Maison d'Artisanat</span>
+            <h2 className="text-2xl md:text-4xl font-black italic uppercase text-white tracking-tight mt-1">
+              <span className="pop-ghost-wrap">
+                <span className="pop-ghost" aria-hidden="true">Histoire</span>
+                Découvrez <span className="text-[#05a855]">notre histoire</span>
+              </span>
             </h2>
-            <p className="text-gray-500 mt-1 max-w-lg mx-auto text-xs sm:text-sm">
+            <p className="text-white/50 mt-1 max-w-lg mx-auto text-xs sm:text-sm">
               Plongez au cœur de l'artisanat béninois à travers nos valeurs et nos passions.
             </p>
           </div>
@@ -771,15 +995,17 @@ export default function Home() {
       {/* ============================================================ */}
       {/* SECTION PRODUITS VEDETTES */}
       {/* ============================================================ */}
-      <section className="py-10 sm:py-14 lg:py-16 bg-white">
-        <div className="container mx-auto px-4 md:px-12">
+      <section className="py-10 sm:py-14 lg:py-16 pop-night relative overflow-hidden border-t border-white/10">
+        <div className="pop-halftone absolute inset-0 opacity-[0.05] pointer-events-none" />
+        <div className="container mx-auto px-4 md:px-12 relative">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a6b3c] block mb-1">
-                Fait main au Bénin
-              </span>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-                Nos <span className="text-[#1a6b3c]">créations artisanales</span>
+              <span className="text-xs font-black uppercase tracking-widest text-[#05a855] mb-2 inline-block">Fait main au Bénin</span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-black italic uppercase text-white tracking-tight mt-1">
+                <span className="pop-ghost-wrap">
+                  <span className="pop-ghost" aria-hidden="true">Créations</span>
+                  Nos <span className="text-[#05a855]">créations artisanales</span>
+                </span>
               </h2>
             </div>
 
@@ -789,10 +1015,10 @@ export default function Home() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold capitalize shrink-0 transition-all ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-black italic uppercase tracking-wide shrink-0 transition-all cursor-pointer ${
                     activeCategory === cat
-                      ? 'bg-[#1a6b3c] text-white shadow-sm scale-105'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000] scale-105'
+                      : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-[#05a855] border border-white/10'
                   }`}
                 >
                   {cat}
@@ -804,22 +1030,22 @@ export default function Home() {
           {loading ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="bg-white rounded-2xl border border-gray-100 animate-pulse overflow-hidden">
-                  <div className="aspect-[4/5] bg-gray-200" />
+                <div key={i} className="pop-card animate-pulse overflow-hidden">
+                  <div className="aspect-[4/5] bg-white/5" />
                   <div className="p-3 space-y-2">
-                    <div className="h-3.5 bg-gray-200 rounded w-3/4" />
-                    <div className="h-3 bg-gray-200 rounded w-1/2" />
+                    <div className="h-3.5 bg-white/10 rounded w-3/4" />
+                    <div className="h-3 bg-white/10 rounded w-1/2" />
                   </div>
                 </div>
               ))}
             </div>
           ) : filteredProducts.length === 0 ? (
-            <div className="text-center py-12 bg-gray-50 rounded-2xl border border-gray-100 p-8">
-              <FiShoppingBag className="w-12 h-12 text-gray-300 mx-auto mb-2" />
-              <p className="text-xs font-bold text-gray-700">Aucun produit dans cette catégorie</p>
+            <div className="text-center py-12 pop-card p-8">
+              <FiShoppingBag className="w-12 h-12 text-[#05a855]/40 mx-auto mb-2" />
+              <p className="text-xs font-bold text-white">Aucun produit dans cette catégorie</p>
               <button 
                 onClick={() => setActiveCategory('toutes')} 
-                className="mt-3 bg-[#1a6b3c] text-white text-xs font-bold px-4 py-2 rounded-full"
+                className="btn-raised btn-sm mt-3"
               >
                 Voir tous les produits
               </button>
@@ -843,7 +1069,7 @@ export default function Home() {
           <div className="text-center mt-10">
             <Link
               to="/boutique"
-              className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-7 py-3 rounded-full transition shadow-md shadow-[#1a6b3c]/20 hover:scale-105 text-xs sm:text-sm"
+              className="btn-raised"
             >
               <span>Voir tout le catalogue de la boutique</span>
               <FiArrowRight className="w-4 h-4" />
@@ -855,35 +1081,39 @@ export default function Home() {
       {/* ============================================================ */}
       {/* SECTION FORMATIONS */}
       {/* ============================================================ */}
-      <section className="py-12 lg:py-16 bg-[#f4f7f4]">
+      <section className="py-12 lg:py-16 pop-night relative overflow-hidden border-t border-white/10">
         <div className="container mx-auto px-4 md:px-12">
           <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-              Nos <span className="text-[#1a6b3c]">filières de formation (CFP Dorcas)</span>
+            <span className="text-xs font-black uppercase tracking-widest text-[#05a855] mb-2 inline-block">Transmission & Savoir-Faire</span>
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase text-white tracking-tight mt-1">
+              <span className="pop-ghost-wrap">
+                <span className="pop-ghost" aria-hidden="true">Formations</span>
+                Nos filières de formation <span className="text-[#05a855]">(CFP Dorcas)</span>
+              </span>
             </h2>
-            <p className="text-gray-500 mt-1 text-xs sm:text-sm max-w-lg mx-auto">
+            <p className="text-white/50 mt-1 text-xs sm:text-sm max-w-lg mx-auto">
               Apprenez un métier d'art et devenez autonome grâce à nos modules certifiés.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {trainings.slice(0, 4).map((t, index) => {
-              const accent = t.color || '#1a6b3c';
+              const accent = t.color || '#05a855';
               const imgSrc = t.image?.startsWith('/')
                 ? `http://localhost:5000${t.image}`
-                : t.image || 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600';
+                : t.image || AFI_FALLBACK_PHOTO;
 
               return (
                 <motion.div
                   key={t.id}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 border border-gray-100 flex flex-col justify-between"
+                  className="pop-card flex flex-col justify-between group overflow-hidden"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: index * 0.06 }}
                 >
                   <div>
-                    <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-black/40">
                       <img
                         src={imgSrc}
                         alt={t.title}
@@ -891,24 +1121,24 @@ export default function Home() {
                         loading="lazy"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
-                            'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
+                            AFI_FALLBACK_PRODUCT;
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                      <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs rounded-full px-2.5 py-0.5 text-[10px] font-bold shadow-xs" style={{ color: accent }}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute top-2.5 left-2.5 bg-black/80 backdrop-blur-xs rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-white/10" style={{ color: accent }}>
                         ⏱ {t.duration || '3 mois'}
                       </div>
                     </div>
 
                     <div className="p-4">
-                      <h3 className="text-sm font-bold text-gray-900 mb-1 leading-snug group-hover:text-[#1a6b3c] transition-colors">{t.title}</h3>
-                      <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">{t.description}</p>
+                      <h3 className="text-sm font-bold text-white mb-1 leading-snug group-hover:text-[#05a855] transition-colors">{t.title}</h3>
+                      <p className="text-xs text-white/50 leading-relaxed line-clamp-2">{t.description}</p>
                     </div>
                   </div>
 
-                  <div className="p-4 pt-0 flex items-center justify-between border-t border-gray-50 mt-1">
-                    <span className="text-xs font-bold text-gray-900 font-mono">{t.price}</span>
-                    <Link to="/formations" className="text-xs font-bold text-[#1a6b3c] flex items-center gap-1 hover:underline">
+                  <div className="p-4 pt-0 flex items-center justify-between border-t border-white/10 mt-1">
+                    <span className="text-xs font-bold text-white font-mono">{t.price}</span>
+                    <Link to="/formations" className="text-xs font-bold text-[#05a855] flex items-center gap-1 hover:underline">
                       S'inscrire <FiArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
@@ -920,7 +1150,7 @@ export default function Home() {
           <div className="text-center mt-8">
             <Link
               to="/formations"
-              className="inline-flex items-center gap-2 border-2 border-[#1a6b3c] text-[#1a6b3c] hover:bg-[#1a6b3c] hover:text-white font-bold px-6 py-2.5 rounded-full transition duration-300 text-xs sm:text-sm"
+              className="btn-ghost"
             >
               En savoir plus sur le CFP Dorcas
             </Link>
@@ -931,11 +1161,15 @@ export default function Home() {
       {/* ============================================================ */}
       {/* SECTION TEMOIGNAGES ET PARTENAIRES EN COULEUR */}
       {/* ============================================================ */}
-      <section className="py-12 lg:py-16 bg-white">
+      <section className="py-12 lg:py-16 pop-night relative overflow-hidden border-t border-white/10">
         <div className="container mx-auto px-4 md:px-12">
           <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
-              Ce qu'ils <span className="text-[#1a6b3c]">pensent de nous</span>
+            <span className="text-xs font-black uppercase tracking-widest text-[#05a855] mb-2 inline-block">Avis Vérifiés</span>
+            <h2 className="text-2xl md:text-3xl font-black italic uppercase text-white tracking-tight mt-1">
+              <span className="pop-ghost-wrap">
+                <span className="pop-ghost" aria-hidden="true">Témoignages</span>
+                Ce qu'ils <span className="text-[#05a855]">pensent de nous</span>
+              </span>
             </h2>
           </div>
 
@@ -948,7 +1182,7 @@ export default function Home() {
             {testimonials.map((t, index) => (
               <motion.div
                 key={t.id}
-                className="bg-gray-50/80 rounded-2xl p-5 border border-gray-100 hover:border-[#1a6b3c]/30 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col justify-between min-w-[260px] snap-center"
+                className="pop-card p-5 flex flex-col justify-between min-w-[260px] snap-center hover:border-[#05a855]/40"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -957,21 +1191,21 @@ export default function Home() {
                 <div>
                   <div className="flex items-center gap-1 mb-2.5">
                     {[...Array(5)].map((_, i) => (
-                      <FiStar key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                      <FiStar key={i} className="w-3.5 h-3.5 text-[#05a855] fill-[#05a855]" />
                     ))}
                   </div>
-                  <p className="text-gray-600 text-xs leading-relaxed italic">
+                  <p className="text-white/80 text-xs leading-relaxed italic">
                     &ldquo;{t.content}&rdquo;
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-gray-200/60">
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1a6b3c] to-[#4ade80] flex items-center justify-center text-white text-xs font-bold shrink-0">
+                <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-white/10">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#028444] to-[#016634] flex items-center justify-center text-white text-xs font-black shrink-0 border-2 border-black">
                     {t.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-gray-900">{t.name}</p>
-                    <p className="text-[10px] text-gray-400">{t.role}</p>
+                    <p className="text-xs font-bold text-white">{t.name}</p>
+                    <p className="text-[10px] text-white/50">{t.role}</p>
                   </div>
                 </div>
               </motion.div>
@@ -979,8 +1213,8 @@ export default function Home() {
           </div>
 
           {/* PARTENAIRES EN COULEURS (SANS GREYSCALE) */}
-          <div className="mt-14 pt-10 border-t border-gray-100 text-center">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">
+          <div className="mt-14 pt-10 border-t border-white/10 text-center">
+            <p className="text-xs font-bold text-white/40 uppercase tracking-widest mb-6">
               Nos partenaires institutionnels et associatifs
             </p>
             <div
@@ -988,13 +1222,13 @@ export default function Home() {
               className="flex md:grid md:grid-cols-6 gap-5 overflow-x-auto items-center justify-center snap-x snap-mandatory md:overflow-visible pb-2 scrollbar-hide"
             >
               {partners.map((partner) => (
-                <div key={partner.id} className="bg-white rounded-2xl p-4 flex items-center justify-center border border-gray-100 min-w-[130px] md:min-w-0 hover:shadow-md transition-all hover:scale-105">
+                <div key={partner.id} className="bg-[#121914] rounded-2xl p-4 flex items-center justify-center border border-white/10 min-w-[130px] md:min-w-0 hover:border-[#05a855]/40 hover:shadow-md transition-all hover:scale-105">
                   <img
                     src={partner.logo}
                     alt={partner.name}
                     className="max-h-12 object-contain transition duration-300"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner.name)}&background=1a6b3c&color=fff&size=80`;
+                      (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner.name)}&background=028444&color=fff&size=80`;
                     }}
                   />
                 </div>
@@ -1007,30 +1241,34 @@ export default function Home() {
       {/* ============================================================ */}
       {/* CTA FINAL */}
       {/* ============================================================ */}
-      <section className="py-14 lg:py-20 bg-white">
-        <div className="container mx-auto px-4 md:px-12">
+      <section className="py-14 lg:py-20 pop-night relative overflow-hidden border-t border-white/10">
+        <div className="pop-halftone absolute inset-0 opacity-[0.05] pointer-events-none" />
+        <div className="container mx-auto px-4 md:px-12 relative">
           <motion.div
-            className="max-w-5xl mx-auto text-center p-8 sm:p-12 lg:p-16 rounded-3xl relative overflow-hidden bg-gradient-to-br from-[#07170d] via-[#1a6b3c] to-[#0a2314] shadow-xl text-white"
+            className="max-w-5xl mx-auto text-center p-8 sm:p-12 lg:p-16 rounded-3xl relative overflow-hidden bg-gradient-to-br from-[#050505] via-[#07190d] to-[#070b08] border-2 border-[#028444]/40 shadow-[4px_4px_0px_#000] text-white"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="absolute top-0 right-0 w-72 h-72 bg-[#4ade80]/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#4ade80]/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-72 h-72 bg-[#028444]/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#05a855]/15 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 space-y-3">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
+            <div className="relative z-10 space-y-4">
+              <div>
+                <span className="text-xs font-black uppercase tracking-widest text-[#05a855]">Rejoignez-nous</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase text-white tracking-tight">
                 Prêt à découvrir l'excellence <br />
-                <span className="text-[#4ade80]">de l'artisanat béninois</span> ?
+                <span className="text-[#05a855]">de l'artisanat béninois</span> ?
               </h2>
-              <p className="text-white/80 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+              <p className="text-white/60 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
                 Parcourez nos créations uniques ou rejoignez nos programmes de formation pour développer vos compétences.
               </p>
-              <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
+              <div className="pt-3 flex flex-wrap items-center justify-center gap-4">
                 <Link 
                   to="/boutique" 
-                  className="inline-flex items-center gap-2 bg-white hover:bg-emerald-50 text-[#1a6b3c] px-7 py-3 rounded-full font-bold transition-all shadow-lg hover:scale-105 text-xs sm:text-sm"
+                  className="btn-raised"
                 >
                   <FiShoppingBag className="w-4 h-4" />
                   <span>Accéder à la boutique</span>
@@ -1038,7 +1276,7 @@ export default function Home() {
                 </Link>
                 <Link 
                   to="/contact" 
-                  className="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white hover:bg-white/10 px-7 py-3 rounded-full font-bold transition text-xs sm:text-sm"
+                  className="btn-ghost btn-xl"
                 >
                   <span>Nous contacter</span>
                 </Link>

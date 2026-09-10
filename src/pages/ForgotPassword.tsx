@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail, FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import { AFI_IMAGES } from '../lib/images';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -49,7 +50,7 @@ export default function ForgotPassword() {
           className="absolute inset-0 w-full h-full object-cover opacity-80 filter brightness-[0.95] contrast-[1.05]"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
-              'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200';
+              AFI_IMAGES.atelierCadre;
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-gray-950/75 via-gray-950/45 to-transparent" />
@@ -82,7 +83,7 @@ export default function ForgotPassword() {
         </div>
       </div>
 
-      <div className="w-full lg:w-[45%] flex items-center justify-center bg-[#faf8f5] px-8 py-12 relative">
+      <div className="w-full lg:w-[45%] flex items-center justify-center bg-[#0c0a09] px-8 py-12 relative">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#1a6b3c]" />
           <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#4ade80]" />
@@ -91,26 +92,26 @@ export default function ForgotPassword() {
         <div className="w-full max-w-sm relative z-10">
           <Link
             to="/connexion"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-[#1a6b3c] text-sm font-medium transition-colors mb-8 lg:hidden group"
+            className="inline-flex items-center gap-2 text-white/40 hover:text-[#4ade80] text-sm font-medium transition-colors mb-8 lg:hidden group"
           >
             <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour à la connexion
           </Link>
 
           {isSent ? (
             <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
-                <FiCheckCircle className="w-8 h-8 text-[#1a6b3c]" />
+              <div className="w-16 h-16 rounded-full bg-[#4ade80]/10 flex items-center justify-center mx-auto mb-6">
+                <FiCheckCircle className="w-8 h-8 text-[#4ade80]" />
               </div>
-              <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-3">
+              <h1 className="text-3xl font-black text-white tracking-tight mb-3">
                 Email envoyé !
               </h1>
-              <p className="text-sm text-gray-500 mb-6">
+              <p className="text-sm text-white/50 mb-6">
                 Si un compte existe avec cette adresse, vous recevrez un email avec les instructions 
                 pour réinitialiser votre mot de passe.
               </p>
               <Link
                 to="/connexion"
-                className="text-[#1a6b3c] font-bold hover:underline text-sm"
+                className="text-[#4ade80] font-bold hover:underline text-sm"
               >
                 Retour à la connexion
               </Link>
@@ -118,24 +119,24 @@ export default function ForgotPassword() {
           ) : (
             <>
               <div className="mb-8">
-                <span className="inline-flex items-center text-[#1a6b3c] text-xs font-bold tracking-widest uppercase mb-3">
+                <span className="inline-flex items-center text-[#4ade80] text-xs font-bold tracking-widest uppercase mb-3">
                   RÉINITIALISATION
                 </span>
-                <h1 className="text-4xl font-black text-gray-900 tracking-tight leading-tight">
+                <h1 className="text-4xl font-black text-white tracking-tight leading-tight">
                   Mot de passe<br />oublié
                 </h1>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-sm text-white/50 mt-2">
                   Saisissez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-semibold text-white/70 mb-2">
                     Adresse email
                   </label>
                   <div className="relative group">
-                    <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#1a6b3c] w-4 h-4 transition-colors" />
+                    <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#4ade80] w-4 h-4 transition-colors" />
                     <input
                       type="email"
                       id="email"
@@ -143,7 +144,7 @@ export default function ForgotPassword() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       placeholder="votre@email.com"
-                      className="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1a6b3c] focus:ring-2 focus:ring-[#1a6b3c]/20 transition-all duration-200"
+                      className="w-full pl-11 pr-4 py-3.5 bg-[#1c1917] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#4ade80]/40 focus:ring-2 focus:ring-[#4ade80]/20 transition-all duration-200"
                     />
                   </div>
                 </div>
@@ -151,7 +152,7 @@ export default function ForgotPassword() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-lg shadow-[#1a6b3c]/20"
+                  className="btn-raised w-full disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <>
@@ -168,7 +169,7 @@ export default function ForgotPassword() {
               </form>
 
               <p className="text-center mt-6">
-                <Link to="/connexion" className="text-[#1a6b3c] font-semibold hover:underline text-sm">
+                <Link to="/connexion" className="text-[#4ade80] font-semibold hover:underline text-sm">
                   Retour à la connexion
                 </Link>
               </p>

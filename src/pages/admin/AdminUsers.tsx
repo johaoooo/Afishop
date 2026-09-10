@@ -76,23 +76,23 @@ export function AdminUsers() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Gestion des utilisateurs</h1>
-          <p className="text-xs text-gray-400 mt-1">
+          <h1 className="text-2xl font-black text-white tracking-tight">Gestion des utilisateurs</h1>
+          <p className="text-xs text-white/40 mt-1">
             Gérez les comptes inscrits et attribuez les rôles administrateur ({users.length} compte{users.length > 1 ? 's' : ''})
           </p>
         </div>
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100 flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="bg-[#1c1917] rounded-2xl p-4 shadow-xs border border-white/10 flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="relative w-full md:w-80">
-          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher par nom ou e-mail…"
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 rounded-xl text-xs text-gray-900 placeholder-gray-400 border border-gray-200/80 focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/30"
+            className="w-full pl-10 pr-4 py-2 bg-white/5 rounded-xl text-xs text-white placeholder-white/30 border border-white/10/80 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30"
           />
         </div>
 
@@ -101,8 +101,8 @@ export function AdminUsers() {
             onClick={() => setRoleFilter('all')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition ${
               roleFilter === 'all'
-                ? 'bg-[#1a6b3c] text-white shadow-xs'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? 'bg-[#4ade80] text-black shadow-xs'
+                : 'bg-white/10 text-white/60 hover:bg-[#1c1917]/15'
             }`}
           >
             Tous ({users.length})
@@ -111,8 +111,8 @@ export function AdminUsers() {
             onClick={() => setRoleFilter('admin')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition ${
               roleFilter === 'admin'
-                ? 'bg-[#1a6b3c] text-white shadow-xs'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? 'bg-[#4ade80] text-black shadow-xs'
+                : 'bg-white/10 text-white/60 hover:bg-[#1c1917]/15'
             }`}
           >
             Administrateurs ({adminCount})
@@ -121,8 +121,8 @@ export function AdminUsers() {
             onClick={() => setRoleFilter('user')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition ${
               roleFilter === 'user'
-                ? 'bg-[#1a6b3c] text-white shadow-xs'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? 'bg-[#4ade80] text-black shadow-xs'
+                : 'bg-white/10 text-white/60 hover:bg-[#1c1917]/15'
             }`}
           >
             Clients ({userCount})
@@ -131,22 +131,22 @@ export function AdminUsers() {
       </div>
 
       {/* Users Table Card */}
-      <div className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-100">
+      <div className="bg-[#1c1917] rounded-2xl shadow-xs overflow-hidden border border-white/10">
         {loading ? (
-          <div className="p-12 text-center text-sm text-gray-400 animate-pulse">
+          <div className="p-12 text-center text-sm text-white/40 animate-pulse">
             Chargement des utilisateurs…
           </div>
         ) : filteredUsers.length === 0 ? (
           <div className="p-12 text-center">
-            <FiUser className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-sm font-bold text-gray-700">Aucun utilisateur trouvé</p>
-            <p className="text-xs text-gray-400 mt-1">Aucun compte ne correspond à votre recherche.</p>
+            <FiUser className="w-12 h-12 text-white/50 mx-auto mb-3" />
+            <p className="text-sm font-bold text-white/70">Aucun utilisateur trouvé</p>
+            <p className="text-xs text-white/40 mt-1">Aucun compte ne correspond à votre recherche.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100 bg-gray-50/50">
+                <tr className="text-xs text-white/40 uppercase tracking-wider border-b border-white/10 bg-white/50">
                   <th className="px-6 py-4 font-bold">Utilisateur</th>
                   <th className="px-6 py-4 font-bold">Adresse Email</th>
                   <th className="px-6 py-4 font-bold">Rôle actuel</th>
@@ -154,39 +154,39 @@ export function AdminUsers() {
                   <th className="px-6 py-4 font-bold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-white/10">
                 {filteredUsers.map((u) => {
                   const isAdmin = u.role?.toLowerCase() === 'admin';
                   const isMe = u.id === currentUser?.id;
 
                   return (
-                    <tr key={u.id} className="hover:bg-gray-50/80 transition-colors">
+                    <tr key={u.id} className="hover:bg-[#1c1917]/80 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
                             isAdmin 
-                              ? 'bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] text-white shadow-sm shadow-[#1a6b3c]/30'
-                              : 'bg-emerald-100 text-[#1a6b3c]'
+                              ? 'bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] text-white shadow-sm shadow-[#4ade80]/30'
+                              : 'bg-[#4ade80]/15 text-[#4ade80]'
                           }`}>
                             {u.name?.[0]?.toUpperCase() || 'U'}
                           </div>
                           <div>
-                            <p className="font-bold text-gray-900 text-xs flex items-center gap-1.5">
+                            <p className="font-bold text-white text-xs flex items-center gap-1.5">
                               <span>{u.name || 'Utilisateur'}</span>
                               {isMe && (
-                                <span className="bg-emerald-100 text-[#1a6b3c] text-[10px] font-bold px-1.5 py-0.2 rounded-md">
+                                <span className="bg-[#4ade80]/15 text-[#4ade80] text-[10px] font-bold px-1.5 py-0.2 rounded-md">
                                   Vous
                                 </span>
                               )}
                             </p>
-                            <p className="text-[11px] text-gray-400">
+                            <p className="text-[11px] text-white/40">
                               Membre depuis {u.createdAt ? new Date(u.createdAt).toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' }) : '—'}
                             </p>
                           </div>
                         </div>
                       </td>
 
-                      <td className="px-6 py-4 text-xs font-medium text-gray-600">
+                      <td className="px-6 py-4 text-xs font-medium text-white/60">
                         {u.email}
                       </td>
 
@@ -197,8 +197,8 @@ export function AdminUsers() {
                             Administrateur
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-600 border border-gray-200 px-2.5 py-1 rounded-full text-xs font-medium">
-                            <FiUserCheck className="w-3 h-3 text-gray-500" />
+                          <span className="inline-flex items-center gap-1 bg-white/10 text-white/60 border border-white/10 px-2.5 py-1 rounded-full text-xs font-medium">
+                            <FiUserCheck className="w-3 h-3 text-white/50" />
                             Client
                           </span>
                         )}
@@ -209,10 +209,10 @@ export function AdminUsers() {
                           value={u.role || 'user'}
                           disabled={updatingId === u.id}
                           onChange={(e) => handleRoleChange(u, e.target.value)}
-                          className={`text-xs font-bold rounded-xl px-3 py-1.5 border transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/30 ${
+                          className={`text-xs font-bold rounded-xl px-3 py-1.5 border transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 ${
                             isAdmin 
                               ? 'bg-purple-50 border-purple-200 text-purple-700' 
-                              : 'bg-emerald-50 border-emerald-200 text-[#1a6b3c]'
+                              : 'bg-[#4ade80]/10 border-[#4ade80]/30 text-[#4ade80]'
                           }`}
                         >
                           <option value="user">👤 Client (User)</option>
@@ -224,13 +224,13 @@ export function AdminUsers() {
                         {!isAdmin ? (
                           <button
                             onClick={() => handleDelete(u.id, u.name)}
-                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
+                            className="p-2 text-white/40 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
                             title="Supprimer l'utilisateur"
                           >
                             <FiTrash2 className="w-4 h-4" />
                           </button>
                         ) : (
-                          <span className="text-[11px] font-semibold text-gray-400 inline-flex items-center gap-1">
+                          <span className="text-[11px] font-semibold text-white/40 inline-flex items-center gap-1">
                             <FiLock className="w-3 h-3" /> Protegé
                           </span>
                         )}

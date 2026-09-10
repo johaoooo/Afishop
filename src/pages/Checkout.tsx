@@ -133,7 +133,7 @@ export default function Checkout() {
         name: (user?.name && user.name.trim()) || 'Client AFI',
         email: (user?.email && user.email.trim()) || 'client@aficollection.com',
         data: String(order.id),
-        theme: '#1a6b3c',
+        theme: '#028444',
         position: 'center'
       };
 
@@ -152,34 +152,40 @@ export default function Checkout() {
   };
 
   return (
-    <div className="bg-[#f5f8f5] min-h-screen py-12">
+    <div className="bg-[#070b08] min-h-screen py-12 text-white">
       <SEO title="Validation de commande" description="Finalisez votre commande AFI Collection. Livraison rapide et paiement sécurisé KKiaPay au Bénin." />
       <div className="container mx-auto px-6 md:px-12 max-w-5xl">
-        <Link to="/panier" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1a6b3c] mb-6 group">
+        <Link to="/panier" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-[#05a855] mb-6 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour au panier
         </Link>
 
-        <motion.h1
-          className="text-3xl font-black text-gray-800 mb-8"
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
+          className="mb-8"
         >
-          Validation de la commande
-        </motion.h1>
+          <span className="pop-sticker">Commande</span>
+          <h1 className="text-3xl font-black italic uppercase text-white mt-3">
+            <span className="pop-ghost-wrap">
+              <span className="pop-ghost" aria-hidden="true">Commande</span>
+              Validation de la <span className="text-[#05a855]">commande</span>
+            </span>
+          </h1>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <motion.div
-            className="md:col-span-2 bg-white/90 backdrop-blur-sm border border-green-100 rounded-2xl p-6 shadow-sm"
+            className="md:col-span-2 bg-[#121914] backdrop-blur-sm border border-[#028444]/30 rounded-2xl p-6 shadow-sm"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
             <form onSubmit={handleSubmit} className="space-y-4">
-              <h2 className="font-bold text-gray-800 text-lg">Adresse de livraison</h2>
+              <h2 className="font-bold text-white text-lg">Adresse de livraison</h2>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <label className="block text-sm font-semibold text-white/70 mb-1.5">
                   Rue / Quartier <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -188,13 +194,13 @@ export default function Checkout() {
                   value={address.street}
                   onChange={(e) => setAddress({ ...address, street: e.target.value })}
                   placeholder="Ex: Avenue Jean-Paul II, Abomey-Calavi"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
+                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60 transition-all bg-black/40 text-white"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-sm font-semibold text-white/70 mb-1.5">
                     Ville <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -203,24 +209,24 @@ export default function Checkout() {
                     value={address.city}
                     onChange={(e) => setAddress({ ...address, city: e.target.value })}
                     placeholder="Abomey-Calavi"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
+                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60 transition-all bg-black/40 text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Code postal</label>
+                  <label className="block text-sm font-semibold text-white/70 mb-1.5">Code postal</label>
                   <input
                     type="text"
                     value={address.postalCode}
                     onChange={(e) => setAddress({ ...address, postalCode: e.target.value })}
                     placeholder="01BP1234"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
+                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60 transition-all bg-black/40 text-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-sm font-semibold text-white/70 mb-1.5">
                     Pays <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -228,11 +234,11 @@ export default function Checkout() {
                     required
                     value={address.country}
                     onChange={(e) => setAddress({ ...address, country: e.target.value })}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
+                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60 transition-all bg-black/40 text-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-sm font-semibold text-white/70 mb-1.5">
                     Téléphone (Mobile Money) <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -241,7 +247,7 @@ export default function Checkout() {
                     value={address.phone}
                     onChange={(e) => setAddress({ ...address, phone: e.target.value })}
                     placeholder="97000000"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white"
+                    className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60 transition-all bg-black/40 text-white"
                   />
                 </div>
               </div>
@@ -249,48 +255,48 @@ export default function Checkout() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl mt-4 flex items-center justify-center gap-2"
+                className="btn-raised w-full mt-4 disabled:opacity-60"
               >
                 {submitting ? 'Création de la commande…' : `Payer avec KKiaPay (${total.toLocaleString('fr-FR')} FCFA)`}
               </button>
 
-              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center text-xs text-emerald-800 font-medium">
+              <div className="bg-[#028444]/15 border border-[#028444]/30 rounded-xl p-3 text-center text-xs text-[#05a855] font-medium">
                 <span className="font-bold">Mode Sandbox (Test KKiaPay)</span> — MTN Mobile Money, Moov, Celtiis & Carte. Aucun montant réel ne sera débité.
               </div>
             </form>
           </motion.div>
 
           <motion.div
-            className="bg-white/90 backdrop-blur-sm border border-green-100 rounded-2xl p-6 h-fit shadow-sm"
+            className="bg-[#121914] backdrop-blur-sm border border-[#028444]/30 rounded-2xl p-6 h-fit shadow-sm"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h2 className="font-bold text-gray-800 mb-4">Récapitulatif</h2>
+            <h2 className="font-bold text-white mb-4">Récapitulatif</h2>
             <div className="space-y-3 max-h-64 overflow-y-auto">
               {items.map((item) => (
-                <div key={item.productId} className="flex justify-between text-sm border-b border-gray-100 pb-2">
-                  <span>{item.name} <span className="text-gray-400">× {item.quantity}</span></span>
+                <div key={item.productId} className="flex justify-between text-sm border-b border-white/10 pb-2">
+                  <span>{item.name} <span className="text-white/40">× {item.quantity}</span></span>
                   <span className="font-semibold">{(item.price * item.quantity).toLocaleString('fr-FR')} FCFA</span>
                 </div>
               ))}
             </div>
-            <div className="flex justify-between font-bold text-gray-800 mt-4 pt-4 border-t border-gray-200">
+            <div className="flex justify-between font-bold text-white mt-4 pt-4 border-t border-white/10">
               <span>Total</span>
-              <span className="text-[#1a6b3c]">{total.toLocaleString('fr-FR')} FCFA</span>
+              <span className="text-[#05a855]">{total.toLocaleString('fr-FR')} FCFA</span>
             </div>
 
-            <div className="mt-6 space-y-2 text-xs text-gray-400">
+            <div className="mt-6 space-y-2 text-xs text-white/40">
               <div className="flex items-center gap-2">
-                <FiTruck className="w-4 h-4 text-[#1a6b3c]" />
+                <FiTruck className="w-4 h-4 text-[#05a855]" />
                 <span>Livraison 48h au Bénin</span>
               </div>
               <div className="flex items-center gap-2">
-                <FiShield className="w-4 h-4 text-[#1a6b3c]" />
+                <FiShield className="w-4 h-4 text-[#05a855]" />
                 <span>Paiement sécurisé via KKiaPay</span>
               </div>
               <div className="flex items-center gap-2">
-                <FiCheckCircle className="w-4 h-4 text-[#1a6b3c]" />
+                <FiCheckCircle className="w-4 h-4 text-[#05a855]" />
                 <span>Confirmation instantanée par SMS / E-mail</span>
               </div>
             </div>

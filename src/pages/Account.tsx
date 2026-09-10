@@ -10,13 +10,14 @@ import { useCart } from '../context/CartContext';
 import { ordersApi, authApi, productsApi, ApiError, type Order, type Product } from '../lib/api';
 import { getFavorites, toggleFavorite } from '../lib/favorites';
 import toast from 'react-hot-toast';
+import { AFI_FALLBACK_PRODUCT } from '../lib/images';
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; border: string; icon: any }> = {
-  pending: { label: 'En attente', bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', icon: FiClock },
-  paid: { label: 'Payée', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', icon: FiCheckCircle },
-  shipped: { label: 'Expédiée', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', icon: FiTruck },
+  pending: { label: 'En attente', bg: 'bg-[#4ade80]/10', text: 'text-[#4ade80]', border: 'border-[#4ade80]/25', icon: FiClock },
+  paid: { label: 'Payée', bg: 'bg-[#4ade80]/10', text: 'text-[#4ade80]', border: 'border-[#4ade80]/30', icon: FiCheckCircle },
+  shipped: { label: 'Expédiée', bg: 'bg-[#60a5fa]/10', text: 'text-[#93c5fd]', border: 'border-[#60a5fa]/30', icon: FiTruck },
   delivered: { label: 'Livrée', bg: 'bg-teal-50', text: 'text-teal-700', border: 'border-teal-200', icon: FiCheckCircle },
-  cancelled: { label: 'Annulée', bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200', icon: FiXCircle },
+  cancelled: { label: 'Annulée', bg: 'bg-[#f43f5e]/10', text: 'text-rose-700', border: 'border-[#f43f5e]/25', icon: FiXCircle },
 };
 
 const RECEIPT_ELIGIBLE = ['pending', 'paid', 'shipped', 'delivered'];
@@ -121,27 +122,27 @@ function OrdersTab() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-xs animate-pulse space-y-4">
-        <div className="w-12 h-12 bg-emerald-100 rounded-full mx-auto" />
-        <div className="h-4 bg-gray-200 rounded w-40 mx-auto" />
-        <div className="h-3 bg-gray-200 rounded w-64 mx-auto" />
+      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs animate-pulse space-y-4">
+        <div className="w-12 h-12 bg-[#4ade80]/15 rounded-full mx-auto" />
+        <div className="h-4 bg-white/10 rounded w-40 mx-auto" />
+        <div className="h-3 bg-white/10 rounded w-64 mx-auto" />
       </div>
     );
   }
 
   if (orders.length === 0) {
     return (
-      <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-xs">
-        <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-[#1a6b3c] flex items-center justify-center mx-auto mb-4 border border-emerald-100">
+      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs">
+        <div className="w-16 h-16 rounded-2xl bg-[#4ade80]/10 text-[#4ade80] flex items-center justify-center mx-auto mb-4 border border-[#4ade80]/15">
           <FiPackage className="w-8 h-8" />
         </div>
-        <h3 className="text-lg font-black text-gray-900">Aucune commande pour le moment</h3>
-        <p className="text-gray-500 text-xs mt-1 max-w-sm mx-auto">
+        <h3 className="text-lg font-black text-white">Aucune commande pour le moment</h3>
+        <p className="text-white/50 text-xs mt-1 max-w-sm mx-auto">
           Explorez nos créations artisanales et passez votre première commande en toute simplicité.
         </p>
         <Link
           to="/boutique"
-          className="inline-flex items-center gap-2 mt-5 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-3 rounded-full transition text-xs shadow-md shadow-[#1a6b3c]/20 hover:scale-105"
+          className="btn-raised mt-5"
         >
           <span>Découvrir la boutique</span>
           <FiArrowRight className="w-4 h-4" />
@@ -155,24 +156,24 @@ function OrdersTab() {
       {orders.map((order) => {
         const canDownload = RECEIPT_ELIGIBLE.includes(order.status);
         const statusInfo = STATUS_CONFIG[order.status] || {
-          label: order.status, bg: 'bg-gray-100', text: 'text-gray-700', border: 'border-gray-200', icon: FiClock
+          label: order.status, bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/10', icon: FiClock
         };
         const StatusIcon = statusInfo.icon;
 
         return (
-          <div key={order.id} className="bg-white rounded-3xl border border-gray-100 p-6 shadow-xs hover:shadow-md transition-all space-y-4">
+          <div key={order.id} className="bg-[#1c1917] rounded-3xl border border-white/10 p-6 shadow-xs hover:shadow-md transition-all space-y-4">
             {/* Order Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-gray-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-xs text-[#1a6b3c] bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100">
+                  <span className="font-mono font-bold text-xs text-[#4ade80] bg-[#4ade80]/10 px-2.5 py-0.5 rounded-md border border-[#4ade80]/15">
                     Commande #{order.id}
                   </span>
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs text-white/40">
                     du {new Date(order.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </span>
                 </div>
-                <p className="text-lg font-black text-gray-900 font-mono mt-1">
+                <p className="text-lg font-black text-white font-mono mt-1">
                   {order.total.toLocaleString('fr-FR')} FCFA
                 </p>
               </div>
@@ -187,7 +188,7 @@ function OrdersTab() {
                   <button
                     onClick={() => handleDownload(order)}
                     disabled={downloadingId === order.id}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a6b3c] bg-emerald-50 hover:bg-emerald-100 px-3.5 py-1.5 rounded-full border border-emerald-200/80 transition disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4ade80] bg-[#4ade80]/10 hover:bg-[#4ade80]/15 px-3.5 py-1.5 rounded-full border border-[#4ade80]/80 transition disabled:opacity-50"
                     title="Télécharger le reçu"
                   >
                     <FiDownload className="w-3.5 h-3.5" />
@@ -200,26 +201,26 @@ function OrdersTab() {
             {/* Order Items List */}
             {order.OrderItem && order.OrderItem.length > 0 && (
               <div className="space-y-2">
-                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                <p className="text-[11px] font-bold text-white/40 uppercase tracking-wider">
                   Articles commandés ({order.OrderItem.reduce((sum, item) => sum + item.quantity, 0)})
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {order.OrderItem.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3 bg-gray-50 p-2.5 rounded-2xl border border-gray-100/80">
+                    <div key={item.id} className="flex items-center gap-3 bg-white/5 p-2.5 rounded-2xl border border-white/10">
                       {item.Product?.image ? (
                         <img
                           src={item.Product.image}
                           alt={item.Product.name}
-                          className="w-12 h-12 rounded-xl object-cover bg-white shrink-0 border border-gray-200/60"
+                          className="w-12 h-12 rounded-xl object-cover bg-[#1c1917] shrink-0 border border-white/10"
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-xl bg-emerald-100 text-[#1a6b3c] flex items-center justify-center shrink-0 font-bold text-xs">
+                        <div className="w-12 h-12 rounded-xl bg-[#4ade80]/15 text-[#4ade80] flex items-center justify-center shrink-0 font-bold text-xs">
                           AFI
                         </div>
                       )}
                       <div className="min-w-0 flex-1">
-                        <p className="font-bold text-gray-900 text-xs truncate">{item.Product?.name || 'Produit'}</p>
-                        <p className="text-[11px] text-gray-500 font-mono">
+                        <p className="font-bold text-white text-xs truncate">{item.Product?.name || 'Produit'}</p>
+                        <p className="text-[11px] text-white/50 font-mono">
                           {item.quantity} × {item.price.toLocaleString('fr-FR')} FCFA
                         </p>
                       </div>
@@ -230,20 +231,20 @@ function OrdersTab() {
             )}
 
             {/* Order Actions */}
-            <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs text-gray-400">Paiement Sécurisé Mobile Money / CB</span>
+            <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+              <span className="text-xs text-white/40">Paiement Sécurisé Mobile Money / CB</span>
 
               {canDownload ? (
                 <button
                   onClick={() => handleDownload(order)}
                   disabled={downloadingId === order.id}
-                  className="inline-flex items-center gap-2 text-xs font-bold text-white bg-[#1a6b3c] hover:bg-[#14532d] px-4 py-2 rounded-xl transition shadow-xs disabled:opacity-50"
+                  className="btn-raised btn-sm disabled:opacity-50"
                 >
                   <FiDownload className="w-3.5 h-3.5" />
                   <span>{downloadingId === order.id ? 'Téléchargement…' : 'Télécharger la Facture PDF'}</span>
                 </button>
               ) : (
-                <span className="text-xs text-gray-400 italic">Facture annulée</span>
+                <span className="text-xs text-white/40 italic">Facture annulée</span>
               )}
             </div>
           </div>
@@ -284,26 +285,26 @@ function FavoritesTab() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-xs animate-pulse">
-        <div className="w-12 h-12 bg-rose-100 rounded-full mx-auto mb-4" />
-        <div className="h-4 bg-gray-200 rounded w-40 mx-auto" />
+      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs animate-pulse">
+        <div className="w-12 h-12 bg-[#f43f5e]/15 rounded-full mx-auto mb-4" />
+        <div className="h-4 bg-white/10 rounded w-40 mx-auto" />
       </div>
     );
   }
 
   if (products.length === 0) {
     return (
-      <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-xs">
-        <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-4 border border-rose-100">
+      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs">
+        <div className="w-16 h-16 rounded-2xl bg-[#f43f5e]/10 text-[#f43f5e]/100 flex items-center justify-center mx-auto mb-4 border border-[#f43f5e]/15">
           <FiHeart className="w-8 h-8" />
         </div>
-        <h3 className="text-lg font-black text-gray-900">Aucun produit favori</h3>
-        <p className="text-gray-500 text-xs mt-1 max-w-sm mx-auto">
+        <h3 className="text-lg font-black text-white">Aucun produit favori</h3>
+        <p className="text-white/50 text-xs mt-1 max-w-sm mx-auto">
           Cliquer sur le cœur d'un produit pour l'enregistrer dans votre liste de coups de cœur.
         </p>
         <Link
           to="/boutique"
-          className="inline-flex items-center gap-2 mt-5 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-3 rounded-full transition text-xs shadow-md shadow-[#1a6b3c]/20 hover:scale-105"
+          className="btn-raised mt-5"
         >
           <span>Parcourir la boutique</span>
           <FiArrowRight className="w-4 h-4" />
@@ -315,40 +316,40 @@ function FavoritesTab() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {products.map((product) => (
-        <div key={product.id} className="bg-white rounded-3xl border border-gray-100 p-4 shadow-xs hover:shadow-md transition flex items-center gap-4 group">
+        <div key={product.id} className="bg-[#1c1917] rounded-3xl border border-white/10 p-4 shadow-xs hover:shadow-md transition flex items-center gap-4 group">
           <Link to={`/produit/${product.id}`} className="shrink-0">
             <img
               src={product.image}
               alt={product.name}
-              className="w-24 h-24 rounded-2xl object-cover bg-gray-50 border border-gray-100 group-hover:scale-105 transition duration-300"
+              className="w-24 h-24 rounded-2xl object-cover bg-white/5 border border-white/10 group-hover:scale-105 transition duration-300"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400';
+                (e.target as HTMLImageElement).src = AFI_FALLBACK_PRODUCT;
               }}
             />
           </Link>
           <div className="flex-1 min-w-0 space-y-1">
-            <span className="text-[10px] font-bold text-[#1a6b3c] uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded">
+            <span className="text-[10px] font-bold text-[#4ade80] uppercase tracking-wider bg-[#4ade80]/10 px-2 py-0.5 rounded">
               {product.category || 'Artisanat'}
             </span>
             <Link to={`/produit/${product.id}`} className="block">
-              <h4 className="font-bold text-gray-900 text-xs truncate group-hover:text-[#1a6b3c] transition-colors">
+              <h4 className="font-bold text-white text-xs truncate group-hover:text-[#4ade80] transition-colors">
                 {product.name}
               </h4>
             </Link>
-            <p className="text-[#1a6b3c] font-black text-xs font-mono">
+            <p className="text-[#4ade80] font-black text-xs font-mono">
               {product.price.toLocaleString('fr-FR')} FCFA
             </p>
             <div className="pt-2 flex items-center gap-2">
               <button
                 onClick={() => handleAddToCart(product)}
-                className="inline-flex items-center gap-1 bg-[#1a6b3c] hover:bg-[#14532d] text-white text-[11px] font-bold px-3 py-1.5 rounded-xl transition shadow-xs"
+                className="btn-raised btn-sm"
               >
                 <FiPlus className="w-3.5 h-3.5" />
                 <span>Ajouter</span>
               </button>
               <button
                 onClick={() => handleRemove(product.id)}
-                className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition"
+                className="p-1.5 text-white/40 hover:text-rose-600 hover:bg-[#f43f5e]/10 rounded-xl transition"
                 title="Retirer des favoris"
               >
                 <FiTrash2 className="w-4 h-4" />
@@ -420,10 +421,10 @@ function ProfileTab() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-xs space-y-6">
+    <form onSubmit={handleSubmit} className="bg-[#1c1917] rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xs space-y-6">
       
       {/* Photo de profil Uploader */}
-      <div className="flex items-center gap-5 p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100/60">
+      <div className="flex items-center gap-5 p-4 bg-[#4ade80]/50 rounded-2xl border border-[#4ade80]/60">
         <div className="relative group shrink-0">
           {avatarUrl ? (
             <img
@@ -439,7 +440,7 @@ function ProfileTab() {
 
           <label
             htmlFor="avatar-upload"
-            className="absolute -bottom-1 -right-1 bg-white text-[#1a6b3c] p-2 rounded-full border border-gray-200 shadow-md cursor-pointer hover:bg-emerald-50 transition hover:scale-105"
+            className="absolute -bottom-1 -right-1 bg-[#1c1917] text-[#4ade80] p-2 rounded-full border border-white/10 shadow-md cursor-pointer hover:bg-[#4ade80]/10 transition hover:scale-105"
             title="Changer la photo de profil"
           >
             <FiCamera className="w-4 h-4" />
@@ -454,11 +455,11 @@ function ProfileTab() {
         </div>
 
         <div>
-          <h3 className="font-extrabold text-sm text-gray-900">Photo de Profil</h3>
-          <p className="text-xs text-gray-500 mt-0.5">Format JPG, PNG ou WEBP. Maximum 5 Mo.</p>
+          <h3 className="font-extrabold text-sm text-white">Photo de Profil</h3>
+          <p className="text-xs text-white/50 mt-0.5">Format JPG, PNG ou WEBP. Maximum 5 Mo.</p>
           <label
             htmlFor="avatar-upload"
-            className="inline-block text-xs font-bold text-[#1a6b3c] hover:underline cursor-pointer mt-1.5"
+            className="inline-block text-xs font-bold text-[#4ade80] hover:underline cursor-pointer mt-1.5"
           >
             Téléverser une photo
           </label>
@@ -466,58 +467,58 @@ function ProfileTab() {
       </div>
 
       <div>
-        <h2 className="text-base font-black text-gray-900 mb-1 flex items-center gap-2">
-          <FiUser className="w-4 h-4 text-[#1a6b3c]" /> Informations personnelles
+        <h2 className="text-base font-black text-white mb-1 flex items-center gap-2">
+          <FiUser className="w-4 h-4 text-[#4ade80]" /> Informations personnelles
         </h2>
-        <p className="text-xs text-gray-400 mb-5">Mettez à jour votre nom d'utilisateur affiché sur vos commandes.</p>
+        <p className="text-xs text-white/40 mb-5">Mettez à jour votre nom d'utilisateur affiché sur vos commandes.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1.5">Nom complet</label>
+            <label className="block text-xs font-bold text-white/70 mb-1.5">Nom complet</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200/80 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/30 focus:border-[#1a6b3c]"
+              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1.5">Adresse Email</label>
+            <label className="block text-xs font-bold text-white/70 mb-1.5">Adresse Email</label>
             <input
               type="email"
               value={user?.email || ''}
               disabled
-              className="w-full px-4 py-2.5 bg-gray-100 border border-gray-200/60 rounded-xl text-xs text-gray-500 cursor-not-allowed"
+              className="w-full px-4 py-2.5 bg-white/10 border border-white/10 rounded-xl text-xs text-white/50 cursor-not-allowed"
             />
           </div>
         </div>
       </div>
 
-      <div className="pt-6 border-t border-gray-100">
-        <h2 className="text-base font-black text-gray-900 mb-1 flex items-center gap-2">
-          <FiLock className="w-4 h-4 text-[#1a6b3c]" /> Sécurité & Mot de passe
+      <div className="pt-6 border-t border-white/10">
+        <h2 className="text-base font-black text-white mb-1 flex items-center gap-2">
+          <FiLock className="w-4 h-4 text-[#4ade80]" /> Sécurité & Mot de passe
         </h2>
-        <p className="text-xs text-gray-400 mb-5">Laissez vide si vous ne souhaitez pas modifier votre mot de passe.</p>
+        <p className="text-xs text-white/40 mb-5">Laissez vide si vous ne souhaitez pas modifier votre mot de passe.</p>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1.5">Mot de passe actuel</label>
+            <label className="block text-xs font-bold text-white/70 mb-1.5">Mot de passe actuel</label>
             <input
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200/80 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/30 focus:border-[#1a6b3c]"
+              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-700 mb-1.5">Nouveau mot de passe</label>
+            <label className="block text-xs font-bold text-white/70 mb-1.5">Nouveau mot de passe</label>
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="8 caractères minimum"
-              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200/80 rounded-xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/30 focus:border-[#1a6b3c]"
+              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
             />
           </div>
         </div>
@@ -527,7 +528,7 @@ function ProfileTab() {
         <button
           type="submit"
           disabled={saving}
-          className="inline-flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-3 rounded-xl transition text-xs shadow-md shadow-[#1a6b3c]/20 disabled:opacity-50"
+          className="btn-raised disabled:opacity-50"
         >
           <FiCheck className="w-4 h-4" />
           <span>{saving ? 'Enregistrement…' : 'Enregistrer les modifications'}</span>
@@ -553,8 +554,8 @@ export default function Account() {
 
   if (isLoading) {
     return (
-      <div className="bg-[#f8faf8] min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-[#1a6b3c] border-t-transparent rounded-full animate-spin" />
+      <div className="bg-[#0c0a09] min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-[#4ade80]/40 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -564,7 +565,7 @@ export default function Account() {
   const isAdmin = user.role?.toLowerCase() === 'admin';
 
   return (
-    <div className="bg-[#f8faf8] min-h-screen pb-16 text-gray-900">
+    <div className="bg-[#0c0a09] min-h-screen pb-16 text-white">
       <SEO title="Mon Compte Client" description="Gérez vos commandes, votre profil et vos favoris sur AFI Collection." />
       
       {/* Dashboard Top Banner */}
@@ -586,7 +587,7 @@ export default function Account() {
                     👑 Admin
                   </span>
                 ) : (
-                  <span className="bg-white/10 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <span className="bg-white/10 text-[#4ade80] text-[10px] font-bold px-2 py-0.5 rounded-full">
                     Client Privilégié
                   </span>
                 )}
@@ -621,13 +622,13 @@ export default function Account() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Navigation Sidebar */}
           <div className="md:col-span-1">
-            <div className="bg-white rounded-3xl border border-gray-100 p-4 shadow-sm space-y-1.5 sticky top-24">
+            <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-4 shadow-sm space-y-1.5 sticky top-24">
               <button
                 onClick={() => setTab('orders')}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-bold text-xs transition ${
                   tab === 'orders'
-                    ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#1a6b3c]/20'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#4ade80]/20'
+                    : 'text-white/60 hover:bg-white/5'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -641,8 +642,8 @@ export default function Account() {
                 onClick={() => setTab('favorites')}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-bold text-xs transition ${
                   tab === 'favorites'
-                    ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#1a6b3c]/20'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#4ade80]/20'
+                    : 'text-white/60 hover:bg-white/5'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -656,8 +657,8 @@ export default function Account() {
                 onClick={() => setTab('profile')}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-bold text-xs transition ${
                   tab === 'profile'
-                    ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#1a6b3c]/20'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#4ade80]/20'
+                    : 'text-white/60 hover:bg-white/5'
                 }`}
               >
                 <div className="flex items-center gap-2.5">

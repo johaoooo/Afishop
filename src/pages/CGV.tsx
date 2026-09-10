@@ -4,7 +4,7 @@ import { FiFileText, FiShoppingBag, FiRefreshCw, FiCreditCard, FiTruck } from 'r
 
 export default function CGV() {
   return (
-    <div className="bg-[#faf8f5] min-h-screen">
+    <div className="bg-[#0c0a09] min-h-screen">
       <SEO title="Conditions Générales de Vente" description="Conditions générales de vente d'AFI Collection. Informations sur les commandes, livraisons et retours." />
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-10 sm:py-14 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
@@ -25,28 +25,28 @@ export default function CGV() {
 
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 pb-16">
         <motion.div 
-          className="bg-white/90 backdrop-blur-sm rounded-3xl border border-green-100 p-8 md:p-10 shadow-sm"
+          className="bg-[#1c1917]/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="space-y-8 text-gray-600 leading-relaxed">
+          <div className="space-y-8 text-white/60 leading-relaxed">
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiFileText className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiFileText className="w-5 h-5 text-[#4ade80]" />
                 Article 1 - Champ d'application
               </h2>
               <p>
                 Les présentes Conditions Générales de Vente régissent les relations contractuelles 
-                entre <strong className="text-[#1a6b3c]">AFI Collection</strong> et tout client 
+                entre <strong className="text-[#4ade80]">AFI Collection</strong> et tout client 
                 effectuant un achat sur le site www.aficollection.com. La validation d'une commande 
                 implique l'acceptation sans réserve des présentes conditions.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiShoppingBag className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiShoppingBag className="w-5 h-5 text-[#4ade80]" />
                 Article 2 - Produits
               </h2>
               <p>
@@ -58,7 +58,7 @@ export default function CGV() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3">Article 3 - Prix</h2>
+              <h2 className="text-xl font-bold text-white/85 mb-3">Article 3 - Prix</h2>
               <p>
                 Les prix sont indiqués en francs CFA (FCFA) toutes taxes comprises. Ils 
                 s'entendent hors frais de livraison, qui sont indiqués avant la validation 
@@ -69,8 +69,8 @@ export default function CGV() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiCreditCard className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiCreditCard className="w-5 h-5 text-[#4ade80]" />
                 Article 4 - Paiement
               </h2>
               <p>
@@ -94,8 +94,8 @@ export default function CGV() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiTruck className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiTruck className="w-5 h-5 text-[#4ade80]" />
                 Article 5 - Livraison
               </h2>
               <p>
@@ -107,8 +107,8 @@ export default function CGV() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiRefreshCw className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiRefreshCw className="w-5 h-5 text-[#4ade80]" />
                 Article 6 - Droit de rétractation
               </h2>
               <p>
@@ -120,7 +120,7 @@ export default function CGV() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3">Article 7 - Service client</h2>
+              <h2 className="text-xl font-bold text-white/85 mb-3">Article 7 - Service client</h2>
               <p>
                 Pour toute question ou réclamation, notre service client est disponible :</p>
               <ul className="mt-2 space-y-1">

@@ -12,6 +12,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { ApiError } from '../lib/api';
 import toast from 'react-hot-toast';
+import { AFI_IMAGES } from '../lib/images';
 
 const features = [
   { icon: FiCheckCircle, text: 'Connexion 100% sécurisée' },
@@ -69,7 +70,7 @@ export default function Login() {
           className="absolute inset-0 w-full h-full object-cover opacity-80 filter brightness-[0.95] contrast-[1.05]"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
-              'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200';
+              AFI_IMAGES.atelierCadre;
           }}
         />
         
@@ -86,14 +87,14 @@ export default function Login() {
 
           <div>
             <div className="mb-6">
-              <span className="text-[#4ade80] text-xs font-bold tracking-widest uppercase">
+              <span className="text-[#05a855] text-xs font-bold tracking-widest uppercase">
                 ESPACE MEMBRES
               </span>
             </div>
             
             <h2 className="text-5xl font-black text-white leading-[1.05] tracking-tight mb-5">
               AFI<br />
-              <span className="text-[#4ade80]">Collection</span>
+              <span className="text-[#05a855]">Collection</span>
             </h2>
             
             <p className="text-white/50 text-sm leading-relaxed mb-10 max-w-xs">
@@ -109,7 +110,7 @@ export default function Login() {
                     className="flex items-start gap-3 text-sm text-white/70 animate-fade-in"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <Icon className="w-4 h-4 text-[#4ade80] shrink-0 mt-0.5" aria-hidden="true" />
+                    <Icon className="w-4 h-4 text-[#05a855] shrink-0 mt-0.5" aria-hidden="true" />
                     {f.text}
                   </li>
                 );
@@ -121,30 +122,30 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="w-full lg:w-[45%] flex items-center justify-center bg-[#faf8f5] px-8 py-12 relative">
+      <div className="w-full lg:w-[45%] flex items-center justify-center bg-[#070b08] px-8 py-12 relative">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-          <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#1a6b3c]" />
-          <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#4ade80]" />
+          <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#028444]" />
+          <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#05a855]" />
         </div>
 
         <div className="w-full max-w-sm relative z-10">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-[#1a6b3c] text-sm font-medium transition-colors mb-8 lg:hidden group"
+            className="inline-flex items-center gap-2 text-white/40 hover:text-[#05a855] text-sm font-medium transition-colors mb-8 lg:hidden group"
           >
             <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour à l'accueil
           </Link>
 
           <div className="mb-8">
-            <span className="inline-flex items-center text-[#1a6b3c] text-xs font-bold tracking-widest uppercase mb-3">
+            <span className="inline-flex items-center text-[#05a855] text-xs font-bold tracking-widest uppercase mb-3">
               CONNEXION
             </span>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight leading-tight">
+            <h1 className="text-4xl font-black text-white tracking-tight leading-tight">
               Accéder à<br />votre compte
             </h1>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-white/50 mt-2">
               Pas encore membre ?{' '}
-              <Link to="/inscription" className="text-[#1a6b3c] font-bold hover:underline transition">
+              <Link to="/inscription" className="text-[#05a855] font-bold hover:underline transition">
                 Créer un compte
               </Link>
             </p>
@@ -152,11 +153,11 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-white/70 mb-2">
                 Adresse email
               </label>
               <div className="relative group">
-                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#1a6b3c] w-4 h-4 transition-colors" aria-hidden="true" />
+                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#05a855] w-4 h-4 transition-colors" aria-hidden="true" />
                 <input
                   type="email"
                   id="email"
@@ -164,25 +165,25 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="votre@email.com"
-                  className="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1a6b3c] focus:ring-2 focus:ring-[#1a6b3c]/20 transition-all duration-200"
+                  className="w-full pl-11 pr-4 py-3.5 bg-[#121914] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor="password" className="text-sm font-semibold text-gray-700">
+                <label htmlFor="password" className="text-sm font-semibold text-white/70">
                   Mot de passe
                 </label>
                 <Link
                   to="/mot-passe-oublie"
-                  className="text-xs text-[#1a6b3c] font-semibold hover:underline transition"
+                  className="text-xs text-[#05a855] font-semibold hover:underline transition"
                 >
                   Mot de passe oublié ?
                 </Link>
               </div>
               <div className="relative group">
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#1a6b3c] w-4 h-4 transition-colors" aria-hidden="true" />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#05a855] w-4 h-4 transition-colors" aria-hidden="true" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
@@ -190,13 +191,13 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-12 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1a6b3c] focus:ring-2 focus:ring-[#1a6b3c]/20 transition-all duration-200"
+                  className="w-full pl-11 pr-12 py-3.5 bg-[#121914] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/60 transition-colors focus:outline-none"
                 >
                   {showPassword ? <FiEyeOff className="w-4 h-4" aria-hidden="true" /> : <FiEye className="w-4 h-4" aria-hidden="true" />}
                 </button>
@@ -206,7 +207,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm mt-2 shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl hover:shadow-[#1a6b3c]/30"
+              className="btn-raised w-full mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -222,11 +223,11 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="text-xs text-gray-400 text-center mt-6 leading-relaxed">
+          <p className="text-xs text-white/40 text-center mt-6 leading-relaxed">
             En vous connectant, vous acceptez nos{' '}
-            <Link to="/conditions" className="text-[#1a6b3c] hover:underline">conditions</Link>
+            <Link to="/conditions" className="text-[#05a855] hover:underline">conditions</Link>
             {' '}et notre{' '}
-            <Link to="/confidentialite" className="text-[#1a6b3c] hover:underline">politique de confidentialité</Link>.
+            <Link to="/confidentialite" className="text-[#05a855] hover:underline">politique de confidentialité</Link>.
           </p>
         </div>
       </div>

@@ -17,11 +17,11 @@ export default function ResetPassword() {
 
   if (!token || !email) {
     return (
-      <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center px-6">
+      <div className="min-h-screen bg-[#0c0a09] flex items-center justify-center px-6">
         <div className="text-center max-w-md">
-          <h1 className="text-2xl font-black text-gray-800 mb-2">Lien invalide</h1>
-          <p className="text-gray-500 text-sm mb-6">Ce lien de réinitialisation est invalide ou a expiré.</p>
-          <Link to="/mot-passe-oublie" className="text-[#1a6b3c] font-semibold hover:underline text-sm">
+          <h1 className="text-2xl font-black text-white/85 mb-2">Lien invalide</h1>
+          <p className="text-white/50 text-sm mb-6">Ce lien de réinitialisation est invalide ou a expiré.</p>
+          <Link to="/mot-passe-oublie" className="text-[#4ade80] font-semibold hover:underline text-sm">
             Demander un nouveau lien
           </Link>
         </div>
@@ -53,14 +53,14 @@ export default function ResetPassword() {
 
   if (isDone) {
     return (
-      <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center px-6">
+      <div className="min-h-screen bg-[#0c0a09] flex items-center justify-center px-6">
         <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
-            <FiCheckCircle className="w-8 h-8 text-[#1a6b3c]" />
+          <div className="w-16 h-16 rounded-full bg-[#4ade80]/10 flex items-center justify-center mx-auto mb-6">
+            <FiCheckCircle className="w-8 h-8 text-[#4ade80]" />
           </div>
-          <h1 className="text-2xl font-black text-gray-800 mb-2">Mot de passe modifié</h1>
-          <p className="text-gray-500 text-sm mb-6">Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</p>
-          <Link to="/connexion" className="inline-block bg-[#1a6b3c] hover:bg-[#14532d] text-white font-semibold px-6 py-3 rounded-full transition text-sm">
+          <h1 className="text-2xl font-black text-white/85 mb-2">Mot de passe modifié</h1>
+          <p className="text-white/50 text-sm mb-6">Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</p>
+          <Link to="/connexion" className="btn-raised btn-sm">
             Se connecter
           </Link>
         </div>
@@ -69,42 +69,42 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] flex items-center justify-center px-6">
+    <div className="min-h-screen bg-[#0c0a09] flex items-center justify-center px-6">
       <SEO title="Réinitialisation mot de passe" description="Réinitialisez votre mot de passe AFI Collection." />
       <div className="w-full max-w-sm">
-        <Link to="/connexion" className="inline-flex items-center gap-2 text-gray-400 hover:text-[#1a6b3c] text-sm font-medium transition-colors mb-8 group">
+        <Link to="/connexion" className="inline-flex items-center gap-2 text-white/40 hover:text-[#4ade80] text-sm font-medium transition-colors mb-8 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour à la connexion
         </Link>
 
         <div className="mb-8">
-          <span className="inline-flex items-center text-[#1a6b3c] text-xs font-bold tracking-widest uppercase mb-3">
+          <span className="inline-flex items-center text-[#4ade80] text-xs font-bold tracking-widest uppercase mb-3">
             NOUVEAU MOT DE PASSE
           </span>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight leading-tight">
+          <h1 className="text-3xl font-black text-white tracking-tight leading-tight">
             Choisissez un<br />nouveau mot de passe
           </h1>
-          <p className="text-sm text-gray-500 mt-2">Pour {email}</p>
+          <p className="text-sm text-white/50 mt-2">Pour {email}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Nouveau mot de passe</label>
+            <label className="block text-sm font-semibold text-white/70 mb-2">Nouveau mot de passe</label>
             <div className="relative group">
-              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#1a6b3c] w-4 h-4 transition-colors" />
-              <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} placeholder="••••••••" className="w-full pl-11 pr-12 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1a6b3c] focus:ring-2 focus:ring-[#1a6b3c]/20 transition-all" />
-              <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#4ade80] w-4 h-4 transition-colors" />
+              <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} placeholder="••••••••" className="w-full pl-11 pr-12 py-3.5 bg-[#1c1917] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#4ade80]/40 focus:ring-2 focus:ring-[#4ade80]/20 transition-all" />
+              <button type="button" onClick={() => setShowPassword((v) => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/60">
                 {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
               </button>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Confirmer le mot de passe</label>
+            <label className="block text-sm font-semibold text-white/70 mb-2">Confirmer le mot de passe</label>
             <div className="relative group">
-              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#1a6b3c] w-4 h-4 transition-colors" />
-              <input type={showPassword ? 'text' : 'password'} value={confirm} onChange={(e) => setConfirm(e.target.value)} required placeholder="••••••••" className="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1a6b3c] focus:ring-2 focus:ring-[#1a6b3c]/20 transition-all" />
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#4ade80] w-4 h-4 transition-colors" />
+              <input type={showPassword ? 'text' : 'password'} value={confirm} onChange={(e) => setConfirm(e.target.value)} required placeholder="••••••••" className="w-full pl-11 pr-4 py-3.5 bg-[#1c1917] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#4ade80]/40 focus:ring-2 focus:ring-[#4ade80]/20 transition-all" />
             </div>
           </div>
-          <button type="submit" disabled={isLoading} className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all text-sm shadow-lg shadow-[#1a6b3c]/20">
+          <button type="submit" disabled={isLoading} className="btn-raised w-full disabled:opacity-60 disabled:cursor-not-allowed">
             {isLoading ? 'Réinitialisation...' : 'Réinitialiser le mot de passe'}
           </button>
         </form>

@@ -18,8 +18,14 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
   }, [onFinish]);
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#0d2818] flex flex-col items-center justify-center select-none">
-      <p className="text-5xl sm:text-6xl md:text-7xl font-black text-[#4ade80] tracking-tight font-mono tabular-nums">
+    <div className="fixed inset-0 z-[9999] bg-[#0c0a09] flex flex-col items-center justify-center gap-6 select-none">
+      <img
+        src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png"
+        alt="AFI Collection"
+        className="h-20 w-auto object-contain"
+      />
+      <span className="pop-sticker">Chargement</span>
+      <p className="text-5xl sm:text-6xl md:text-7xl font-black italic text-[#4ade80] tracking-tight font-mono tabular-nums">
         {Math.round(progress * 100)}%
       </p>
     </div>

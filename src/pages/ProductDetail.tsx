@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FiArrowLeft, FiShoppingBag, FiTruck, FiShield } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { productsApi, type Product } from '../lib/api';
+import { AFI_FALLBACK_PRODUCT } from '../lib/images';
 import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
 
@@ -27,17 +28,17 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="bg-[#f5f8f5] min-h-screen py-16">
+      <div className="bg-[#070b08] min-h-screen py-16 text-white">
         <div className="container mx-auto px-6 md:px-12 max-w-5xl">
-          <div className="bg-white/90 backdrop-blur-sm rounded-3xl border border-green-100 p-8 animate-pulse">
+          <div className="bg-[#121914] backdrop-blur-sm rounded-3xl border border-[#028444]/30 p-8 animate-pulse">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div className="aspect-square bg-gray-200 rounded-2xl" />
+              <div className="aspect-square bg-white/10 rounded-2xl" />
               <div className="space-y-4">
-                <div className="h-6 bg-gray-200 rounded w-1/4" />
-                <div className="h-10 bg-gray-200 rounded w-3/4" />
-                <div className="h-4 bg-gray-200 rounded w-full" />
-                <div className="h-4 bg-gray-200 rounded w-full" />
-                <div className="h-8 bg-gray-200 rounded w-1/3" />
+                <div className="h-6 bg-white/10 rounded w-1/4" />
+                <div className="h-10 bg-white/10 rounded w-3/4" />
+                <div className="h-4 bg-white/10 rounded w-full" />
+                <div className="h-4 bg-white/10 rounded w-full" />
+                <div className="h-8 bg-white/10 rounded w-1/3" />
               </div>
             </div>
           </div>
@@ -48,16 +49,16 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="bg-[#f5f8f5] min-h-screen py-16">
+      <div className="bg-[#070b08] min-h-screen py-16 text-white">
         <div className="container mx-auto px-6 md:px-12 max-w-5xl">
           <motion.div 
-            className="bg-white/90 backdrop-blur-sm rounded-3xl border border-green-100 p-16 text-center"
+            className="bg-[#121914] backdrop-blur-sm rounded-3xl border border-[#028444]/30 p-16 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-gray-500 mb-4">Ce produit n'existe pas ou n'est plus disponible.</p>
-            <Link to="/boutique" className="text-[#1a6b3c] font-semibold hover:underline">Retour à la boutique</Link>
+            <p className="text-white/50 mb-4">Ce produit n'existe pas ou n'est plus disponible.</p>
+            <Link to="/boutique" className="text-[#05a855] font-semibold hover:underline">Retour à la boutique</Link>
           </motion.div>
         </div>
       </div>
@@ -77,7 +78,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="bg-[#f5f8f5] min-h-screen pb-24 md:pb-12 pt-12">
+    <div className="bg-[#070b08] min-h-screen pb-24 md:pb-12 pt-12 text-white">
       <SEO
         title={product.name}
         description={product.description?.slice(0, 160)}
@@ -85,52 +86,52 @@ export default function ProductDetail() {
         url={`https://aficollection.com/produit/${product.id}`}
       />
       <div className="container mx-auto px-4 md:px-12 max-w-5xl">
-        <Link to="/boutique" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1a6b3c] mb-4 md:mb-6 group">
+        <Link to="/boutique" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-[#05a855] mb-4 md:mb-6 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour à la boutique
         </Link>
 
         <motion.div 
-          className="bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-3xl border border-green-100 p-4 md:p-8 shadow-sm"
+          className="bg-[#121914] backdrop-blur-sm rounded-2xl md:rounded-3xl border border-[#028444]/30 p-4 md:p-8 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             {/* Image */}
-            <div className="aspect-square bg-gray-50 rounded-xl md:rounded-2xl overflow-hidden">
+            <div className="aspect-square bg-black/40 border border-white/10 rounded-xl md:rounded-2xl overflow-hidden flex items-center justify-center">
               <img
                 src={product.image}
                 alt={product.name}
                 className="w-full h-full object-contain p-4 hover:scale-105 transition duration-700"
-                onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/600x600/1a6b3c/ffffff?text=AFI'; }}
+                onError={(e) => { (e.target as HTMLImageElement).src = AFI_FALLBACK_PRODUCT; }}
               />
             </div>
 
             {/* Infos */}
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#1a6b3c]">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#05a855]">
                 {product.category} · {product.brand}
               </p>
-              <h1 className="text-xl md:text-3xl font-black text-gray-800 mt-1">{product.name}</h1>
-              <p className="text-sm md:text-base text-gray-500 mt-3 md:mt-4 leading-relaxed">{product.description}</p>
+              <h1 className="text-xl md:text-3xl font-black text-white mt-1">{product.name}</h1>
+              <p className="text-sm md:text-base text-white/60 mt-3 md:mt-4 leading-relaxed">{product.description}</p>
 
-              <p className="text-2xl md:text-3xl font-black text-[#1a6b3c] mt-4 md:mt-6">
+              <p className="text-2xl md:text-3xl font-black text-[#05a855] mt-4 md:mt-6">
                 {product.price.toLocaleString('fr-FR')} FCFA
               </p>
 
               <p className="text-sm mt-2 md:mt-3">
                 {inStock ? (
-                  <span className="text-green-600 font-medium">✅ En stock — {product.stock} disponibles</span>
+                  <span className="text-[#05a855] font-medium">✅ En stock — {product.stock} disponibles</span>
                 ) : (
-                  <span className="text-red-600 font-medium">❌ Rupture de stock</span>
+                  <span className="text-red-500 font-medium">❌ Rupture de stock</span>
                 )}
               </p>
 
               {inStock && (
-                <div className="flex items-center gap-1 border border-gray-200 rounded-full w-fit mt-4 md:mt-6 bg-white">
+                <div className="flex items-center gap-1 border border-white/10 rounded-full w-fit mt-4 md:mt-6 bg-black/30">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-gray-100 transition flex items-center justify-center text-lg"
+                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
                     aria-label="Diminuer la quantité"
                   >
                     −
@@ -138,7 +139,7 @@ export default function ProductDetail() {
                   <span className="w-10 text-center font-semibold text-lg">{quantity}</span>
                   <button
                     onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-gray-100 transition flex items-center justify-center text-lg"
+                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
                     aria-label="Augmenter la quantité"
                   >
                     +
@@ -150,27 +151,27 @@ export default function ProductDetail() {
                 <button
                   onClick={handleBuyNow}
                   disabled={!inStock}
-                  className="w-full bg-[#1a6b3c] hover:bg-[#14532d] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#1a6b3c]/20 hover:shadow-xl"
+                  className="btn-raised w-full disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <FiShoppingBag className="w-4 h-4" /> Commander maintenant
                 </button>
                 <button
                   onClick={handleAddToCart}
                   disabled={!inStock}
-                  className="w-full border-2 border-[#1a6b3c] text-[#1a6b3c] hover:bg-[#1a6b3c] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed font-bold py-3.5 rounded-xl transition-colors"
+                  className="btn-ghost w-full disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Ajouter au panier
                 </button>
               </div>
 
               {/* Garanties */}
-              <div className="hidden md:flex gap-4 mt-6 pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <FiTruck className="w-4 h-4 text-[#1a6b3c]" />
+              <div className="hidden md:flex gap-4 mt-6 pt-4 border-t border-white/10">
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <FiTruck className="w-4 h-4 text-[#05a855]" />
                   <span>Livraison 48h</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <FiShield className="w-4 h-4 text-[#1a6b3c]" />
+                <div className="flex items-center gap-2 text-xs text-white/50">
+                  <FiShield className="w-4 h-4 text-[#05a855]" />
                   <span>Paiement sécurisé</span>
                 </div>
               </div>
@@ -179,13 +180,13 @@ export default function ProductDetail() {
         </motion.div>
 
         {/* Garanties sur mobile */}
-        <div className="md:hidden flex gap-4 mt-4 pt-4 border-t border-gray-200">
-          <div className="flex items-center gap-2 text-xs text-gray-400">
-            <FiTruck className="w-4 h-4 text-[#1a6b3c]" />
+        <div className="md:hidden flex gap-4 mt-4 pt-4 border-t border-white/10">
+          <div className="flex items-center gap-2 text-xs text-white/50">
+            <FiTruck className="w-4 h-4 text-[#05a855]" />
             <span>Livraison 48h</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-gray-400">
-            <FiShield className="w-4 h-4 text-[#1a6b3c]" />
+          <div className="flex items-center gap-2 text-xs text-white/50">
+            <FiShield className="w-4 h-4 text-[#05a855]" />
             <span>Paiement sécurisé</span>
           </div>
         </div>
@@ -193,31 +194,31 @@ export default function ProductDetail() {
 
       {/* Barre fixe bas de page (mobile) */}
       {inStock && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-4 py-3 shadow-2xl">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#121914] border-t border-white/10 px-4 py-3 shadow-2xl">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 border border-gray-300 rounded-full bg-gray-50 shrink-0">
+            <div className="flex items-center gap-1 border border-white/20 rounded-full bg-white/5 shrink-0">
               <button
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="w-10 h-10 rounded-full hover:bg-gray-100 transition flex items-center justify-center text-lg"
+                className="w-10 h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
                 aria-label="Diminuer"
               >−</button>
               <span className="w-8 text-center font-semibold">{quantity}</span>
               <button
                 onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                className="w-10 h-10 rounded-full hover:bg-gray-100 transition flex items-center justify-center text-lg"
+                className="w-10 h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
                 aria-label="Augmenter"
               >+</button>
             </div>
             <button
               onClick={handleBuyNow}
-              className="flex-1 bg-[#1a6b3c] text-white font-bold py-3 rounded-xl shadow-lg shadow-[#1a6b3c]/20 active:scale-[0.98] transition"
+              className="btn-raised flex-1"
             >
               <FiShoppingBag className="w-4 h-4 inline mr-1.5 -mt-0.5" />
               Commander {product.price.toLocaleString('fr-FR')} FCFA
             </button>
             <button
               onClick={handleAddToCart}
-              className="shrink-0 border-2 border-[#1a6b3c] text-[#1a6b3c] font-bold w-12 h-12 rounded-xl flex items-center justify-center active:scale-90 transition"
+              className="shrink-0 border-2 border-[#05a855] text-[#05a855] font-bold w-12 h-12 rounded-xl flex items-center justify-center active:scale-90 transition bg-[#028444]/10"
               aria-label="Ajouter au panier"
             >
               +

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiBox, FiAlertTriangle, FiTag } from 'react-icons/fi';
 import { adminApi, type Product } from '../../lib/api';
 import toast from 'react-hot-toast';
+import { AFI_FALLBACK_PRODUCT } from '../../lib/images';
 
 export function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -55,14 +56,14 @@ export function AdminProducts() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">Catalogue des produits</h1>
-          <p className="text-xs text-gray-400 mt-1">
+          <h1 className="text-2xl font-black text-white tracking-tight">Catalogue des produits</h1>
+          <p className="text-xs text-white/40 mt-1">
             Gérez vos articles en vente ({products.length} référence{products.length > 1 ? 's' : ''})
           </p>
         </div>
         <Link
           to="/admin/produits/nouveau"
-          className="inline-flex items-center justify-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-md shadow-[#1a6b3c]/20 hover:scale-102 shrink-0"
+          className="inline-flex items-center justify-center gap-2 btn-raised text-black! text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-md shadow-[#4ade80]/20 hover:scale-102 shrink-0"
         >
           <FiPlus className="w-4 h-4" />
           Ajouter un nouveau produit
@@ -70,26 +71,26 @@ export function AdminProducts() {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100 flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="bg-[#1c1917] rounded-2xl p-4 shadow-xs border border-white/10 flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="relative w-full md:w-80">
-          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher par nom ou description…"
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 rounded-xl text-xs text-gray-900 placeholder-gray-400 border border-gray-200/80 focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/30"
+            className="w-full pl-10 pr-4 py-2 bg-white/5 rounded-xl text-xs text-white placeholder-white/30 border border-white/10/80 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30"
           />
         </div>
 
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-          <span className="text-xs text-gray-400 font-medium shrink-0">Catégorie:</span>
+          <span className="text-xs text-white/40 font-medium shrink-0">Catégorie:</span>
           <button
             onClick={() => setCategoryFilter('toutes')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition ${
               categoryFilter === 'toutes'
-                ? 'bg-[#1a6b3c] text-white shadow-sm'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                ? 'bg-[#4ade80] text-black shadow-sm'
+                : 'bg-white/10 text-white/60 hover:bg-[#1c1917]/15'
             }`}
           >
             Toutes ({products.length})
@@ -102,8 +103,8 @@ export function AdminProducts() {
                 onClick={() => setCategoryFilter(cat)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold capitalize shrink-0 transition ${
                   categoryFilter === cat
-                    ? 'bg-[#1a6b3c] text-white shadow-sm'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-[#4ade80] text-black shadow-sm'
+                    : 'bg-white/10 text-white/60 hover:bg-[#1c1917]/15'
                 }`}
               >
                 {cat} ({count})
@@ -114,22 +115,22 @@ export function AdminProducts() {
       </div>
 
       {/* Products Table Card */}
-      <div className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-100">
+      <div className="bg-[#1c1917] rounded-2xl shadow-xs overflow-hidden border border-white/10">
         {loading ? (
-          <div className="p-12 text-center text-sm text-gray-400 animate-pulse">
+          <div className="p-12 text-center text-sm text-white/40 animate-pulse">
             Chargement du catalogue produit…
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="p-12 text-center">
-            <FiBox className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-sm font-bold text-gray-700">Aucun produit trouvé</p>
-            <p className="text-xs text-gray-400 mt-1">Essayez de modifier votre recherche ou ajoutez un nouveau produit.</p>
+            <FiBox className="w-12 h-12 text-white/50 mx-auto mb-3" />
+            <p className="text-sm font-bold text-white/70">Aucun produit trouvé</p>
+            <p className="text-xs text-white/40 mt-1">Essayez de modifier votre recherche ou ajoutez un nouveau produit.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100 bg-gray-50/50">
+                <tr className="text-xs text-white/40 uppercase tracking-wider border-b border-white/10 bg-white/50">
                   <th className="px-6 py-4 font-bold">Produit</th>
                   <th className="px-6 py-4 font-bold">Catégorie</th>
                   <th className="px-6 py-4 font-bold">Prix</th>
@@ -137,34 +138,34 @@ export function AdminProducts() {
                   <th className="px-6 py-4 font-bold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-white/10">
                 {filteredProducts.map((p) => (
-                  <tr key={p.id} className="hover:bg-gray-50/80 transition-colors group">
+                  <tr key={p.id} className="hover:bg-[#1c1917]/80 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden shrink-0 border border-gray-200/60 relative">
+                        <div className="w-12 h-12 rounded-xl bg-white/10 overflow-hidden shrink-0 border border-white/10/60 relative">
                           <img 
                             src={p.image} 
                             alt={p.name} 
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform" 
                             onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100';
+                              (e.target as HTMLImageElement).src = AFI_FALLBACK_PRODUCT;
                             }} 
                           />
                         </div>
                         <div>
-                          <p className="font-bold text-gray-900 text-sm group-hover:text-[#1a6b3c] transition-colors">{p.name}</p>
-                          <p className="text-xs text-gray-400 line-clamp-1 max-w-xs">{p.description || 'Aucune description'}</p>
+                          <p className="font-bold text-white text-sm group-hover:text-[#4ade80] transition-colors">{p.name}</p>
+                          <p className="text-xs text-white/40 line-clamp-1 max-w-xs">{p.description || 'Aucune description'}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center gap-1 bg-emerald-50 text-[#1a6b3c] px-2.5 py-1 rounded-lg text-xs font-semibold capitalize">
+                      <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#4ade80] px-2.5 py-1 rounded-lg text-xs font-semibold capitalize">
                         <FiTag className="w-3 h-3" />
                         {p.category || 'Général'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-bold text-gray-900 font-mono text-sm">
+                    <td className="px-6 py-4 font-bold text-white font-mono text-sm">
                       {p.price.toLocaleString('fr-FR')} FCFA
                     </td>
                     <td className="px-6 py-4">
@@ -173,12 +174,12 @@ export function AdminProducts() {
                           Épuisé
                         </span>
                       ) : p.stock <= 3 ? (
-                        <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-full text-xs font-bold">
+                        <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#4ade80] border border-[#4ade80]/25 px-2.5 py-1 rounded-full text-xs font-bold">
                           <FiAlertTriangle className="w-3 h-3" />
                           {p.stock} restant{p.stock > 1 ? 's' : ''}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 bg-emerald-50 text-[#1a6b3c] border border-emerald-200 px-2.5 py-1 rounded-full text-xs font-semibold">
+                        <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#4ade80] border border-[#4ade80]/30 px-2.5 py-1 rounded-full text-xs font-semibold">
                           {p.stock} en stock
                         </span>
                       )}
@@ -187,14 +188,14 @@ export function AdminProducts() {
                       <div className="flex items-center justify-end gap-2">
                         <Link 
                           to={`/admin/produits/${p.id}/modifier`} 
-                          className="p-2 text-gray-500 hover:text-[#1a6b3c] hover:bg-emerald-50 rounded-xl transition"
+                          className="p-2 text-white/50 hover:text-[#4ade80] hover:bg-[#4ade80]/10 rounded-xl transition"
                           title="Modifier"
                         >
                           <FiEdit2 className="w-4 h-4" />
                         </Link>
                         <button 
                           onClick={() => handleDelete(p.id, p.name)} 
-                          className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
+                          className="p-2 text-white/50 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
                           title="Supprimer"
                         >
                           <FiTrash2 className="w-4 h-4" />

@@ -1,27 +1,60 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { 
-  FiShoppingCart,
-  FiMenu, 
-  FiX, 
-  FiLogOut, 
-  FiPackage, 
-  FiChevronDown,
-  FiHeart,
-  FiSearch,
-  FiArrowRight
-} from 'react-icons/fi';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  ShoppingBag, 
+  ShoppingCart, 
+  User, 
+  UserCheck, 
+  Search, 
+  X, 
+  ArrowRight, 
+  GraduationCap, 
+  Heart, 
+  Package, 
+  PhoneCall, 
+  Sparkles, 
+  Info, 
+  Layers 
+} from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
-const navLinks = [
-  { to: '/', label: 'Accueil' },
-  { to: '/boutique', label: 'Boutique' },
-  { to: '/formations', label: 'Formations CFP' },
-  { to: '/a-propos', label: 'Qui sommes-nous' },
-  { to: '/contact', label: 'Contact' },
+const NAV_SLOGANS = [
+  "Créations d'exception & Macramé d'art.",
+  "Artisanat béninois 100% fait main.",
+  "Inclusion sociale & Savoir-faire ancestral.",
+  "Maroquinerie fine & Terroir d'Afrique.",
 ];
+
+function NavSlogan() {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIdx((prev) => (prev + 1) % NAV_SLOGANS.length);
+    }, 3800);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative min-h-[2.8em] overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={idx}
+          initial={{ y: 12, opacity: 0, filter: 'blur(4px)' }}
+          animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+          exit={{ y: -12, opacity: 0, filter: 'blur(4px)' }}
+          transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+          className="m-0 text-white/80 font-bold text-sm leading-snug"
+        >
+          {NAV_SLOGANS[idx]}
+        </motion.p>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export function Header() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -29,54 +62,40 @@ export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  const userMenuRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const userDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Détection du scroll pour effet de réduction / ombre
+  // Fermeture lors d'un changement de page
   useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 15);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    setOpen(false);
+    setMobileMenuOpen(false);
+    setSearchOpen(false);
+    setUserDropdownOpen(false);
+  }, [location.pathname]);
 
   // Fermeture des menus au clic extérieur
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setUserMenuOpen(false);
+      if (userDropdownRef.current && !userDropdownRef.current.contains(e.target as Node)) {
+        setUserDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
   }, []);
 
-  // Fermeture à la navigation
-  useEffect(() => {
-    setMenuOpen(false);
-    setUserMenuOpen(false);
-    setSearchOpen(false);
-  }, [location.pathname]);
-
-  // Focus automatique du champ de recherche
+  // Focus champ recherche
   useEffect(() => {
     if (searchOpen) {
-      setTimeout(() => searchInputRef.current?.focus(), 100);
+      setTimeout(() => searchInputRef.current?.focus(), 120);
     }
   }, [searchOpen]);
-
-  const handleLogout = () => {
-    logout();
-    setUserMenuOpen(false);
-    navigate('/');
-  };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,59 +106,58 @@ export function Header() {
     }
   };
 
+  const closeMenus = () => {
+    setOpen(false);
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-50 transition-all duration-300">
-      {/* Barre de navigation principale */}
-      <div 
-        className={`bg-white/95 backdrop-blur-md transition-all duration-300 ${
-          isScrolled 
-            ? 'shadow-lg shadow-black/8 py-2 sm:py-2.5 border-b border-gray-200/70' 
-            : 'py-2.5 sm:py-3.5 border-b border-gray-100'
-        }`}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+    <>
+      {/* ═══════════════════════════════════════════════════════════
+          DESKTOP : CardNav flottant (inspiré de port 3002)
+          ═══════════════════════════════════════════════════════════ */}
+      <div className="nav-desktop-only aka-nav-container">
+        <nav className={`aka-card-nav ${open ? 'is-open' : ''}`}>
+          
+          {/* Barre du haut fixe dans la pilule */}
+          <div className="aka-nav-top">
             
-            {/* Logo de la marque agrandi */}
-            <Link to="/" className="flex items-center group shrink-0">
+            {/* Bouton Menu Hamburger à gauche */}
+            <button 
+              type="button" 
+              className={`aka-nav-menu-btn ${open ? 'open' : ''}`}
+              onClick={() => setOpen((prev) => !prev)}
+              aria-label="Ouvrir le menu de navigation"
+            >
+              <div className="aka-hamburger">
+                <div className="aka-hline" />
+                <div className="aka-hline" />
+              </div>
+              <span>{open ? 'Fermer' : 'Menu'}</span>
+            </button>
+
+            {/* Logo Central AFI */}
+            <Link to="/" className="aka-nav-logo" onClick={closeMenus} aria-label="Accueil AFI Collection">
               <img 
                 src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
                 alt="AFI Collection" 
-                className="h-14 sm:h-16 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-10 sm:h-12 w-auto object-contain"
               />
             </Link>
 
-            {/* Menu de navigation central (Desktop) - Liens verts et police agrandie */}
-            <nav className="hidden lg:flex items-center gap-2 xl:gap-3">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  end={link.to === '/'}
-                  className={({ isActive }) =>
-                    `px-4 py-2.5 rounded-xl text-base font-bold transition-all duration-200 ${
-                      isActive 
-                        ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#1a6b3c]/25' 
-                        : 'text-[#1a6b3c] hover:bg-[#1a6b3c]/10 hover:text-[#14532d]'
-                    }`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-            </nav>
-
-            {/* Actions à droite (Recherche, Panier, Profil & Mobile Toggle) */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            {/* Actions à droite : Recherche, Panier, Compte, WhatsApp */}
+            <div className="aka-nav-right">
               
-              {/* Bouton de recherche */}
+              {/* Recherche Toggle */}
               <div className="relative">
                 <button
+                  type="button"
                   onClick={() => setSearchOpen((v) => !v)}
+                  className="aka-nav-pill aka-nav-pill--icon-only"
+                  title="Rechercher"
                   aria-label="Rechercher des créations"
-                  className="p-2.5 rounded-full text-[#1a6b3c] hover:text-[#14532d] hover:bg-[#1a6b3c]/10 transition-all cursor-pointer"
                 >
-                  <FiSearch className="w-5 h-5" />
+                  <Search size={16} className="aka-nav-pill-icon" />
                 </button>
 
                 <AnimatePresence>
@@ -148,7 +166,7 @@ export function Header() {
                       initial={{ opacity: 0, scale: 0.95, y: 10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: 5 }}
-                      className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 p-3 z-50"
+                      className="absolute right-0 mt-3 w-80 bg-[#121914] rounded-2xl shadow-2xl border border-[#028444]/40 p-3 z-50"
                     >
                       <form onSubmit={handleSearchSubmit} className="relative">
                         <input
@@ -157,16 +175,16 @@ export function Header() {
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           placeholder="Rechercher un sac, pagne..."
-                          className="w-full bg-gray-50 rounded-xl pl-10 pr-10 py-2.5 text-sm text-gray-800 border border-gray-200 focus:outline-none focus:border-[#1a6b3c] focus:bg-white transition-all"
+                          className="w-full bg-black/60 rounded-xl pl-10 pr-10 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-[#05a855] transition-all placeholder-white/30"
                         />
-                        <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#05a855]" />
                         {searchQuery && (
                           <button
                             type="button"
                             onClick={() => setSearchQuery('')}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
                           >
-                            <FiX className="w-4 h-4" />
+                            <X className="w-4 h-4" />
                           </button>
                         )}
                       </form>
@@ -175,278 +193,427 @@ export function Header() {
                 </AnimatePresence>
               </div>
 
-              {/* Bouton Panier avec badge animé */}
+              {/* Bouton Chariot / Panier */}
               <Link
                 to="/panier"
-                aria-label="Voir le panier"
-                className="relative flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-full bg-emerald-50/70 hover:bg-[#1a6b3c]/15 text-[#1a6b3c] transition-all border border-[#1a6b3c]/20 group"
+                className="aka-nav-pill aka-nav-pill--icon-only"
+                title={`Mon Panier (${count} articles)`}
+                aria-label="Mon Panier"
               >
-                <div className="relative">
-                  <FiShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform text-[#1a6b3c]" />
-                  {count > 0 && (
-                    <span className="absolute -top-2 -right-2.5 bg-[#dc2626] text-white text-[10px] font-black rounded-full min-w-5 h-5 px-1 flex items-center justify-center shadow-md animate-bounce">
-                      {count > 99 ? '99+' : count}
-                    </span>
-                  )}
-                </div>
+                <ShoppingCart size={16} className="aka-nav-pill-icon" />
                 {count > 0 && (
-                  <span className="hidden md:inline text-xs font-bold text-[#1a6b3c]">
-                    {total.toLocaleString('fr-FR')} F
+                  <span className="aka-cart-badge">
+                    {count > 99 ? '99+' : count}
                   </span>
                 )}
               </Link>
 
-              {/* Espace Compte / Profil (Desktop) */}
-              <div className="hidden md:block relative" ref={userMenuRef}>
+              {/* Bouton Compte Client */}
+              <div className="relative" ref={userDropdownRef}>
                 {isAuthenticated && user ? (
-                  <>
-                    <button
-                      onClick={() => setUserMenuOpen((v) => !v)}
-                      className="flex items-center gap-2 p-1.5 pr-3 rounded-full hover:bg-emerald-50/60 transition-all border border-[#1a6b3c]/20 cursor-pointer"
-                    >
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#1a6b3c] to-[#4ade80] flex items-center justify-center text-white font-black text-xs shadow-sm">
-                        {user.name?.charAt(0).toUpperCase() || 'U'}
-                      </div>
-                      <span className="text-xs font-bold text-[#1a6b3c] max-w-[100px] truncate">
-                        {user.name?.split(' ')[0] || 'Compte'}
-                      </span>
-                      <FiChevronDown className={`w-3.5 h-3.5 text-[#1a6b3c] transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
-                    </button>
-
-                    <AnimatePresence>
-                      {userMenuOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                          className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50"
-                        >
-                          <div className="px-4 py-3.5 bg-gradient-to-r from-[#1a6b3c] to-[#14532d] text-white">
-                            <p className="text-xs text-emerald-200 uppercase font-bold tracking-wider">Espace Client</p>
-                            <p className="text-sm font-bold truncate mt-0.5">{user.name}</p>
-                            <p className="text-[11px] text-white/70 truncate">{user.email}</p>
-                          </div>
-
-                          <div className="p-2 space-y-1">
-                            <Link
-                              to="/mon-compte"
-                              onClick={() => setUserMenuOpen(false)}
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-[#1a6b3c] transition-colors"
-                            >
-                              <FiPackage className="w-4 h-4 text-[#1a6b3c]" />
-                              <span>Mes commandes</span>
-                            </Link>
-
-                            <Link
-                              to="/mon-compte?favoris=true"
-                              onClick={() => setUserMenuOpen(false)}
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-700 hover:bg-emerald-50 hover:text-[#1a6b3c] transition-colors"
-                            >
-                              <FiHeart className="w-4 h-4 text-rose-500" />
-                              <span>Mes favoris</span>
-                            </Link>
-
-                            {user.role === 'admin' && (
-                              <Link
-                                to="/admin"
-                                onClick={() => setUserMenuOpen(false)}
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 transition-colors"
-                              >
-                                <span className="w-4 h-4 text-amber-600 font-bold">★</span>
-                                <span>Tableau de bord Admin</span>
-                              </Link>
-                            )}
-                          </div>
-
-                          <div className="p-2 border-t border-gray-100">
-                            <button
-                              onClick={handleLogout}
-                              className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-                            >
-                              <FiLogOut className="w-4 h-4" />
-                              <span>Déconnexion</span>
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </>
+                  <button
+                    type="button"
+                    onClick={() => setUserDropdownOpen((v) => !v)}
+                    className="aka-nav-pill aka-nav-pill--icon-only border-[#028444]/60"
+                    title={`Connecté : ${user.name}`}
+                  >
+                    <UserCheck size={16} className="aka-nav-pill-icon text-[#05a855]" />
+                  </button>
                 ) : (
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to="/connexion"
-                      className="text-sm font-bold text-[#1a6b3c] hover:text-[#14532d] px-3.5 py-2 rounded-xl hover:bg-[#1a6b3c]/10 transition-all"
-                    >
-                      Connexion
-                    </Link>
-                    <Link
-                      to="/inscription"
-                      className="text-sm font-bold bg-[#1a6b3c] hover:bg-[#14532d] text-white px-4 py-2 rounded-xl transition-all shadow-md shadow-[#1a6b3c]/25 hover:shadow-lg hover:scale-105"
-                    >
-                      S'inscrire
-                    </Link>
-                  </div>
+                  <Link
+                    to="/connexion"
+                    className="aka-nav-pill aka-nav-pill--icon-only"
+                    title="Connexion / Mon compte"
+                  >
+                    <User size={16} className="aka-nav-pill-icon" />
+                  </Link>
                 )}
+
+                {/* Dropdown utilisateur connecté */}
+                <AnimatePresence>
+                  {isAuthenticated && user && userDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 5, scale: 0.95 }}
+                      className="absolute right-0 mt-3 w-64 bg-[#121914] rounded-2xl shadow-2xl border border-[#028444]/40 overflow-hidden z-50"
+                    >
+                      <div className="px-4 py-3.5 bg-gradient-to-r from-[#028444] to-[#016634] text-white">
+                        <p className="text-[10px] text-white/80 uppercase font-black tracking-wider">Espace Membre</p>
+                        <p className="text-sm font-black truncate mt-0.5">{user.name}</p>
+                        <p className="text-[11px] text-white/80 truncate">{user.email}</p>
+                      </div>
+
+                      <div className="p-2 space-y-1">
+                        <Link
+                          to="/mon-compte"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-white/80 hover:bg-white/5 hover:text-[#05a855] transition-colors"
+                        >
+                          <Package className="w-4 h-4 text-[#05a855]" />
+                          <span>Mes commandes</span>
+                        </Link>
+
+                        <Link
+                          to="/mon-compte?favoris=true"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-white/80 hover:bg-white/5 hover:text-[#05a855] transition-colors"
+                        >
+                          <Heart className="w-4 h-4 text-rose-400" />
+                          <span>Mes favoris</span>
+                        </Link>
+
+                        {user.role === 'admin' && (
+                          <Link
+                            to="/admin"
+                            onClick={() => setUserDropdownOpen(false)}
+                            className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-white bg-[#028444] hover:bg-[#05a855] transition-colors"
+                          >
+                            <Sparkles className="w-4 h-4" />
+                            <span>Panneau Admin</span>
+                          </Link>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            logout();
+                            setUserDropdownOpen(false);
+                            navigate('/');
+                          }}
+                          className="w-full text-left flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/10 transition-colors"
+                        >
+                          <X className="w-4 h-4" />
+                          <span>Se déconnecter</span>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
-              {/* Bouton Toggle Mobile Drawer */}
-              <button
-                className="lg:hidden p-2.5 rounded-xl text-[#1a6b3c] hover:text-[#14532d] hover:bg-[#1a6b3c]/10 transition-all cursor-pointer"
-                onClick={() => setMenuOpen((v) => !v)}
-                aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              {/* Bouton WhatsApp CTA */}
+              <a
+                href="https://wa.me/2290197222880"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-raised btn-sm flex items-center gap-1.5"
               >
-                {menuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
-              </button>
-
+                <FaWhatsapp className="w-3.5 h-3.5" />
+                <span>WHATSAPP</span>
+              </a>
             </div>
-
           </div>
-        </div>
+
+          {/* Déploiement : Grille de 3 Cartes (GSAP / Framer Motion) */}
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+                className="aka-nav-content overflow-hidden"
+              >
+                {/* Carte 1 : Identité & Slogans */}
+                <motion.div 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.05, duration: 0.35 }}
+                  className="aka-nav-card aka-card-1"
+                >
+                  <div className="aka-card-label">AFI COLLECTION</div>
+                  <div className="aka-card-brand">
+                    <Link to="/" onClick={closeMenus} className="aka-card-logo-link">
+                      <img 
+                        src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
+                        alt="AFI Collection" 
+                        className="h-16 w-auto object-contain mx-auto"
+                      />
+                    </Link>
+                    <NavSlogan />
+                  </div>
+                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-white/40">
+                    <span>Abomey-Calavi · Bénin</span>
+                    <span className="text-[#05a855] font-bold">100% Fait main</span>
+                  </div>
+                </motion.div>
+
+                {/* Carte 2 : Boutique & Savoir-faire */}
+                <motion.div 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.1, duration: 0.35 }}
+                  className="aka-nav-card aka-card-2"
+                >
+                  <div className="aka-card-label">Boutique & Savoir-Faire</div>
+                  <div className="aka-card-links">
+                    <Link to="/boutique" onClick={closeMenus} className="aka-card-link group">
+                      <ArrowRight className="aka-link-arrow" />
+                      <span className="aka-card-link-textWrap">
+                        <span className="aka-card-link-label">Boutique</span>
+                        <em className="aka-link-sub">Sacs macramé, sandales & pagnes</em>
+                      </span>
+                    </Link>
+
+                    <Link to="/formations" onClick={closeMenus} className="aka-card-link group">
+                      <ArrowRight className="aka-link-arrow" />
+                      <span className="aka-card-link-textWrap">
+                        <span className="aka-card-link-label">Formations CFP</span>
+                        <em className="aka-link-sub">Ateliers Dorcas & savoir-faire</em>
+                      </span>
+                    </Link>
+
+                    <Link to="/panier" onClick={closeMenus} className="aka-card-link group">
+                      <ArrowRight className="aka-link-arrow" />
+                      <span className="aka-card-link-textWrap">
+                        <span className="aka-card-link-label">Mon Panier ({count})</span>
+                        <em className="aka-link-sub">Total : {total.toLocaleString('fr-FR')} FCFA</em>
+                      </span>
+                    </Link>
+                  </div>
+                </motion.div>
+
+                {/* Carte 3 : Univers & Contact */}
+                <motion.div 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.15, duration: 0.35 }}
+                  className="aka-nav-card aka-card-3"
+                >
+                  <div className="aka-card-label">Univers & Contact</div>
+                  <div className="aka-card-links">
+                    <Link to="/a-propos" onClick={closeMenus} className="aka-card-link group">
+                      <ArrowRight className="aka-link-arrow" />
+                      <span className="aka-card-link-textWrap">
+                        <span className="aka-card-link-label">Qui Sommes-Nous</span>
+                        <em className="aka-link-sub">Notre histoire & inclusion sociale</em>
+                      </span>
+                    </Link>
+
+                    <Link to="/services" onClick={closeMenus} className="aka-card-link group">
+                      <ArrowRight className="aka-link-arrow" />
+                      <span className="aka-card-link-textWrap">
+                        <span className="aka-card-link-label">Nos Services</span>
+                        <em className="aka-link-sub">Sur-mesure, gros & événementiel</em>
+                      </span>
+                    </Link>
+
+                    <Link to="/contact" onClick={closeMenus} className="aka-card-link group">
+                      <ArrowRight className="aka-link-arrow" />
+                      <span className="aka-card-link-textWrap">
+                        <span className="aka-card-link-label">Contact & Atelier</span>
+                        <em className="aka-link-sub">Écrivez-nous ou passez à l'atelier</em>
+                      </span>
+                    </Link>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
       </div>
 
-      {/* Drawer Mobile moderne plein écran / slide-in */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            {/* Overlay d'arrière-plan */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMenuOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden"
-            />
+      {/* ═══════════════════════════════════════════════════════════
+          MOBILE : Barre fixe 58px + Drawer animé
+          ═══════════════════════════════════════════════════════════ */}
+      <div className="nav-mobile-only">
+        <header className="sm-header">
+          {/* Bouton Hamburger Mobile */}
+          <button
+            type="button"
+            className="sm-header-icon-btn"
+            onClick={() => setMobileMenuOpen((v) => !v)}
+            aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          >
+            {mobileMenuOpen ? <X size={20} className="text-[#05a855]" /> : <div className="aka-hamburger"><div className="aka-hline" /><div className="aka-hline" /></div>}
+          </button>
 
-            {/* Panneau latéral mobile */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl z-50 lg:hidden flex flex-col justify-between overflow-y-auto"
+          {/* Logo Mobile */}
+          <Link to="/" onClick={closeMenus} className="flex items-center">
+            <img 
+              src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
+              alt="AFI Collection" 
+              className="h-9 w-auto object-contain"
+            />
+          </Link>
+
+          {/* Actions Droite Mobile */}
+          <div className="flex items-center gap-2">
+            <Link
+              to="/panier"
+              onClick={closeMenus}
+              className="sm-header-icon-btn"
+              aria-label="Voir le panier"
             >
-              <div>
-                {/* Entête du drawer */}
-                <div className="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/70">
-                  <Link to="/" onClick={() => setMenuOpen(false)} className="flex items-center">
-                    <img 
-                      src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
-                      alt="AFI Collection" 
-                      className="h-12 w-auto object-contain"
-                    />
+              <ShoppingCart size={17} className="text-[#05a855]" />
+              {count > 0 && (
+                <span className="sm-cart-badge">
+                  {count > 99 ? '99+' : count}
+                </span>
+              )}
+            </Link>
+
+            <Link
+              to={isAuthenticated ? "/mon-compte" : "/connexion"}
+              onClick={closeMenus}
+              className="sm-header-icon-btn"
+              aria-label="Mon compte"
+            >
+              {isAuthenticated ? <UserCheck size={17} className="text-[#05a855]" /> : <User size={17} />}
+            </Link>
+          </div>
+        </header>
+
+        {/* Drawer Mobile Flou & Animé */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.28, ease: 'easeOut' }}
+              className="fixed inset-x-0 top-[58px] bottom-0 bg-[#070b08]/98 backdrop-blur-2xl z-[9300] overflow-y-auto p-5 flex flex-col justify-between"
+            >
+              <div className="space-y-6">
+                {/* Recherche rapide */}
+                <form onSubmit={handleSearchSubmit} className="relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Rechercher sacs, pagnes, sandales..."
+                    className="w-full bg-[#121914] border border-[#028444]/40 rounded-full pl-11 pr-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#05a855]"
+                  />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#05a855]" />
+                </form>
+
+                {/* Liens principaux */}
+                <div className="space-y-2">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[#05a855] px-2">Navigation</p>
+                  
+                  <Link
+                    to="/"
+                    onClick={closeMenus}
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Sparkles className="w-5 h-5 text-[#05a855]" />
+                      <span className="font-bold text-sm text-white">Accueil</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white/30" />
                   </Link>
 
-                  <button
-                    onClick={() => setMenuOpen(false)}
-                    className="p-2 rounded-full hover:bg-gray-200 text-gray-600 transition-colors"
+                  <Link
+                    to="/boutique"
+                    onClick={closeMenus}
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
                   >
-                    <FiX className="w-5 h-5" />
-                  </button>
-                </div>
+                    <div className="flex items-center gap-3">
+                      <ShoppingBag className="w-5 h-5 text-[#05a855]" />
+                      <div>
+                        <div className="font-bold text-sm text-white">Boutique & Créations</div>
+                        <div className="text-[11px] text-white/40">Sacs macramé, sandales, pagnes</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white/30" />
+                  </Link>
 
-                {/* Recherche mobile */}
-                <div className="p-4 border-b border-gray-100">
-                  <form onSubmit={handleSearchSubmit} className="relative">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Rechercher créations..."
-                      className="w-full bg-gray-50 rounded-xl pl-9 pr-4 py-2 text-xs text-gray-800 border border-gray-200 focus:outline-none focus:border-[#1a6b3c]"
-                    />
-                    <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
-                  </form>
-                </div>
+                  <Link
+                    to="/formations"
+                    onClick={closeMenus}
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <GraduationCap className="w-5 h-5 text-[#05a855]" />
+                      <div>
+                        <div className="font-bold text-sm text-white">Formations CFP</div>
+                        <div className="text-[11px] text-white/40">Ateliers & transmission Dorcas</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white/30" />
+                  </Link>
 
-                {/* Liens de navigation mobiles (Police agrandie et en vert) */}
-                <div className="p-4 space-y-1.5">
-                  <p className="px-3 py-1 text-[11px] font-black uppercase tracking-wider text-gray-400">Navigation</p>
-                  
-                  {navLinks.map((link) => (
-                    <NavLink
-                      key={link.to}
-                      to={link.to}
-                      end={link.to === '/'}
-                      onClick={() => setMenuOpen(false)}
-                      className={({ isActive }) =>
-                        `flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold transition-all ${
-                          isActive 
-                            ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#1a6b3c]/20' 
-                            : 'text-[#1a6b3c] hover:bg-[#1a6b3c]/10'
-                        }`
-                      }
-                    >
-                      <span>{link.label}</span>
-                      <FiArrowRight className="w-4 h-4 opacity-70" />
-                    </NavLink>
-                  ))}
+                  <Link
+                    to="/services"
+                    onClick={closeMenus}
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Layers className="w-5 h-5 text-[#05a855]" />
+                      <span className="font-bold text-sm text-white">Nos Services</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white/30" />
+                  </Link>
+
+                  <Link
+                    to="/a-propos"
+                    onClick={closeMenus}
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Info className="w-5 h-5 text-[#05a855]" />
+                      <span className="font-bold text-sm text-white">Qui Sommes-Nous</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white/30" />
+                  </Link>
+
+                  <Link
+                    to="/contact"
+                    onClick={closeMenus}
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <PhoneCall className="w-5 h-5 text-[#05a855]" />
+                      <span className="font-bold text-sm text-white">Contact & Ateliers</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white/30" />
+                  </Link>
                 </div>
               </div>
 
-              {/* Pied du drawer mobile */}
-              <div className="p-4 border-t border-gray-100 bg-gray-50/80 space-y-2">
-                {isAuthenticated && user ? (
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3 p-2 bg-white rounded-xl border border-gray-200/80">
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1a6b3c] to-[#4ade80] flex items-center justify-center text-white font-bold text-xs">
-                        {user.name?.charAt(0).toUpperCase() || 'U'}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-bold text-gray-900 truncate">{user.name}</p>
-                        <p className="text-[10px] text-gray-500 truncate">{user.email}</p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                      <Link
-                        to="/mon-compte"
-                        onClick={() => setMenuOpen(false)}
-                        className="text-center py-2 px-3 text-xs font-bold bg-white text-[#1a6b3c] rounded-xl border border-gray-200 hover:bg-emerald-50"
-                      >
-                        Commandes
-                      </Link>
-                      <button
-                        onClick={handleLogout}
-                        className="py-2 px-3 text-xs font-bold text-red-600 bg-red-50 rounded-xl hover:bg-red-100 cursor-pointer"
-                      >
-                        Déconnexion
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link
-                      to="/connexion"
-                      onClick={() => setMenuOpen(false)}
-                      className="text-center py-2.5 px-3 text-xs font-bold text-[#1a6b3c] bg-white border border-[#1a6b3c] rounded-xl hover:bg-emerald-50"
-                    >
-                      Connexion
-                    </Link>
-                    <Link
-                      to="/inscription"
-                      onClick={() => setMenuOpen(false)}
-                      className="text-center py-2.5 px-3 text-xs font-bold text-white bg-[#1a6b3c] rounded-xl hover:bg-[#14532d] shadow-md shadow-[#1a6b3c]/20"
-                    >
-                      S'inscrire
-                    </Link>
-                  </div>
-                )}
-
+              {/* Bas du Drawer : Boutons CTA */}
+              <div className="pt-6 border-t border-white/10 space-y-3">
                 <a
                   href="https://wa.me/2290197222880"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition-all"
+                  rel="noreferrer"
+                  className="btn-raised btn-xl w-full flex items-center justify-center gap-2"
                 >
+                  <FaWhatsapp className="w-5 h-5" />
                   <span>Commander sur WhatsApp</span>
                 </a>
+
+                {isAuthenticated ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logout();
+                      closeMenus();
+                    }}
+                    className="w-full py-2.5 text-center text-xs font-bold text-rose-400 cursor-pointer"
+                  >
+                    Se déconnecter ({user?.name})
+                  </button>
+                ) : (
+                  <div className="flex items-center justify-center gap-3 text-xs text-white/50 pt-1">
+                    <Link to="/connexion" onClick={closeMenus} className="text-[#05a855] font-bold underline">
+                      Connexion
+                    </Link>
+                    <span>·</span>
+                    <Link to="/inscription" onClick={closeMenus} className="hover:text-white">
+                      Créer un compte
+                    </Link>
+                  </div>
+                )}
               </div>
-
             </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </div>
 
-    </header>
+      {/* Espacement de tête pour compenser la nav flottante */}
+      <div className="h-20 md:h-24" aria-hidden="true" />
+    </>
   );
 }

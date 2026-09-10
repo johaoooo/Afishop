@@ -112,38 +112,38 @@ export function AdminProductForm() {
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center gap-4">
-        <button onClick={() => navigate('/admin/produits')} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+        <button onClick={() => navigate('/admin/produits')} className="p-2 text-white/40 hover:text-white/60 hover:bg-white/10 rounded-lg transition-colors">
           <FiArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-black text-gray-800">{isEdit ? 'Modifier le produit' : 'Nouveau produit'}</h1>
-          <p className="text-sm text-gray-400 mt-0.5">
+          <h1 className="text-2xl font-black text-white/85">{isEdit ? 'Modifier le produit' : 'Nouveau produit'}</h1>
+          <p className="text-sm text-white/40 mt-0.5">
             {isEdit ? 'Modifiez les informations du produit' : 'Ajoutez un nouveau produit au catalogue'}
           </p>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm p-6 space-y-5">
+      <div className="bg-[#1c1917] rounded-2xl shadow-sm p-6 space-y-5">
         <div className="grid grid-cols-2 gap-5">
           <div className="col-span-2">
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Nom du produit</label>
-            <input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder="ex: Sac en macramé" className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Nom du produit</label>
+            <input value={form.name} onChange={(e) => update('name', e.target.value)} placeholder="ex: Sac en macramé" className="w-full px-3.5 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4ade80]/20 focus:border-[#4ade80] transition-all" />
           </div>
           <div className="col-span-2">
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Description</label>
-            <textarea value={form.description} onChange={(e) => update('description', e.target.value)} rows={4} placeholder="Description détaillée du produit..." className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all resize-none" />
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Description</label>
+            <textarea value={form.description} onChange={(e) => update('description', e.target.value)} rows={4} placeholder="Description détaillée du produit..." className="w-full px-3.5 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4ade80]/20 focus:border-[#4ade80] transition-all resize-none" />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Prix (FCFA)</label>
-            <input type="number" value={form.price} onChange={(e) => update('price', e.target.value)} placeholder="15000" className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Prix (FCFA)</label>
+            <input type="number" value={form.price} onChange={(e) => update('price', e.target.value)} placeholder="15000" className="w-full px-3.5 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4ade80]/20 focus:border-[#4ade80] transition-all" />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Stock</label>
-            <input type="number" value={form.stock} onChange={(e) => update('stock', e.target.value)} placeholder="10" className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Stock</label>
+            <input type="number" value={form.stock} onChange={(e) => update('stock', e.target.value)} placeholder="10" className="w-full px-3.5 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4ade80]/20 focus:border-[#4ade80] transition-all" />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Catégorie</label>
-            <select value={form.category} onChange={(e) => update('category', e.target.value)} className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all bg-white">
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Catégorie</label>
+            <select value={form.category} onChange={(e) => update('category', e.target.value)} className="w-full px-3.5 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4ade80]/20 focus:border-[#4ade80] transition-all bg-[#1c1917]">
               <option value="">Sélectionner une catégorie</option>
               {CATEGORY_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -151,29 +151,29 @@ export function AdminProductForm() {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Marque</label>
-            <input value={form.brand} onChange={(e) => update('brand', e.target.value)} placeholder="ex: AFI Collection" className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Marque</label>
+            <input value={form.brand} onChange={(e) => update('brand', e.target.value)} placeholder="ex: AFI Collection" className="w-full px-3.5 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4ade80]/20 focus:border-[#4ade80] transition-all" />
           </div>
           <div className="col-span-2">
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Image</label>
+            <label className="block text-xs font-semibold text-white/50 mb-1.5">Image</label>
             <div className="flex gap-2">
-              <input value={form.image} onChange={(e) => update('image', e.target.value)} placeholder="Lien URL de l'image" className="flex-1 px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/20 focus:border-[#1a6b3c] transition-all" />
+              <input value={form.image} onChange={(e) => update('image', e.target.value)} placeholder="Lien URL de l'image" className="flex-1 px-3.5 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#4ade80]/20 focus:border-[#4ade80] transition-all" />
               <input ref={fileRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
               <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-semibold rounded-lg transition-colors whitespace-nowrap">
                 <FiUpload className="w-4 h-4" /> {uploading ? 'Upload...' : 'Upload'}
               </button>
             </div>
             {form.image && (
-              <img src={form.image} alt="" className="mt-3 h-28 w-28 rounded-xl object-cover border border-gray-200 shadow-sm" />
+              <img src={form.image} alt="" className="mt-3 h-28 w-28 rounded-xl object-cover border border-white/10 shadow-sm" />
             )}
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-2 border-t border-gray-100">
-          <button onClick={() => navigate('/admin/produits')} className="px-5 py-2.5 text-sm font-semibold text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+        <div className="flex items-center justify-end gap-3 pt-2 border-t border-white/10">
+          <button onClick={() => navigate('/admin/produits')} className="px-5 py-2.5 text-sm font-semibold text-white/50 hover:text-white/70 hover:bg-white/10 rounded-lg transition-colors">
             Annuler
           </button>
-          <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#1a6b3c] hover:bg-[#14532d] text-white text-sm font-semibold rounded-full transition-colors disabled:opacity-50">
+          <button onClick={handleSave} disabled={saving} className="inline-flex items-center gap-2 px-6 py-2.5 btn-raised text-black! text-sm font-semibold rounded-full transition-colors disabled:opacity-50">
             <FiSave className="w-4 h-4" />
             {saving ? 'Enregistrement...' : isEdit ? 'Mettre à jour' : 'Créer le produit'}
           </button>

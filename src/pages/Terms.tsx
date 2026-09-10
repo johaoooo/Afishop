@@ -4,7 +4,7 @@ import { FiCheckCircle, FiShield, FiAlertCircle } from 'react-icons/fi';
 
 export default function Terms() {
   return (
-    <div className="bg-[#faf8f5] min-h-screen">
+    <div className="bg-[#0c0a09] min-h-screen">
       <SEO title="Conditions d'Utilisation" description="Conditions d'utilisation d'AFI Collection. Règles et obligations pour l'utilisation de notre boutique en ligne." />
       <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-10 sm:py-14 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
@@ -25,26 +25,26 @@ export default function Terms() {
 
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 pb-16">
         <motion.div 
-          className="bg-white/90 backdrop-blur-sm rounded-3xl border border-green-100 p-8 md:p-10 shadow-sm"
+          className="bg-[#1c1917]/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="space-y-8 text-gray-600 leading-relaxed">
+          <div className="space-y-8 text-white/60 leading-relaxed">
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiCheckCircle className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiCheckCircle className="w-5 h-5 text-[#4ade80]" />
                 Acceptation des conditions
               </h2>
               <p>
-                En accédant et en utilisant le site <strong className="text-[#1a6b3c]">AFI Collection</strong>, 
+                En accédant et en utilisant le site <strong className="text-[#4ade80]">AFI Collection</strong>, 
                 vous acceptez d'être lié par les présentes conditions d'utilisation. Si vous n'acceptez pas 
                 ces conditions, veuillez ne pas utiliser notre site.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3">Compte utilisateur</h2>
+              <h2 className="text-xl font-bold text-white/85 mb-3">Compte utilisateur</h2>
               <p>Lors de la création d'un compte, vous vous engagez à :</p>
               <ul className="mt-2 space-y-2">
                 <li className="flex items-start gap-2">
@@ -67,8 +67,8 @@ export default function Terms() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiShield className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiShield className="w-5 h-5 text-[#4ade80]" />
                 Propriété intellectuelle
               </h2>
               <p>
@@ -79,8 +79,8 @@ export default function Terms() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <FiAlertCircle className="w-5 h-5 text-[#1a6b3c]" />
+              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
+                <FiAlertCircle className="w-5 h-5 text-[#4ade80]" />
                 Limitation de responsabilité
               </h2>
               <p>
@@ -91,7 +91,7 @@ export default function Terms() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-gray-800 mb-3">Modifications</h2>
+              <h2 className="text-xl font-bold text-white/85 mb-3">Modifications</h2>
               <p>
                 Nous nous réservons le droit de modifier les présentes conditions d'utilisation 
                 à tout moment. Les modifications prennent effet dès leur publication sur le site. 
@@ -99,8 +99,8 @@ export default function Terms() {
               </p>
             </div>
 
-            <div className="bg-green-50 rounded-2xl p-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-3">Contact</h2>
+            <div className="bg-[#4ade80]/10 rounded-2xl p-6">
+              <h2 className="text-xl font-bold text-white/85 mb-3">Contact</h2>
               <p className="mb-3">
                 Pour toute question relative à ces conditions, contactez-nous :
               </p>

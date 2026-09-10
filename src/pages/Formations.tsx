@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { trainingsApi, type Training } from '../lib/api';
+import { AFI_IMAGES, AFI_FALLBACK_PRODUCT, AFI_FALLBACK_PHOTO } from '../lib/images';
 
 const stats = [
   { value: '150+', label: 'Étudiants formés', icon: FiUsers },
@@ -64,7 +65,7 @@ export default function Formations() {
   const displayTrainings = trainings.length > 0 ? trainings : defaultTrainings;
 
   return (
-    <div className="bg-[#f8faf8] min-h-screen text-gray-900 pb-20">
+    <div className="bg-[#070b08] min-h-screen text-white pb-20">
       <SEO title="Formations Artisanales | AFI Collection" description="Découvrez nos formations artisanales : macramé, tissage, fabrication de sandales et teinture au Bénin avec le CFP Dorcas & AFI Collection." />
 
       {/* ===== HERO ===== */}
@@ -75,10 +76,10 @@ export default function Formations() {
           className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
-              'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200';
+              AFI_IMAGES.atelierCadre;
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-[#070b08]/80" />
         
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
           <motion.div
@@ -87,8 +88,9 @@ export default function Formations() {
             transition={{ duration: 0.4 }}
             className="space-y-2"
           >
+            <span className="pop-sticker mb-4 inline-block">Académie des Métiers</span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white drop-shadow-md">
-              Nos Formations <span className="text-[#fbbf24]">Artisanales</span>
+              Nos Formations <span className="text-[#05a855]">Artisanales</span>
             </h1>
             <p className="text-white/90 text-sm sm:text-base font-medium max-w-md mx-auto pt-1 drop-shadow-sm">
               Développez des compétences professionnelles et maîtrisez un métier d'art au Bénin.
@@ -102,21 +104,21 @@ export default function Formations() {
         
         {/* ===== BANDEAU PRÉSENTATION CFP DORCAS ===== */}
         <motion.div
-          className="bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-xs"
+          className="bg-[#121914] rounded-3xl p-6 sm:p-10 border border-white/10 shadow-xs"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl font-black text-gray-900 leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
                 Le Centre de Formation <br />
-                <span className="text-[#1a6b3c]">CFP Dorcas</span>
+                <span className="text-[#05a855]">CFP Dorcas</span>
               </h2>
               
-              <div className="space-y-3 text-xs sm:text-sm text-gray-600 leading-relaxed">
+              <div className="space-y-3 text-xs sm:text-sm text-white/60 leading-relaxed">
                 <p>
-                  Le <strong className="text-gray-900 font-bold">Centre de Formation Professionnelle (CFP) Dorcas</strong> est 
+                  Le <strong className="text-white font-bold">Centre de Formation Professionnelle (CFP) Dorcas</strong> est 
                   une institution dédiée à la transmission des savoir-faire artisanaux et à la professionnalisation 
                   des métiers d'art au Bénin.
                 </p>
@@ -127,11 +129,11 @@ export default function Formations() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                <div className="flex items-center gap-2 bg-emerald-50 text-[#1a6b3c] px-4 py-2 rounded-2xl text-xs font-bold border border-emerald-100">
+                <div className="flex items-center gap-2 bg-[#028444]/20 text-[#05a855] px-4 py-2 rounded-2xl text-xs font-bold border border-[#028444]/30">
                   <FiMapPin className="w-4 h-4" />
                   <span>Abomey-Calavi, Bénin</span>
                 </div>
-                <div className="flex items-center gap-2 bg-amber-50 text-amber-800 px-4 py-2 rounded-2xl text-xs font-bold border border-amber-100">
+                <div className="flex items-center gap-2 bg-[#028444]/20 text-[#05a855] px-4 py-2 rounded-2xl text-xs font-bold border border-[#028444]/30">
                   <FiCalendar className="w-4 h-4" />
                   <span>Inscriptions Ouvertes</span>
                 </div>
@@ -139,14 +141,14 @@ export default function Formations() {
             </div>
 
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-lg bg-[#1a6b3c]/5 border border-gray-100 flex items-center justify-center p-3">
+              <div className="rounded-3xl overflow-hidden shadow-lg bg-black/40 border border-white/10 flex items-center justify-center p-3">
                 <img
                   src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441633/WhatsApp_Image_2026-05-03_at_13.13.55_xrgmtq.jpg"
                   alt="CFP Dorcas - Centre de formation"
                   className="w-full h-auto max-h-[380px] rounded-2xl object-contain hover:scale-102 transition duration-700"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
-                      'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600';
+                      AFI_FALLBACK_PHOTO;
                   }}
                 />
               </div>
@@ -159,12 +161,12 @@ export default function Formations() {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div key={index} className="bg-white rounded-3xl p-6 border border-gray-100 shadow-xs text-center space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#1a6b3c] flex items-center justify-center mx-auto">
+              <div key={index} className="bg-[#121914] rounded-3xl p-6 border border-white/10 shadow-xs text-center space-y-2">
+                <div className="w-12 h-12 rounded-2xl bg-[#028444]/20 text-[#05a855] flex items-center justify-center mx-auto">
                   <Icon className="w-6 h-6" />
                 </div>
-                <p className="text-2xl sm:text-3xl font-black text-gray-900 font-mono">{stat.value}</p>
-                <p className="text-xs font-bold text-gray-500">{stat.label}</p>
+                <p className="text-2xl sm:text-3xl font-black text-white font-mono">{stat.value}</p>
+                <p className="text-xs font-bold text-white/50">{stat.label}</p>
               </div>
             );
           })}
@@ -173,38 +175,38 @@ export default function Formations() {
         {/* ===== LISTE DES FORMATIONS ===== */}
         <div className="space-y-6">
           <div className="text-center space-y-1">
-            <h2 className="text-xl sm:text-2xl font-black text-gray-900">
+            <h2 className="text-xl sm:text-2xl font-black text-white">
               Filières & Programmes de Formation
             </h2>
-            <p className="text-xs text-gray-500">Des programmes pratiques encadrés par des professionnels</p>
+            <p className="text-xs text-white/50">Des programmes pratiques encadrés par des professionnels</p>
           </div>
 
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[...Array(2)].map((_, i) => (
-                <div key={i} className="bg-white rounded-3xl border border-gray-100 animate-pulse overflow-hidden p-6 space-y-4">
-                  <div className="h-48 bg-gray-200 rounded-2xl" />
-                  <div className="h-4 bg-gray-200 rounded w-3/4" />
-                  <div className="h-3 bg-gray-200 rounded w-1/2" />
+                <div key={i} className="bg-[#121914] rounded-3xl border border-white/10 animate-pulse overflow-hidden p-6 space-y-4">
+                  <div className="h-48 bg-white/10 rounded-2xl" />
+                  <div className="h-4 bg-white/10 rounded w-3/4" />
+                  <div className="h-3 bg-white/10 rounded w-1/2" />
                 </div>
               ))}
             </div>
           ) : displayTrainings.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-xs">
-              <FiBookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-black text-gray-900">Aucune formation enregistrée</h3>
+            <div className="bg-[#121914] rounded-3xl border border-white/10 p-12 text-center shadow-xs">
+              <FiBookOpen className="w-16 h-16 text-white/50 mx-auto mb-4" />
+              <h3 className="text-lg font-black text-white">Aucune formation enregistrée</h3>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {displayTrainings.map((training, index) => {
                 const imgSrc = training.image?.startsWith('/')
                   ? `http://localhost:5000${training.image}`
-                  : training.image || 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
+                  : training.image || AFI_FALLBACK_PRODUCT;
 
                 return (
                   <motion.div
                     key={training.id}
-                    className="group bg-white rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 border border-gray-100 flex flex-col justify-between"
+                    className="group bg-[#121914] rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 border border-white/10 flex flex-col justify-between"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -212,40 +214,40 @@ export default function Formations() {
                   >
                     <div className="space-y-4 p-5 sm:p-6">
                       {/* Image */}
-                      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-gray-100 border border-gray-100">
+                      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/40 border border-white/10">
                         <img
                           src={imgSrc}
                           alt={training.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src =
-                              'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600';
+                              AFI_FALLBACK_PRODUCT;
                           }}
                         />
-                        <div className="absolute top-3 left-3 flex items-center gap-1.5 text-xs font-bold bg-white/90 backdrop-blur-md rounded-full px-3 py-1 text-[#1a6b3c] shadow-xs">
+                        <div className="absolute top-3 left-3 flex items-center gap-1.5 text-xs font-bold bg-[#070b08]/90 backdrop-blur-md rounded-full px-3 py-1 text-[#05a855] border border-white/10 shadow-xs">
                           <FiClock className="w-3.5 h-3.5" />
                           <span>{training.duration || '3 mois'}</span>
                         </div>
 
-                        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-md rounded-full px-3 py-1 shadow-xs text-xs font-bold text-gray-800">
-                          <FiUsers className="w-3.5 h-3.5 text-[#1a6b3c]" />
+                        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-[#070b08]/90 backdrop-blur-md rounded-full px-3 py-1 shadow-xs text-xs font-bold text-white border border-white/10">
+                          <FiUsers className="w-3.5 h-3.5 text-[#05a855]" />
                           <span>{training.students} places</span>
                         </div>
                       </div>
 
                       {/* Content */}
                       <div className="space-y-2">
-                        <h3 className="text-lg font-black text-gray-900 group-hover:text-[#1a6b3c] transition-colors">
+                        <h3 className="text-lg font-black text-white group-hover:text-[#05a855] transition-colors">
                           {training.title}
                         </h3>
 
-                        <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
+                        <p className="text-xs text-white/50 leading-relaxed line-clamp-2">
                           {training.description}
                         </p>
 
                         <div className="pt-2 flex items-center gap-2">
-                          <FiAward className="w-4 h-4 text-[#1a6b3c]" />
-                          <span className="text-sm font-black text-[#1a6b3c] font-mono">
+                          <FiAward className="w-4 h-4 text-[#05a855]" />
+                          <span className="text-sm font-black text-[#05a855] font-mono">
                             {typeof training.price === 'number' ? `${training.price.toLocaleString('fr-FR')} FCFA` : training.price}
                           </span>
                         </div>
@@ -254,8 +256,8 @@ export default function Formations() {
                         {training.modules && training.modules.length > 0 && (
                           <div className="pt-2 space-y-1.5">
                             {training.modules.slice(0, 3).map((mod, idx) => (
-                              <div key={idx} className="flex items-center gap-2 text-xs text-gray-600">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#1a6b3c] shrink-0" />
+                              <div key={idx} className="flex items-center gap-2 text-xs text-white/60">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#028444] shrink-0" />
                                 <span className="truncate">{mod}</span>
                               </div>
                             ))}
@@ -267,7 +269,7 @@ export default function Formations() {
                     <div className="p-5 sm:p-6 pt-0">
                       <Link
                         to="/contact"
-                        className="w-full inline-flex items-center justify-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-3 rounded-2xl transition text-xs shadow-md shadow-[#1a6b3c]/20 hover:scale-102"
+                        className="btn-raised w-full"
                       >
                         <span>S'inscrire à cette formation</span>
                         <FiArrowRight className="w-4 h-4" />
@@ -282,7 +284,7 @@ export default function Formations() {
 
         {/* ===== CALL TO ACTION ===== */}
         <motion.div
-          className="p-8 sm:p-12 rounded-3xl text-center bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] text-white space-y-4 shadow-lg"
+          className="p-8 sm:p-12 rounded-3xl text-center bg-gradient-to-r from-[#070b08] via-[#0d2818] to-[#070b08] border border-[#028444]/30 text-white space-y-4 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -291,13 +293,13 @@ export default function Formations() {
           <h2 className="text-2xl sm:text-3xl font-black text-white">
             Prêt à démarrer votre formation ?
           </h2>
-          <p className="text-emerald-100 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
+          <p className="text-white/60 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
             Rejoignez le CFP Dorcas et développez des compétences artisanales de haut niveau au Bénin.
           </p>
           <div className="flex flex-wrap gap-3 justify-center pt-2">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-white hover:bg-emerald-50 text-[#1a6b3c] font-bold px-8 py-3.5 rounded-full transition-all shadow-lg hover:scale-105 text-xs sm:text-sm"
+              className="btn-raised inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs sm:text-sm"
             >
               <span>Nous contacter</span>
               <FiArrowRight className="w-4 h-4" />

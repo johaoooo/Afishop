@@ -47,15 +47,15 @@ export function AdminLayout() {
       {/* Brand Header */}
       <div className="px-6 py-6 border-b border-white/10 flex items-center justify-between">
         <Link to="/admin" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] flex items-center justify-center text-white shadow-lg shadow-[#1a6b3c]/30 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] flex items-center justify-center text-white shadow-lg shadow-[#4ade80]/30 group-hover:scale-105 transition-transform">
             <FiShield className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
               <span className="font-black text-base tracking-wide text-white">AFI ADMIN</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-#4ade80 animate-pulse" />
             </div>
-            <p className="text-[11px] text-emerald-400/80 font-medium">Panneau de gestion</p>
+            <p className="text-[11px] text-#4ade80/80 font-medium">Panneau de gestion</p>
           </div>
         </Link>
         <button
@@ -83,16 +83,16 @@ export function AdminLayout() {
               to={item.to}
               className={`relative flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-sm font-semibold transition-all duration-200 group ${
                 isActive
-                  ? 'bg-gradient-to-r from-[#1a6b3c] to-[#25854d] text-white shadow-md shadow-[#1a6b3c]/30'
+                  ? 'bg-gradient-to-r from-[#1a6b3c] to-[#25854d] text-white shadow-md shadow-[#4ade80]/30'
                   : 'text-white/70 hover:bg-white/5 hover:text-white'
               }`}
             >
               <Icon className={`w-5 h-5 transition-transform duration-200 group-hover:scale-110 ${
-                isActive ? 'text-emerald-300' : 'text-white/50 group-hover:text-white'
+                isActive ? 'text-#4ade80' : 'text-white/50 group-hover:text-white'
               }`} />
               <span className="flex-1">{item.label}</span>
               {isActive && (
-                <FiChevronRight className="w-4 h-4 text-emerald-300 opacity-80" />
+                <FiChevronRight className="w-4 h-4 text-#4ade80 opacity-80" />
               )}
             </Link>
           );
@@ -108,22 +108,22 @@ export function AdminLayout() {
           className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/70 hover:bg-white/10 hover:text-white transition-all border border-white/10"
         >
           <span className="flex items-center gap-2">
-            <FiExternalLink className="w-4 h-4 text-emerald-400" />
+            <FiExternalLink className="w-4 h-4 text-#4ade80" />
             Voir le site public
           </span>
-          <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">
+          <span className="text-[10px] bg-[#4ade80]/20 text-#4ade80 px-2 py-0.5 rounded-full font-bold">
             Live
           </span>
         </a>
 
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-[#1a6b3c] flex items-center justify-center font-bold text-white text-sm shadow-sm">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#4ade80] to-[#1a6b3c] flex items-center justify-center font-bold text-white text-sm shadow-sm">
               {user?.name?.[0]?.toUpperCase() || 'A'}
             </div>
             <div className="truncate max-w-[120px]">
               <p className="text-xs font-bold text-white truncate">{user?.name || 'Admin'}</p>
-              <p className="text-[10px] text-emerald-400 font-medium truncate">Administrateur</p>
+              <p className="text-[10px] text-#4ade80 font-medium truncate">Administrateur</p>
             </div>
           </div>
           <button
@@ -139,7 +139,7 @@ export function AdminLayout() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f3f6f4] flex text-gray-900 font-sans">
+    <div className="min-h-screen bg-[#0c0a09] flex text-white font-sans">
       {/* Desktop Sidebar */}
       <aside className="hidden lg:block w-64 shrink-0 shadow-2xl z-30">
         <SidebarContent />
@@ -172,25 +172,25 @@ export function AdminLayout() {
       {/* Main Workspace */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header Navbar */}
-        <header className="bg-white/90 backdrop-blur-md border-b border-gray-200/80 sticky top-0 z-20 px-4 md:px-8 py-3.5 flex items-center justify-between shadow-xs">
+        <header className="bg-[#1c1917]/90 backdrop-blur-md border-b border-white/10/80 sticky top-0 z-20 px-4 md:px-8 py-3.5 flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-gray-600 hover:text-[#1a6b3c] hover:bg-gray-100 rounded-xl transition"
+              className="lg:hidden p-2 text-white/60 hover:text-[#4ade80] hover:bg-white/10 rounded-xl transition"
               aria-label="Ouvrir le menu"
             >
               <FiMenu className="w-6 h-6" />
             </button>
 
             <div>
-              <h2 className="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2">
+              <h2 className="text-base md:text-lg font-bold text-white flex items-center gap-2">
                 <span>{currentPage.label}</span>
               </h2>
             </div>
           </div>
 
           <div className="flex items-center gap-3 md:gap-4">
-            <div className="hidden sm:flex items-center gap-2 bg-emerald-50 text-[#1a6b3c] px-3 py-1.5 rounded-full border border-emerald-100 text-xs font-semibold">
+            <div className="hidden sm:flex items-center gap-2 bg-[#4ade80]/10 text-[#4ade80] px-3 py-1.5 rounded-full border border-[#4ade80]/15 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-[#1a6b3c] animate-pulse" />
               <span>
                 {new Date().toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })}
@@ -199,7 +199,7 @@ export function AdminLayout() {
 
             <Link
               to="/admin/produits/nouveau"
-              className="flex items-center gap-2 bg-[#1a6b3c] hover:bg-[#14532d] text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-md shadow-[#1a6b3c]/20 hover:scale-102 active:scale-98"
+              className="flex items-center gap-2 btn-raised text-black! text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-md shadow-[#4ade80]/20 hover:scale-102 active:scale-98"
             >
               <FiPlus className="w-4 h-4" />
               <span className="hidden sm:inline">Nouveau Produit</span>

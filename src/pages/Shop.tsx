@@ -7,6 +7,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { productsApi, type Product } from '../lib/api';
 import { ProductCard } from '../components/ProductCard';
+import { AFI_IMAGES } from '../lib/images';
 
 interface SortOption {
   value: string;
@@ -64,14 +65,14 @@ const CategorySidebarContent: FC<CategorySidebarProps> = ({
         onClick={() => onSelectCategory('tous')}
         className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
           selectedCategory === 'tous'
-            ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#1a6b3c]/20'
-            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+            ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000]'
+            : 'text-white/60 hover:bg-white/10 hover:text-white'
         }`}
       >
-        <span className={`w-2 h-2 rounded-full shrink-0 ${selectedCategory === 'tous' ? 'bg-white' : 'bg-gray-400'}`} />
+        <span className={`w-2 h-2 rounded-full shrink-0 ${selectedCategory === 'tous' ? 'bg-white' : 'bg-white/30'}`} />
         <span className="flex-1 text-left truncate">Toutes les catégories</span>
         <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-          selectedCategory === 'tous' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+          selectedCategory === 'tous' ? 'bg-black/30 text-white' : 'bg-white/10 text-white/50'
         }`}>
           {products.length}
         </span>
@@ -90,14 +91,14 @@ const CategorySidebarContent: FC<CategorySidebarProps> = ({
             onClick={() => onSelectCategory(cat.id)}
             className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${
               isActive
-                ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#1a6b3c]/20 font-semibold'
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000] font-semibold'
+                : 'text-white/60 hover:bg-white/10 hover:text-white'
             }`}
           >
-            <span className={`w-2 h-2 rounded-full shrink-0 ${isActive ? 'bg-white' : 'bg-gray-300'}`} />
+            <span className={`w-2 h-2 rounded-full shrink-0 ${isActive ? 'bg-white' : 'bg-white/30'}`} />
             <span className="flex-1 text-left truncate">{cat.label}</span>
             <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-              isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
+              isActive ? 'bg-black/30 text-white' : 'bg-white/10 text-white/50'
             }`}>
               {catCount}
             </span>
@@ -187,7 +188,7 @@ export default function Shop() {
   };
 
   return (
-    <div className="bg-[#f5f8f5] min-h-screen">
+    <div className="bg-[#070b08] min-h-screen text-white">
       <SEO 
         title="Boutique" 
         description="Découvrez nos créations artisanales : macramé, tricotage, teinture de pagne, décoration artisanale, mode et accessoires, et produits agroalimentaires (sésame, soja). AFI Collection — l'élégance artisanale au service de la tradition." 
@@ -201,20 +202,21 @@ export default function Shop() {
           className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
-              'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200';
+              AFI_IMAGES.atelierCadre;
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-[#070b08]/80" />
         <div className="container mx-auto px-6 md:px-12 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            <span className="pop-sticker mb-4 inline-block">Boutique Officielle</span>
             <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight drop-shadow-md">
               La boutique
             </h1>
-            <p className="text-white/90 text-base max-w-md mt-3 font-medium drop-shadow-sm">
+            <p className="text-white/80 text-base max-w-md mt-3 font-medium drop-shadow-sm">
               Toutes nos créations artisanales, en un seul endroit.
             </p>
           </motion.div>
@@ -223,18 +225,18 @@ export default function Shop() {
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-7 relative z-30">
         <div className="max-w-2xl mx-auto relative">
-          <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40 w-5 h-5" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher un produit…"
-            className="w-full pl-14 pr-12 py-4 bg-white rounded-2xl shadow-xl border-0 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1a6b3c]/30 transition-all"
+            className="w-full pl-14 pr-12 py-4 bg-[#121914] rounded-2xl shadow-xl border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#05a855]/40 transition-all"
           />
           {search && (
             <button
               onClick={() => setSearch('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/60 p-1"
               aria-label="Effacer la recherche"
             >
               <FiX className="w-4 h-4" />
@@ -247,18 +249,18 @@ export default function Shop() {
         <div className="flex flex-col lg:flex-row gap-8 items-start relative">
           
           <aside className="hidden lg:block w-64 shrink-0 sticky top-24 self-start max-h-[calc(100vh-7rem)] overflow-y-auto h-max z-20 transition-all">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+            <div className="bg-[#121914] rounded-2xl shadow-sm border border-white/10 p-5 space-y-5">
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <FiFilter className="w-4 h-4 text-[#1a6b3c]" />
-                  <span className="font-bold text-gray-900 text-sm uppercase tracking-wider">
+                  <FiFilter className="w-4 h-4 text-[#05a855]" />
+                  <span className="font-bold text-white text-sm uppercase tracking-wider">
                     Filtres
                   </span>
                 </div>
                 {hasActiveFilters && (
                   <button
                     onClick={handleResetFilters}
-                    className="flex items-center gap-1 text-xs text-[#1a6b3c] hover:text-[#14532d] font-semibold transition"
+                    className="flex items-center gap-1 text-xs text-[#05a855] hover:text-[#4ade80] font-semibold transition"
                     title="Réinitialiser tous les filtres"
                   >
                     <FiRotateCcw className="w-3 h-3" />
@@ -268,19 +270,19 @@ export default function Shop() {
               </div>
 
               {hasActiveFilters && (
-                <div className="space-y-2 pb-3 border-b border-gray-100">
-                  <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Filtres actifs</span>
+                <div className="space-y-2 pb-3 border-b border-white/10">
+                  <span className="text-[11px] font-bold text-white/40 uppercase tracking-wider">Filtres actifs</span>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedCategory !== 'tous' && (
-                      <span className="inline-flex items-center gap-1 bg-[#1a6b3c]/10 text-[#1a6b3c] text-xs font-semibold px-2.5 py-1 rounded-lg">
+                      <span className="inline-flex items-center gap-1 bg-[#028444]/20 text-[#05a855] text-xs font-semibold px-2.5 py-1 rounded-lg border border-[#028444]/30">
                         {selectedCat?.label}
-                        <button onClick={() => setSelectedCategory('tous')} className="hover:text-red-600">
+                        <button onClick={() => setSelectedCategory('tous')} className="hover:text-red-400">
                           <FiX className="w-3 h-3" />
                         </button>
                       </span>
                     )}
                     {search !== '' && (
-                      <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs font-semibold px-2.5 py-1 rounded-lg">
+                      <span className="inline-flex items-center gap-1 bg-white/10 text-white/70 text-xs font-semibold px-2.5 py-1 rounded-lg">
                         "{search}"
                         <button onClick={() => setSearch('')} className="hover:text-red-600">
                           <FiX className="w-3 h-3" />
@@ -296,10 +298,10 @@ export default function Shop() {
                   onClick={() => setCatOpen((v) => !v)}
                   className="w-full flex items-center justify-between gap-2 pb-2 mb-1"
                 >
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                  <span className="text-xs font-bold text-white/40 uppercase tracking-wider">
                     Catégories
                   </span>
-                  <FiChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${catOpen ? '' : '-rotate-90'}`} />
+                  <FiChevronDown className={`w-4 h-4 text-white/40 transition-transform duration-200 ${catOpen ? '' : '-rotate-90'}`} />
                 </button>
                 <CategorySidebarContent
                   selectedCategory={selectedCategory}
@@ -326,16 +328,16 @@ export default function Shop() {
                   animate={{ x: 0 }}
                   exit={{ x: '-100%' }}
                   transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                  className="relative w-80 max-w-[85vw] bg-white shadow-2xl h-full flex flex-col z-10 overflow-hidden"
+                  className="relative w-80 max-w-[85vw] bg-[#121914] shadow-2xl h-full flex flex-col z-10 overflow-hidden"
                 >
-                  <div className="flex items-center justify-between p-5 border-b border-gray-100 bg-gray-50/50">
+                  <div className="flex items-center justify-between p-5 border-b border-white/10 bg-white/5">
                     <div className="flex items-center gap-2">
-                      <FiFilter className="w-5 h-5 text-[#1a6b3c]" />
-                      <h3 className="font-bold text-gray-900 text-base">Filtres</h3>
+                      <FiFilter className="w-5 h-5 text-[#05a855]" />
+                      <h3 className="font-bold text-white text-base">Filtres</h3>
                     </div>
                     <button 
                       onClick={() => setMobileFilterOpen(false)} 
-                      className="p-1 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-200/50 transition"
+                      className="p-1 text-white/40 hover:text-white/70 rounded-lg hover:bg-white/10 transition"
                       aria-label="Fermer"
                     >
                       <FiX className="w-6 h-6" />
@@ -343,11 +345,11 @@ export default function Shop() {
                   </div>
                   <div className="p-5 flex-1 overflow-y-auto space-y-6">
                     {hasActiveFilters && (
-                      <div className="flex items-center justify-between bg-[#1a6b3c]/5 p-3 rounded-xl">
-                        <span className="text-xs font-bold text-[#1a6b3c]">Filtres actifs</span>
+                      <div className="flex items-center justify-between bg-[#028444]/20 border border-[#028444]/30 p-3 rounded-xl">
+                        <span className="text-xs font-bold text-[#05a855]">Filtres actifs</span>
                         <button
                           onClick={handleResetFilters}
-                          className="text-xs font-semibold text-red-600 hover:underline flex items-center gap-1"
+                          className="text-xs font-semibold text-red-400 hover:underline flex items-center gap-1"
                         >
                           <FiRotateCcw className="w-3 h-3" />
                           Réinitialiser
@@ -359,8 +361,8 @@ export default function Shop() {
                         onClick={() => setCatOpen((v) => !v)}
                         className="w-full flex items-center justify-between gap-2 py-2 mb-2"
                       >
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Catégories</span>
-                        <FiChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${catOpen ? '' : '-rotate-90'}`} />
+                        <span className="text-xs font-bold text-white/40 uppercase tracking-wider">Catégories</span>
+                        <FiChevronDown className={`w-4 h-4 text-white/40 transition-transform ${catOpen ? '' : '-rotate-90'}`} />
                       </button>
                       <CategorySidebarContent
                         selectedCategory={selectedCategory}
@@ -379,40 +381,40 @@ export default function Shop() {
           </AnimatePresence>
 
           <div className="flex-1 min-w-0 w-full">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-5 py-4 mb-6">
+            <div className="bg-[#121914] rounded-2xl shadow-sm border border-white/10 px-5 py-4 mb-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setMobileFilterOpen(true)}
-                    className="lg:hidden flex items-center gap-2 px-3 py-2 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-[#1a6b3c]/10 hover:text-[#1a6b3c] rounded-xl transition"
+                    className="lg:hidden flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white/70 bg-white/10 hover:bg-[#028444]/20 hover:text-[#05a855] rounded-xl transition"
                     aria-label="Filtrer"
                   >
-                    <FiTag className="w-4 h-4 text-[#1a6b3c]" />
+                    <FiTag className="w-4 h-4 text-[#05a855]" />
                     <span>Filtres</span>
                   </button>
-                  <span className="text-sm text-gray-500">
-                    <span className="font-semibold text-gray-800">{sorted.length}</span> produit{sorted.length > 1 ? 's' : ''}
+                  <span className="text-sm text-white/50">
+                    <span className="font-semibold text-white/85">{sorted.length}</span> produit{sorted.length > 1 ? 's' : ''}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="relative" ref={sortRef}>
                     <button
                       onClick={() => setSortOpen((v) => !v)}
-                      className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#1a6b3c] font-medium px-3.5 py-2 rounded-xl bg-gray-50 hover:bg-gray-100 transition"
+                      className="flex items-center gap-1.5 text-sm text-white/60 hover:text-[#05a855] font-medium px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 transition"
                     >
-                      <currentSort.icon className="w-4 h-4 text-[#1a6b3c]" />
+                      <currentSort.icon className="w-4 h-4 text-[#05a855]" />
                       <span className="hidden sm:inline">{currentSort.label}</span>
                       <FiChevronDown className={`w-3 h-3 transition-transform ${sortOpen ? 'rotate-180' : ''}`} />
                     </button>
                     {sortOpen && (
-                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-30">
+                      <div className="absolute right-0 mt-2 w-48 bg-[#121914] rounded-xl shadow-xl border border-white/10 overflow-hidden z-30">
                         {SORT_OPTIONS.map((opt) => {
                           const Icon = opt.icon;
                           return (
                             <button
                               key={opt.value}
                               onClick={() => { setSortBy(opt.value); setSortOpen(false); }}
-                              className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm ${sortBy === opt.value ? 'bg-[#1a6b3c]/10 text-[#1a6b3c] font-semibold' : 'text-gray-600'}`}
+                              className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm ${sortBy === opt.value ? 'bg-[#028444]/20 text-[#05a855] font-semibold' : 'text-white/60'}`}
                             >
                               <Icon className="w-4 h-4" />
                               {opt.label}
@@ -422,11 +424,11 @@ export default function Shop() {
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center gap-1 bg-gray-100 rounded-xl p-1">
-                    <button onClick={() => setViewMode('grid')} className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-[#1a6b3c]' : 'text-gray-400'}`}>
+                  <div className="flex items-center gap-1 bg-white/10 rounded-xl p-1">
+                    <button onClick={() => setViewMode('grid')} className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-[#121914] shadow-sm text-[#05a855]' : 'text-white/40'}`}>
                       <FiGrid className="w-4 h-4" />
                     </button>
-                    <button onClick={() => setViewMode('list')} className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-white shadow-sm text-[#1a6b3c]' : 'text-gray-400'}`}>
+                    <button onClick={() => setViewMode('list')} className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-[#121914] shadow-sm text-[#05a855]' : 'text-white/40'}`}>
                       <FiList className="w-4 h-4" />
                     </button>
                   </div>
@@ -437,17 +439,17 @@ export default function Shop() {
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-2xl border border-gray-100 animate-pulse overflow-hidden">
-                    <div className="aspect-square bg-gray-200" />
-                    <div className="p-4 space-y-2"><div className="h-3 bg-gray-200 rounded w-3/4" /><div className="h-4 bg-gray-200 rounded w-1/3" /></div>
+                  <div key={i} className="bg-[#121914] rounded-2xl border border-white/10 animate-pulse overflow-hidden">
+                    <div className="aspect-square bg-white/10" />
+                    <div className="p-4 space-y-2"><div className="h-3 bg-white/10 rounded w-3/4" /><div className="h-4 bg-white/10 rounded w-1/3" /></div>
                   </div>
                 ))}
               </div>
             ) : paginated.length === 0 ? (
-              <motion.div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-16 text-center">
-                <FiTag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-800">Aucun produit trouvé</h3>
-                <button onClick={handleResetFilters} className="mt-5 bg-[#1a6b3c] hover:bg-[#14532d] text-white font-bold px-6 py-2.5 rounded-full transition text-sm">
+              <motion.div className="bg-[#121914] rounded-2xl shadow-sm border border-white/10 p-16 text-center">
+                <FiTag className="w-16 h-16 text-white/50 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white/85">Aucun produit trouvé</h3>
+                <button onClick={handleResetFilters} className="btn-raised btn-sm mt-5">
                   Réinitialiser les filtres
                 </button>
               </motion.div>
@@ -467,15 +469,15 @@ export default function Shop() {
       {totalPages > 1 && (
         <div className="max-w-7xl mx-auto px-4 md:px-8 pb-12">
           <div className="flex items-center justify-center gap-2">
-            <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="p-2 rounded-xl border border-gray-200 bg-white disabled:opacity-30 hover:bg-gray-50 transition">
+            <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="p-2 rounded-xl border border-white/10 bg-[#121914] disabled:opacity-30 hover:bg-white/5 transition">
               <FiChevronLeft size={18} />
             </button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-              <button key={p} onClick={() => setPage(p)} className={`w-10 h-10 rounded-xl text-sm font-semibold transition ${p === page ? 'bg-[#1a6b3c] text-white shadow-md' : 'border border-gray-200 bg-white text-gray-700'}`}>
+              <button key={p} onClick={() => setPage(p)} className={`w-10 h-10 rounded-xl text-sm font-semibold transition ${p === page ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000]' : 'border border-white/10 bg-[#121914] text-white/70'}`}>
                 {p}
               </button>
             ))}
-            <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-2 rounded-xl border border-gray-200 bg-white disabled:opacity-30 hover:bg-gray-50 transition">
+            <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-2 rounded-xl border border-white/10 bg-[#121914] disabled:opacity-30 hover:bg-white/5 transition">
               <FiChevronRight size={18} />
             </button>
           </div>
