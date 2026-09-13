@@ -536,8 +536,10 @@ export default function Home() {
           <img
             src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1780563939/slide3_zsjt4w.png"
             alt="Artisanes AFI Collection"
-            className="w-full h-full object-cover filter blur-[2px] scale-105 opacity-80"
+            className="w-full h-full object-cover scale-105 opacity-80"
           />
+          {/* Flou léger uniquement sur la moitié droite (gauche nette) */}
+          <div className="absolute inset-y-0 right-0 w-1/2 backdrop-blur-[2.5px] [mask-image:linear-gradient(to_right,transparent,black_18%)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_18%)]" />
           <div className="absolute inset-0 bg-black/65" />
           <div className="grid-bg absolute inset-0 opacity-10 pointer-events-none" />
           <div className="halftone-bg absolute top-0 right-0 w-1/2 h-1/2 opacity-10 pointer-events-none" />
