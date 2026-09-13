@@ -312,7 +312,7 @@ export function Header() {
 
               {/* Bouton WhatsApp CTA */}
               <a
-                href="https://wa.me/2290197222880"
+                href="https://wa.me/2290196062287"
                 target="_blank"
                 rel="noreferrer"
                 className="btn-raised btn-sm flex items-center gap-1.5"
@@ -593,7 +593,7 @@ export function Header() {
               {/* Bas du Drawer : Boutons CTA */}
               <div className="pt-6 border-t border-[#0f1f14]/10 space-y-3">
                 <a
-                  href="https://wa.me/2290197222880"
+                  href="https://wa.me/2290196062287"
                   target="_blank"
                   rel="noreferrer"
                   className="btn-raised btn-xl w-full flex items-center justify-center gap-2"

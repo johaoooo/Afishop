@@ -181,7 +181,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-3 text-[#0f1f14]/60 hover:text-[#0f1f14]/85 transition-colors duration-300 group">
                 <FiPhone className="w-4 h-4 text-[#05a855] shrink-0 mt-0.5" />
-                <span className="text-sm">+229 01 97 22 28 80</span>
+                <span className="text-sm">+229 01 96 06 22 87</span>
               </li>
               <li className="flex items-center gap-3 text-[#0f1f14]/60 hover:text-[#0f1f14]/85 transition-colors duration-300 group">
                 <FiMail className="w-4 h-4 text-[#05a855] shrink-0" />
@@ -246,6 +246,17 @@ export function Footer() {
         <div className="mt-12 pt-6 border-t border-[#0f1f14]/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[#0f1f14]/40 text-xs">
             © {currentYear} AFI Collection. Tous droits réservés.
+          </p>
+          <p className="text-[#0f1f14]/40 text-xs">
+            Développé par{' '}
+            <a
+              href="https://johaodev.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-[#028444] hover:underline"
+            >
+              johao
+            </a>
           </p>
           <div className="flex items-center gap-4 text-[#0f1f14]/40 text-xs">
             <span>Bénin & International</span>

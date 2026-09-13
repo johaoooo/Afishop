@@ -69,7 +69,7 @@ export default function Contact() {
         subtitle="Une question sur une création, une commande sur-mesure ou nos formations ? Notre équipe est à votre écoute."
         backgroundImage={AFI_IMAGES.exposition}
         imageAlt="Contact AFI Collection"
-        primaryCta={{ label: 'WhatsApp direct', href: 'https://wa.me/2290197222880' }}
+        primaryCta={{ label: 'WhatsApp direct', href: 'https://wa.me/2290196062287' }}
         secondaryCta={{ label: 'Voir la boutique', to: '/boutique' }}
       />
 

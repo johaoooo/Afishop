@@ -1080,6 +1080,14 @@ nav.aka-card-nav {
     text-align: center;
     white-space: normal;
   }
+  /* Boutons longs des sections : retour à la ligne + pleine largeur sur mobile */
+  .btn-raised,
+  .btn-ghost {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.4;
+    max-width: 100%;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════

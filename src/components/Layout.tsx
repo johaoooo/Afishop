@@ -19,7 +19,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <Footer />
       {/* WhatsApp flottant — façon port 3002 */}
       <a
-        href="https://wa.me/2290197222880"
+        href="https://wa.me/2290196062287"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Discuter sur WhatsApp"

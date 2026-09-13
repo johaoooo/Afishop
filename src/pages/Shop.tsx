@@ -203,7 +203,7 @@ export default function Shop() {
         subtitle="Toutes nos créations artisanales, en un seul endroit."
         backgroundImage="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441653/WhatsApp_Image_2026-05-03_at_13.15.44_e6xbcs.jpg"
         imageAlt="Boutique AFI Collection"
-        primaryCta={{ label: 'Commander sur WhatsApp', href: 'https://wa.me/2290197222880' }}
+        primaryCta={{ label: 'Commander sur WhatsApp', href: 'https://wa.me/2290196062287' }}
         secondaryCta={{ label: 'Nos formations', to: '/formations' }}
       />
 

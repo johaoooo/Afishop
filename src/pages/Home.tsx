@@ -637,7 +637,7 @@ export default function Home() {
             className="hero-cta-row flex flex-wrap items-center justify-center gap-3 sm:gap-4"
           >
             <a
-              href="https://wa.me/2290197222880"
+              href="https://wa.me/2290196062287"
               target="_blank"
               rel="noreferrer"
               className="btn-raised btn-xl"
