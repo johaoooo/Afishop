@@ -1070,7 +1070,7 @@ nav.aka-card-nav {
     flex-direction: column;
     align-items: stretch;
     width: 100%;
-    max-width: 340px;
+    max-width: 250px;
     margin-inline: auto;
   }
   .hero-cta-row .btn-raised,
