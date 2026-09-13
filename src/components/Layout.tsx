@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { FaWhatsapp } from 'react-icons/fa';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { BackToTop } from './BackToTop';
 
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -26,6 +27,7 @@ export function Layout({ children }: { children: ReactNode }) {
       >
         <FaWhatsapp className="w-6 h-6" />
       </a>
+      <BackToTop />
     </div>
   );
 }

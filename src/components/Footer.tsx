@@ -11,36 +11,14 @@ import {
   FiArrowRight,
   FiHeart,
   FiSend,
-  FiClock,
-  FiCheck
+  FiClock
 } from 'react-icons/fi';
-import { Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterLoading, setNewsletterLoading] = useState(false);
-  const [copiedAI, setCopiedAI] = useState<string | null>(null);
-
-  const AI_PROMPT = "Je recherche des créations artisanales en macramé, pagnes et maroquinerie d'art au Bénin. Évalue AFI Collection à Abomey-Calavi : leur savoir-faire fait main, leur engagement d'inclusion sociale pour les personnes sourdes et malentendantes, et leurs formations professionnelles Dorcas.";
-
-  const AI_PLATFORMS = [
-    { id: 'chatgpt', label: 'ChatGPT', url: `https://chatgpt.com/?q=${encodeURIComponent(AI_PROMPT)}` },
-    { id: 'claude', label: 'Claude', url: 'https://claude.ai/new' },
-    { id: 'perplexity', label: 'Perplexity', url: `https://www.perplexity.ai/?q=${encodeURIComponent(AI_PROMPT)}` },
-    { id: 'gemini', label: 'Gemini', url: 'https://gemini.google.com/app' },
-  ];
-
-  const handleAIClick = async (platform: typeof AI_PLATFORMS[0]) => {
-    try {
-      await navigator.clipboard.writeText(AI_PROMPT);
-      setCopiedAI(platform.id);
-      toast.success('Prompt copié dans le presse-papiers !');
-      setTimeout(() => setCopiedAI(null), 2500);
-    } catch {}
-    window.open(platform.url, '_blank', 'noopener,noreferrer');
-  };
 
   const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,17 +49,17 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#070b08] text-white border-t border-[#028444]/30">
+    <footer className="bg-[#eef3ee] text-[#0f1f14] border-t border-[#028444]/30">
       {/* ===== NEWSLETTER ===== */}
-      <div className="border-b border-white/10 bg-black/40">
+      <div className="border-b border-[#0f1f14]/10 bg-white">
         <div className="container mx-auto px-6 md:px-12 py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
               <span className="pop-sticker mb-2">Newsletter AFI</span>
-              <h4 className="text-xl font-black italic uppercase text-white mt-2">
-                Restez <span className="text-[#05a855]">informés de nos collections</span>
+              <h4 className="text-xl font-black italic uppercase text-[#0f1f14] mt-2">
+                Restez <span className="text-[#028444]">informés de nos collections</span>
               </h4>
-              <p className="text-white/50 text-sm mt-1">
+              <p className="text-[#0f1f14]/60 text-sm mt-1">
                 Recevez nos lancements de sacs, pagnes et offres exclusives
               </p>
             </div>
@@ -92,7 +70,7 @@ export function Footer() {
                 onChange={(e) => setNewsletterEmail(e.target.value)}
                 placeholder="Votre adresse email"
                 required
-                className="flex-1 min-w-0 px-5 py-3 rounded-l-full bg-black/60 border-2 border-r-0 border-[#028444]/50 text-white placeholder-white/30 focus:outline-none focus:border-[#05a855] transition-all text-xs sm:text-sm"
+                className="flex-1 min-w-0 px-5 py-3 rounded-l-full bg-[#f3f6f3] border-2 border-r-0 border-[#028444]/50 text-[#0f1f14] placeholder-[#0f1f14]/40 focus:outline-none focus:border-[#05a855] transition-all text-xs sm:text-sm"
               />
               <button
                 type="submit"
@@ -114,30 +92,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ===== ASK AI STRIP (Inspiré de port 3002) ===== */}
-      <div className="border-b border-white/5 bg-[#0e1610] py-6 px-4 text-center">
-        <p className="text-[11px] uppercase tracking-widest font-black text-white/50 mb-3 flex items-center justify-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-[#05a855]" />
-          <span>Demandez à l'IA ce qu'elle sait d'AFI Collection Bénin</span>
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          {AI_PLATFORMS.map((p) => (
-            <button
-              key={p.id}
-              onClick={() => handleAIClick(p)}
-              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#05a855] hover:bg-[#028444]/15 text-xs font-bold text-white/80 transition-all flex items-center gap-2 cursor-pointer"
-            >
-              {copiedAI === p.id ? (
-                <FiCheck className="w-3.5 h-3.5 text-[#05a855]" />
-              ) : (
-                <span className="w-2 h-2 rounded-full bg-[#05a855]" />
-              )}
-              <span>{copiedAI === p.id ? 'Copié !' : p.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
       <div className="container mx-auto px-6 md:px-12 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_1.4fr_1fr] gap-8">
           
@@ -151,7 +105,7 @@ export function Footer() {
               />
             </Link>
             
-            <p className="text-white/50 text-sm leading-relaxed max-w-xs">
+            <p className="text-[#0f1f14]/60 text-sm leading-relaxed max-w-xs">
               L'élégance artisanale au service de l'autonomie et de la culture.
               Créations faites main d'exception par nos maîtres artisanes à Abomey-Calavi.
             </p>
@@ -159,38 +113,38 @@ export function Footer() {
             <div className="flex gap-2.5 pt-2">
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-white/10"
+                className="w-10 h-10 rounded-full bg-[#0f1f14]/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-[#0f1f14]/10"
                 aria-label="Facebook"
               >
-                <FiFacebook className="w-4 h-4 text-white/70 group-hover:text-white transition-colors" />
+                <FiFacebook className="w-4 h-4 text-[#0f1f14]/60 group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-white/10"
+                className="w-10 h-10 rounded-full bg-[#0f1f14]/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-[#0f1f14]/10"
                 aria-label="Twitter"
               >
-                <FiTwitter className="w-4 h-4 text-white/70 group-hover:text-white transition-colors" />
+                <FiTwitter className="w-4 h-4 text-[#0f1f14]/60 group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-white/10"
+                className="w-10 h-10 rounded-full bg-[#0f1f14]/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-[#0f1f14]/10"
                 aria-label="Instagram"
               >
-                <FiInstagram className="w-4 h-4 text-white/70 group-hover:text-white transition-colors" />
+                <FiInstagram className="w-4 h-4 text-[#0f1f14]/60 group-hover:text-white transition-colors" />
               </a>
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-white/10"
+                className="w-10 h-10 rounded-full bg-[#0f1f14]/5 hover:bg-[#028444] hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 group border border-[#0f1f14]/10"
                 aria-label="YouTube"
               >
-                <FiYoutube className="w-4 h-4 text-white/70 group-hover:text-white transition-colors" />
+                <FiYoutube className="w-4 h-4 text-[#0f1f14]/60 group-hover:text-white transition-colors" />
               </a>
             </div>
           </div>
 
           {/* ===== COLONNE 2 - Liens rapides ===== */}
           <div>
-            <h4 className="text-xs font-black uppercase tracking-wider text-[#05a855] mb-5">
+            <h4 className="text-xs font-black uppercase tracking-wider text-[#028444] mb-5">
               Explorer
             </h4>
             <ul className="space-y-3">
@@ -203,7 +157,7 @@ export function Footer() {
                 <li key={link.to}>
                   <Link 
                     to={link.to} 
-                    className="text-white/50 hover:text-white text-sm transition-all duration-300 flex items-center gap-2 group"
+                    className="text-[#0f1f14]/60 hover:text-[#028444] text-sm transition-all duration-300 flex items-center gap-2 group"
                   >
                     <FiArrowRight className="w-3 h-3 text-[#05a855] group-hover:translate-x-1 transition-all" />
                     <span className="group-hover:translate-x-1 transition-transform duration-300">
@@ -217,28 +171,28 @@ export function Footer() {
 
           {/* ===== COLONNE 3 - Contact & Atelier ===== */}
           <div className="min-w-0">
-            <h4 className="text-xs font-black uppercase tracking-wider text-[#05a855] mb-5">
+            <h4 className="text-xs font-black uppercase tracking-wider text-[#028444] mb-5">
               Contact & Atelier
             </h4>
             <ul className="space-y-3.5">
-              <li className="flex items-start gap-3 text-white/50 hover:text-white/80 transition-colors duration-300 group">
+              <li className="flex items-start gap-3 text-[#0f1f14]/60 hover:text-[#0f1f14]/85 transition-colors duration-300 group">
                 <FiMapPin className="w-4 h-4 text-[#05a855] shrink-0 mt-0.5" />
                 <span className="text-sm">Abomey-Calavi, République du Bénin</span>
               </li>
-              <li className="flex items-start gap-3 text-white/50 hover:text-white/80 transition-colors duration-300 group">
+              <li className="flex items-start gap-3 text-[#0f1f14]/60 hover:text-[#0f1f14]/85 transition-colors duration-300 group">
                 <FiPhone className="w-4 h-4 text-[#05a855] shrink-0 mt-0.5" />
                 <span className="text-sm">+229 01 97 22 28 80</span>
               </li>
-              <li className="flex items-center gap-3 text-white/50 hover:text-white/80 transition-colors duration-300 group">
+              <li className="flex items-center gap-3 text-[#0f1f14]/60 hover:text-[#0f1f14]/85 transition-colors duration-300 group">
                 <FiMail className="w-4 h-4 text-[#05a855] shrink-0" />
                 <a 
                   href="mailto:maisonaficollections@gmail.com" 
-                  className="text-xs sm:text-sm hover:underline text-white/70 hover:text-[#05a855] transition-colors"
+                  className="text-xs sm:text-sm hover:underline text-[#0f1f14]/70 hover:text-[#028444] transition-colors"
                 >
                   maisonaficollections@gmail.com
                 </a>
               </li>
-              <li className="flex items-start gap-3 text-white/50 hover:text-white/80 transition-colors duration-300 group">
+              <li className="flex items-start gap-3 text-[#0f1f14]/60 hover:text-[#0f1f14]/85 transition-colors duration-300 group">
                 <FiClock className="w-4 h-4 text-[#05a855] shrink-0 mt-0.5" />
                 <span className="text-sm">Lun - Sam : 08h00 - 18h30</span>
               </li>
@@ -247,14 +201,14 @@ export function Footer() {
 
           {/* ===== COLONNE 4 - Informations & Légal ===== */}
           <div className="min-w-0">
-            <h4 className="text-xs font-black uppercase tracking-wider text-[#05a855] mb-5">
+            <h4 className="text-xs font-black uppercase tracking-wider text-[#028444] mb-5">
               Informations
             </h4>
             <ul className="space-y-3">
               <li>
                 <Link 
                   to="/mentions-legales" 
-                  className="text-white/50 hover:text-white text-sm transition-all duration-300 flex items-center gap-2 group"
+                  className="text-[#0f1f14]/60 hover:text-[#028444] text-sm transition-all duration-300 flex items-center gap-2 group"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#05a855]/50 group-hover:bg-[#05a855] transition-all" />
                   Mentions légales
@@ -263,7 +217,7 @@ export function Footer() {
               <li>
                 <Link 
                   to="/confidentialite" 
-                  className="text-white/50 hover:text-white text-sm transition-all duration-300 flex items-center gap-2 group"
+                  className="text-[#0f1f14]/60 hover:text-[#028444] text-sm transition-all duration-300 flex items-center gap-2 group"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#05a855]/50 group-hover:bg-[#05a855] transition-all" />
                   Politique de confidentialité
@@ -272,14 +226,14 @@ export function Footer() {
               <li>
                 <Link 
                   to="/cgv" 
-                  className="text-white/50 hover:text-white text-sm transition-all duration-300 flex items-center gap-2 group"
+                  className="text-[#0f1f14]/60 hover:text-[#028444] text-sm transition-all duration-300 flex items-center gap-2 group"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#05a855]/50 group-hover:bg-[#05a855] transition-all" />
                   Conditions de vente
                 </Link>
               </li>
               <li className="pt-2">
-                <div className="flex items-center gap-2 text-white/30 text-xs">
+                <div className="flex items-center gap-2 text-[#0f1f14]/40 text-xs">
                   <FiHeart className="w-3.5 h-3.5 text-[#05a855]" />
                   <span>Artisanat inclusif & équitable</span>
                 </div>
@@ -289,13 +243,13 @@ export function Footer() {
         </div>
 
         {/* ===== BARRE DU BAS ===== */}
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/30 text-xs">
+        <div className="mt-12 pt-6 border-t border-[#0f1f14]/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-[#0f1f14]/40 text-xs">
             © {currentYear} AFI Collection. Tous droits réservés.
           </p>
-          <div className="flex items-center gap-4 text-white/30 text-xs">
+          <div className="flex items-center gap-4 text-[#0f1f14]/40 text-xs">
             <span>Bénin & International</span>
-            <span className="w-px h-3 bg-white/10" />
+            <span className="w-px h-3 bg-[#0f1f14]/10" />
             <span>Paiement sécurisé KKiaPay & Mobile Money</span>
           </div>
         </div>

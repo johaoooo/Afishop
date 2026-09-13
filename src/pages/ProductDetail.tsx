@@ -28,17 +28,17 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="bg-[#070b08] min-h-screen py-16 text-white">
+      <div className="bg-[#f3f6f3] min-h-screen py-16 text-[#0f1f14]">
         <div className="container mx-auto px-6 md:px-12 max-w-5xl">
-          <div className="bg-[#121914] backdrop-blur-sm rounded-3xl border border-[#028444]/30 p-8 animate-pulse">
+          <div className="bg-white backdrop-blur-sm rounded-3xl border border-[#028444]/30 p-8 animate-pulse">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div className="aspect-square bg-white/10 rounded-2xl" />
+              <div className="aspect-square bg-[#0f1f14]/10 rounded-2xl" />
               <div className="space-y-4">
-                <div className="h-6 bg-white/10 rounded w-1/4" />
-                <div className="h-10 bg-white/10 rounded w-3/4" />
-                <div className="h-4 bg-white/10 rounded w-full" />
-                <div className="h-4 bg-white/10 rounded w-full" />
-                <div className="h-8 bg-white/10 rounded w-1/3" />
+                <div className="h-6 bg-[#0f1f14]/10 rounded w-1/4" />
+                <div className="h-10 bg-[#0f1f14]/10 rounded w-3/4" />
+                <div className="h-4 bg-[#0f1f14]/10 rounded w-full" />
+                <div className="h-4 bg-[#0f1f14]/10 rounded w-full" />
+                <div className="h-8 bg-[#0f1f14]/10 rounded w-1/3" />
               </div>
             </div>
           </div>
@@ -49,16 +49,16 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="bg-[#070b08] min-h-screen py-16 text-white">
+      <div className="bg-[#f3f6f3] min-h-screen py-16 text-[#0f1f14]">
         <div className="container mx-auto px-6 md:px-12 max-w-5xl">
           <motion.div 
-            className="bg-[#121914] backdrop-blur-sm rounded-3xl border border-[#028444]/30 p-16 text-center"
+            className="bg-white backdrop-blur-sm rounded-3xl border border-[#028444]/30 p-16 text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-white/50 mb-4">Ce produit n'existe pas ou n'est plus disponible.</p>
-            <Link to="/boutique" className="text-[#05a855] font-semibold hover:underline">Retour à la boutique</Link>
+            <p className="text-[#0f1f14]/60 mb-4">Ce produit n'existe pas ou n'est plus disponible.</p>
+            <Link to="/boutique" className="text-[#028444] font-semibold hover:underline">Retour à la boutique</Link>
           </motion.div>
         </div>
       </div>
@@ -78,7 +78,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="bg-[#070b08] min-h-screen pb-24 md:pb-12 pt-12 text-white">
+    <div className="bg-[#f3f6f3] min-h-screen pb-24 md:pb-12 pt-12 text-[#0f1f14]">
       <SEO
         title={product.name}
         description={product.description?.slice(0, 160)}
@@ -86,19 +86,19 @@ export default function ProductDetail() {
         url={`https://aficollection.com/produit/${product.id}`}
       />
       <div className="container mx-auto px-4 md:px-12 max-w-5xl">
-        <Link to="/boutique" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-[#05a855] mb-4 md:mb-6 group">
+        <Link to="/boutique" className="inline-flex items-center gap-2 text-sm text-[#0f1f14]/60 hover:text-[#028444] mb-4 md:mb-6 group">
           <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour à la boutique
         </Link>
 
         <motion.div 
-          className="bg-[#121914] backdrop-blur-sm rounded-2xl md:rounded-3xl border border-[#028444]/30 p-4 md:p-8 shadow-sm"
+          className="bg-white backdrop-blur-sm rounded-2xl md:rounded-3xl border border-[#028444]/30 p-4 md:p-8 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             {/* Image */}
-            <div className="aspect-square bg-black/40 border border-white/10 rounded-xl md:rounded-2xl overflow-hidden flex items-center justify-center">
+            <div className="aspect-square bg-black/40 border border-[#0f1f14]/10 rounded-xl md:rounded-2xl overflow-hidden flex items-center justify-center">
               <img
                 src={product.image}
                 alt={product.name}
@@ -109,29 +109,29 @@ export default function ProductDetail() {
 
             {/* Infos */}
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#05a855]">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#028444]">
                 {product.category} · {product.brand}
               </p>
-              <h1 className="text-xl md:text-3xl font-black text-white mt-1">{product.name}</h1>
-              <p className="text-sm md:text-base text-white/60 mt-3 md:mt-4 leading-relaxed">{product.description}</p>
+              <h1 className="text-xl md:text-3xl font-black text-[#0f1f14] mt-1">{product.name}</h1>
+              <p className="text-sm md:text-base text-[#0f1f14]/60 mt-3 md:mt-4 leading-relaxed">{product.description}</p>
 
-              <p className="text-2xl md:text-3xl font-black text-[#05a855] mt-4 md:mt-6">
+              <p className="text-2xl md:text-3xl font-black text-[#028444] mt-4 md:mt-6">
                 {product.price.toLocaleString('fr-FR')} FCFA
               </p>
 
               <p className="text-sm mt-2 md:mt-3">
                 {inStock ? (
-                  <span className="text-[#05a855] font-medium">✅ En stock — {product.stock} disponibles</span>
+                  <span className="text-[#028444] font-medium">✅ En stock — {product.stock} disponibles</span>
                 ) : (
                   <span className="text-red-500 font-medium">❌ Rupture de stock</span>
                 )}
               </p>
 
               {inStock && (
-                <div className="flex items-center gap-1 border border-white/10 rounded-full w-fit mt-4 md:mt-6 bg-black/30">
+                <div className="flex items-center gap-1 border border-[#0f1f14]/10 rounded-full w-fit mt-4 md:mt-6 bg-[#0f1f14]/5">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
+                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-[#028444]/10 transition flex items-center justify-center text-lg"
                     aria-label="Diminuer la quantité"
                   >
                     −
@@ -139,7 +139,7 @@ export default function ProductDetail() {
                   <span className="w-10 text-center font-semibold text-lg">{quantity}</span>
                   <button
                     onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
+                    className="w-12 h-12 md:w-10 md:h-10 rounded-full hover:bg-[#028444]/10 transition flex items-center justify-center text-lg"
                     aria-label="Augmenter la quantité"
                   >
                     +
@@ -165,13 +165,13 @@ export default function ProductDetail() {
               </div>
 
               {/* Garanties */}
-              <div className="hidden md:flex gap-4 mt-6 pt-4 border-t border-white/10">
-                <div className="flex items-center gap-2 text-xs text-white/50">
-                  <FiTruck className="w-4 h-4 text-[#05a855]" />
+              <div className="hidden md:flex gap-4 mt-6 pt-4 border-t border-[#0f1f14]/10">
+                <div className="flex items-center gap-2 text-xs text-[#0f1f14]/60">
+                  <FiTruck className="w-4 h-4 text-[#028444]" />
                   <span>Livraison 48h</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
-                  <FiShield className="w-4 h-4 text-[#05a855]" />
+                <div className="flex items-center gap-2 text-xs text-[#0f1f14]/60">
+                  <FiShield className="w-4 h-4 text-[#028444]" />
                   <span>Paiement sécurisé</span>
                 </div>
               </div>
@@ -180,13 +180,13 @@ export default function ProductDetail() {
         </motion.div>
 
         {/* Garanties sur mobile */}
-        <div className="md:hidden flex gap-4 mt-4 pt-4 border-t border-white/10">
-          <div className="flex items-center gap-2 text-xs text-white/50">
-            <FiTruck className="w-4 h-4 text-[#05a855]" />
+        <div className="md:hidden flex gap-4 mt-4 pt-4 border-t border-[#0f1f14]/10">
+          <div className="flex items-center gap-2 text-xs text-[#0f1f14]/60">
+            <FiTruck className="w-4 h-4 text-[#028444]" />
             <span>Livraison 48h</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-white/50">
-            <FiShield className="w-4 h-4 text-[#05a855]" />
+          <div className="flex items-center gap-2 text-xs text-[#0f1f14]/60">
+            <FiShield className="w-4 h-4 text-[#028444]" />
             <span>Paiement sécurisé</span>
           </div>
         </div>
@@ -194,18 +194,18 @@ export default function ProductDetail() {
 
       {/* Barre fixe bas de page (mobile) */}
       {inStock && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#121914] border-t border-white/10 px-4 py-3 shadow-2xl">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#0f1f14]/10 px-4 py-3 shadow-2xl">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 border border-white/20 rounded-full bg-white/5 shrink-0">
+            <div className="flex items-center gap-1 border border-[#0f1f14]/15 rounded-full bg-[#0f1f14]/5 shrink-0">
               <button
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="w-10 h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
+                className="w-10 h-10 rounded-full hover:bg-[#028444]/10 transition flex items-center justify-center text-lg"
                 aria-label="Diminuer"
               >−</button>
               <span className="w-8 text-center font-semibold">{quantity}</span>
               <button
                 onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                className="w-10 h-10 rounded-full hover:bg-white/10 transition flex items-center justify-center text-lg"
+                className="w-10 h-10 rounded-full hover:bg-[#028444]/10 transition flex items-center justify-center text-lg"
                 aria-label="Augmenter"
               >+</button>
             </div>
@@ -218,7 +218,7 @@ export default function ProductDetail() {
             </button>
             <button
               onClick={handleAddToCart}
-              className="shrink-0 border-2 border-[#05a855] text-[#05a855] font-bold w-12 h-12 rounded-xl flex items-center justify-center active:scale-90 transition bg-[#028444]/10"
+              className="shrink-0 border-2 border-[#028444] text-[#028444] font-bold w-12 h-12 rounded-xl flex items-center justify-center active:scale-90 transition bg-[#028444]/10"
               aria-label="Ajouter au panier"
             >
               +

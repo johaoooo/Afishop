@@ -47,7 +47,7 @@ function NavSlogan() {
           animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
           exit={{ y: -12, opacity: 0, filter: 'blur(4px)' }}
           transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          className="m-0 text-white/80 font-bold text-sm leading-snug"
+          className="m-0 text-[#0f1f14]/70 font-bold text-sm leading-snug"
         >
           {NAV_SLOGANS[idx]}
         </motion.p>
@@ -67,9 +67,22 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const userDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Barre de progression du scroll (façon Wappe, en vert AFI)
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(max > 0 ? Math.min(1, y / max) : 0);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Fermeture lors d'un changement de page
   useEffect(() => {
@@ -113,6 +126,11 @@ export function Header() {
 
   return (
     <>
+      <div
+        aria-hidden="true"
+        className="wappe-scroll-progress"
+        style={{ width: `${scrollProgress * 100}%` }}
+      />
       {/* ═══════════════════════════════════════════════════════════
           DESKTOP : CardNav flottant (inspiré de port 3002)
           ═══════════════════════════════════════════════════════════ */}
@@ -166,7 +184,7 @@ export function Header() {
                       initial={{ opacity: 0, scale: 0.95, y: 10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: 5 }}
-                      className="absolute right-0 mt-3 w-80 bg-[#121914] rounded-2xl shadow-2xl border border-[#028444]/40 p-3 z-50"
+                      className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-[#028444]/40 p-3 z-50"
                     >
                       <form onSubmit={handleSearchSubmit} className="relative">
                         <input
@@ -175,14 +193,14 @@ export function Header() {
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           placeholder="Rechercher un sac, pagne..."
-                          className="w-full bg-black/60 rounded-xl pl-10 pr-10 py-2.5 text-xs text-white border border-white/10 focus:outline-none focus:border-[#05a855] transition-all placeholder-white/30"
+                          className="w-full bg-[#f3f6f3] rounded-xl pl-10 pr-10 py-2.5 text-xs text-[#0f1f14] border border-[#0f1f14]/15 focus:outline-none focus:border-[#05a855] transition-all placeholder-[#0f1f14]/40"
                         />
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#05a855]" />
                         {searchQuery && (
                           <button
                             type="button"
                             onClick={() => setSearchQuery('')}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0f1f14]/40 hover:text-[#0f1f14]"
                           >
                             <X className="w-4 h-4" />
                           </button>
@@ -236,9 +254,9 @@ export function Header() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                      className="absolute right-0 mt-3 w-64 bg-[#121914] rounded-2xl shadow-2xl border border-[#028444]/40 overflow-hidden z-50"
+                      className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-[#028444]/40 overflow-hidden z-50"
                     >
-                      <div className="px-4 py-3.5 bg-gradient-to-r from-[#028444] to-[#016634] text-white">
+                      <div className="px-4 py-3.5 bg-[#028444] text-white">
                         <p className="text-[10px] text-white/80 uppercase font-black tracking-wider">Espace Membre</p>
                         <p className="text-sm font-black truncate mt-0.5">{user.name}</p>
                         <p className="text-[11px] text-white/80 truncate">{user.email}</p>
@@ -248,7 +266,7 @@ export function Header() {
                         <Link
                           to="/mon-compte"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-white/80 hover:bg-white/5 hover:text-[#05a855] transition-colors"
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#0f1f14]/75 hover:bg-[#028444]/10 hover:text-[#028444] transition-colors"
                         >
                           <Package className="w-4 h-4 text-[#05a855]" />
                           <span>Mes commandes</span>
@@ -257,9 +275,9 @@ export function Header() {
                         <Link
                           to="/mon-compte?favoris=true"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-white/80 hover:bg-white/5 hover:text-[#05a855] transition-colors"
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#0f1f14]/75 hover:bg-[#028444]/10 hover:text-[#028444] transition-colors"
                         >
-                          <Heart className="w-4 h-4 text-rose-400" />
+                          <Heart className="w-4 h-4 text-rose-500" />
                           <span>Mes favoris</span>
                         </Link>
 
@@ -281,7 +299,7 @@ export function Header() {
                             setUserDropdownOpen(false);
                             navigate('/');
                           }}
-                          className="w-full text-left flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/10 transition-colors"
+                          className="w-full text-left flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-500/10 transition-colors"
                         >
                           <X className="w-4 h-4" />
                           <span>Se déconnecter</span>
@@ -333,7 +351,7 @@ export function Header() {
                     </Link>
                     <NavSlogan />
                   </div>
-                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-white/40">
+                  <div className="pt-2 border-t border-[#0f1f14]/10 flex items-center justify-between text-[11px] text-[#0f1f14]/50">
                     <span>Abomey-Calavi · Bénin</span>
                     <span className="text-[#05a855] font-bold">100% Fait main</span>
                   </div>
@@ -473,7 +491,7 @@ export function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.28, ease: 'easeOut' }}
-              className="fixed inset-x-0 top-[58px] bottom-0 bg-[#070b08]/98 backdrop-blur-2xl z-[9300] overflow-y-auto p-5 flex flex-col justify-between"
+              className="fixed inset-x-0 top-[58px] bottom-0 bg-[#f3f6f3]/98 backdrop-blur-2xl z-[9300] overflow-y-auto p-5 flex flex-col justify-between"
             >
               <div className="space-y-6">
                 {/* Recherche rapide */}
@@ -483,7 +501,7 @@ export function Header() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Rechercher sacs, pagnes, sandales..."
-                    className="w-full bg-[#121914] border border-[#028444]/40 rounded-full pl-11 pr-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#05a855]"
+                    className="w-full bg-white border border-[#028444]/40 rounded-full pl-11 pr-4 py-3 text-sm text-[#0f1f14] placeholder-[#0f1f14]/40 focus:outline-none focus:border-[#05a855]"
                   />
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#05a855]" />
                 </form>
@@ -495,85 +513,85 @@ export function Header() {
                   <Link
                     to="/"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <Sparkles className="w-5 h-5 text-[#05a855]" />
-                      <span className="font-bold text-sm text-white">Accueil</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Accueil</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-white/30" />
+                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
                   </Link>
 
                   <Link
                     to="/boutique"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <ShoppingBag className="w-5 h-5 text-[#05a855]" />
                       <div>
-                        <div className="font-bold text-sm text-white">Boutique & Créations</div>
-                        <div className="text-[11px] text-white/40">Sacs macramé, sandales, pagnes</div>
+                        <div className="font-bold text-sm text-[#0f1f14]">Boutique & Créations</div>
+                        <div className="text-[11px] text-[#0f1f14]/50">Sacs macramé, sandales, pagnes</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-white/30" />
+                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
                   </Link>
 
                   <Link
                     to="/formations"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <GraduationCap className="w-5 h-5 text-[#05a855]" />
                       <div>
-                        <div className="font-bold text-sm text-white">Formations CFP</div>
-                        <div className="text-[11px] text-white/40">Ateliers & transmission Dorcas</div>
+                        <div className="font-bold text-sm text-[#0f1f14]">Formations CFP</div>
+                        <div className="text-[11px] text-[#0f1f14]/50">Ateliers & transmission Dorcas</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-white/30" />
+                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
                   </Link>
 
                   <Link
                     to="/services"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <Layers className="w-5 h-5 text-[#05a855]" />
-                      <span className="font-bold text-sm text-white">Nos Services</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Nos Services</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-white/30" />
+                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
                   </Link>
 
                   <Link
                     to="/a-propos"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <Info className="w-5 h-5 text-[#05a855]" />
-                      <span className="font-bold text-sm text-white">Qui Sommes-Nous</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Qui Sommes-Nous</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-white/30" />
+                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
                   </Link>
 
                   <Link
                     to="/contact"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-[#121914] border border-white/5 hover:border-[#05a855]/40 transition-colors"
+                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <PhoneCall className="w-5 h-5 text-[#05a855]" />
-                      <span className="font-bold text-sm text-white">Contact & Ateliers</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Contact & Ateliers</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-white/30" />
+                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
                   </Link>
                 </div>
               </div>
 
               {/* Bas du Drawer : Boutons CTA */}
-              <div className="pt-6 border-t border-white/10 space-y-3">
+              <div className="pt-6 border-t border-[#0f1f14]/10 space-y-3">
                 <a
                   href="https://wa.me/2290197222880"
                   target="_blank"
@@ -591,12 +609,12 @@ export function Header() {
                       logout();
                       closeMenus();
                     }}
-                    className="w-full py-2.5 text-center text-xs font-bold text-rose-400 cursor-pointer"
+                    className="w-full py-2.5 text-center text-xs font-bold text-rose-600 cursor-pointer"
                   >
                     Se déconnecter ({user?.name})
                   </button>
                 ) : (
-                  <div className="flex items-center justify-center gap-3 text-xs text-white/50 pt-1">
+                  <div className="flex items-center justify-center gap-3 text-xs text-[#0f1f14]/55 pt-1">
                     <Link to="/connexion" onClick={closeMenus} className="text-[#05a855] font-bold underline">
                       Connexion
                     </Link>

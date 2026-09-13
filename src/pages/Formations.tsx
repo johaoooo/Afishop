@@ -65,7 +65,7 @@ export default function Formations() {
   const displayTrainings = trainings.length > 0 ? trainings : defaultTrainings;
 
   return (
-    <div className="bg-[#070b08] min-h-screen text-white pb-20">
+    <div className="bg-[#f3f6f3] min-h-screen text-[#0f1f14] pb-20">
       <SEO title="Formations Artisanales | AFI Collection" description="Découvrez nos formations artisanales : macramé, tissage, fabrication de sandales et teinture au Bénin avec le CFP Dorcas & AFI Collection." />
 
       {/* ===== HERO ===== */}
@@ -79,7 +79,7 @@ export default function Formations() {
               AFI_IMAGES.atelierCadre;
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-[#070b08]/80" />
+        <div className="absolute inset-0 bg-[#070b08]/75" />
         
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
           <motion.div
@@ -104,21 +104,21 @@ export default function Formations() {
         
         {/* ===== BANDEAU PRÉSENTATION CFP DORCAS ===== */}
         <motion.div
-          className="bg-[#121914] rounded-3xl p-6 sm:p-10 border border-white/10 shadow-xs"
+          className="bg-white rounded-3xl p-6 sm:p-10 border border-[#0f1f14]/10 shadow-xs"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-black text-[#0f1f14] leading-tight">
                 Le Centre de Formation <br />
-                <span className="text-[#05a855]">CFP Dorcas</span>
+                <span className="text-[#028444]">CFP Dorcas</span>
               </h2>
               
-              <div className="space-y-3 text-xs sm:text-sm text-white/60 leading-relaxed">
+              <div className="space-y-3 text-xs sm:text-sm text-[#0f1f14]/60 leading-relaxed">
                 <p>
-                  Le <strong className="text-white font-bold">Centre de Formation Professionnelle (CFP) Dorcas</strong> est 
+                  Le <strong className="text-[#0f1f14] font-bold">Centre de Formation Professionnelle (CFP) Dorcas</strong> est 
                   une institution dédiée à la transmission des savoir-faire artisanaux et à la professionnalisation 
                   des métiers d'art au Bénin.
                 </p>
@@ -129,11 +129,11 @@ export default function Formations() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                <div className="flex items-center gap-2 bg-[#028444]/20 text-[#05a855] px-4 py-2 rounded-2xl text-xs font-bold border border-[#028444]/30">
+                <div className="flex items-center gap-2 bg-[#028444]/20 text-[#028444] px-4 py-2 rounded-2xl text-xs font-bold border border-[#028444]/30">
                   <FiMapPin className="w-4 h-4" />
                   <span>Abomey-Calavi, Bénin</span>
                 </div>
-                <div className="flex items-center gap-2 bg-[#028444]/20 text-[#05a855] px-4 py-2 rounded-2xl text-xs font-bold border border-[#028444]/30">
+                <div className="flex items-center gap-2 bg-[#028444]/20 text-[#028444] px-4 py-2 rounded-2xl text-xs font-bold border border-[#028444]/30">
                   <FiCalendar className="w-4 h-4" />
                   <span>Inscriptions Ouvertes</span>
                 </div>
@@ -141,7 +141,7 @@ export default function Formations() {
             </div>
 
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-lg bg-black/40 border border-white/10 flex items-center justify-center p-3">
+              <div className="rounded-3xl overflow-hidden shadow-lg bg-black/40 border border-[#0f1f14]/10 flex items-center justify-center p-3">
                 <img
                   src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441633/WhatsApp_Image_2026-05-03_at_13.13.55_xrgmtq.jpg"
                   alt="CFP Dorcas - Centre de formation"
@@ -161,12 +161,12 @@ export default function Formations() {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div key={index} className="bg-[#121914] rounded-3xl p-6 border border-white/10 shadow-xs text-center space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-[#028444]/20 text-[#05a855] flex items-center justify-center mx-auto">
+              <div key={index} className="bg-white rounded-3xl p-6 border border-[#0f1f14]/10 shadow-xs text-center space-y-2">
+                <div className="w-12 h-12 rounded-2xl bg-[#028444]/20 text-[#028444] flex items-center justify-center mx-auto">
                   <Icon className="w-6 h-6" />
                 </div>
-                <p className="text-2xl sm:text-3xl font-black text-white font-mono">{stat.value}</p>
-                <p className="text-xs font-bold text-white/50">{stat.label}</p>
+                <p className="text-2xl sm:text-3xl font-black text-[#0f1f14] font-mono">{stat.value}</p>
+                <p className="text-xs font-bold text-[#0f1f14]/60">{stat.label}</p>
               </div>
             );
           })}
@@ -175,26 +175,26 @@ export default function Formations() {
         {/* ===== LISTE DES FORMATIONS ===== */}
         <div className="space-y-6">
           <div className="text-center space-y-1">
-            <h2 className="text-xl sm:text-2xl font-black text-white">
+            <h2 className="text-xl sm:text-2xl font-black text-[#0f1f14]">
               Filières & Programmes de Formation
             </h2>
-            <p className="text-xs text-white/50">Des programmes pratiques encadrés par des professionnels</p>
+            <p className="text-xs text-[#0f1f14]/60">Des programmes pratiques encadrés par des professionnels</p>
           </div>
 
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[...Array(2)].map((_, i) => (
-                <div key={i} className="bg-[#121914] rounded-3xl border border-white/10 animate-pulse overflow-hidden p-6 space-y-4">
-                  <div className="h-48 bg-white/10 rounded-2xl" />
-                  <div className="h-4 bg-white/10 rounded w-3/4" />
-                  <div className="h-3 bg-white/10 rounded w-1/2" />
+                <div key={i} className="bg-white rounded-3xl border border-[#0f1f14]/10 animate-pulse overflow-hidden p-6 space-y-4">
+                  <div className="h-48 bg-[#0f1f14]/10 rounded-2xl" />
+                  <div className="h-4 bg-[#0f1f14]/10 rounded w-3/4" />
+                  <div className="h-3 bg-[#0f1f14]/10 rounded w-1/2" />
                 </div>
               ))}
             </div>
           ) : displayTrainings.length === 0 ? (
-            <div className="bg-[#121914] rounded-3xl border border-white/10 p-12 text-center shadow-xs">
-              <FiBookOpen className="w-16 h-16 text-white/50 mx-auto mb-4" />
-              <h3 className="text-lg font-black text-white">Aucune formation enregistrée</h3>
+            <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-12 text-center shadow-xs">
+              <FiBookOpen className="w-16 h-16 text-[#0f1f14]/60 mx-auto mb-4" />
+              <h3 className="text-lg font-black text-[#0f1f14]">Aucune formation enregistrée</h3>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -206,7 +206,7 @@ export default function Formations() {
                 return (
                   <motion.div
                     key={training.id}
-                    className="group bg-[#121914] rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 border border-white/10 flex flex-col justify-between"
+                    className="group bg-white rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 border border-[#0f1f14]/10 flex flex-col justify-between"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -214,7 +214,7 @@ export default function Formations() {
                   >
                     <div className="space-y-4 p-5 sm:p-6">
                       {/* Image */}
-                      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/40 border border-white/10">
+                      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-black/40 border border-[#0f1f14]/10">
                         <img
                           src={imgSrc}
                           alt={training.title}
@@ -237,17 +237,17 @@ export default function Formations() {
 
                       {/* Content */}
                       <div className="space-y-2">
-                        <h3 className="text-lg font-black text-white group-hover:text-[#05a855] transition-colors">
+                        <h3 className="text-lg font-black text-[#0f1f14] group-hover:text-[#028444] transition-colors">
                           {training.title}
                         </h3>
 
-                        <p className="text-xs text-white/50 leading-relaxed line-clamp-2">
+                        <p className="text-xs text-[#0f1f14]/60 leading-relaxed line-clamp-2">
                           {training.description}
                         </p>
 
                         <div className="pt-2 flex items-center gap-2">
-                          <FiAward className="w-4 h-4 text-[#05a855]" />
-                          <span className="text-sm font-black text-[#05a855] font-mono">
+                          <FiAward className="w-4 h-4 text-[#028444]" />
+                          <span className="text-sm font-black text-[#028444] font-mono">
                             {typeof training.price === 'number' ? `${training.price.toLocaleString('fr-FR')} FCFA` : training.price}
                           </span>
                         </div>
@@ -256,7 +256,7 @@ export default function Formations() {
                         {training.modules && training.modules.length > 0 && (
                           <div className="pt-2 space-y-1.5">
                             {training.modules.slice(0, 3).map((mod, idx) => (
-                              <div key={idx} className="flex items-center gap-2 text-xs text-white/60">
+                              <div key={idx} className="flex items-center gap-2 text-xs text-[#0f1f14]/60">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#028444] shrink-0" />
                                 <span className="truncate">{mod}</span>
                               </div>
@@ -284,16 +284,16 @@ export default function Formations() {
 
         {/* ===== CALL TO ACTION ===== */}
         <motion.div
-          className="p-8 sm:p-12 rounded-3xl text-center bg-gradient-to-r from-[#070b08] via-[#0d2818] to-[#070b08] border border-[#028444]/30 text-white space-y-4 shadow-lg"
+          className="p-8 sm:p-12 rounded-3xl text-center bg-white border border-[#028444]/30 text-[#0f1f14] space-y-4 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-2xl sm:text-3xl font-black text-white">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0f1f14]">
             Prêt à démarrer votre formation ?
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
+          <p className="text-[#0f1f14]/60 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
             Rejoignez le CFP Dorcas et développez des compétences artisanales de haut niveau au Bénin.
           </p>
           <div className="flex flex-wrap gap-3 justify-center pt-2">
@@ -306,7 +306,7 @@ export default function Formations() {
             </Link>
             <Link
               to="/boutique"
-              className="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-bold px-8 py-3.5 rounded-full transition text-xs sm:text-sm"
+              className="inline-flex items-center gap-2 border-2 border-[#0f1f14]/25 hover:border-[#0f1f14] text-[#0f1f14] font-bold px-8 py-3.5 rounded-full transition text-xs sm:text-sm"
             >
               <span>Découvrir la boutique</span>
             </Link>

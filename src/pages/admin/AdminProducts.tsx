@@ -56,8 +56,8 @@ export function AdminProducts() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-white tracking-tight">Catalogue des produits</h1>
-          <p className="text-xs text-white/40 mt-1">
+          <h1 className="text-2xl font-black text-[#0f1f14] tracking-tight">Catalogue des produits</h1>
+          <p className="text-xs text-[#0f1f14]/50 mt-1">
             Gérez vos articles en vente ({products.length} référence{products.length > 1 ? 's' : ''})
           </p>
         </div>
@@ -71,26 +71,26 @@ export function AdminProducts() {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-[#1c1917] rounded-2xl p-4 shadow-xs border border-white/10 flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div className="bg-white rounded-2xl p-4 shadow-xs border border-[#0f1f14]/10 flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="relative w-full md:w-80">
-          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 w-4 h-4" />
+          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#0f1f14]/50 w-4 h-4" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher par nom ou description…"
-            className="w-full pl-10 pr-4 py-2 bg-white/5 rounded-xl text-xs text-white placeholder-white/30 border border-white/10/80 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30"
+            className="w-full pl-10 pr-4 py-2 bg-white rounded-xl text-xs text-[#0f1f14] placeholder-[#0f1f14]/40 border border-[#0f1f14]/15 focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30"
           />
         </div>
 
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-          <span className="text-xs text-white/40 font-medium shrink-0">Catégorie:</span>
+          <span className="text-xs text-[#0f1f14]/50 font-medium shrink-0">Catégorie:</span>
           <button
             onClick={() => setCategoryFilter('toutes')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition ${
               categoryFilter === 'toutes'
                 ? 'bg-[#4ade80] text-black shadow-sm'
-                : 'bg-white/10 text-white/60 hover:bg-[#1c1917]/15'
+                : 'bg-[#0f1f14]/5 text-[#0f1f14]/60 hover:bg-[#028444]/10'
             }`}
           >
             Toutes ({products.length})
@@ -104,7 +104,7 @@ export function AdminProducts() {
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold capitalize shrink-0 transition ${
                   categoryFilter === cat
                     ? 'bg-[#4ade80] text-black shadow-sm'
-                    : 'bg-white/10 text-white/60 hover:bg-[#1c1917]/15'
+                    : 'bg-[#0f1f14]/5 text-[#0f1f14]/60 hover:bg-[#028444]/10'
                 }`}
               >
                 {cat} ({count})
@@ -115,22 +115,22 @@ export function AdminProducts() {
       </div>
 
       {/* Products Table Card */}
-      <div className="bg-[#1c1917] rounded-2xl shadow-xs overflow-hidden border border-white/10">
+      <div className="bg-white rounded-2xl shadow-xs overflow-hidden border border-[#0f1f14]/10">
         {loading ? (
-          <div className="p-12 text-center text-sm text-white/40 animate-pulse">
+          <div className="p-12 text-center text-sm text-[#0f1f14]/50 animate-pulse">
             Chargement du catalogue produit…
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="p-12 text-center">
-            <FiBox className="w-12 h-12 text-white/50 mx-auto mb-3" />
-            <p className="text-sm font-bold text-white/70">Aucun produit trouvé</p>
-            <p className="text-xs text-white/40 mt-1">Essayez de modifier votre recherche ou ajoutez un nouveau produit.</p>
+            <FiBox className="w-12 h-12 text-[#0f1f14]/60 mx-auto mb-3" />
+            <p className="text-sm font-bold text-[#0f1f14]/70">Aucun produit trouvé</p>
+            <p className="text-xs text-[#0f1f14]/50 mt-1">Essayez de modifier votre recherche ou ajoutez un nouveau produit.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="text-xs text-white/40 uppercase tracking-wider border-b border-white/10 bg-white/50">
+                <tr className="text-xs text-[#0f1f14]/50 uppercase tracking-wider border-b border-[#0f1f14]/10 bg-[#f3f6f3]">
                   <th className="px-6 py-4 font-bold">Produit</th>
                   <th className="px-6 py-4 font-bold">Catégorie</th>
                   <th className="px-6 py-4 font-bold">Prix</th>
@@ -138,12 +138,12 @@ export function AdminProducts() {
                   <th className="px-6 py-4 font-bold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/10">
+              <tbody className="divide-y divide-[#0f1f14]/10">
                 {filteredProducts.map((p) => (
-                  <tr key={p.id} className="hover:bg-[#1c1917]/80 transition-colors group">
+                  <tr key={p.id} className="hover:bg-[#f3f6f3] transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-white/10 overflow-hidden shrink-0 border border-white/10/60 relative">
+                        <div className="w-12 h-12 rounded-xl bg-[#0f1f14]/5 overflow-hidden shrink-0 border border-[#0f1f14]/10 relative">
                           <img 
                             src={p.image} 
                             alt={p.name} 
@@ -154,18 +154,18 @@ export function AdminProducts() {
                           />
                         </div>
                         <div>
-                          <p className="font-bold text-white text-sm group-hover:text-[#4ade80] transition-colors">{p.name}</p>
-                          <p className="text-xs text-white/40 line-clamp-1 max-w-xs">{p.description || 'Aucune description'}</p>
+                          <p className="font-bold text-[#0f1f14] text-sm group-hover:text-[#028444] transition-colors">{p.name}</p>
+                          <p className="text-xs text-[#0f1f14]/50 line-clamp-1 max-w-xs">{p.description || 'Aucune description'}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#4ade80] px-2.5 py-1 rounded-lg text-xs font-semibold capitalize">
+                      <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#028444] px-2.5 py-1 rounded-lg text-xs font-semibold capitalize">
                         <FiTag className="w-3 h-3" />
                         {p.category || 'Général'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-bold text-white font-mono text-sm">
+                    <td className="px-6 py-4 font-bold text-[#0f1f14] font-mono text-sm">
                       {p.price.toLocaleString('fr-FR')} FCFA
                     </td>
                     <td className="px-6 py-4">
@@ -174,12 +174,12 @@ export function AdminProducts() {
                           Épuisé
                         </span>
                       ) : p.stock <= 3 ? (
-                        <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#4ade80] border border-[#4ade80]/25 px-2.5 py-1 rounded-full text-xs font-bold">
+                        <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#028444] border border-[#4ade80]/25 px-2.5 py-1 rounded-full text-xs font-bold">
                           <FiAlertTriangle className="w-3 h-3" />
                           {p.stock} restant{p.stock > 1 ? 's' : ''}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#4ade80] border border-[#4ade80]/30 px-2.5 py-1 rounded-full text-xs font-semibold">
+                        <span className="inline-flex items-center gap-1 bg-[#4ade80]/10 text-[#028444] border border-[#4ade80]/30 px-2.5 py-1 rounded-full text-xs font-semibold">
                           {p.stock} en stock
                         </span>
                       )}
@@ -188,14 +188,14 @@ export function AdminProducts() {
                       <div className="flex items-center justify-end gap-2">
                         <Link 
                           to={`/admin/produits/${p.id}/modifier`} 
-                          className="p-2 text-white/50 hover:text-[#4ade80] hover:bg-[#4ade80]/10 rounded-xl transition"
+                          className="p-2 text-[#0f1f14]/50 hover:text-[#028444] hover:bg-[#028444]/10 rounded-xl transition"
                           title="Modifier"
                         >
                           <FiEdit2 className="w-4 h-4" />
                         </Link>
                         <button 
                           onClick={() => handleDelete(p.id, p.name)} 
-                          className="p-2 text-white/50 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
+                          className="p-2 text-[#0f1f14]/50 hover:text-red-600 hover:bg-red-50 rounded-xl transition"
                           title="Supprimer"
                         >
                           <FiTrash2 className="w-4 h-4" />

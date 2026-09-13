@@ -9,8 +9,8 @@ interface PageHeroProps {
   imageAlt?: string;
 }
 
-// En-tête de page partagé — style pop vitaminé : nuit, sticker,
-// titre italic + mot fantôme en contour, photo AFI en carte pop.
+// En-tête de page partagé — style pop vitaminé en mode clair :
+// sticker, titre italic + mot fantôme en contour, photo AFI en carte pop.
 export function PageHero({ sticker, title, ghostWord, subtitle, image, imageAlt }: PageHeroProps) {
   return (
     <div className="pop-night relative overflow-hidden">
@@ -25,7 +25,7 @@ export function PageHero({ sticker, title, ghostWord, subtitle, image, imageAlt 
             transition={{ duration: 0.5 }}
           >
             <span className="pop-sticker">{sticker}</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black italic uppercase text-white tracking-tight leading-tight mt-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black italic uppercase text-[#0f1f14] tracking-tight leading-tight mt-4">
               <span className="pop-ghost-wrap">
                 {ghostWord && (
                   <span className="pop-ghost" aria-hidden="true">
@@ -36,7 +36,7 @@ export function PageHero({ sticker, title, ghostWord, subtitle, image, imageAlt 
               </span>
             </h1>
             {subtitle && (
-              <p className="text-white/60 text-sm sm:text-base mt-3 max-w-xl leading-relaxed">
+              <p className="text-[#0f1f14]/60 text-sm sm:text-base mt-3 max-w-xl leading-relaxed">
                 {subtitle}
               </p>
             )}

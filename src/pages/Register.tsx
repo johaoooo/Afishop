@@ -76,7 +76,7 @@ export default function Register() {
               AFI_IMAGES.atelierCadre;
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-950/75 via-gray-950/45 to-transparent" />
+        <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative z-10 flex flex-col justify-between h-full p-10">
           <Link
@@ -122,7 +122,7 @@ export default function Register() {
       </div>
 
       {/* ===== PANEL DROIT - FORMULAIRE ===== */}
-      <div className="w-full lg:w-[45%] flex items-center justify-center bg-[#070b08] px-8 py-12 relative">
+      <div className="w-full lg:w-[45%] flex items-center justify-center bg-[#f3f6f3] px-8 py-12 relative">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-[#028444]" />
           <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#05a855]" />
@@ -131,21 +131,21 @@ export default function Register() {
         <div className="w-full max-w-sm relative z-10">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-white/40 hover:text-[#05a855] text-sm font-medium transition-colors mb-8 lg:hidden group"
+            className="inline-flex items-center gap-2 text-[#0f1f14]/50 hover:text-[#028444] text-sm font-medium transition-colors mb-8 lg:hidden group"
           >
             <FiArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Retour à l'accueil
           </Link>
 
           <div className="mb-8">
-            <span className="inline-flex items-center text-[#05a855] text-xs font-bold tracking-widest uppercase mb-3">
+            <span className="inline-flex items-center text-[#028444] text-xs font-bold tracking-widest uppercase mb-3">
               INSCRIPTION
             </span>
-            <h1 className="text-4xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-4xl font-black text-[#0f1f14] tracking-tight leading-tight">
               Créer un compte
             </h1>
-            <p className="text-sm text-white/50 mt-2">
+            <p className="text-sm text-[#0f1f14]/60 mt-2">
               Déjà membre ?{' '}
-              <Link to="/connexion" className="text-[#05a855] font-bold hover:underline transition">
+              <Link to="/connexion" className="text-[#028444] font-bold hover:underline transition">
                 Se connecter
               </Link>
             </p>
@@ -153,11 +153,11 @@ export default function Register() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-semibold text-white/70 mb-2">
+              <label htmlFor="name" className="block text-sm font-semibold text-[#0f1f14]/70 mb-2">
                 Nom complet
               </label>
               <div className="relative group">
-                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#05a855] w-4 h-4 transition-colors" aria-hidden="true" />
+                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0f1f14]/50 group-focus-within:text-[#028444] w-4 h-4 transition-colors" aria-hidden="true" />
                 <input
                   type="text"
                   id="name"
@@ -165,17 +165,17 @@ export default function Register() {
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="Jean Dupont"
-                  className="w-full pl-11 pr-4 py-3.5 bg-[#121914] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
+                  className="w-full pl-11 pr-4 py-3.5 bg-white border border-[#0f1f14]/15 rounded-xl text-sm text-[#0f1f14] placeholder-[#0f1f14]/40 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-white/70 mb-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-[#0f1f14]/70 mb-2">
                 Adresse email
               </label>
               <div className="relative group">
-                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#05a855] w-4 h-4 transition-colors" aria-hidden="true" />
+                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0f1f14]/50 group-focus-within:text-[#028444] w-4 h-4 transition-colors" aria-hidden="true" />
                 <input
                   type="email"
                   id="email"
@@ -183,17 +183,17 @@ export default function Register() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="votre@email.com"
-                  className="w-full pl-11 pr-4 py-3.5 bg-[#121914] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
+                  className="w-full pl-11 pr-4 py-3.5 bg-white border border-[#0f1f14]/15 rounded-xl text-sm text-[#0f1f14] placeholder-[#0f1f14]/40 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-white/70 mb-2">
-                Mot de passe <span className="text-xs text-white/40 font-normal">(8 caractères min.)</span>
+              <label htmlFor="password" className="block text-sm font-semibold text-[#0f1f14]/70 mb-2">
+                Mot de passe <span className="text-xs text-[#0f1f14]/50 font-normal">(8 caractères min.)</span>
               </label>
               <div className="relative group">
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-[#05a855] w-4 h-4 transition-colors" aria-hidden="true" />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0f1f14]/50 group-focus-within:text-[#028444] w-4 h-4 transition-colors" aria-hidden="true" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
@@ -202,13 +202,13 @@ export default function Register() {
                   required
                   minLength={8}
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-12 py-3.5 bg-[#121914] border border-white/10 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
+                  className="w-full pl-11 pr-12 py-3.5 bg-white border border-[#0f1f14]/15 rounded-xl text-sm text-[#0f1f14] placeholder-[#0f1f14]/40 focus:outline-none focus:border-[#028444]/60 focus:ring-2 focus:ring-[#05a855]/20 transition-all duration-200"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/60 transition-colors focus:outline-none"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#0f1f14]/50 hover:text-[#0f1f14]/60 transition-colors focus:outline-none"
                 >
                   {showPassword ? <FiEyeOff className="w-4 h-4" aria-hidden="true" /> : <FiEye className="w-4 h-4" aria-hidden="true" />}
                 </button>
@@ -234,11 +234,11 @@ export default function Register() {
             </button>
           </form>
 
-          <p className="text-xs text-white/40 text-center mt-6 leading-relaxed">
+          <p className="text-xs text-[#0f1f14]/50 text-center mt-6 leading-relaxed">
             En créant un compte, vous acceptez nos{' '}
-            <Link to="/conditions" className="text-[#05a855] hover:underline">conditions d'utilisation</Link>
+            <Link to="/conditions" className="text-[#028444] hover:underline">conditions d'utilisation</Link>
             {' '}et notre{' '}
-            <Link to="/confidentialite" className="text-[#05a855] hover:underline">politique de confidentialité</Link>.
+            <Link to="/confidentialite" className="text-[#028444] hover:underline">politique de confidentialité</Link>.
           </p>
         </div>
       </div>

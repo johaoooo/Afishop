@@ -4,19 +4,19 @@ import { FiCheckCircle, FiShield, FiAlertCircle } from 'react-icons/fi';
 
 export default function Terms() {
   return (
-    <div className="bg-[#0c0a09] min-h-screen">
+    <div className="bg-[#f3f6f3] min-h-screen">
       <SEO title="Conditions d'Utilisation" description="Conditions d'utilisation d'AFI Collection. Règles et obligations pour l'utilisation de notre boutique en ligne." />
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-10 sm:py-14 md:py-28 overflow-hidden">
+      <div className="relative bg-[#e9f0e9] py-10 sm:py-14 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }} />
         <div className="container mx-auto px-6 md:px-12 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-black text-[#0f1f14] leading-tight tracking-tight">
               Conditions d'utilisation
             </h1>
-            <p className="text-white/70 text-base max-w-md mt-3">
+            <p className="text-[#0f1f14]/70 text-base max-w-md mt-3">
               Les règles d'utilisation de la plateforme AFI Collection.
             </p>
           </motion.div>
@@ -25,26 +25,26 @@ export default function Terms() {
 
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 pb-16">
         <motion.div 
-          className="bg-[#1c1917]/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
+          className="bg-white/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="space-y-8 text-white/60 leading-relaxed">
+          <div className="space-y-8 text-[#0f1f14]/60 leading-relaxed">
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiCheckCircle className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiCheckCircle className="w-5 h-5 text-[#028444]" />
                 Acceptation des conditions
               </h2>
               <p>
-                En accédant et en utilisant le site <strong className="text-[#4ade80]">AFI Collection</strong>, 
+                En accédant et en utilisant le site <strong className="text-[#028444]">AFI Collection</strong>, 
                 vous acceptez d'être lié par les présentes conditions d'utilisation. Si vous n'acceptez pas 
                 ces conditions, veuillez ne pas utiliser notre site.
               </p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Compte utilisateur</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Compte utilisateur</h2>
               <p>Lors de la création d'un compte, vous vous engagez à :</p>
               <ul className="mt-2 space-y-2">
                 <li className="flex items-start gap-2">
@@ -67,8 +67,8 @@ export default function Terms() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiShield className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiShield className="w-5 h-5 text-[#028444]" />
                 Propriété intellectuelle
               </h2>
               <p>
@@ -79,8 +79,8 @@ export default function Terms() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiAlertCircle className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiAlertCircle className="w-5 h-5 text-[#028444]" />
                 Limitation de responsabilité
               </h2>
               <p>
@@ -91,7 +91,7 @@ export default function Terms() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Modifications</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Modifications</h2>
               <p>
                 Nous nous réservons le droit de modifier les présentes conditions d'utilisation 
                 à tout moment. Les modifications prennent effet dès leur publication sur le site. 
@@ -100,7 +100,7 @@ export default function Terms() {
             </div>
 
             <div className="bg-[#4ade80]/10 rounded-2xl p-6">
-              <h2 className="text-xl font-bold text-white/85 mb-3">Contact</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Contact</h2>
               <p className="mb-3">
                 Pour toute question relative à ces conditions, contactez-nous :
               </p>

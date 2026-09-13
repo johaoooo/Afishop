@@ -56,7 +56,7 @@ export default function Contact() {
   const whatsappUrl = "https://wa.me/2290196062287?text=" + encodeURIComponent("Bonjour AFI Collection, je souhaiterais obtenir des informations.");
 
   return (
-    <div className="bg-[#070b08] min-h-screen text-white pb-20">
+    <div className="bg-[#f3f6f3] min-h-screen text-[#0f1f14] pb-20">
       <SEO title="Contactez-nous | AFI Collection" description="Contactez l'équipe AFI Collection pour toute question sur nos créations artisanales, commandes sur-mesure ou formations." />
 
       {/* ===== HERO ===== */}
@@ -66,7 +66,7 @@ export default function Contact() {
           alt="Contact AFI Collection"
           className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-[#070b08]/80" />
+        <div className="absolute inset-0 bg-[#070b08]/75" />
         
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
           <motion.div
@@ -94,12 +94,12 @@ export default function Contact() {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div key={index} className="bg-[#121914] rounded-3xl p-6 border border-white/10 shadow-xs text-center space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-[#028444]/20 text-[#05a855] flex items-center justify-center mx-auto">
+              <div key={index} className="bg-white rounded-3xl p-6 border border-[#0f1f14]/10 shadow-xs text-center space-y-2">
+                <div className="w-12 h-12 rounded-2xl bg-[#028444]/20 text-[#028444] flex items-center justify-center mx-auto">
                   <Icon className="w-6 h-6" />
                 </div>
-                <p className="text-2xl sm:text-3xl font-black text-white font-mono">{stat.value}</p>
-                <p className="text-xs font-bold text-white/50">{stat.label}</p>
+                <p className="text-2xl sm:text-3xl font-black text-[#0f1f14] font-mono">{stat.value}</p>
+                <p className="text-xs font-bold text-[#0f1f14]/60">{stat.label}</p>
               </div>
             );
           })}
@@ -109,26 +109,26 @@ export default function Contact() {
           
           {/* FORMULAIRE (7 COLS) */}
           <motion.div 
-            className="lg:col-span-7 bg-[#121914] rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xs"
+            className="lg:col-span-7 bg-white rounded-3xl border border-[#0f1f14]/10 p-6 sm:p-8 shadow-xs"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <h2 className="text-xl font-black text-white mb-1">Envoyez-nous un message</h2>
-            <p className="text-xs text-white/40 mb-6">Réponse garantie sous 24h ouvrées</p>
+            <h2 className="text-xl font-black text-[#0f1f14] mb-1">Envoyez-nous un message</h2>
+            <p className="text-xs text-[#0f1f14]/50 mb-6">Réponse garantie sous 24h ouvrées</p>
 
             {sent ? (
               <div className="bg-[#028444]/20 border border-[#028444]/40 rounded-2xl p-8 text-center space-y-3">
-                <div className="w-12 h-12 rounded-full bg-[#028444]/30 text-[#05a855] flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 rounded-full bg-[#028444]/30 text-[#028444] flex items-center justify-center mx-auto">
                   <FiCheckCircle className="w-6 h-6" />
                 </div>
-                <h3 className="text-base font-bold text-white">Message envoyé !</h3>
-                <p className="text-white/60 text-xs max-w-sm mx-auto">
+                <h3 className="text-base font-bold text-[#0f1f14]">Message envoyé !</h3>
+                <p className="text-[#0f1f14]/60 text-xs max-w-sm mx-auto">
                   Merci ! Notre équipe étudie votre demande et vous répondra au plus vite.
                 </p>
                 <button
                   onClick={() => setSent(false)}
-                  className="mt-2 text-xs font-bold text-[#05a855] hover:underline"
+                  className="mt-2 text-xs font-bold text-[#028444] hover:underline"
                 >
                   Envoyer un autre message
                 </button>
@@ -137,35 +137,35 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">
+                    <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1">
                       Nom complet <span className="text-[#f43f5e]/100">*</span>
                     </label>
                     <div className="relative">
-                      <FiUser className="w-4 h-4 text-white/40 absolute left-3.5 top-3" />
+                      <FiUser className="w-4 h-4 text-[#0f1f14]/50 absolute left-3.5 top-3" />
                       <input
                         type="text"
                         required
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         placeholder="Koffi Mensah"
-                        className="w-full pl-10 pr-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
+                        className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">
+                    <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1">
                       Email <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <FiMail className="w-4 h-4 text-white/40 absolute left-3.5 top-3" />
+                      <FiMail className="w-4 h-4 text-[#0f1f14]/50 absolute left-3.5 top-3" />
                       <input
                         type="email"
                         required
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         placeholder="koffi@example.com"
-                        className="w-full pl-10 pr-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
+                        className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
                       />
                     </div>
                   </div>
@@ -173,25 +173,25 @@ export default function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Téléphone (WhatsApp)</label>
+                    <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1">Téléphone (WhatsApp)</label>
                     <div className="relative">
-                      <FiPhone className="w-4 h-4 text-white/40 absolute left-3.5 top-3" />
+                      <FiPhone className="w-4 h-4 text-[#0f1f14]/50 absolute left-3.5 top-3" />
                       <input
                         type="tel"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                         placeholder="+229 01 96 06 22 87"
-                        className="w-full pl-10 pr-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
+                        className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Objet de la demande</label>
+                    <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1">Objet de la demande</label>
                     <select
                       value={form.subject}
                       onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-[#121914] border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
+                      className="w-full px-4 py-2.5 bg-white border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60"
                     >
                       {SUBJECT_OPTIONS.map((sub) => (
                         <option key={sub} value={sub}>{sub}</option>
@@ -201,18 +201,18 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-white/70 mb-1">
+                  <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1">
                     Votre message <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <FiMessageSquare className="w-4 h-4 text-white/40 absolute left-3.5 top-3" />
+                    <FiMessageSquare className="w-4 h-4 text-[#0f1f14]/50 absolute left-3.5 top-3" />
                     <textarea
                       required
                       rows={4}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       placeholder="Expliquez-nous votre besoin..."
-                      className="w-full pl-10 pr-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60 resize-none"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#05a855]/30 focus:border-[#028444]/60 resize-none"
                     />
                   </div>
                 </div>
@@ -249,41 +249,41 @@ export default function Contact() {
             </a>
 
             {/* CARD COORDONNÉES */}
-            <div className="bg-[#121914] rounded-3xl border border-white/10 p-6 shadow-xs space-y-4">
-              <h3 className="text-xs font-extrabold uppercase tracking-wider text-white/40">
+            <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-6 shadow-xs space-y-4">
+              <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0f1f14]/50">
                 Nos Coordonnées
               </h3>
               
               <div className="space-y-4 text-xs">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#028444]/20 text-[#05a855] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-[#028444]/20 text-[#028444] flex items-center justify-center shrink-0">
                     <FiMapPin className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-bold text-white block">Atelier AFI Collection</span>
-                    <span className="text-white/50">Abomey-Calavi, Bénin</span>
+                    <span className="font-bold text-[#0f1f14] block">Atelier AFI Collection</span>
+                    <span className="text-[#0f1f14]/60">Abomey-Calavi, Bénin</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#028444]/20 text-[#05a855] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-[#028444]/20 text-[#028444] flex items-center justify-center shrink-0">
                     <FiPhone className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-bold text-white block">Téléphone / WhatsApp</span>
-                    <a href="tel:+2290196062287" className="text-white/60 hover:text-[#05a855] font-mono">
+                    <span className="font-bold text-[#0f1f14] block">Téléphone / WhatsApp</span>
+                    <a href="tel:+2290196062287" className="text-[#0f1f14]/60 hover:text-[#028444] font-mono">
                       +229 01 96 06 22 87
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#028444]/20 text-[#05a855] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-[#028444]/20 text-[#028444] flex items-center justify-center shrink-0">
                     <FiMail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="font-bold text-white block">Email</span>
-                    <a href="mailto:maisonaficollections@gmail.com" className="text-white/60 hover:text-[#05a855] font-mono break-all">
+                    <span className="font-bold text-[#0f1f14] block">Email</span>
+                    <a href="mailto:maisonaficollections@gmail.com" className="text-[#0f1f14]/60 hover:text-[#028444] font-mono break-all">
                       maisonaficollections@gmail.com
                     </a>
                   </div>
@@ -292,23 +292,23 @@ export default function Contact() {
             </div>
 
             {/* CARD HORAIRES */}
-            <div className="bg-[#121914] rounded-3xl border border-white/10 p-6 shadow-xs space-y-3">
-              <div className="flex items-center gap-2.5 text-white font-bold text-xs">
-                <FiClock className="w-4 h-4 text-[#05a855]" />
+            <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-6 shadow-xs space-y-3">
+              <div className="flex items-center gap-2.5 text-[#0f1f14] font-bold text-xs">
+                <FiClock className="w-4 h-4 text-[#028444]" />
                 <span>Horaires d'Ouverture</span>
               </div>
-              <div className="space-y-1.5 text-xs text-white/60 pt-1">
+              <div className="space-y-1.5 text-xs text-[#0f1f14]/60 pt-1">
                 <div className="flex justify-between">
                   <span>Lundi - Vendredi</span>
-                  <span className="font-semibold text-white">8h00 - 18h00</span>
+                  <span className="font-semibold text-[#0f1f14]">8h00 - 18h00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Samedi</span>
-                  <span className="font-semibold text-white">9h00 - 13h00</span>
+                  <span className="font-semibold text-[#0f1f14]">9h00 - 13h00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Dimanche</span>
-                  <span className="text-red-400 font-medium">Fermé</span>
+                  <span className="text-red-600 font-medium">Fermé</span>
                 </div>
               </div>
             </div>
@@ -319,23 +319,23 @@ export default function Contact() {
 
         {/* ===== CALL TO ACTION ===== */}
         <motion.div
-          className="p-8 sm:p-12 rounded-3xl text-center bg-gradient-to-r from-[#070b08] via-[#0d2818] to-[#070b08] border border-[#028444]/30 text-white space-y-4 shadow-lg"
+          className="p-8 sm:p-12 rounded-3xl text-center bg-white border border-[#028444]/30 text-[#0f1f14] space-y-4 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <FiHeadphones className="w-10 h-10 mx-auto text-[#05a855]" />
-          <h2 className="text-2xl sm:text-3xl font-black text-white">
+          <FiHeadphones className="w-10 h-10 mx-auto text-[#028444]" />
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0f1f14]">
             Vous préférez qu'on vous appelle ?
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
+          <p className="text-[#0f1f14]/60 max-w-xl mx-auto text-xs sm:text-sm leading-relaxed">
             Laissez-nous votre numéro et un créneau horaire, et un conseiller AFI Collection vous rappellera sous 24h.
           </p>
           <div className="flex flex-wrap gap-3 justify-center pt-2">
             <a
               href="tel:+2290196062287"
-              className="inline-flex items-center gap-2 bg-[#121914] hover:bg-[#028444]/20 border border-[#028444]/40 text-[#05a855] font-bold px-8 py-3.5 rounded-full transition-all shadow-lg hover:scale-105 text-xs sm:text-sm"
+              className="inline-flex items-center gap-2 bg-white hover:bg-[#028444]/20 border border-[#028444]/40 text-[#028444] font-bold px-8 py-3.5 rounded-full transition-all shadow-lg hover:scale-105 text-xs sm:text-sm"
             >
               <FiPhone className="w-4 h-4" />
               <span>+229 01 96 06 22 87</span>

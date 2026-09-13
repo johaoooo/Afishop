@@ -30,7 +30,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       to={`/produit/${product.id}`}
-      className="pop-card group block overflow-hidden flex flex-col justify-between"
+      className="pop-card wappe-lift group block overflow-hidden flex flex-col justify-between"
     >
       {/* Image Container with 4:5 mobile / square desktop aspect ratio - Full Image Visible */}
       <div className="aspect-[4/5] sm:aspect-square bg-black/30 overflow-hidden relative w-full flex items-center justify-center p-2">
@@ -44,8 +44,7 @@ export function ProductCard({ product }: { product: Product }) {
           }}
         />
 
-        {/* Gradient Overlay on image bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity" />
+
 
         {/* Favorite Heart Button - Always visible on mobile */}
         <button
@@ -80,21 +79,21 @@ export function ProductCard({ product }: { product: Product }) {
 
       {/* Card Info Details */}
       <div className="p-3.5 sm:p-4 space-y-1.5">
-        <h3 className="font-bold text-white text-xs sm:text-sm line-clamp-1 group-hover:text-[#05a855] transition-colors leading-snug">
+        <h3 className="font-bold text-[#0f1f14] text-xs sm:text-sm line-clamp-1 group-hover:text-[#028444] transition-colors leading-snug">
           {product.name}
         </h3>
 
         {product.description && (
-          <p className="text-[11px] sm:text-xs text-white/50 line-clamp-2 leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-[#0f1f14]/60 line-clamp-2 leading-relaxed">
             {product.description}
           </p>
         )}
 
         <div className="flex items-center justify-between pt-1">
-          <span className="font-black text-[#05a855] text-xs sm:text-sm font-mono">
+          <span className="font-black text-[#028444] text-xs sm:text-sm font-mono">
             {product.price.toLocaleString('fr-FR')} FCFA
           </span>
-          <span className={`text-[10px] font-bold flex items-center gap-1 ${inStock ? 'text-[#05a855]' : 'text-rose-400'}`}>
+          <span className={`text-[10px] font-bold flex items-center gap-1 ${inStock ? 'text-[#028444]' : 'text-rose-600'}`}>
             {inStock ? (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#05a855] animate-pulse inline-block" />

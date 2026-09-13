@@ -13,9 +13,9 @@ import toast from 'react-hot-toast';
 import { AFI_FALLBACK_PRODUCT } from '../lib/images';
 
 const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; border: string; icon: any }> = {
-  pending: { label: 'En attente', bg: 'bg-[#4ade80]/10', text: 'text-[#4ade80]', border: 'border-[#4ade80]/25', icon: FiClock },
-  paid: { label: 'Payée', bg: 'bg-[#4ade80]/10', text: 'text-[#4ade80]', border: 'border-[#4ade80]/30', icon: FiCheckCircle },
-  shipped: { label: 'Expédiée', bg: 'bg-[#60a5fa]/10', text: 'text-[#93c5fd]', border: 'border-[#60a5fa]/30', icon: FiTruck },
+  pending: { label: 'En attente', bg: 'bg-[#4ade80]/10', text: 'text-[#028444]', border: 'border-[#4ade80]/25', icon: FiClock },
+  paid: { label: 'Payée', bg: 'bg-[#4ade80]/10', text: 'text-[#028444]', border: 'border-[#4ade80]/30', icon: FiCheckCircle },
+  shipped: { label: 'Expédiée', bg: 'bg-[#60a5fa]/10', text: 'text-blue-600', border: 'border-[#60a5fa]/30', icon: FiTruck },
   delivered: { label: 'Livrée', bg: 'bg-teal-50', text: 'text-teal-700', border: 'border-teal-200', icon: FiCheckCircle },
   cancelled: { label: 'Annulée', bg: 'bg-[#f43f5e]/10', text: 'text-rose-700', border: 'border-[#f43f5e]/25', icon: FiXCircle },
 };
@@ -122,22 +122,22 @@ function OrdersTab() {
 
   if (loading) {
     return (
-      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs animate-pulse space-y-4">
+      <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-12 text-center shadow-xs animate-pulse space-y-4">
         <div className="w-12 h-12 bg-[#4ade80]/15 rounded-full mx-auto" />
-        <div className="h-4 bg-white/10 rounded w-40 mx-auto" />
-        <div className="h-3 bg-white/10 rounded w-64 mx-auto" />
+        <div className="h-4 bg-[#0f1f14]/10 rounded w-40 mx-auto" />
+        <div className="h-3 bg-[#0f1f14]/10 rounded w-64 mx-auto" />
       </div>
     );
   }
 
   if (orders.length === 0) {
     return (
-      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs">
-        <div className="w-16 h-16 rounded-2xl bg-[#4ade80]/10 text-[#4ade80] flex items-center justify-center mx-auto mb-4 border border-[#4ade80]/15">
+      <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-12 text-center shadow-xs">
+        <div className="w-16 h-16 rounded-2xl bg-[#4ade80]/10 text-[#028444] flex items-center justify-center mx-auto mb-4 border border-[#4ade80]/15">
           <FiPackage className="w-8 h-8" />
         </div>
-        <h3 className="text-lg font-black text-white">Aucune commande pour le moment</h3>
-        <p className="text-white/50 text-xs mt-1 max-w-sm mx-auto">
+        <h3 className="text-lg font-black text-[#0f1f14]">Aucune commande pour le moment</h3>
+        <p className="text-[#0f1f14]/60 text-xs mt-1 max-w-sm mx-auto">
           Explorez nos créations artisanales et passez votre première commande en toute simplicité.
         </p>
         <Link
@@ -156,24 +156,24 @@ function OrdersTab() {
       {orders.map((order) => {
         const canDownload = RECEIPT_ELIGIBLE.includes(order.status);
         const statusInfo = STATUS_CONFIG[order.status] || {
-          label: order.status, bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/10', icon: FiClock
+          label: order.status, bg: 'bg-[#0f1f14]/10', text: 'text-[#0f1f14]/70', border: 'border-[#0f1f14]/10', icon: FiClock
         };
         const StatusIcon = statusInfo.icon;
 
         return (
-          <div key={order.id} className="bg-[#1c1917] rounded-3xl border border-white/10 p-6 shadow-xs hover:shadow-md transition-all space-y-4">
+          <div key={order.id} className="bg-white rounded-3xl border border-[#0f1f14]/10 p-6 shadow-xs hover:shadow-md transition-all space-y-4">
             {/* Order Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#0f1f14]/10">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-xs text-[#4ade80] bg-[#4ade80]/10 px-2.5 py-0.5 rounded-md border border-[#4ade80]/15">
+                  <span className="font-mono font-bold text-xs text-[#028444] bg-[#4ade80]/10 px-2.5 py-0.5 rounded-md border border-[#4ade80]/15">
                     Commande #{order.id}
                   </span>
-                  <span className="text-xs text-white/40">
+                  <span className="text-xs text-[#0f1f14]/50">
                     du {new Date(order.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </span>
                 </div>
-                <p className="text-lg font-black text-white font-mono mt-1">
+                <p className="text-lg font-black text-[#0f1f14] font-mono mt-1">
                   {order.total.toLocaleString('fr-FR')} FCFA
                 </p>
               </div>
@@ -188,7 +188,7 @@ function OrdersTab() {
                   <button
                     onClick={() => handleDownload(order)}
                     disabled={downloadingId === order.id}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4ade80] bg-[#4ade80]/10 hover:bg-[#4ade80]/15 px-3.5 py-1.5 rounded-full border border-[#4ade80]/80 transition disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#028444] bg-[#4ade80]/10 hover:bg-[#4ade80]/15 px-3.5 py-1.5 rounded-full border border-[#4ade80]/80 transition disabled:opacity-50"
                     title="Télécharger le reçu"
                   >
                     <FiDownload className="w-3.5 h-3.5" />
@@ -201,26 +201,26 @@ function OrdersTab() {
             {/* Order Items List */}
             {order.OrderItem && order.OrderItem.length > 0 && (
               <div className="space-y-2">
-                <p className="text-[11px] font-bold text-white/40 uppercase tracking-wider">
+                <p className="text-[11px] font-bold text-[#0f1f14]/50 uppercase tracking-wider">
                   Articles commandés ({order.OrderItem.reduce((sum, item) => sum + item.quantity, 0)})
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {order.OrderItem.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3 bg-white/5 p-2.5 rounded-2xl border border-white/10">
+                    <div key={item.id} className="flex items-center gap-3 bg-[#0f1f14]/5 p-2.5 rounded-2xl border border-[#0f1f14]/10">
                       {item.Product?.image ? (
                         <img
                           src={item.Product.image}
                           alt={item.Product.name}
-                          className="w-12 h-12 rounded-xl object-cover bg-[#1c1917] shrink-0 border border-white/10"
+                          className="w-12 h-12 rounded-xl object-cover bg-white shrink-0 border border-[#0f1f14]/10"
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-xl bg-[#4ade80]/15 text-[#4ade80] flex items-center justify-center shrink-0 font-bold text-xs">
+                        <div className="w-12 h-12 rounded-xl bg-[#4ade80]/15 text-[#028444] flex items-center justify-center shrink-0 font-bold text-xs">
                           AFI
                         </div>
                       )}
                       <div className="min-w-0 flex-1">
-                        <p className="font-bold text-white text-xs truncate">{item.Product?.name || 'Produit'}</p>
-                        <p className="text-[11px] text-white/50 font-mono">
+                        <p className="font-bold text-[#0f1f14] text-xs truncate">{item.Product?.name || 'Produit'}</p>
+                        <p className="text-[11px] text-[#0f1f14]/60 font-mono">
                           {item.quantity} × {item.price.toLocaleString('fr-FR')} FCFA
                         </p>
                       </div>
@@ -231,8 +231,8 @@ function OrdersTab() {
             )}
 
             {/* Order Actions */}
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between">
-              <span className="text-xs text-white/40">Paiement Sécurisé Mobile Money / CB</span>
+            <div className="pt-3 border-t border-[#0f1f14]/10 flex items-center justify-between">
+              <span className="text-xs text-[#0f1f14]/50">Paiement Sécurisé Mobile Money / CB</span>
 
               {canDownload ? (
                 <button
@@ -244,7 +244,7 @@ function OrdersTab() {
                   <span>{downloadingId === order.id ? 'Téléchargement…' : 'Télécharger la Facture PDF'}</span>
                 </button>
               ) : (
-                <span className="text-xs text-white/40 italic">Facture annulée</span>
+                <span className="text-xs text-[#0f1f14]/50 italic">Facture annulée</span>
               )}
             </div>
           </div>
@@ -285,21 +285,21 @@ function FavoritesTab() {
 
   if (loading) {
     return (
-      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs animate-pulse">
+      <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-12 text-center shadow-xs animate-pulse">
         <div className="w-12 h-12 bg-[#f43f5e]/15 rounded-full mx-auto mb-4" />
-        <div className="h-4 bg-white/10 rounded w-40 mx-auto" />
+        <div className="h-4 bg-[#0f1f14]/10 rounded w-40 mx-auto" />
       </div>
     );
   }
 
   if (products.length === 0) {
     return (
-      <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-12 text-center shadow-xs">
+      <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-12 text-center shadow-xs">
         <div className="w-16 h-16 rounded-2xl bg-[#f43f5e]/10 text-[#f43f5e]/100 flex items-center justify-center mx-auto mb-4 border border-[#f43f5e]/15">
           <FiHeart className="w-8 h-8" />
         </div>
-        <h3 className="text-lg font-black text-white">Aucun produit favori</h3>
-        <p className="text-white/50 text-xs mt-1 max-w-sm mx-auto">
+        <h3 className="text-lg font-black text-[#0f1f14]">Aucun produit favori</h3>
+        <p className="text-[#0f1f14]/60 text-xs mt-1 max-w-sm mx-auto">
           Cliquer sur le cœur d'un produit pour l'enregistrer dans votre liste de coups de cœur.
         </p>
         <Link
@@ -316,27 +316,27 @@ function FavoritesTab() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {products.map((product) => (
-        <div key={product.id} className="bg-[#1c1917] rounded-3xl border border-white/10 p-4 shadow-xs hover:shadow-md transition flex items-center gap-4 group">
+        <div key={product.id} className="bg-white rounded-3xl border border-[#0f1f14]/10 p-4 shadow-xs hover:shadow-md transition flex items-center gap-4 group">
           <Link to={`/produit/${product.id}`} className="shrink-0">
             <img
               src={product.image}
               alt={product.name}
-              className="w-24 h-24 rounded-2xl object-cover bg-white/5 border border-white/10 group-hover:scale-105 transition duration-300"
+              className="w-24 h-24 rounded-2xl object-cover bg-[#0f1f14]/5 border border-[#0f1f14]/10 group-hover:scale-105 transition duration-300"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = AFI_FALLBACK_PRODUCT;
               }}
             />
           </Link>
           <div className="flex-1 min-w-0 space-y-1">
-            <span className="text-[10px] font-bold text-[#4ade80] uppercase tracking-wider bg-[#4ade80]/10 px-2 py-0.5 rounded">
+            <span className="text-[10px] font-bold text-[#028444] uppercase tracking-wider bg-[#4ade80]/10 px-2 py-0.5 rounded">
               {product.category || 'Artisanat'}
             </span>
             <Link to={`/produit/${product.id}`} className="block">
-              <h4 className="font-bold text-white text-xs truncate group-hover:text-[#4ade80] transition-colors">
+              <h4 className="font-bold text-[#0f1f14] text-xs truncate group-hover:text-[#028444] transition-colors">
                 {product.name}
               </h4>
             </Link>
-            <p className="text-[#4ade80] font-black text-xs font-mono">
+            <p className="text-[#028444] font-black text-xs font-mono">
               {product.price.toLocaleString('fr-FR')} FCFA
             </p>
             <div className="pt-2 flex items-center gap-2">
@@ -349,7 +349,7 @@ function FavoritesTab() {
               </button>
               <button
                 onClick={() => handleRemove(product.id)}
-                className="p-1.5 text-white/40 hover:text-rose-600 hover:bg-[#f43f5e]/10 rounded-xl transition"
+                className="p-1.5 text-[#0f1f14]/50 hover:text-rose-600 hover:bg-[#f43f5e]/10 rounded-xl transition"
                 title="Retirer des favoris"
               >
                 <FiTrash2 className="w-4 h-4" />
@@ -421,7 +421,7 @@ function ProfileTab() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#1c1917] rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xs space-y-6">
+    <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-[#0f1f14]/10 p-6 sm:p-8 shadow-xs space-y-6">
       
       {/* Photo de profil Uploader */}
       <div className="flex items-center gap-5 p-4 bg-[#4ade80]/50 rounded-2xl border border-[#4ade80]/60">
@@ -433,14 +433,14 @@ function ProfileTab() {
               className="w-20 h-20 rounded-2xl object-cover border-2 border-white shadow-md"
             />
           ) : (
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] text-white font-black text-2xl flex items-center justify-center border-2 border-white shadow-md">
+            <div className="w-20 h-20 rounded-2xl bg-[#028444] text-white font-black text-2xl flex items-center justify-center border-2 border-white shadow-md">
               {user?.name?.[0]?.toUpperCase() || 'U'}
             </div>
           )}
 
           <label
             htmlFor="avatar-upload"
-            className="absolute -bottom-1 -right-1 bg-[#1c1917] text-[#4ade80] p-2 rounded-full border border-white/10 shadow-md cursor-pointer hover:bg-[#4ade80]/10 transition hover:scale-105"
+            className="absolute -bottom-1 -right-1 bg-white text-[#028444] p-2 rounded-full border border-[#0f1f14]/10 shadow-md cursor-pointer hover:bg-[#4ade80]/10 transition hover:scale-105"
             title="Changer la photo de profil"
           >
             <FiCamera className="w-4 h-4" />
@@ -455,11 +455,11 @@ function ProfileTab() {
         </div>
 
         <div>
-          <h3 className="font-extrabold text-sm text-white">Photo de Profil</h3>
-          <p className="text-xs text-white/50 mt-0.5">Format JPG, PNG ou WEBP. Maximum 5 Mo.</p>
+          <h3 className="font-extrabold text-sm text-[#0f1f14]">Photo de Profil</h3>
+          <p className="text-xs text-[#0f1f14]/60 mt-0.5">Format JPG, PNG ou WEBP. Maximum 5 Mo.</p>
           <label
             htmlFor="avatar-upload"
-            className="inline-block text-xs font-bold text-[#4ade80] hover:underline cursor-pointer mt-1.5"
+            className="inline-block text-xs font-bold text-[#028444] hover:underline cursor-pointer mt-1.5"
           >
             Téléverser une photo
           </label>
@@ -467,58 +467,58 @@ function ProfileTab() {
       </div>
 
       <div>
-        <h2 className="text-base font-black text-white mb-1 flex items-center gap-2">
-          <FiUser className="w-4 h-4 text-[#4ade80]" /> Informations personnelles
+        <h2 className="text-base font-black text-[#0f1f14] mb-1 flex items-center gap-2">
+          <FiUser className="w-4 h-4 text-[#028444]" /> Informations personnelles
         </h2>
-        <p className="text-xs text-white/40 mb-5">Mettez à jour votre nom d'utilisateur affiché sur vos commandes.</p>
+        <p className="text-xs text-[#0f1f14]/50 mb-5">Mettez à jour votre nom d'utilisateur affiché sur vos commandes.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-white/70 mb-1.5">Nom complet</label>
+            <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1.5">Nom complet</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
+              className="w-full px-4 py-2.5 bg-[#0f1f14]/5 border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-white/70 mb-1.5">Adresse Email</label>
+            <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1.5">Adresse Email</label>
             <input
               type="email"
               value={user?.email || ''}
               disabled
-              className="w-full px-4 py-2.5 bg-white/10 border border-white/10 rounded-xl text-xs text-white/50 cursor-not-allowed"
+              className="w-full px-4 py-2.5 bg-[#0f1f14]/10 border border-[#0f1f14]/10 rounded-xl text-xs text-[#0f1f14]/60 cursor-not-allowed"
             />
           </div>
         </div>
       </div>
 
-      <div className="pt-6 border-t border-white/10">
-        <h2 className="text-base font-black text-white mb-1 flex items-center gap-2">
-          <FiLock className="w-4 h-4 text-[#4ade80]" /> Sécurité & Mot de passe
+      <div className="pt-6 border-t border-[#0f1f14]/10">
+        <h2 className="text-base font-black text-[#0f1f14] mb-1 flex items-center gap-2">
+          <FiLock className="w-4 h-4 text-[#028444]" /> Sécurité & Mot de passe
         </h2>
-        <p className="text-xs text-white/40 mb-5">Laissez vide si vous ne souhaitez pas modifier votre mot de passe.</p>
+        <p className="text-xs text-[#0f1f14]/50 mb-5">Laissez vide si vous ne souhaitez pas modifier votre mot de passe.</p>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-white/70 mb-1.5">Mot de passe actuel</label>
+            <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1.5">Mot de passe actuel</label>
             <input
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
+              className="w-full px-4 py-2.5 bg-[#0f1f14]/5 border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-white/70 mb-1.5">Nouveau mot de passe</label>
+            <label className="block text-xs font-bold text-[#0f1f14]/70 mb-1.5">Nouveau mot de passe</label>
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="8 caractères minimum"
-              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
+              className="w-full px-4 py-2.5 bg-[#0f1f14]/5 border border-[#0f1f14]/15 rounded-xl text-xs text-[#0f1f14] focus:outline-none focus:ring-2 focus:ring-[#4ade80]/30 focus:border-[#4ade80]/40"
             />
           </div>
         </div>
@@ -554,7 +554,7 @@ export default function Account() {
 
   if (isLoading) {
     return (
-      <div className="bg-[#0c0a09] min-h-screen flex items-center justify-center">
+      <div className="bg-[#f3f6f3] min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-[#4ade80]/40 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -565,14 +565,14 @@ export default function Account() {
   const isAdmin = user.role?.toLowerCase() === 'admin';
 
   return (
-    <div className="bg-[#0c0a09] min-h-screen pb-16 text-white">
+    <div className="bg-[#f3f6f3] min-h-screen pb-16 text-[#0f1f14]">
       <SEO title="Mon Compte Client" description="Gérez vos commandes, votre profil et vos favoris sur AFI Collection." />
       
       {/* Dashboard Top Banner */}
-      <div className="bg-gradient-to-r from-[#07170d] via-[#1a6b3c] to-[#0a2314] text-[#fff] py-10 shadow-lg">
+      <div className="bg-white border-b border-[#028444]/30 text-[#fff] py-10 shadow-lg">
         <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#1a6b3c] to-[#4ade80] text-white font-black text-xl flex items-center justify-center shadow-lg shadow-black/20 border-2 border-white/20 shrink-0 overflow-hidden">
+            <div className="w-16 h-16 rounded-2xl bg-[#028444] text-white font-black text-xl flex items-center justify-center shadow-lg shadow-black/20 border-2 border-white/20 shrink-0 overflow-hidden">
               {user.avatar ? (
                 <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
               ) : (
@@ -581,18 +581,18 @@ export default function Account() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-white">{user.name}</h1>
+                <h1 className="text-xl sm:text-2xl font-black text-[#0f1f14]">{user.name}</h1>
                 {isAdmin ? (
-                  <span className="bg-purple-400/20 text-purple-200 border border-purple-300/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <span className="bg-purple-400/20 text-purple-700 border border-purple-300/30 text-[10px] font-bold px-2 py-0.5 rounded-full">
                     👑 Admin
                   </span>
                 ) : (
-                  <span className="bg-white/10 text-[#4ade80] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  <span className="bg-[#0f1f14]/10 text-[#028444] text-[10px] font-bold px-2 py-0.5 rounded-full">
                     Client Privilégié
                   </span>
                 )}
               </div>
-              <p className="text-xs text-white/70 mt-0.5">{user.email}</p>
+              <p className="text-xs text-[#0f1f14]/70 mt-0.5">{user.email}</p>
             </div>
           </div>
 
@@ -608,7 +608,7 @@ export default function Account() {
             )}
             <button
               onClick={logout}
-              className="inline-flex items-center gap-2 bg-white/10 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-xl text-xs backdrop-blur-md transition border border-white/20"
+              className="inline-flex items-center gap-2 bg-[#0f1f14]/10 hover:bg-rose-600 hover:text-white text-[#0f1f14] font-bold px-4 py-2 rounded-xl text-xs backdrop-blur-md transition border border-[#0f1f14]/15"
             >
               <FiLogOut className="w-4 h-4" />
               <span>Déconnexion</span>
@@ -622,13 +622,13 @@ export default function Account() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Navigation Sidebar */}
           <div className="md:col-span-1">
-            <div className="bg-[#1c1917] rounded-3xl border border-white/10 p-4 shadow-sm space-y-1.5 sticky top-24">
+            <div className="bg-white rounded-3xl border border-[#0f1f14]/10 p-4 shadow-sm space-y-1.5 sticky top-24">
               <button
                 onClick={() => setTab('orders')}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-bold text-xs transition ${
                   tab === 'orders'
                     ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#4ade80]/20'
-                    : 'text-white/60 hover:bg-white/5'
+                    : 'text-[#0f1f14]/60 hover:bg-[#0f1f14]/5'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -643,7 +643,7 @@ export default function Account() {
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-bold text-xs transition ${
                   tab === 'favorites'
                     ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#4ade80]/20'
-                    : 'text-white/60 hover:bg-white/5'
+                    : 'text-[#0f1f14]/60 hover:bg-[#0f1f14]/5'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -658,7 +658,7 @@ export default function Account() {
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-bold text-xs transition ${
                   tab === 'profile'
                     ? 'bg-[#1a6b3c] text-white shadow-md shadow-[#4ade80]/20'
-                    : 'text-white/60 hover:bg-white/5'
+                    : 'text-[#0f1f14]/60 hover:bg-[#0f1f14]/5'
                 }`}
               >
                 <div className="flex items-center gap-2.5">

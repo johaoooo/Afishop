@@ -4,19 +4,19 @@ import { FiLock, FiDatabase, FiEye, FiTrash2, FiMail } from 'react-icons/fi';
 
 export default function Privacy() {
   return (
-    <div className="bg-[#0c0a09] min-h-screen">
+    <div className="bg-[#f3f6f3] min-h-screen">
       <SEO title="Politique de Confidentialité" description="Politique de confidentialité d'AFI Collection. Comment nous protégeons vos données personnelles." />
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-10 sm:py-14 md:py-28 overflow-hidden">
+      <div className="relative bg-[#e9f0e9] py-10 sm:py-14 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }} />
         <div className="container mx-auto px-6 md:px-12 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-black text-[#0f1f14] leading-tight tracking-tight">
               Politique de confidentialité
             </h1>
-            <p className="text-white/70 text-base max-w-md mt-3">
+            <p className="text-[#0f1f14]/70 text-base max-w-md mt-3">
               Comment nous protégeons vos données personnelles.
             </p>
           </motion.div>
@@ -25,19 +25,19 @@ export default function Privacy() {
 
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 pb-16">
         <motion.div 
-          className="bg-[#1c1917]/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
+          className="bg-white/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="space-y-8 text-white/60 leading-relaxed">
+          <div className="space-y-8 text-[#0f1f14]/60 leading-relaxed">
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiLock className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiLock className="w-5 h-5 text-[#028444]" />
                 Introduction
               </h2>
               <p>
-                Chez <strong className="text-[#4ade80]">AFI Collection</strong>, nous accordons une 
+                Chez <strong className="text-[#028444]">AFI Collection</strong>, nous accordons une 
                 importance capitale à la protection de vos données personnelles. La présente politique 
                 vous informe de la manière dont nous collectons, utilisons et protégeons vos 
                 informations lorsque vous utilisez notre site.
@@ -45,8 +45,8 @@ export default function Privacy() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiDatabase className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiDatabase className="w-5 h-5 text-[#028444]" />
                 Données collectées
               </h2>
               <p>Nous pouvons collecter les données suivantes :</p>
@@ -75,8 +75,8 @@ export default function Privacy() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiEye className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiEye className="w-5 h-5 text-[#028444]" />
                 Utilisation des données
               </h2>
               <p>Vos données sont utilisées pour :</p>
@@ -105,7 +105,7 @@ export default function Privacy() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Protection des données</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Protection des données</h2>
               <p>
                 Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles 
                 appropriées pour protéger vos données contre tout accès non autorisé, modification, 
@@ -115,8 +115,8 @@ export default function Privacy() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiTrash2 className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiTrash2 className="w-5 h-5 text-[#028444]" />
                 Vos droits
               </h2>
               <p>Conformément à la réglementation, vous disposez des droits suivants :</p>
@@ -145,12 +145,12 @@ export default function Privacy() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Contact</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Contact</h2>
               <p>
                 Pour toute question concernant vos données, vous pouvez nous contacter à :
               </p>
               <div className="mt-3 flex items-center gap-2 bg-[#4ade80]/10 px-4 py-2 rounded-full w-fit">
-                <FiMail className="w-4 h-4 text-[#4ade80]" />
+                <FiMail className="w-4 h-4 text-[#028444]" />
                 <span className="text-sm">maisonaficollections@gmail.com</span>
               </div>
             </div>

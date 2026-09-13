@@ -4,19 +4,19 @@ import { FiShield, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 
 export default function LegalMentions() {
   return (
-    <div className="bg-[#0c0a09] min-h-screen">
+    <div className="bg-[#f3f6f3] min-h-screen">
       <SEO title="Mentions Légales" description="Mentions légales d'AFI Collection, boutique artisanale basée au Bénin." />
-      <div className="relative bg-gradient-to-r from-[#0d2818] to-[#1a6b3c] py-10 sm:py-14 md:py-28 overflow-hidden">
+      <div className="relative bg-[#e9f0e9] py-10 sm:py-14 md:py-28 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ 
           backgroundImage: 'radial-gradient(circle at 20% 50%, #4ade80 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }} />
         <div className="container mx-auto px-6 md:px-12 relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-black text-[#0f1f14] leading-tight tracking-tight">
               Mentions légales
             </h1>
-            <p className="text-white/70 text-base max-w-md mt-3">
+            <p className="text-[#0f1f14]/70 text-base max-w-md mt-3">
               Informations légales relatives à AFI Collection.
             </p>
           </motion.div>
@@ -25,18 +25,18 @@ export default function LegalMentions() {
 
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 pb-16">
         <motion.div 
-          className="bg-[#1c1917]/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
+          className="bg-white/90 backdrop-blur-sm rounded-3xl border border-[#4ade80]/20 p-8 md:p-10 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="space-y-8 text-white/60 leading-relaxed">
+          <div className="space-y-8 text-[#0f1f14]/60 leading-relaxed">
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3 flex items-center gap-2">
-                <FiShield className="w-5 h-5 text-[#4ade80]" />
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3 flex items-center gap-2">
+                <FiShield className="w-5 h-5 text-[#028444]" />
                 Éditeur du site
               </h2>
-              <p>Le site <strong className="text-[#4ade80]">AFI Collection</strong> est édité par :</p>
+              <p>Le site <strong className="text-[#028444]">AFI Collection</strong> est édité par :</p>
               <ul className="mt-2 space-y-1">
                 <li><strong>Raison sociale :</strong> AFI Collection SARL</li>
                 <li><strong>Siège social :</strong> Abomey-Calavi, Bénin</li>
@@ -46,12 +46,12 @@ export default function LegalMentions() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Directeur de la publication</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Directeur de la publication</h2>
               <p>La directrice de la publication est Madame Honorine Tossa, fondatrice d'AFI Collection.</p>
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Hébergement</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Hébergement</h2>
               <p>Le site est hébergé par :</p>
               <ul className="mt-2 space-y-1">
                 <li><strong>Vercel Inc.</strong></li>
@@ -61,7 +61,7 @@ export default function LegalMentions() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Propriété intellectuelle</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Propriété intellectuelle</h2>
               <p>
                 L'ensemble des contenus présents sur le site (textes, images, logos, vidéos, etc.) 
                 est la propriété exclusive d'AFI Collection ou de ses partenaires. Toute reproduction, 
@@ -71,18 +71,18 @@ export default function LegalMentions() {
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-white/85 mb-3">Contact</h2>
+              <h2 className="text-xl font-bold text-[#0f1f14] mb-3">Contact</h2>
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2 bg-[#4ade80]/10 px-4 py-2 rounded-full">
-                  <FiMail className="w-4 h-4 text-[#4ade80]" />
+                  <FiMail className="w-4 h-4 text-[#028444]" />
                   <span className="text-sm">maisonaficollections@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#4ade80]/10 px-4 py-2 rounded-full">
-                  <FiPhone className="w-4 h-4 text-[#4ade80]" />
+                  <FiPhone className="w-4 h-4 text-[#028444]" />
                   <span className="text-sm">+229 97 00 00 00</span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#4ade80]/10 px-4 py-2 rounded-full">
-                  <FiMapPin className="w-4 h-4 text-[#4ade80]" />
+                  <FiMapPin className="w-4 h-4 text-[#028444]" />
                   <span className="text-sm">Abomey-Calavi, Bénin</span>
                 </div>
               </div>
