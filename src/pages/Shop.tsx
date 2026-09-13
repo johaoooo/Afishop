@@ -7,7 +7,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { productsApi, type Product } from '../lib/api';
 import { ProductCard } from '../components/ProductCard';
-import { AFI_IMAGES } from '../lib/images';
+import { PageHero } from '../components/PageHero';
 
 interface SortOption {
   value: string;
@@ -195,33 +195,17 @@ export default function Shop() {
       />
 
       {/* ===== HERO ===== */}
-      <div className="relative py-14 sm:py-20 md:py-32 overflow-hidden shadow-md">
-        <img
-          src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441653/WhatsApp_Image_2026-05-03_at_13.15.44_e6xbcs.jpg"
-          alt="Boutique AFI Collection"
-          className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src =
-              AFI_IMAGES.atelierCadre;
-          }}
-        />
-        <div className="absolute inset-0 bg-[#070b08]/75" />
-        <div className="container mx-auto px-6 md:px-12 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="text-xs font-black uppercase tracking-widest text-[#05a855] mb-3 inline-block">Boutique Officielle</span>
-            <h1 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight drop-shadow-md">
-              La boutique
-            </h1>
-            <p className="text-white/80 text-base max-w-md mt-3 font-medium drop-shadow-sm">
-              Toutes nos créations artisanales, en un seul endroit.
-            </p>
-          </motion.div>
-        </div>
-      </div>
+      <PageHero
+        align="center"
+        sticker="Boutique Officielle"
+        title="La boutique"
+        ghostWord="Boutique"
+        subtitle="Toutes nos créations artisanales, en un seul endroit."
+        backgroundImage="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441653/WhatsApp_Image_2026-05-03_at_13.15.44_e6xbcs.jpg"
+        imageAlt="Boutique AFI Collection"
+        primaryCta={{ label: 'Commander sur WhatsApp', href: 'https://wa.me/2290197222880' }}
+        secondaryCta={{ label: 'Nos formations', to: '/formations' }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-7 relative z-30">
         <div className="max-w-2xl mx-auto relative">

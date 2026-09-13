@@ -261,10 +261,10 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
 // ═══════════════════════════════════════════════════════════
 
 const HERO_SLOGANS = [
-  { before: "Maison d'artisanat d'art & créations ", highlight: "FAIT MAIN" },
-  { before: "Maroquinerie de prestige & macramé ", highlight: "BÉNINOIS" },
-  { before: "Inclusion des sourds & formations certifiées ", highlight: "CFP DORCAS" },
-  { before: "Saveurs authentiques du terroir & klui-klui ", highlight: "D'AGONLIN" },
+  { before: "Artisanat d'art & créations ", highlight: "FAIT MAIN" },
+  { before: "Maroquinerie & macramé ", highlight: "BÉNINOIS" },
+  { before: "Inclusion & formations ", highlight: "CFP DORCAS" },
+  { before: "Saveurs du terroir ", highlight: "D'AGONLIN" },
 ];
 
 const HERO_AVATARS = [
@@ -599,7 +599,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.25 }}
             className="text-white/75 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 leading-relaxed"
           >
-            Maison d'artisanat d'art béninois : sacs en macramé uniques, tissages traditionnels, agroalimentaire du terroir et formation d'excellence au CFP Dorcas.
+            Sacs macramé, tissages, terroir béninois et formations d'excellence au CFP Dorcas.
           </motion.p>
 
           {/* AvatarGroup Réassurance Sociale */}
@@ -634,7 +634,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.45 }}
-            className="flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+            className="hero-cta-row flex flex-wrap items-center justify-center gap-3 sm:gap-4"
           >
             <a
               href="https://wa.me/2290197222880"

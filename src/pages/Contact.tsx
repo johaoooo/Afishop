@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { contactApi, ApiError } from '../lib/api';
 import toast from 'react-hot-toast';
 import { AFI_IMAGES } from '../lib/images';
+import { PageHero } from '../components/PageHero';
 
 const SUBJECT_OPTIONS = [
   'Information produit',
@@ -60,31 +61,17 @@ export default function Contact() {
       <SEO title="Contactez-nous | AFI Collection" description="Contactez l'équipe AFI Collection pour toute question sur nos créations artisanales, commandes sur-mesure ou formations." />
 
       {/* ===== HERO ===== */}
-      <div className="relative py-14 sm:py-20 md:py-32 text-white overflow-hidden shadow-md">
-        <img
-          src={AFI_IMAGES.exposition}
-          alt="Contact AFI Collection"
-          className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
-        />
-        <div className="absolute inset-0 bg-[#070b08]/75" />
-        
-        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="space-y-2"
-          >
-            <span className="pop-sticker mb-4 inline-block">Contact & Écoute</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white drop-shadow-md">
-              Contactez-<span className="text-[#05a855]">nous</span>
-            </h1>
-            <p className="text-white/90 text-sm sm:text-base font-medium max-w-md mx-auto pt-1 drop-shadow-sm">
-              Une question sur une création, une commande sur-mesure ou nos formations ? Notre équipe est à votre écoute.
-            </p>
-          </motion.div>
-        </div>
-      </div>
+      <PageHero
+        align="center"
+        sticker="Contact & Écoute"
+        title={<>Contactez-<span className="text-[#05a855]">nous</span></>}
+        ghostWord="Contact"
+        subtitle="Une question sur une création, une commande sur-mesure ou nos formations ? Notre équipe est à votre écoute."
+        backgroundImage={AFI_IMAGES.exposition}
+        imageAlt="Contact AFI Collection"
+        primaryCta={{ label: 'WhatsApp direct', href: 'https://wa.me/2290197222880' }}
+        secondaryCta={{ label: 'Voir la boutique', to: '/boutique' }}
+      />
 
       {/* ===== CONTENEUR PRINCIPAL ===== */}
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 space-y-10 max-w-5xl">

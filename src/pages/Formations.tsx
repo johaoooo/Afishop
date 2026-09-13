@@ -12,7 +12,8 @@ import {
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { trainingsApi, type Training } from '../lib/api';
-import { AFI_IMAGES, AFI_FALLBACK_PRODUCT, AFI_FALLBACK_PHOTO } from '../lib/images';
+import { AFI_FALLBACK_PRODUCT, AFI_FALLBACK_PHOTO } from '../lib/images';
+import { PageHero } from '../components/PageHero';
 
 const stats = [
   { value: '150+', label: 'Étudiants formés', icon: FiUsers },
@@ -69,35 +70,17 @@ export default function Formations() {
       <SEO title="Formations Artisanales | AFI Collection" description="Découvrez nos formations artisanales : macramé, tissage, fabrication de sandales et teinture au Bénin avec le CFP Dorcas & AFI Collection." />
 
       {/* ===== HERO ===== */}
-      <div className="relative py-14 sm:py-20 md:py-32 text-white overflow-hidden shadow-md">
-        <img
-          src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1782717374/WhatsApp_Image_2026-06-29_at_08.08.43_jc7ddz.jpg"
-          alt="Formation artisanale"
-          className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src =
-              AFI_IMAGES.atelierCadre;
-          }}
-        />
-        <div className="absolute inset-0 bg-[#070b08]/75" />
-        
-        <div className="container mx-auto px-6 md:px-12 relative z-10 text-center max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="space-y-2"
-          >
-            <span className="pop-sticker mb-4 inline-block">Académie des Métiers</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white drop-shadow-md">
-              Nos Formations <span className="text-[#05a855]">Artisanales</span>
-            </h1>
-            <p className="text-white/90 text-sm sm:text-base font-medium max-w-md mx-auto pt-1 drop-shadow-sm">
-              Développez des compétences professionnelles et maîtrisez un métier d'art au Bénin.
-            </p>
-          </motion.div>
-        </div>
-      </div>
+      <PageHero
+        align="center"
+        sticker="Académie des Métiers"
+        title={<>Nos Formations <span className="text-[#05a855]">Artisanales</span></>}
+        ghostWord="Formations"
+        subtitle="Développez des compétences professionnelles et maîtrisez un métier d'art au Bénin."
+        backgroundImage="https://res.cloudinary.com/dzxesa3wi/image/upload/v1782717374/WhatsApp_Image_2026-06-29_at_08.08.43_jc7ddz.jpg"
+        imageAlt="Formation artisanale"
+        primaryCta={{ label: "S'inscrire", to: '/contact' }}
+        secondaryCta={{ label: 'Voir la boutique', to: '/boutique' }}
+      />
 
       {/* ===== CONTENEUR PRINCIPAL ===== */}
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 space-y-10">

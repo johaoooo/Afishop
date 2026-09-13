@@ -20,9 +20,11 @@ export default function Services() {
       <SEO title="Services" description="Découvrez tous nos services : livraison rapide au Bénin, retours faciles, service client et paiement sécurisé." />
       <PageHero
         sticker="Nos services"
-        title={<>Nos <span className="text-[#05a855]">services</span></>}
+        title={<>Nos <span className="text-[#028444]">services</span></>}
         ghostWord="Services"
         subtitle="Tout ce que nous mettons en œuvre pour votre satisfaction."
+        primaryCta={{ label: 'Voir la boutique', to: '/boutique' }}
+        secondaryCta={{ label: 'Nous contacter', to: '/contact' }}
       />
 
       <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 pb-16">

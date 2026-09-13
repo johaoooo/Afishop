@@ -1064,7 +1064,21 @@ nav.aka-card-nav {
     padding: 0.65rem 1.15rem;
     font-size: 0.78rem;
     gap: 0.5rem;
-    width: auto;
+  }
+  /* Lignes de CTA (accueil + pages) : empilées, centrées, pleine largeur */
+  .hero-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 340px;
+    margin-inline: auto;
+  }
+  .hero-cta-row .btn-raised,
+  .hero-cta-row .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
   }
 }
 
