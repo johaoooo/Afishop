@@ -1,5 +1,5 @@
 import SEO from '../components/SEO';
-import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   FiArrowRight, 
@@ -485,27 +485,6 @@ export default function Home() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
-  const testimonialRef = useRef<HTMLDivElement>(null);
-  const partnerRef = useRef<HTMLDivElement>(null);
-  const [autoScrollPaused, setAutoScrollPaused] = useState(false);
-
-  const autoScroll = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
-    if (!ref.current || autoScrollPaused) return;
-    const el = ref.current;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    if (maxScroll <= 0) return;
-    if (el.scrollLeft >= maxScroll - 1) {
-      el.scrollTo({ left: 0, behavior: 'smooth' });
-    } else {
-      el.scrollBy({ left: el.clientWidth * 0.5, behavior: 'smooth' });
-    }
-  }, [autoScrollPaused]);
-
-  useEffect(() => {
-    const ti = setInterval(() => autoScroll(testimonialRef), 3500);
-    const pi = setInterval(() => autoScroll(partnerRef), 3500);
-    return () => { clearInterval(ti); clearInterval(pi); };
-  }, [autoScroll]);
 
   useEffect(() => {
     Promise.all([
@@ -1218,43 +1197,42 @@ export default function Home() {
             </h2>
           </div>
 
-          <div
-            ref={testimonialRef}
-            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-5 overflow-x-auto snap-x snap-mandatory md:overflow-visible pb-4 md:pb-0 scrollbar-hide"
-            onMouseEnter={() => setAutoScrollPaused(true)}
-            onMouseLeave={() => setAutoScrollPaused(false)}
-          >
-            {testimonials.map((t, index) => (
-              <motion.div
-                key={t.id}
-                className="pop-card p-5 flex flex-col justify-between min-w-[260px] snap-center hover:border-[#05a855]/40"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.06 }}
-              >
-                <div>
-                  <div className="flex items-center gap-1 mb-2.5">
-                    {[...Array(5)].map((_, i) => (
-                      <FiStar key={i} className="w-3.5 h-3.5 text-[#028444] fill-[#028444]" />
-                    ))}
-                  </div>
-                  <p className="text-[#0f1f14]/80 text-xs leading-relaxed">
-                    &ldquo;{t.content}&rdquo;
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-[#0f1f14]/10">
-                  <div className="w-9 h-9 rounded-full bg-[#028444] flex items-center justify-center text-white text-xs font-black shrink-0 border-2 border-black">
-                    {t.name.split(' ').map(n => n[0]).join('')}
-                  </div>
+          {/* Défilement continu et lisible (pause au survol) — comme « Nos engagements » */}
+          <div className="marquee-container -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="marquee-content marquee-slow">
+              {[...testimonials, ...testimonials].map((t, index) => (
+                <motion.div
+                  key={`${t.id}-${index}`}
+                  aria-hidden={index >= testimonials.length}
+                  className="pop-card p-5 flex flex-col justify-between shrink-0 w-[260px] sm:w-[300px] hover:border-[#05a855]/40"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: (index % testimonials.length) * 0.05 }}
+                >
                   <div>
-                    <p className="text-xs font-bold text-[#0f1f14]">{t.name}</p>
-                    <p className="text-[10px] text-[#0f1f14]/60">{t.role}</p>
+                    <div className="flex items-center gap-1 mb-2.5">
+                      {[...Array(5)].map((_, i) => (
+                        <FiStar key={i} className="w-3.5 h-3.5 text-[#028444] fill-[#028444]" />
+                      ))}
+                    </div>
+                    <p className="text-[#0f1f14]/80 text-xs leading-relaxed">
+                      &ldquo;{t.content}&rdquo;
+                    </p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+
+                  <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-[#0f1f14]/10">
+                    <div className="w-9 h-9 rounded-full bg-[#028444] flex items-center justify-center text-white text-xs font-black shrink-0 border-2 border-black">
+                      {t.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#0f1f14]">{t.name}</p>
+                      <p className="text-[10px] text-[#0f1f14]/60">{t.role}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* PARTENAIRES EN COULEURS (SANS GREYSCALE) */}
@@ -1262,22 +1240,26 @@ export default function Home() {
             <p className="text-xs font-bold text-[#0f1f14]/50 uppercase tracking-widest mb-6">
               Nos partenaires institutionnels et associatifs
             </p>
-            <div
-              ref={partnerRef}
-              className="flex md:grid md:grid-cols-6 gap-5 overflow-x-auto items-center justify-center snap-x snap-mandatory md:overflow-visible pb-2 scrollbar-hide"
-            >
-              {partners.map((partner) => (
-                <div key={partner.id} className="bg-white rounded-2xl p-4 flex items-center justify-center border border-[#0f1f14]/10 min-w-[130px] md:min-w-0 hover:border-[#05a855]/40 hover:shadow-md transition-all hover:scale-105">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="max-h-12 object-contain transition duration-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner.name)}&background=028444&color=fff&size=80`;
-                    }}
-                  />
-                </div>
-              ))}
+            <div className="marquee-container -mx-4 px-4 sm:mx-0 sm:px-0">
+              <div className="marquee-content marquee-slow">
+                {[...partners, ...partners].map((partner, index) => (
+                  <div
+                    key={`${partner.id}-${index}`}
+                    aria-hidden={index >= partners.length}
+                    className="bg-white rounded-2xl p-4 flex items-center justify-center border border-[#0f1f14]/10 shrink-0 w-[150px] sm:w-[170px] hover:border-[#05a855]/40 hover:shadow-md transition-all hover:scale-105"
+                  >
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="max-h-12 object-contain transition duration-300"
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(partner.name)}&background=028444&color=fff&size=80`;
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
