@@ -2,20 +2,22 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ShoppingBag, 
   ShoppingCart, 
   User, 
   UserCheck, 
   Search, 
   X, 
+  ChevronRight, 
   ArrowRight, 
   GraduationCap, 
   Heart, 
   Package, 
-  PhoneCall, 
   Sparkles, 
-  Info, 
-  Layers 
+  Home,
+  Store,
+  BriefcaseBusiness,
+  Users,
+  MapPin
 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
@@ -513,79 +515,91 @@ export function Header() {
                   <Link
                     to="/"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <Sparkles className="w-5 h-5 text-[#05a855]" />
+                      <span className="w-10 h-10 rounded-xl bg-[#028444] border-2 border-black shadow-[2px_2px_0px_#000] text-white flex items-center justify-center shrink-0">
+                        <Home className="w-5 h-5" strokeWidth={2.25} />
+                      </span>
                       <span className="font-bold text-sm text-[#0f1f14]">Accueil</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/boutique"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <ShoppingBag className="w-5 h-5 text-[#05a855]" />
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                        <Store className="w-5 h-5" strokeWidth={2.25} />
+                      </span>
                       <div>
                         <div className="font-bold text-sm text-[#0f1f14]">Boutique & Créations</div>
                         <div className="text-[11px] text-[#0f1f14]/50">Sacs macramé, sandales, pagnes</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/formations"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <GraduationCap className="w-5 h-5 text-[#05a855]" />
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                        <GraduationCap className="w-5 h-5" strokeWidth={2.25} />
+                      </span>
                       <div>
                         <div className="font-bold text-sm text-[#0f1f14]">Formations CFP</div>
                         <div className="text-[11px] text-[#0f1f14]/50">Ateliers & transmission Dorcas</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/services"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <Layers className="w-5 h-5 text-[#05a855]" />
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                        <BriefcaseBusiness className="w-5 h-5" strokeWidth={2.25} />
+                      </span>
                       <span className="font-bold text-sm text-[#0f1f14]">Nos Services</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/a-propos"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <Info className="w-5 h-5 text-[#05a855]" />
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                        <Users className="w-5 h-5" strokeWidth={2.25} />
+                      </span>
                       <span className="font-bold text-sm text-[#0f1f14]">Qui Sommes-Nous</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/contact"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3.5 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <PhoneCall className="w-5 h-5 text-[#05a855]" />
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                        <MapPin className="w-5 h-5" strokeWidth={2.25} />
+                      </span>
                       <span className="font-bold text-sm text-[#0f1f14]">Contact & Ateliers</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#0f1f14]/30" />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
                   </Link>
                 </div>
               </div>
