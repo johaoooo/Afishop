@@ -261,9 +261,9 @@ function FeatureSection({ section, index }: { section: typeof featuredSections[0
 // ═══════════════════════════════════════════════════════════
 
 const HERO_SLOGANS = [
-  { before: "Artisanat d'art & créations ", highlight: "FAIT MAIN" },
+  { before: "Artisanat & créations ", highlight: "FAIT MAIN" },
   { before: "Maroquinerie & macramé ", highlight: "BÉNINOIS" },
-  { before: "Inclusion & formations ", highlight: "CFP DORCAS" },
+  { before: "Inclusion & ", highlight: "CFP DORCAS" },
   { before: "Saveurs du terroir ", highlight: "D'AGONLIN" },
 ];
 
@@ -331,7 +331,7 @@ function HeroSloganCycle({ index }: { index: number }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -18 }}
           transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="font-black uppercase text-white text-center leading-[1.02] tracking-tight m-0 text-2xl sm:text-4xl md:text-5xl lg:text-[3.5rem]"
+          className="font-black uppercase text-white text-center leading-[1.05] tracking-tight m-0 text-balance px-2 text-[1.35rem] sm:text-4xl md:text-5xl lg:text-[3.5rem]"
           style={{ textShadow: '0 2px 24px rgba(0, 0, 0, 0.85)' }}
         >
           {before}

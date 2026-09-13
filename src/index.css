@@ -1106,11 +1106,12 @@ nav.aka-card-nav {
    Retrait = supprimer la classe sur le root : retour immédiat.
    ═══════════════════════════════════════════════════════════ */
 
-/* Titre hero réduit (façon display Wappe, en Poppins AFI) */
+/* Titre hero réduit (façon display Wappe, en Poppins AFI) — min abaissé pour tenir sur 2 lignes mobile */
 .wappe-radical .wappe-hero h1 {
-  font-size: clamp(1.9rem, 5vw, 3.4rem) !important;
+  font-size: clamp(1.4rem, 6vw, 3.4rem) !important;
   line-height: 1.08 !important;
   letter-spacing: -0.02em !important;
+  text-wrap: balance;
 }
 
 /* Titres de sections : un cran au-dessus, resserrés */
