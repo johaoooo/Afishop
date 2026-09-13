@@ -244,7 +244,7 @@ function OrdersTab() {
                   <span>{downloadingId === order.id ? 'Téléchargement…' : 'Télécharger la Facture PDF'}</span>
                 </button>
               ) : (
-                <span className="text-xs text-[#0f1f14]/50 italic">Facture annulée</span>
+                <span className="text-xs text-[#0f1f14]/50">Facture annulée</span>
               )}
             </div>
           </div>

@@ -469,13 +469,12 @@ export default function Home() {
   // Navigation du hero façon Wappe : slogan piloté + pause au survol
   const [sloganIndex, setSloganIndex] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
-  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (heroPaused || reduceMotion) return;
+    if (heroPaused) return;
     const id = setInterval(() => setSloganIndex((i) => (i + 1) % HERO_SLOGANS.length), 3500);
     return () => clearInterval(id);
-  }, [heroPaused, reduceMotion]);
+  }, [heroPaused]);
 
   const heroMidRef = useRef<HTMLDivElement>(null);
   const heroGalleryRef = useRef<HTMLDivElement>(null);
@@ -620,7 +619,7 @@ export default function Home() {
               ))}
             </div>
             <div className="text-left">
-              <div className="font-black italic text-xs sm:text-sm text-white uppercase leading-tight tracking-tight">
+              <div className="font-black text-xs sm:text-sm text-white uppercase leading-tight tracking-tight">
                 Artisanes & Maîtres d'art
               </div>
               <div className="text-[11px] sm:text-xs font-bold text-[#05a855]">
@@ -676,7 +675,7 @@ export default function Home() {
       </section>
 
       {/* ── Marquee strip réassurance façon port 3002 en vert du logo AFI ── */}
-      <div className="wappe-ticker bg-[#028444] text-white font-black italic uppercase py-3 overflow-hidden border-y-[3px] border-black shadow-[0_4px_24px_rgba(5,168,85,0.4)]">
+      <div className="wappe-ticker bg-[#028444] text-white font-black uppercase py-3 overflow-hidden border-y-[3px] border-black shadow-[0_4px_24px_rgba(5,168,85,0.4)]">
         <div className="marquee-container">
           <div className="marquee-content text-xs sm:text-sm tracking-wider flex items-center gap-8">
             <span>✦ MACRAMÉ D'ART FAIT MAIN</span>
@@ -704,7 +703,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-12 relative">
           <div className="text-center mb-6 sm:mb-10">
             <span className="text-xs font-black uppercase tracking-widest text-[#028444]">Nos engagements</span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black italic uppercase text-[#0f1f14] tracking-tight mt-3">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-[#0f1f14] tracking-tight mt-3">
               <span className="pop-ghost-wrap">
                 <span className="pop-ghost" aria-hidden="true">AFI Collection</span>
                 Les engagements <span className="text-[#028444]">AFI Collection</span>
@@ -715,17 +714,19 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Horizontal Single Line Layout */}
-          <div className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 lg:grid lg:grid-cols-4 lg:gap-5 -mx-4 px-4 sm:mx-0 sm:px-0">
-            {advantages.map((a, index) => (
-              <motion.div
-                key={a.title}
-                className="pop-card shrink-0 w-[240px] sm:w-[260px] lg:w-auto snap-center group relative p-4 sm:p-5 flex flex-col justify-between"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
+          {/* Défilement continu et lisible (pause au survol) */}
+          <div className="marquee-container -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="marquee-content marquee-slow">
+              {[...advantages, ...advantages].map((a, index) => (
+                <motion.div
+                  key={`${a.title}-${index}`}
+                  aria-hidden={index >= advantages.length}
+                  className="pop-card shrink-0 w-[240px] sm:w-[260px] lg:w-[280px] group relative p-4 sm:p-5 flex flex-col justify-between"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: (index % advantages.length) * 0.05 }}
+                >
                 <div>
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#028444] border-2 border-black shadow-[2px_2px_0px_#000] text-white flex items-center justify-center mb-3 group-hover:scale-105 group-hover:rotate-6 transition-transform">
                     <a.icon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -743,6 +744,7 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+            </div>
           </div>
         </div>
       </section>
@@ -759,7 +761,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-12 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-black uppercase tracking-widest text-[#028444] mb-2 inline-block">Engagement Citoyen</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase text-[#0f1f14] tracking-tight leading-tight mt-1">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-[#0f1f14] tracking-tight leading-tight mt-1">
               <span className="pop-ghost-wrap">
                 <span className="pop-ghost" aria-hidden="true">Impact Social</span>
                 {socialImpactStory.title}
@@ -804,7 +806,7 @@ export default function Home() {
                 <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
                   <button 
                     onClick={() => setImpactSlideIndex(0)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-black italic uppercase transition-all backdrop-blur-md border ${
+                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all backdrop-blur-md border ${
                       impactSlideIndex === 0 
                         ? 'bg-[#028444] text-white border-black shadow-[2px_2px_0px_#000]' 
                         : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
@@ -814,7 +816,7 @@ export default function Home() {
                   </button>
                   <button 
                     onClick={() => setImpactSlideIndex(1)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-black italic uppercase transition-all backdrop-blur-md border ${
+                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all backdrop-blur-md border ${
                       impactSlideIndex === 1 
                         ? 'bg-[#028444] text-white border-black shadow-[2px_2px_0px_#000]' 
                         : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
@@ -843,7 +845,7 @@ export default function Home() {
 
                 {/* Quote & Slide Indicator Overlay at Bottom */}
                 <div className="absolute bottom-4 left-4 right-4 z-20 p-4 bg-black/75 backdrop-blur-md rounded-2xl border border-white/15 space-y-2">
-                  <p className="text-xs sm:text-sm font-medium text-white/95 italic leading-relaxed">
+                  <p className="text-xs sm:text-sm font-medium text-white/95 leading-relaxed">
                     &ldquo;{socialImpactStory.quote}&rdquo;
                   </p>
                   <div className="flex items-center justify-between text-[10px] text-[#05a855] font-bold pt-1 border-t border-white/10">
@@ -933,7 +935,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-12 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-black uppercase tracking-widest text-[#028444] mb-2 inline-block">Terroir Béninois</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase text-[#0f1f14] tracking-tight leading-tight mt-1">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-[#0f1f14] tracking-tight leading-tight mt-1">
               <span className="pop-ghost-wrap">
                 <span className="pop-ghost" aria-hidden="true">Savoir-Faire</span>
                 {terroirStory.title}
@@ -962,7 +964,7 @@ export default function Home() {
                       alt={step.title} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute top-3 left-3 bg-[#028444] text-white text-xs font-black italic uppercase px-3 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000]">
+                    <div className="absolute top-3 left-3 bg-[#028444] text-white text-xs font-black uppercase px-3 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000]">
                       Étape {step.number}
                     </div>
                   </div>
@@ -1010,7 +1012,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-12 relative">
           <div className="text-center mb-10">
             <span className="text-xs font-black uppercase tracking-widest text-[#028444] mb-2 inline-block">Maison d'Artisanat</span>
-            <h2 className="text-2xl md:text-4xl font-black italic uppercase text-[#0f1f14] tracking-tight mt-1">
+            <h2 className="text-2xl md:text-4xl font-black uppercase text-[#0f1f14] tracking-tight mt-1">
               <span className="pop-ghost-wrap">
                 <span className="pop-ghost" aria-hidden="true">Histoire</span>
                 Découvrez <span className="text-[#028444]">notre histoire</span>
@@ -1040,7 +1042,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
             <div>
               <span className="text-xs font-black uppercase tracking-widest text-[#028444] mb-2 inline-block">Fait main au Bénin</span>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-black italic uppercase text-[#0f1f14] tracking-tight mt-1">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-[#0f1f14] tracking-tight mt-1">
                 <span className="pop-ghost-wrap">
                   <span className="pop-ghost" aria-hidden="true">Créations</span>
                   Nos <span className="text-[#028444]">créations artisanales</span>
@@ -1054,7 +1056,7 @@ export default function Home() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-black italic uppercase tracking-wide shrink-0 transition-all cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wide shrink-0 transition-all cursor-pointer ${
                     activeCategory === cat
                       ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000] scale-105'
                       : 'bg-[#0f1f14]/5 text-[#0f1f14]/60 hover:bg-[#028444]/10 hover:text-[#028444] border border-[#0f1f14]/10'
@@ -1126,7 +1128,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-12 relative">
           <div className="text-center mb-10">
             <span className="text-xs font-black uppercase tracking-widest text-[#028444] mb-2 inline-block">Transmission & Savoir-Faire</span>
-            <h2 className="text-2xl md:text-3xl font-black italic uppercase text-[#0f1f14] tracking-tight mt-1">
+            <h2 className="text-2xl md:text-3xl font-black uppercase text-[#0f1f14] tracking-tight mt-1">
               <span className="pop-ghost-wrap">
                 <span className="pop-ghost" aria-hidden="true">Formations</span>
                 Nos filières de formation <span className="text-[#028444]">(CFP Dorcas)</span>
@@ -1208,7 +1210,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-12">
           <div className="text-center mb-10">
             <span className="text-xs font-black uppercase tracking-widest text-[#028444] mb-2 inline-block">Avis Vérifiés</span>
-            <h2 className="text-2xl md:text-3xl font-black italic uppercase text-[#0f1f14] tracking-tight mt-1">
+            <h2 className="text-2xl md:text-3xl font-black uppercase text-[#0f1f14] tracking-tight mt-1">
               <span className="pop-ghost-wrap">
                 <span className="pop-ghost" aria-hidden="true">Témoignages</span>
                 Ce qu'ils <span className="text-[#028444]">pensent de nous</span>
@@ -1237,7 +1239,7 @@ export default function Home() {
                       <FiStar key={i} className="w-3.5 h-3.5 text-[#028444] fill-[#028444]" />
                     ))}
                   </div>
-                  <p className="text-[#0f1f14]/80 text-xs leading-relaxed italic">
+                  <p className="text-[#0f1f14]/80 text-xs leading-relaxed">
                     &ldquo;{t.content}&rdquo;
                   </p>
                 </div>
@@ -1301,7 +1303,7 @@ export default function Home() {
               <div>
                 <span className="text-xs font-black uppercase tracking-widest text-[#028444]">Rejoignez-nous</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase text-[#0f1f14] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-[#0f1f14] tracking-tight">
                 Prêt à découvrir l'excellence <br />
                 <span className="text-[#028444]">de l'artisanat béninois</span> ?
               </h2>

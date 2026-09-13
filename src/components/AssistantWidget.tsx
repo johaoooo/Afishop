@@ -86,7 +86,7 @@ export function AssistantWidget() {
                 <RiCustomerService2Fill className="w-5 h-5" />
               </span>
               <div className="min-w-0">
-                <p className="text-sm font-black italic uppercase leading-tight">Assistant AFI</p>
+                <p className="text-sm font-black uppercase leading-tight">Assistant AFI</p>
                 <p className="text-[11px] text-white/80 flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse inline-block" />
                   En ligne — répond instantanément

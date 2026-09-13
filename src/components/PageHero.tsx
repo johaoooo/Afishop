@@ -119,7 +119,7 @@ export function PageHero({
         {ghostWord && (
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-black italic uppercase leading-none text-white/[0.08]"
+            className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-black uppercase leading-none text-white/[0.08]"
             style={{ fontSize: 'clamp(4rem, 14vw, 11rem)' }}
           >
             {ghostWord}
@@ -166,7 +166,7 @@ export function PageHero({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black italic uppercase text-[#0f1f14] tracking-tight leading-tight mt-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase text-[#0f1f14] tracking-tight leading-tight mt-4">
               <span className="pop-ghost-wrap">
                 {ghostWord && (
                   <span className="pop-ghost" aria-hidden="true">

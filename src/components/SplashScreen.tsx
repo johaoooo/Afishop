@@ -74,7 +74,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             style={{ width: `${Math.round(progress * 100)}%` }}
           />
         </div>
-        <p className="mt-2 text-center text-sm font-black italic text-[#028444] font-mono tabular-nums">
+        <p className="mt-2 text-center text-sm font-black text-[#028444] font-mono tabular-nums">
           {Math.round(progress * 100)}%
         </p>
       </div>

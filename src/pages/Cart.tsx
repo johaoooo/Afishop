@@ -45,7 +45,7 @@ export default function Cart() {
         </Link>
 
         <span className="pop-sticker">Panier</span>
-        <h1 className="text-3xl font-black italic uppercase text-[#0f1f14] mb-8 mt-3">
+        <h1 className="text-3xl font-black uppercase text-[#0f1f14] mb-8 mt-3">
           <span className="pop-ghost-wrap">
             <span className="pop-ghost" aria-hidden="true">Panier</span>
             Mon <span className="text-[#028444]">panier</span>

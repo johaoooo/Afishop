@@ -56,7 +56,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
               <span className="pop-sticker mb-2">Newsletter AFI</span>
-              <h4 className="text-xl font-black italic uppercase text-[#0f1f14] mt-2">
+              <h4 className="text-xl font-black uppercase text-[#0f1f14] mt-2">
                 Restez <span className="text-[#028444]">informés de nos collections</span>
               </h4>
               <p className="text-[#0f1f14]/60 text-sm mt-1">

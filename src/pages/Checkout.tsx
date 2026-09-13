@@ -166,7 +166,7 @@ export default function Checkout() {
           className="mb-8"
         >
           <span className="pop-sticker">Commande</span>
-          <h1 className="text-3xl font-black italic uppercase text-[#0f1f14] mt-3">
+          <h1 className="text-3xl font-black uppercase text-[#0f1f14] mt-3">
             <span className="pop-ghost-wrap">
               <span className="pop-ghost" aria-hidden="true">Commande</span>
               Validation de la <span className="text-[#028444]">commande</span>
