@@ -214,6 +214,20 @@ export const trainingsApi = {
   getById: (id: number | string) => request<{ training: Training }>(`/trainings/${id}`),
 };
 
+// ---- Assistant IA ---------------------------------------------------
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export const assistantApi = {
+  chat: (message: string, history: ChatMessage[] = []) =>
+    request<{ reply: string }>('/assistant/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message, history }),
+    }),
+};
+
 // ---- Admin -----------------------------------------------------------
 export interface Message {
   id: number;
