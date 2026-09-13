@@ -654,51 +654,6 @@ export default function Home() {
               <span>Explorer la boutique</span>
             </Link>
           </motion.div>
-
-          {/* Navigation du hero façon Wappe : flèches + dots + progression (desktop uniquement) */}
-          <div className="mt-6 hidden items-center justify-center gap-3 sm:flex">
-            <button
-              type="button"
-              aria-label="Slogan précédent"
-              onClick={() => setSloganIndex((i) => (i - 1 + HERO_SLOGANS.length) % HERO_SLOGANS.length)}
-              className="hidden sm:flex h-8 w-8 items-center justify-center rounded-full border border-white/20 text-white/70 transition hover:border-[#05a855] hover:text-white"
-            >
-              <FiChevronLeft className="w-4 h-4" />
-            </button>
-            <div className="flex items-center gap-2">
-              {HERO_SLOGANS.map((s, i) => (
-                <button
-                  key={s.highlight}
-                  type="button"
-                  aria-label={`Slogan ${i + 1}`}
-                  onClick={() => setSloganIndex(i)}
-                  className="flex h-6 items-center"
-                >
-                  <span
-                    className={`relative block h-2 overflow-hidden rounded-full transition-all ${
-                      i === sloganIndex ? 'w-12 bg-white/20' : 'w-5 bg-white/25 hover:bg-white/50'
-                    }`}
-                  >
-                    {i === sloganIndex && (
-                      <span
-                        key={sloganIndex}
-                        className="wappe-hero-progress absolute left-0 top-0 h-full rounded-full bg-[#05a855]"
-                        style={heroPaused ? { animationPlayState: 'paused' } : undefined}
-                      />
-                    )}
-                  </span>
-                </button>
-              ))}
-            </div>
-            <button
-              type="button"
-              aria-label="Slogan suivant"
-              onClick={() => setSloganIndex((i) => (i + 1) % HERO_SLOGANS.length)}
-              className="hidden sm:flex h-8 w-8 items-center justify-center rounded-full border border-white/20 text-white/70 transition hover:border-[#05a855] hover:text-white"
-            >
-              <FiChevronRight className="w-4 h-4" />
-            </button>
-          </div>
         </div>
 
         {/* Galerie Circulaire 3D Ancrée en bas du Hero */}

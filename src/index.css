@@ -865,6 +865,21 @@ nav.aka-card-nav {
   text-decoration: none;
 }
 
+/* Hamburger du header mobile (styles dédiés, hors CardNav desktop) */
+.sm-header .aka-hamburger {
+  width: 18px;
+  height: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.sm-header .aka-hline {
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: #0f1f14;
+}
+
 /* Responsive display switches */
 .nav-desktop-only { display: block; }
 .nav-mobile-only  { display: none; }
