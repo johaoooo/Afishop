@@ -604,10 +604,17 @@ nav.aka-card-nav.is-transparent {
 
 nav.aka-card-nav.is-transparent .aka-nav-menu-btn,
 nav.aka-card-nav.is-transparent .aka-nav-pill {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.35);
   box-shadow: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+}
+
+nav.aka-card-nav.is-transparent .aka-nav-pill-icon {
+  color: #ffffff;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.8));
 }
 
 nav.aka-card-nav.is-transparent .aka-nav-menu-btn:hover,
@@ -911,9 +918,16 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
 }
 
 .sm-header.is-transparent .sm-header-icon-btn {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.35);
   box-shadow: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.sm-header.is-transparent .sm-header-icon-btn svg {
+  color: #ffffff !important;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.8));
 }
 
 /* Hamburger du header mobile (styles dédiés, hors CardNav desktop) */

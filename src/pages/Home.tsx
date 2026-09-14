@@ -544,12 +544,10 @@ export default function Home() {
         {/* Calque Fond Arrière-Plan avec texture grille et demi-teinte */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <img
-            src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441621/WhatsApp_Image_2026-05-03_at_13.03.09_2_cujxnk.jpg"
+            src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441679/WhatsApp_Image_2026-05-03_at_13.13.42_sxxufd.jpg"
             alt="Artisanes AFI Collection"
-            className="w-full h-full object-cover scale-105 opacity-100 blur-[2.5px] brightness-110"
+            className="w-full h-full object-cover scale-105 opacity-100 brightness-110 translate-y-4 sm:translate-y-5"
           />
-          {/* Flou léger uniquement sur la moitié droite (gauche nette) */}
-          <div className="absolute inset-y-0 right-0 w-1/2 backdrop-blur-[2.5px] [mask-image:linear-gradient(to_right,transparent,black_18%)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_18%)]" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/45" />
           <div className="grid-bg absolute inset-0 opacity-10 pointer-events-none" />
           <div className="halftone-bg absolute top-0 right-0 w-1/2 h-1/2 opacity-10 pointer-events-none" />
@@ -587,7 +585,8 @@ export default function Home() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="text-white/75 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 leading-relaxed"
+            className="text-white font-medium text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+            style={{ textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 18px rgba(0,0,0,0.7)' }}
           >
             Sacs macramé, tissages, terroir béninois et formations d'excellence au CFP Dorcas.
           </motion.p>
@@ -605,12 +604,14 @@ export default function Home() {
                   key={i}
                   src={c.img}
                   alt={c.name}
-                  className="inline-block h-8 w-8 sm:h-9 sm:w-9 rounded-full ring-2 ring-black object-cover border border-white/20"
+                  className="inline-block h-8 w-8 sm:h-9 sm:w-9 rounded-full ring-2 ring-white/90 object-cover shadow-[0_2px_10px_rgba(0,0,0,0.6)]"
+                  title={c.name}
                 />
               ))}
             </div>
             <div className="text-left">
-              <div className="font-black text-xs sm:text-sm text-white uppercase leading-tight tracking-tight">
+              <div className="font-black text-xs sm:text-sm text-white uppercase leading-tight tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+                style={{ textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 18px rgba(0,0,0,0.7)' }}>
                 Artisanes & Maîtres d'art
               </div>
               <div className="text-[11px] sm:text-xs font-bold text-[#2bff88]"
