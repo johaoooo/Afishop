@@ -49,7 +49,7 @@ function NavSlogan() {
           animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
           exit={{ y: -12, opacity: 0, filter: 'blur(4px)' }}
           transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          className="m-0 text-[#0f1f14]/70 font-bold text-sm leading-snug"
+          className="m-0 text-white/70 font-bold text-sm leading-snug"
         >
           {NAV_SLOGANS[idx]}
         </motion.p>
@@ -70,14 +70,21 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const userDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Header fusionné au hero sur l'accueil : transparent tant qu'on est en haut,
+  // fond sombre dès qu'on scrolle, qu'on ouvre le menu ou qu'on change de page.
+  const isHome = location.pathname === '/';
+  const transparent = isHome && !scrolled && !open && !mobileMenuOpen;
 
   // Barre de progression du scroll (façon Wappe, en vert AFI)
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
+      setScrolled(y > 24);
       const max = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(max > 0 ? Math.min(1, y / max) : 0);
     };
@@ -137,7 +144,7 @@ export function Header() {
           DESKTOP : CardNav flottant (inspiré de port 3002)
           ═══════════════════════════════════════════════════════════ */}
       <div className="nav-desktop-only aka-nav-container">
-        <nav className={`aka-card-nav ${open ? 'is-open' : ''}`}>
+        <nav className={`aka-card-nav ${open ? 'is-open' : ''} ${transparent ? 'is-transparent' : ''}`}>
           
           {/* Barre du haut fixe dans la pilule */}
           <div className="aka-nav-top">
@@ -161,7 +168,7 @@ export function Header() {
               <img 
                 src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
                 alt="AFI Collection" 
-                className="h-10 sm:h-12 w-auto object-contain"
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] brightness-110"
               />
             </Link>
 
@@ -186,7 +193,7 @@ export function Header() {
                       initial={{ opacity: 0, scale: 0.95, y: 10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: 5 }}
-                      className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-2xl border border-[#028444]/40 p-3 z-50"
+                      className="absolute right-0 mt-3 w-80 bg-[#0f1f14] rounded-2xl shadow-2xl border border-[#05a855]/40 p-3 z-50"
                     >
                       <form onSubmit={handleSearchSubmit} className="relative">
                         <input
@@ -195,14 +202,14 @@ export function Header() {
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           placeholder="Rechercher un sac, pagne..."
-                          className="w-full bg-[#f3f6f3] rounded-xl pl-10 pr-10 py-2.5 text-xs text-[#0f1f14] border border-[#0f1f14]/15 focus:outline-none focus:border-[#05a855] transition-all placeholder-[#0f1f14]/40"
+                          className="w-full bg-white/10 rounded-xl pl-10 pr-10 py-2.5 text-xs text-white border border-white/20 focus:outline-none focus:border-[#05a855] transition-all placeholder-white/40"
                         />
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#05a855]" />
                         {searchQuery && (
                           <button
                             type="button"
                             onClick={() => setSearchQuery('')}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0f1f14]/40 hover:text-[#0f1f14]"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
                           >
                             <X className="w-4 h-4" />
                           </button>
@@ -256,7 +263,7 @@ export function Header() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                      className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-[#028444]/40 overflow-hidden z-50"
+                      className="absolute right-0 mt-3 w-64 bg-[#0f1f14] rounded-2xl shadow-2xl border border-[#05a855]/40 overflow-hidden z-50"
                     >
                       <div className="px-4 py-3.5 bg-[#028444] text-white">
                         <p className="text-[10px] text-white/80 uppercase font-black tracking-wider">Espace Membre</p>
@@ -268,7 +275,7 @@ export function Header() {
                         <Link
                           to="/mon-compte"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#0f1f14]/75 hover:bg-[#028444]/10 hover:text-[#028444] transition-colors"
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-white/75 hover:bg-white/10 hover:text-[#05a855] transition-colors"
                         >
                           <Package className="w-4 h-4 text-[#05a855]" />
                           <span>Mes commandes</span>
@@ -277,7 +284,7 @@ export function Header() {
                         <Link
                           to="/mon-compte?favoris=true"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#0f1f14]/75 hover:bg-[#028444]/10 hover:text-[#028444] transition-colors"
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-white/75 hover:bg-white/10 hover:text-[#05a855] transition-colors"
                         >
                           <Heart className="w-4 h-4 text-rose-500" />
                           <span>Mes favoris</span>
@@ -348,12 +355,12 @@ export function Header() {
                       <img 
                         src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
                         alt="AFI Collection" 
-                        className="h-16 w-auto object-contain mx-auto"
+                        className="h-16 w-auto object-contain mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] brightness-110"
                       />
                     </Link>
                     <NavSlogan />
                   </div>
-                  <div className="pt-2 border-t border-[#0f1f14]/10 flex items-center justify-between text-[11px] text-[#0f1f14]/50">
+                  <div className="pt-2 border-t border-white/15 flex items-center justify-between text-[11px] text-white/50">
                     <span>Abomey-Calavi · Bénin</span>
                     <span className="text-[#05a855] font-bold">100% Fait main</span>
                   </div>
@@ -438,7 +445,7 @@ export function Header() {
           MOBILE : Barre fixe 58px + Drawer animé
           ═══════════════════════════════════════════════════════════ */}
       <div className="nav-mobile-only">
-        <header className="sm-header">
+        <header className={`sm-header ${transparent ? 'is-transparent' : ''}`}>
           {/* Bouton Hamburger Mobile */}
           <button
             type="button"
@@ -454,7 +461,7 @@ export function Header() {
             <img 
               src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
               alt="AFI Collection" 
-              className="h-9 w-auto object-contain"
+              className="h-9 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] brightness-110"
             />
           </Link>
 
@@ -493,7 +500,7 @@ export function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.28, ease: 'easeOut' }}
-              className="fixed inset-x-0 top-[58px] bottom-0 bg-[#f3f6f3]/98 backdrop-blur-2xl z-[9300] overflow-y-auto p-5 flex flex-col justify-between"
+              className="fixed inset-x-0 top-[58px] bottom-0 bg-[#070b08]/98 backdrop-blur-2xl z-[9300] overflow-y-auto p-5 flex flex-col justify-between text-white"
             >
               <div className="space-y-6">
                 {/* Recherche rapide */}
@@ -503,7 +510,7 @@ export function Header() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Rechercher sacs, pagnes, sandales..."
-                    className="w-full bg-white border border-[#028444]/40 rounded-full pl-11 pr-4 py-3 text-sm text-[#0f1f14] placeholder-[#0f1f14]/40 focus:outline-none focus:border-[#05a855]"
+                    className="w-full bg-white/10 border border-[#05a855]/40 rounded-full pl-11 pr-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#05a855]"
                   />
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#05a855]" />
                 </form>
@@ -515,97 +522,97 @@ export function Header() {
                   <Link
                     to="/"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <span className="w-10 h-10 rounded-xl bg-[#028444] border-2 border-black shadow-[2px_2px_0px_#000] text-white flex items-center justify-center shrink-0">
                         <Home className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-[#0f1f14]">Accueil</span>
+                      <span className="font-bold text-sm text-white">Accueil</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/boutique"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
                         <Store className="w-5 h-5" strokeWidth={2.25} />
                       </span>
                       <div>
-                        <div className="font-bold text-sm text-[#0f1f14]">Boutique & Créations</div>
-                        <div className="text-[11px] text-[#0f1f14]/50">Sacs macramé, sandales, pagnes</div>
+                        <div className="font-bold text-sm text-white">Boutique & Créations</div>
+                        <div className="text-[11px] text-white/55">Sacs macramé, sandales, pagnes</div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/formations"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
                         <GraduationCap className="w-5 h-5" strokeWidth={2.25} />
                       </span>
                       <div>
-                        <div className="font-bold text-sm text-[#0f1f14]">Formations CFP</div>
-                        <div className="text-[11px] text-[#0f1f14]/50">Ateliers & transmission Dorcas</div>
+                        <div className="font-bold text-sm text-white">Formations CFP</div>
+                        <div className="text-[11px] text-white/55">Ateliers & transmission Dorcas</div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/services"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
                         <BriefcaseBusiness className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-[#0f1f14]">Nos Services</span>
+                      <span className="font-bold text-sm text-white">Nos Services</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/a-propos"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
                         <Users className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-[#0f1f14]">Qui Sommes-Nous</span>
+                      <span className="font-bold text-sm text-white">Qui Sommes-Nous</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/contact"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/25 text-[#028444] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
                         <MapPin className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-[#0f1f14]">Contact & Ateliers</span>
+                      <span className="font-bold text-sm text-white">Contact & Ateliers</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/25" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
                   </Link>
                 </div>
               </div>
 
               {/* Bas du Drawer : Boutons CTA */}
-              <div className="pt-6 border-t border-[#0f1f14]/10 space-y-3">
+              <div className="pt-6 border-t border-white/15 space-y-3">
                 <a
                   href="https://wa.me/2290196062287"
                   target="_blank"
@@ -628,7 +635,7 @@ export function Header() {
                     Se déconnecter ({user?.name})
                   </button>
                 ) : (
-                  <div className="flex items-center justify-center gap-3 text-xs text-[#0f1f14]/55 pt-1">
+                  <div className="flex items-center justify-center gap-3 text-xs text-white/60 pt-1">
                     <Link to="/connexion" onClick={closeMenus} className="text-[#05a855] font-bold underline">
                       Connexion
                     </Link>
@@ -644,8 +651,8 @@ export function Header() {
         </AnimatePresence>
       </div>
 
-      {/* Espacement de tête pour compenser la nav flottante */}
-      <div className="h-20 md:h-24" aria-hidden="true" />
+      {/* Espacement de tête : supprimé sur l'accueil pour fusionner header + hero */}
+      {!isHome && <div className="h-20 md:h-24" aria-hidden="true" />}
     </>
   );
 }
