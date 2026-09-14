@@ -265,7 +265,7 @@ export const adminApi = {
       body: JSON.stringify({ status }),
     }),
 
-  getProducts: () => request<{ count: number; products: Product[] }>('/products'),
+  getProducts: () => request<{ count: number; products: Product[] }>('/products?limit=100'),
 
   createProduct: (payload: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) =>
     request<{ product: Product }>('/products', {

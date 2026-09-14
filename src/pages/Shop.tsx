@@ -125,7 +125,7 @@ export default function Shop() {
 
   useEffect(() => {
     productsApi
-      .getAll()
+      .getAll({ limit: 100 })
       .then((data) => {
         setProducts(data.products);
       })
