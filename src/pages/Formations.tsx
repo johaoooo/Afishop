@@ -241,7 +241,7 @@ export default function Formations() {
                             {training.modules.slice(0, 3).map((mod, idx) => (
                               <div key={idx} className="flex items-center gap-2 text-xs text-[#0f1f14]/60">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#028444] shrink-0" />
-                                <span className="truncate">{mod}</span>
+                                <span className="truncate">{typeof mod === 'string' ? mod : (mod as { title: string }).title}</span>
                               </div>
                             ))}
                           </div>

@@ -47,7 +47,7 @@ export function AdminTrainings() {
     setEditingId(t.id);
     setForm({
       title: t.title, description: t.description, duration: t.duration, price: t.price,
-      image: t.image, color: t.color || '#1a6b3c', modulesText: (t.modules || []).join('\n'),
+      image: t.image, color: t.color || '#1a6b3c', modulesText: (t.modules || []).map((m: any) => typeof m === 'string' ? m : m.title).join('\n'),
     });
     setModalOpen(true);
   };
@@ -59,10 +59,11 @@ export function AdminTrainings() {
     }
     setSaving(true);
     try {
+      const priceNum = Number(String(form.price).replace(/[^\d]/g, ''));
       const payload = {
         title: form.title, description: form.description, duration: form.duration,
-        price: form.price, image: form.image, color: form.color,
-        modules: form.modulesText.split('\n').map((m) => m.trim()).filter(Boolean),
+        price: (Number.isFinite(priceNum) && priceNum > 0 ? priceNum : form.price) as any, image: form.image, color: form.color,
+        modules: form.modulesText.split('\n').map((m) => m.trim()).filter(Boolean).map((title) => ({ title })),
       };
       if (editingId) {
         await adminApi.updateTraining(editingId, payload);
