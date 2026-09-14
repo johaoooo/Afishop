@@ -547,7 +547,7 @@ export default function Home() {
         {/* Calque Fond Arrière-Plan avec texture grille et demi-teinte */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <img
-            src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573437/WhatsApp_Image_2026-08-01_at_08.30.43_1_utrxsc.jpg"
+            src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441621/WhatsApp_Image_2026-05-03_at_13.03.09_2_cujxnk.jpg"
             alt="Artisanes AFI Collection"
             className="w-full h-full object-cover object-[center_45%] opacity-100 brightness-110"
           />

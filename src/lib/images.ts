@@ -5,7 +5,7 @@ const C = 'https://res.cloudinary.com/dzxesa3wi/image/upload';
 
 export const AFI_IMAGES = {
   logo: `${C}/v1783162335/afiii_wqkawf.png`,
-  heroSlide: `${C}/v1785573437/WhatsApp_Image_2026-08-01_at_08.30.43_1_utrxsc.jpg`,
+  heroSlide: `${C}/v1779441621/WhatsApp_Image_2026-05-03_at_13.03.09_2_cujxnk.jpg`,
   heroSlideAlt: `${C}/v1780563931/slide01_gwdcug.png`,
   atelierCadre:
     `${C}/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg`,
