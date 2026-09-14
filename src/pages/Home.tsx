@@ -549,7 +549,7 @@ export default function Home() {
           <img
             src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441621/WhatsApp_Image_2026-05-03_at_13.03.09_2_cujxnk.jpg"
             alt="Artisanes AFI Collection"
-            className="w-full h-full object-cover object-[center_45%] opacity-100 brightness-110"
+            className="w-full h-full object-cover object-[center_calc(45%_-_76px)] sm:object-[center_45%] opacity-100 brightness-110"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/45" />
           <div className="grid-bg absolute inset-0 opacity-10 pointer-events-none" />
