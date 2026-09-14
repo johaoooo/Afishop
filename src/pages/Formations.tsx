@@ -43,7 +43,7 @@ export default function Formations() {
       price: 150000,
       modules: ['Techniques de base du macramé', 'Création de sacs et accessoires', 'Réalisation de rideaux et suspensions'],
       students: 12,
-      image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441677/WhatsApp_Image_2026-05-03_at_13.08.20_m5mbxc.jpg',
+      image: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573437/WhatsApp_Image_2026-08-01_at_08.30.43_1_utrxsc.jpg',
       color: '#1a6b3c',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()

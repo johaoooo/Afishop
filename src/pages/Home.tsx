@@ -449,7 +449,7 @@ function CircularProjectsGallery() {
 const TRAINING_NET_IMAGES: { match: string[]; src: string }[] = [
   {
     match: ['macram', 'tricot'],
-    src: 'https://images.unsplash.com/photo-1632393121391-3c40fcfafe1a?auto=format&fit=crop&w=800&q=80',
+    src: 'https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573437/WhatsApp_Image_2026-08-01_at_08.30.43_1_utrxsc.jpg',
   },
   {
     match: ['teinture', 'pagne'],

@@ -781,11 +781,11 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   padding: 16px;
-  /* Laisse transparaître le fond hero du parent + voile sombre pour lisibilité */
-  background: rgba(7, 11, 8, 0.72);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(5, 168, 85, 0.35);
+  /* Panneau clair façon site (fond clarté + flou) */
+  background: rgba(243, 246, 243, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(2, 132, 68, 0.25);
 }
 
 .aka-nav-card {
@@ -798,6 +798,8 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
   border: 2px solid #050505;
   box-shadow: 4px 4px 0px #050505;
   transition: box-shadow 0.3s, transform 0.3s;
+  background: #ffffff;
+  color: #0f1f14;
 }
 
 .aka-nav-card:hover {
@@ -805,9 +807,9 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
   transform: translateY(-2px);
 }
 
-.aka-card-1 { background: #0f1f14; color: #ffffff; }
-.aka-card-2 { background: #121f16; color: #ffffff; }
-.aka-card-3 { background: #0c1710; color: #ffffff; }
+.aka-card-1 { background: #ffffff; color: #0f1f14; }
+.aka-card-2 { background: #edf3ed; color: #0f1f14; }
+.aka-card-3 { background: #ffffff; color: #0f1f14; }
 
 .aka-card-label {
   font-family: 'Poppins', sans-serif;
@@ -815,7 +817,7 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: 700;
-  color: #05a855;
+  color: #028444;
   margin-bottom: 12px;
 }
 
@@ -835,7 +837,7 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
 }
 
 .aka-card-link:hover {
-  color: #05a855;
+  color: #028444;
   transform: translateX(5px);
 }
 
@@ -846,7 +848,7 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
   transform: rotate(25deg);
   transition: opacity 0.2s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   flex-shrink: 0;
-  color: #05a855;
+  color: #028444;
 }
 
 .aka-card-link:hover .aka-link-arrow {

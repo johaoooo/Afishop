@@ -49,7 +49,7 @@ function NavSlogan() {
           animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
           exit={{ y: -12, opacity: 0, filter: 'blur(4px)' }}
           transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          className="m-0 text-white/70 font-bold text-sm leading-snug"
+          className="m-0 text-[#0f1f14]/60 font-bold text-sm leading-snug"
         >
           {NAV_SLOGANS[idx]}
         </motion.p>
@@ -357,14 +357,14 @@ export function Header() {
                       <img 
                         src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
                         alt="AFI Collection" 
-                        className="h-16 w-auto object-contain mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] brightness-110"
+                        className="h-16 w-auto object-contain mx-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.25)]"
                       />
                     </Link>
                     <NavSlogan />
                   </div>
-                  <div className="pt-2 border-t border-white/15 flex items-center justify-between text-[11px] text-white/50">
+                  <div className="pt-2 border-t border-[#0f1f14]/10 flex items-center justify-between text-[11px] text-[#0f1f14]/50">
                     <span>Abomey-Calavi · Bénin</span>
-                    <span className="text-[#05a855] font-bold">100% Fait main</span>
+                    <span className="text-[#028444] font-bold">100% Fait main</span>
                   </div>
                 </motion.div>
 
@@ -502,7 +502,7 @@ export function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.28, ease: 'easeOut' }}
-              className="fixed inset-x-0 top-[58px] bottom-0 bg-[#070b08]/98 backdrop-blur-2xl z-[9300] overflow-y-auto p-5 flex flex-col justify-between text-white"
+              className="fixed inset-x-0 top-[58px] bottom-0 bg-[#f3f6f3]/98 backdrop-blur-2xl z-[9300] overflow-y-auto p-5 flex flex-col justify-between text-[#0f1f14]"
             >
               <div className="space-y-6">
                 {/* Recherche rapide */}
@@ -512,109 +512,109 @@ export function Header() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Rechercher sacs, pagnes, sandales..."
-                    className="w-full bg-white/10 border border-[#05a855]/40 rounded-full pl-11 pr-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#05a855]"
+                    className="w-full bg-white border border-[#028444]/30 rounded-full pl-11 pr-4 py-3 text-sm text-[#0f1f14] placeholder-[#0f1f14]/40 focus:outline-none focus:border-[#028444]"
                   />
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#05a855]" />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#028444]" />
                 </form>
 
                 {/* Liens principaux */}
                 <div className="space-y-2">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#05a855] px-2">Navigation</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[#028444] px-2">Navigation</p>
                   
                   <Link
                     to="/"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
                       <span className="w-10 h-10 rounded-xl bg-[#028444] border-2 border-black shadow-[2px_2px_0px_#000] text-white flex items-center justify-center shrink-0">
                         <Home className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-white">Accueil</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Accueil</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/boutique"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/30 text-[#028444] flex items-center justify-center shrink-0">
                         <Store className="w-5 h-5" strokeWidth={2.25} />
                       </span>
                       <div>
-                        <div className="font-bold text-sm text-white">Boutique & Créations</div>
-                        <div className="text-[11px] text-white/55">Sacs macramé, sandales, pagnes</div>
+                        <div className="font-bold text-sm text-[#0f1f14]">Boutique & Créations</div>
+                        <div className="text-[11px] text-[#0f1f14]/55">Sacs macramé, sandales, pagnes</div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/formations"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/30 text-[#028444] flex items-center justify-center shrink-0">
                         <GraduationCap className="w-5 h-5" strokeWidth={2.25} />
                       </span>
                       <div>
-                        <div className="font-bold text-sm text-white">Formations CFP</div>
-                        <div className="text-[11px] text-white/55">Ateliers & transmission Dorcas</div>
+                        <div className="font-bold text-sm text-[#0f1f14]">Formations CFP</div>
+                        <div className="text-[11px] text-[#0f1f14]/55">Ateliers & transmission Dorcas</div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/services"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/30 text-[#028444] flex items-center justify-center shrink-0">
                         <BriefcaseBusiness className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-white">Nos Services</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Nos Services</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/a-propos"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/30 text-[#028444] flex items-center justify-center shrink-0">
                         <Users className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-white">Qui Sommes-Nous</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Qui Sommes-Nous</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/30" strokeWidth={2.5} />
                   </Link>
 
                   <Link
                     to="/contact"
                     onClick={closeMenus}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.06] border border-white/15 hover:border-[#05a855]/50 transition-colors shadow-sm"
+                    className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#05a855]/15 border border-[#05a855]/40 text-[#05a855] flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-[#028444]/10 border border-[#028444]/30 text-[#028444] flex items-center justify-center shrink-0">
                         <MapPin className="w-5 h-5" strokeWidth={2.25} />
                       </span>
-                      <span className="font-bold text-sm text-white">Contact & Ateliers</span>
+                      <span className="font-bold text-sm text-[#0f1f14]">Contact & Ateliers</span>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-white/30" strokeWidth={2.5} />
+                    <ChevronRight className="w-5 h-5 text-[#0f1f14]/30" strokeWidth={2.5} />
                   </Link>
                 </div>
               </div>
 
               {/* Bas du Drawer : Boutons CTA */}
-              <div className="pt-6 border-t border-white/15 space-y-3">
+              <div className="pt-6 border-t border-[#0f1f14]/10 space-y-3">
                 <a
                   href="https://wa.me/2290196062287"
                   target="_blank"
@@ -637,12 +637,12 @@ export function Header() {
                     Se déconnecter ({user?.name})
                   </button>
                 ) : (
-                  <div className="flex items-center justify-center gap-3 text-xs text-white/60 pt-1">
-                    <Link to="/connexion" onClick={closeMenus} className="text-[#05a855] font-bold underline">
+                  <div className="flex items-center justify-center gap-3 text-xs text-[#0f1f14]/60 pt-1">
+                    <Link to="/connexion" onClick={closeMenus} className="text-[#028444] font-bold underline">
                       Connexion
                     </Link>
                     <span>·</span>
-                    <Link to="/inscription" onClick={closeMenus} className="hover:text-white">
+                    <Link to="/inscription" onClick={closeMenus} className="hover:text-[#0f1f14]">
                       Créer un compte
                     </Link>
                   </div>
