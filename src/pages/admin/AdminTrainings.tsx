@@ -46,7 +46,7 @@ export function AdminTrainings() {
   const openEdit = (t: Training) => {
     setEditingId(t.id);
     setForm({
-      title: t.title, description: t.description, duration: t.duration, price: t.price,
+      title: t.title, description: t.description, duration: t.duration, price: String(t.price ?? ''),
       image: t.image, color: t.color || '#1a6b3c', modulesText: (t.modules || []).map((m: any) => typeof m === 'string' ? m : m.title).join('\n'),
     });
     setModalOpen(true);

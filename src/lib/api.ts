@@ -200,8 +200,8 @@ export interface Training {
   title: string;
   description: string;
   duration: string;
-  price: string;
-  modules: string[];
+  price: number | string;
+  modules: (string | { title: string; duration?: string })[];
   students: number;
   image: string;
   color: string;
