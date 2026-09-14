@@ -127,8 +127,8 @@ export function PageHero({
       {ghostWord && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-black uppercase leading-none text-white/[0.08]"
-          style={{ fontSize: 'clamp(4rem, 14vw, 11rem)' }}
+          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-black uppercase leading-none text-white/[0.16]"
+          style={{ fontSize: 'clamp(4rem, 14vw, 11rem)', WebkitTextStroke: '1px rgba(255, 255, 255, 0.22)' }}
         >
           {ghostWord}
         </span>
@@ -157,7 +157,7 @@ export function PageHero({
 
           <h1
             className="font-black uppercase tracking-tight text-white text-balance text-4xl sm:text-5xl md:text-6xl leading-[1.02]"
-            style={{ textShadow: '0 2px 24px rgba(0, 0, 0, 0.85)' }}
+            style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.95), 0 4px 28px rgba(0, 0, 0, 0.9), 0 0 44px rgba(0, 0, 0, 0.7)' }}
           >
             {title}
           </h1>

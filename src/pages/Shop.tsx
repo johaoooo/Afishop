@@ -8,6 +8,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { productsApi, type Product } from '../lib/api';
 import { ProductCard } from '../components/ProductCard';
 import { PageHero } from '../components/PageHero';
+import { SectionBg } from '../components/SectionBg';
+import { WappeWord } from '../components/WappeWord';
+import { AFI_IMAGES } from '../lib/images';
 
 interface SortOption {
   value: string;
@@ -206,7 +209,7 @@ export default function Shop() {
         secondaryCta={{ label: 'Nos formations', to: '/formations' }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 -mt-7 relative z-30">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-6 -mt-7 relative z-30">
         <div className="max-w-2xl mx-auto relative">
           <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-[#0f1f14]/50 w-5 h-5" />
           <input
@@ -228,7 +231,11 @@ export default function Shop() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+      {/* ===== CATALOGUE ===== */}
+      <section className="relative overflow-clip">
+        <SectionBg src={AFI_IMAGES.exposition} />
+        <WappeWord word="Maison" />
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-6 relative z-10 py-8">
         <div className="flex flex-col lg:flex-row gap-8 items-start relative">
           
           <aside className="hidden lg:block w-64 shrink-0 sticky top-24 self-start max-h-[calc(100vh-7rem)] overflow-y-auto h-max z-20 transition-all">
@@ -450,7 +457,7 @@ export default function Shop() {
       </div>
 
       {totalPages > 1 && (
-        <div className="max-w-7xl mx-auto px-4 md:px-8 pb-12">
+        <div className="max-w-[1400px] mx-auto px-3 sm:px-6 relative z-10 pb-12">
           <div className="flex items-center justify-center gap-2">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="p-2 rounded-xl border border-[#0f1f14]/10 bg-white disabled:opacity-30 hover:bg-[#0f1f14]/5 transition">
               <FiChevronLeft size={18} />
@@ -466,6 +473,7 @@ export default function Shop() {
           </div>
         </div>
       )}
+      </section>
     </div>
   );
 }

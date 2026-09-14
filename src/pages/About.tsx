@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AFI_IMAGES } from '../lib/images';
 import { PageHero } from '../components/PageHero';
+import { SectionBg } from '../components/SectionBg';
+import { WappeWord } from '../components/WappeWord';
 
 export default function About() {
   const values = [
@@ -27,7 +29,7 @@ export default function About() {
       {/* ===== HERO ===== */}
       <PageHero
         align="center"
-        title={<>À Propos de <span className="text-[#05a855]">AFI Collection</span></>}
+        title="À Propos"
         ghostWord="Histoire"
         crumb="À propos"
         subtitle="L'excellence de l'artisanat béninois, entre passion, tradition et modernité."
@@ -37,8 +39,11 @@ export default function About() {
         secondaryCta={{ label: 'Nous contacter', to: '/contact' }}
       />
 
-      {/* ===== CONTENU PRINCIPAL ===== */}
-      <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 space-y-10">
+      {/* ===== HISTOIRE ===== */}
+      <section className="relative overflow-hidden">
+        <SectionBg src={AFI_IMAGES.mainsOr} />
+        <WappeWord word="Maison" />
+        <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-10 pb-10">
         
         {/* ===== HISTOIRE AVEC IMAGE ===== */}
         <motion.div 
@@ -98,6 +103,13 @@ export default function About() {
             </div>
           </div>
         </motion.div>
+        </div>
+      </section>
+
+      {/* ===== CHIFFRES & VALEURS ===== */}
+      <section className="relative overflow-hidden">
+        <WappeWord word="Afi Collection" />
+        <div className="container mx-auto px-6 md:px-12 relative z-10 py-10 space-y-10">
 
         {/* ===== STATS COUNTER GRID ===== */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -144,8 +156,14 @@ export default function About() {
           </div>
         </div>
 
-        {/* ===== CALL TO ACTION ===== */}
-        <motion.div 
+        </div>
+      </section>
+
+      {/* ===== CALL TO ACTION ===== */}
+      <section className="relative overflow-hidden">
+        <SectionBg src={AFI_IMAGES.equipe} />
+        <div className="container mx-auto px-6 md:px-12 relative z-10 py-10">
+        <motion.div
           className="bg-white border border-[#028444]/30 rounded-3xl p-8 sm:p-12 text-center text-[#0f1f14] space-y-4 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -168,8 +186,8 @@ export default function About() {
             </Link>
           </div>
         </motion.div>
-
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

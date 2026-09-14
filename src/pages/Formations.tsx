@@ -12,8 +12,10 @@ import {
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { trainingsApi, type Training } from '../lib/api';
-import { AFI_FALLBACK_PRODUCT, AFI_FALLBACK_PHOTO } from '../lib/images';
+import { AFI_FALLBACK_PRODUCT, AFI_FALLBACK_PHOTO, AFI_IMAGES } from '../lib/images';
 import { PageHero } from '../components/PageHero';
+import { SectionBg } from '../components/SectionBg';
+import { WappeWord } from '../components/WappeWord';
 
 const stats = [
   { value: '150+', label: 'Étudiants formés', icon: FiUsers },
@@ -72,7 +74,7 @@ export default function Formations() {
       {/* ===== HERO ===== */}
       <PageHero
         align="center"
-        title={<>Nos Formations <span className="text-[#05a855]">Artisanales</span></>}
+        title="Nos Formations"
         ghostWord="Formations"
         subtitle="Développez des compétences professionnelles et maîtrisez un métier d'art au Bénin."
         backgroundImage="https://res.cloudinary.com/dzxesa3wi/image/upload/v1782717374/WhatsApp_Image_2026-06-29_at_08.08.43_jc7ddz.jpg"
@@ -82,7 +84,11 @@ export default function Formations() {
       />
 
       {/* ===== CONTENEUR PRINCIPAL ===== */}
-      <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-20 space-y-10">
+      {/* ===== CFP DORCAS ===== */}
+      <section className="relative overflow-hidden">
+        <SectionBg src={AFI_IMAGES.fierteArtisane} />
+        <WappeWord word="Maison" />
+        <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-10 pb-10">
         
         {/* ===== BANDEAU PRÉSENTATION CFP DORCAS ===== */}
         <motion.div
@@ -137,6 +143,14 @@ export default function Formations() {
             </div>
           </div>
         </motion.div>
+        </div>
+      </section>
+
+      {/* ===== FILIÈRES ===== */}
+      <section className="relative overflow-hidden">
+        <SectionBg src={AFI_IMAGES.tressageDetail} />
+        <WappeWord word="Afi Collection" />
+        <div className="container mx-auto px-6 md:px-12 relative z-10 py-10 space-y-10">
 
         {/* ===== STATS GRID ===== */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -264,7 +278,11 @@ export default function Formations() {
           )}
         </div>
 
-        {/* ===== CALL TO ACTION ===== */}
+        </div>
+      </section>
+
+      {/* ===== CALL TO ACTION ===== */}
+      <div className="container mx-auto px-6 md:px-12 relative z-10 pt-10">
         <motion.div
           className="p-8 sm:p-12 rounded-3xl text-center bg-white border border-[#028444]/30 text-[#0f1f14] space-y-4 shadow-lg"
           initial={{ opacity: 0, y: 20 }}
@@ -294,7 +312,6 @@ export default function Formations() {
             </Link>
           </div>
         </motion.div>
-
       </div>
     </div>
   );
