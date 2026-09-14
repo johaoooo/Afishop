@@ -617,6 +617,17 @@ nav.aka-card-nav.is-transparent .aka-nav-pill-icon {
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.8));
 }
 
+/* Logo bien visible en mode transparent : médaillon sombre flouté */
+nav.aka-card-nav.is-transparent .aka-logo-badge {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  padding: 4px 16px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
 nav.aka-card-nav.is-transparent .aka-nav-menu-btn:hover,
 nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
   background: #028444;
@@ -928,6 +939,17 @@ nav.aka-card-nav.is-transparent .aka-nav-pill:hover {
 .sm-header.is-transparent .sm-header-icon-btn svg {
   color: #ffffff !important;
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.8));
+}
+
+/* Logo mobile bien visible en mode transparent */
+.sm-header.is-transparent .aka-logo-badge {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  padding: 2px 12px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* Hamburger du header mobile (styles dédiés, hors CardNav desktop) */

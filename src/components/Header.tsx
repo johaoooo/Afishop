@@ -164,7 +164,7 @@ export function Header() {
             </button>
 
             {/* Logo Central AFI */}
-            <Link to="/" className="aka-nav-logo" onClick={closeMenus} aria-label="Accueil AFI Collection">
+            <Link to="/" className="aka-nav-logo aka-logo-badge" onClick={closeMenus} aria-label="Accueil AFI Collection">
               <img 
                 src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
                 alt="AFI Collection" 
@@ -457,7 +457,7 @@ export function Header() {
           </button>
 
           {/* Logo Mobile */}
-          <Link to="/" onClick={closeMenus} className="flex items-center">
+          <Link to="/" onClick={closeMenus} className="flex items-center aka-logo-badge">
             <img 
               src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
               alt="AFI Collection" 
