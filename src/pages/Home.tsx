@@ -489,6 +489,18 @@ export default function Home() {
   const heroMidRef = useRef<HTMLDivElement>(null);
   const heroGalleryRef = useRef<HTMLDivElement>(null);
 
+  // Parallaxe souris partagée hero + bandeau galerie
+  const handleHeroMouseMove = (e: React.MouseEvent) => {
+    const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+    const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+    if (heroMidRef.current) {
+      heroMidRef.current.style.transform = `translate3d(${x * 16}px, ${y * 12}px, 0)`;
+    }
+    if (heroGalleryRef.current) {
+      heroGalleryRef.current.style.transform = `translate3d(${x * -18}px, ${y * -8}px, 0)`;
+    }
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setImpactSlideIndex((prev) => (prev + 1) % socialImpactStory.images.length);
@@ -527,26 +539,17 @@ export default function Home() {
       {/* HERO SECTION - Style Copié du Port 3002 en VERT DU LOGO AFI */}
       {/* ============================================================ */}
       <section 
-        className="wappe-hero relative min-h-[92vh] lg:min-h-[100vh] w-full overflow-hidden flex flex-col justify-between items-center bg-[#070b08] pt-24 sm:pt-28 pb-6"
+        className="wappe-hero relative w-full overflow-hidden flex flex-col items-center bg-[#070b08]"
         onMouseEnter={() => setHeroPaused(true)}
         onMouseLeave={() => setHeroPaused(false)}
-        onMouseMove={(e) => {
-          const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-          const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
-          if (heroMidRef.current) {
-            heroMidRef.current.style.transform = `translate3d(${x * 16}px, ${y * 12}px, 0)`;
-          }
-          if (heroGalleryRef.current) {
-            heroGalleryRef.current.style.transform = `translate3d(${x * -18}px, ${y * -8}px, 0)`;
-          }
-        }}
+        onMouseMove={handleHeroMouseMove}
       >
         {/* Calque Fond Arrière-Plan avec texture grille et demi-teinte */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <img
-            src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441679/WhatsApp_Image_2026-05-03_at_13.13.42_sxxufd.jpg"
+            src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573437/WhatsApp_Image_2026-08-01_at_08.30.43_1_utrxsc.jpg"
             alt="Artisanes AFI Collection"
-            className="w-full h-full object-cover scale-105 opacity-100 brightness-110 translate-y-4 sm:translate-y-5"
+            className="w-full h-full object-cover object-[center_45%] opacity-100 brightness-110"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/45" />
           <div className="grid-bg absolute inset-0 opacity-10 pointer-events-none" />
@@ -572,6 +575,8 @@ export default function Home() {
           ))}
         </div>
 
+        {/* Premier écran : Titre, Slogan, Avatars, Boutons */}
+        <div className="relative z-20 w-full min-h-[100svh] flex flex-col justify-between items-center pt-24 sm:pt-28 pb-6">
         {/* Contenu Central : Titre, Slogan, Avatars, Boutons */}
         <div
           ref={heroMidRef}
@@ -652,14 +657,6 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Galerie Circulaire 3D Ancrée en bas du Hero */}
-        <div
-          ref={heroGalleryRef}
-          className="w-full relative z-20 mt-[43px] sm:mt-[51px] transition-transform duration-100 ease-out"
-        >
-          <CircularProjectsGallery />
-        </div>
-
         {/* Scroll Indicator */}
         <div className="relative z-20 flex flex-col items-center opacity-40 pointer-events-none mt-2">
           <span className="text-[9px] tracking-widest uppercase font-bold text-white mb-1">Scroll</span>
@@ -668,6 +665,17 @@ export default function Home() {
             transition={{ duration: 1.6, repeat: Infinity }}
             className="w-0.5 h-6 bg-white/40 rounded-full"
           />
+        </div>
+        </div>
+
+        {/* Galerie 3D : même fond que le hero (aucune séparation), visible au scroll */}
+        <div className="relative z-20 w-full pb-10">
+          <div
+            ref={heroGalleryRef}
+            className="w-full relative transition-transform duration-100 ease-out"
+          >
+            <CircularProjectsGallery />
+          </div>
         </div>
       </section>
 

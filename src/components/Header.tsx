@@ -164,11 +164,11 @@ export function Header() {
             </button>
 
             {/* Logo Central AFI */}
-            <Link to="/" className="aka-nav-logo aka-logo-badge" onClick={closeMenus} aria-label="Accueil AFI Collection">
+            <Link to="/" className="aka-nav-logo" onClick={closeMenus} aria-label="Accueil AFI Collection">
               <img 
                 src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
                 alt="AFI Collection" 
-                className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] brightness-110"
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] brightness-110"
               />
             </Link>
 
@@ -457,11 +457,11 @@ export function Header() {
           </button>
 
           {/* Logo Mobile */}
-          <Link to="/" onClick={closeMenus} className="flex items-center aka-logo-badge">
+          <Link to="/" onClick={closeMenus} className="flex items-center">
             <img 
               src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1783162335/afiii_wqkawf.png" 
               alt="AFI Collection" 
-              className="h-9 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] brightness-110"
+              className="h-9 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] brightness-110"
             />
           </Link>
 
