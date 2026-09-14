@@ -72,7 +72,6 @@ export default function Formations() {
       {/* ===== HERO ===== */}
       <PageHero
         align="center"
-        sticker="Académie des Métiers"
         title={<>Nos Formations <span className="text-[#05a855]">Artisanales</span></>}
         ghostWord="Formations"
         subtitle="Développez des compétences professionnelles et maîtrisez un métier d'art au Bénin."

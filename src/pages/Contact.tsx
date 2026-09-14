@@ -63,7 +63,6 @@ export default function Contact() {
       {/* ===== HERO ===== */}
       <PageHero
         align="center"
-        sticker="Contact & Écoute"
         title={<>Contactez-<span className="text-[#05a855]">nous</span></>}
         ghostWord="Contact"
         subtitle="Une question sur une création, une commande sur-mesure ou nos formations ? Notre équipe est à votre écoute."

@@ -75,10 +75,12 @@ export function Header() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const userDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Header fusionné au hero sur l'accueil : transparent tant qu'on est en haut,
-  // fond sombre dès qu'on scrolle, qu'on ouvre le menu ou qu'on change de page.
-  const isHome = location.pathname === '/';
-  const transparent = isHome && !scrolled && !open && !mobileMenuOpen;
+  // Header fusionné au hero (façon accueil) sur toutes les pages à hero
+  // immersif : transparent tant qu'on est en haut, fond sombre dès qu'on
+  // scrolle, qu'on ouvre le menu ou qu'on est sur une page sans hero.
+  const HERO_PATHS = ['/', '/boutique', '/a-propos', '/formations', '/services', '/contact'];
+  const hasHero = HERO_PATHS.includes(location.pathname);
+  const transparent = hasHero && !scrolled && !open && !mobileMenuOpen;
 
   // Barre de progression du scroll (façon Wappe, en vert AFI)
   useEffect(() => {
@@ -651,8 +653,9 @@ export function Header() {
         </AnimatePresence>
       </div>
 
-      {/* Espacement de tête : supprimé sur l'accueil pour fusionner header + hero */}
-      {!isHome && <div className="h-20 md:h-24" aria-hidden="true" />}
+      {/* Espacement de tête : uniquement sur les pages sans hero immersif
+          (les pages à hero démarrent sous le header transparent fusionné) */}
+      {!hasHero && <div className="h-20 md:h-24" aria-hidden="true" />}
     </>
   );
 }

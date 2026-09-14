@@ -197,7 +197,6 @@ export default function Shop() {
       {/* ===== HERO ===== */}
       <PageHero
         align="center"
-        sticker="Boutique Officielle"
         title="La boutique"
         ghostWord="Boutique"
         subtitle="Toutes nos créations artisanales, en un seul endroit."

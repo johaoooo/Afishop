@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FiPackage, FiTruck, FiRefreshCw, FiHeadphones, FiShield, FiStar } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
+import { AFI_IMAGES } from '../lib/images';
 
 export default function Services() {
   const services = [
@@ -19,10 +20,12 @@ export default function Services() {
     <div className="bg-[#f3f6f3] min-h-screen text-[#0f1f14]">
       <SEO title="Services" description="Découvrez tous nos services : livraison rapide au Bénin, retours faciles, service client et paiement sécurisé." />
       <PageHero
-        sticker="Nos services"
-        title={<>Nos <span className="text-[#028444]">services</span></>}
+        align="center"
+        title={<>Nos <span className="text-[#05a855]">services</span></>}
         ghostWord="Services"
         subtitle="Tout ce que nous mettons en œuvre pour votre satisfaction."
+        backgroundImage={AFI_IMAGES.equipe}
+        imageAlt="L'équipe AFI Collection à votre service"
         primaryCta={{ label: 'Voir la boutique', to: '/boutique' }}
         secondaryCta={{ label: 'Nous contacter', to: '/contact' }}
       />

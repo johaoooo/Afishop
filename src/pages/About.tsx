@@ -27,9 +27,9 @@ export default function About() {
       {/* ===== HERO ===== */}
       <PageHero
         align="center"
-        sticker="Notre Histoire"
         title={<>À Propos de <span className="text-[#05a855]">AFI Collection</span></>}
         ghostWord="Histoire"
+        crumb="À propos"
         subtitle="L'excellence de l'artisanat béninois, entre passion, tradition et modernité."
         backgroundImage={AFI_IMAGES.atelierCadre}
         imageAlt="AFI Collection - Artisanat béninois"
