@@ -11,7 +11,10 @@ import {
   FiHeadphones,
   FiCheckCircle,
   FiChevronLeft,
-  FiChevronRight
+  FiChevronRight,
+  FiMapPin,
+  FiCreditCard,
+  FiBookOpen
 } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
@@ -335,7 +338,14 @@ function HeroSloganCycle({ index }: { index: number }) {
           style={{ textShadow: '0 2px 24px rgba(0, 0, 0, 0.85)' }}
         >
           {before}
-          <span className="wappe-glow text-[#05a855]">
+          <span
+            className="wappe-glow text-[#2bff88]"
+            style={{
+              textShadow:
+                '0 2px 4px rgba(0,0,0,0.95), 0 0 24px rgba(0,0,0,0.9), 0 0 14px rgba(43,255,136,0.55)',
+              WebkitTextStroke: '0.8px rgba(0,0,0,0.7)',
+            }}
+          >
             {highlight}
           </span>
         </motion.h1>
@@ -404,15 +414,15 @@ function CircularProjectsGallery() {
             <img
               src={p.img}
               alt={p.title}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center brightness-110"
             />
             <div
               style={{
                 position: 'absolute',
                 inset: 0,
                 background: isActive
-                  ? 'rgba(0, 0, 0, 0.70)'
-                  : 'rgba(0, 0, 0, 0.55)',
+                  ? 'rgba(0, 0, 0, 0.50)'
+                  : 'rgba(0, 0, 0, 0.35)',
               }}
             />
             <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 text-left">
@@ -536,11 +546,11 @@ export default function Home() {
           <img
             src="https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441621/WhatsApp_Image_2026-05-03_at_13.03.09_2_cujxnk.jpg"
             alt="Artisanes AFI Collection"
-            className="w-full h-full object-cover scale-105 opacity-80"
+            className="w-full h-full object-cover scale-105 opacity-100 blur-[2.5px] brightness-110"
           />
           {/* Flou léger uniquement sur la moitié droite (gauche nette) */}
           <div className="absolute inset-y-0 right-0 w-1/2 backdrop-blur-[2.5px] [mask-image:linear-gradient(to_right,transparent,black_18%)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_18%)]" />
-          <div className="absolute inset-0 bg-black/65" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/45" />
           <div className="grid-bg absolute inset-0 opacity-10 pointer-events-none" />
           <div className="halftone-bg absolute top-0 right-0 w-1/2 h-1/2 opacity-10 pointer-events-none" />
         </div>
@@ -567,7 +577,7 @@ export default function Home() {
         {/* Contenu Central : Titre, Slogan, Avatars, Boutons */}
         <div
           ref={heroMidRef}
-          className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center transition-transform duration-100 ease-out"
+          className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center transition-transform duration-100 ease-out mt-14 sm:mt-16"
         >
           {/* Slogan Cyclique */}
           <HeroSloganCycle index={sloganIndex} />
@@ -603,7 +613,12 @@ export default function Home() {
               <div className="font-black text-xs sm:text-sm text-white uppercase leading-tight tracking-tight">
                 Artisanes & Maîtres d'art
               </div>
-              <div className="text-[11px] sm:text-xs font-bold text-[#05a855]">
+              <div className="text-[11px] sm:text-xs font-bold text-[#2bff88]"
+                style={{
+                  textShadow:
+                    '0 1px 3px rgba(0,0,0,0.95), 0 0 14px rgba(0,0,0,0.9)',
+                }}
+              >
                 150+ femmes formées & 500+ créations uniques
               </div>
             </div>
@@ -639,7 +654,7 @@ export default function Home() {
         {/* Galerie Circulaire 3D Ancrée en bas du Hero */}
         <div
           ref={heroGalleryRef}
-          className="w-full relative z-20 mt-6 sm:mt-8 transition-transform duration-100 ease-out"
+          className="w-full relative z-20 mt-[43px] sm:mt-[51px] transition-transform duration-100 ease-out"
         >
           <CircularProjectsGallery />
         </div>
@@ -655,22 +670,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Marquee strip réassurance façon port 3002 en vert du logo AFI ── */}
-      <div className="wappe-ticker bg-[#028444] text-white font-black uppercase py-3 overflow-hidden border-y-[3px] border-black shadow-[0_4px_24px_rgba(5,168,85,0.4)]">
+      {/* ── Bandeau défilant réassurance (premium, sobre) ── */}
+      <div className="wappe-ticker bg-[#0c1710] text-white/85 font-semibold uppercase py-2.5 overflow-hidden border-y border-white/10">
         <div className="marquee-container">
-          <div className="marquee-content text-xs sm:text-sm tracking-wider flex items-center gap-8">
-            <span>✦ MACRAMÉ D'ART FAIT MAIN</span>
-            <span>✦ 100% ARTISANAT BÉNINOIS</span>
-            <span>✦ FORMATIONS CFP DORCAS INCLUSIVES</span>
-            <span>✦ LIVRAISON 48H BÉNIN & AFRIQUE</span>
-            <span>✦ PAIEMENT SÉCURISÉ MOBILE MONEY KKIAPAY</span>
-            <span>✦ ATELIER ABOMEY-CALAVI</span>
-            <span>✦ MACRAMÉ D'ART FAIT MAIN</span>
-            <span>✦ 100% ARTISANAT BÉNINOIS</span>
-            <span>✦ FORMATIONS CFP DORCAS INCLUSIVES</span>
-            <span>✦ LIVRAISON 48H BÉNIN & AFRIQUE</span>
-            <span>✦ PAIEMENT SÉCURISÉ MOBILE MONEY KKIAPAY</span>
-            <span>✦ ATELIER ABOMEY-CALAVI</span>
+          <div
+            className="marquee-content text-[11px] sm:text-xs tracking-[0.22em] flex items-center gap-10"
+            style={{ animationDuration: '45s' }}
+          >
+            <span className="flex items-center gap-2"><FiAward className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Macramé d'art fait main</span>
+            <span className="flex items-center gap-2"><FiStar className="w-3.5 h-3.5 text-[#05a855] shrink-0" />100% artisanat béninois</span>
+            <span className="flex items-center gap-2"><FiBookOpen className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Formations CFP Dorcas inclusives</span>
+            <span className="flex items-center gap-2"><FiTruck className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Livraison 48h Bénin & Afrique</span>
+            <span className="flex items-center gap-2"><FiCreditCard className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Paiement sécurisé Mobile Money</span>
+            <span className="flex items-center gap-2"><FiMapPin className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Atelier Abomey-Calavi</span>
+            <span className="flex items-center gap-2"><FiAward className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Macramé d'art fait main</span>
+            <span className="flex items-center gap-2"><FiStar className="w-3.5 h-3.5 text-[#05a855] shrink-0" />100% artisanat béninois</span>
+            <span className="flex items-center gap-2"><FiBookOpen className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Formations CFP Dorcas inclusives</span>
+            <span className="flex items-center gap-2"><FiTruck className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Livraison 48h Bénin & Afrique</span>
+            <span className="flex items-center gap-2"><FiCreditCard className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Paiement sécurisé Mobile Money</span>
+            <span className="flex items-center gap-2"><FiMapPin className="w-3.5 h-3.5 text-[#05a855] shrink-0" />Atelier Abomey-Calavi</span>
           </div>
         </div>
       </div>

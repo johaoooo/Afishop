@@ -12,14 +12,14 @@ export function SectionBg({ src }: { src: string }) {
         aria-hidden="true"
         loading="lazy"
         className="absolute inset-0 h-full w-full object-cover pointer-events-none"
-        style={{ opacity: 0.32 }}
+        style={{ opacity: 0.38 }}
       />
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'linear-gradient(180deg, rgba(255,255,255,0.72), rgba(241,245,241,0.82))',
+            'linear-gradient(180deg, rgba(255,255,255,0.66), rgba(241,245,241,0.76))',
         }}
       />
     </>
