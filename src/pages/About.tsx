@@ -40,7 +40,7 @@ export default function About() {
       />
 
       {/* ===== HISTOIRE ===== */}
-      <section className="relative overflow-hidden -mt-8 z-10">
+      <section className="relative overflow-hidden sm:-mt-8 z-10">
         <SectionBg src={AFI_IMAGES.mainsOr} />
         <WappeWord word="Maison" />
         <div className="container mx-auto px-6 md:px-12 relative pb-10">
