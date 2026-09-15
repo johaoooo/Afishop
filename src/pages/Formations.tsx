@@ -85,10 +85,10 @@ export default function Formations() {
 
       {/* ===== CONTENEUR PRINCIPAL ===== */}
       {/* ===== CFP DORCAS ===== */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden -mt-8 z-10">
         <SectionBg src={AFI_IMAGES.fierteArtisane} />
         <WappeWord word="Maison" />
-        <div className="container mx-auto px-6 md:px-12 -mt-8 relative z-10 pb-10">
+        <div className="container mx-auto px-6 md:px-12 relative pb-10">
         
         {/* ===== BANDEAU PRÉSENTATION CFP DORCAS ===== */}
         <motion.div
