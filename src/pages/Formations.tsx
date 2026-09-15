@@ -85,7 +85,7 @@ export default function Formations() {
 
       {/* ===== CONTENEUR PRINCIPAL ===== */}
       {/* ===== CFP DORCAS ===== */}
-      <section className="relative overflow-hidden sm:-mt-8 z-10">
+      <section className="relative overflow-hidden sm:-mt-8 z-10 pt-6 sm:pt-0">
         <SectionBg src={AFI_IMAGES.fierteArtisane} />
         <WappeWord word="Maison" />
         <div className="container mx-auto px-6 md:px-12 relative pb-10">
