@@ -6,7 +6,8 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<User>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  loginWithGoogle: (credential: string) => Promise<User>;
+  register: (email: string, password: string, name: string) => Promise<any>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 }
@@ -48,11 +49,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return user; // renvoyé directement pour éviter de relire un contexte pas encore à jour
   };
 
-  const register = async (email: string, password: string, name: string) => {
-    const { token, user } = await authApi.register(email, password, name);
+  const loginWithGoogle = async (credential: string) => {
+    const response = await authApi.googleLogin(credential);
+    const { token, user } = response;
     localStorage.setItem('afi_token', token);
     localStorage.setItem('afi_user', JSON.stringify(user));
     setUser(user);
+    return user;
+  };
+
+  const register = async (email: string, password: string, name: string) => {
+    const res = await authApi.register(email, password, name);
+    if (res.token && res.user) {
+      localStorage.setItem('afi_token', res.token);
+      localStorage.setItem('afi_user', JSON.stringify(res.user));
+      setUser(res.user);
+    }
+    return res;
   };
 
   const logout = () => {
@@ -79,6 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user, 
         isLoading, 
         login, 
+        loginWithGoogle,
         register, 
         logout,
         refreshUser,

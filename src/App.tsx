@@ -22,6 +22,7 @@ import CGV from './pages/CGV';
 import Services from './pages/Services';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import VerifyEmail from './pages/VerifyEmail';
 import Terms from './pages/Terms';
 
 // Admin imports
@@ -34,13 +35,17 @@ import { AdminOrders } from './pages/admin/AdminOrders';
 import { AdminMessages } from './pages/admin/AdminMessages';
 import { AdminTrainings } from './pages/admin/AdminTrainings';
 import { AdminUsers } from './pages/admin/AdminUsers';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import NotFound from './pages/NotFound';
 
 export default function App() {
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'dummy-google-client-id';
+
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Toaster position="top-center" />
+    <GoogleOAuthProvider clientId={googleClientId}>
+      <AuthProvider>
+        <CartProvider>
+          <Toaster position="top-center" />
         
         <Routes>
           {/* Routes avec Layout (header + footer) */}
@@ -62,6 +67,7 @@ export default function App() {
           {/* Routes sans Layout (header/footer) */}
           <Route path="/connexion" element={<PageTransition><Login /></PageTransition>} />
           <Route path="/inscription" element={<PageTransition><Register /></PageTransition>} />
+          <Route path="/verifier-email" element={<PageTransition><VerifyEmail /></PageTransition>} />
           <Route path="/mot-passe-oublie" element={<PageTransition><ForgotPassword /></PageTransition>} />
           <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
 
@@ -89,5 +95,6 @@ export default function App() {
         </Routes>
       </CartProvider>
     </AuthProvider>
+    </GoogleOAuthProvider>
   );
 }

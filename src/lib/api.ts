@@ -114,9 +114,27 @@ export const authApi = {
     }),
 
   register: (email: string, password: string, name: string) =>
-    request<{ token: string; user: User }>('/auth/register', {
+    request<{ token?: string; user?: User; requiresVerification?: boolean; message?: string }>('/auth/register', {
       method: 'POST',
       body: JSON.stringify({ email, password, name }),
+    }),
+
+  googleLogin: (credential: string) =>
+    request<{ token: string; user: User }>('/auth/google', {
+      method: 'POST',
+      body: JSON.stringify({ credential }),
+    }),
+
+  verifyEmail: (payload: { token: string; email?: string }) =>
+    request<{ token?: string; user?: User; message: string }>('/auth/verify-email', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  resendVerification: (email: string) =>
+    request<{ message: string }>('/auth/resend-verification', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
     }),
 
   me: () => request<{ user: User }>('/auth/me'),

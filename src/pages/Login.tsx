@@ -12,6 +12,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { ApiError } from '../lib/api';
 import toast from 'react-hot-toast';
+import GoogleAuthButton from '../components/GoogleAuthButton';
 import { AFI_IMAGES } from '../lib/images';
 
 const features = [
@@ -222,6 +223,21 @@ export default function Login() {
               )}
             </button>
           </form>
+
+          {/* Séparateur */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#0f1f14]/10" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase tracking-wider">
+              <span className="bg-[#f3f6f3] px-3 text-[#0f1f14]/50 font-medium">
+                Ou avec
+              </span>
+            </div>
+          </div>
+
+          {/* Bouton Google */}
+          <GoogleAuthButton redirect={redirect} />
 
           <p className="text-xs text-[#0f1f14]/50 text-center mt-6 leading-relaxed">
             En vous connectant, vous acceptez nos{' '}

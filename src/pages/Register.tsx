@@ -13,6 +13,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { ApiError } from '../lib/api';
 import toast from 'react-hot-toast';
+import GoogleAuthButton from '../components/GoogleAuthButton';
 import { AFI_IMAGES } from '../lib/images';
 
 const benefits = [
@@ -46,9 +47,16 @@ export default function Register() {
 
     setIsLoading(true);
     try {
-      await register(email, password, name);
-      toast.success('Compte créé avec succès ! 🎉');
-      navigate('/mon-compte');
+      const res = await register(email, password, name);
+      if (res?.requiresVerification) {
+        toast.success(res.message || "Compte créé ! Un lien d'activation vous a été envoyé par e-mail.", {
+          duration: 6000,
+        });
+        navigate('/connexion');
+      } else {
+        toast.success('Compte créé avec succès ! 🎉');
+        navigate('/mon-compte');
+      }
     } catch (error: any) {
       if (error instanceof ApiError && error.fieldErrors) {
         error.fieldErrors.forEach((fe) => toast.error(fe.message));
@@ -233,6 +241,21 @@ export default function Register() {
               )}
             </button>
           </form>
+
+          {/* Séparateur */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-[#0f1f14]/10" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase tracking-wider">
+              <span className="bg-[#f3f6f3] px-3 text-[#0f1f14]/50 font-medium">
+                Ou avec
+              </span>
+            </div>
+          </div>
+
+          {/* Bouton Google */}
+          <GoogleAuthButton />
 
           <p className="text-xs text-[#0f1f14]/50 text-center mt-6 leading-relaxed">
             En créant un compte, vous acceptez nos{' '}
