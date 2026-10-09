@@ -146,12 +146,12 @@ export function PageHero({
           className="mx-auto max-w-3xl space-y-4 sm:space-y-5"
         >
           {crumbLabel && (
-            <nav aria-label="Fil d'Ariane" className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-white/60">
-              <Link to="/" className="hover:text-[#2bff88] transition-colors">
+            <nav aria-label="Fil d'Ariane" className="flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-white/70">
+              <Link to="/" className="hover:text-[#f3e5ab] transition-colors">
                 Accueil
               </Link>
               <ChevronRight className="w-3.5 h-3.5 text-[#05a855]" />
-              <span className="text-white/90">{crumbLabel}</span>
+              <span className="text-white/95">{crumbLabel}</span>
             </nav>
           )}
 

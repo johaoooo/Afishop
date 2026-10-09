@@ -24,7 +24,7 @@ export function ProductCard({ product }: { product: Product }) {
     e.stopPropagation();
     const now = toggleFavorite(product.id);
     setFav(now);
-    toast(now ? 'Ajouté aux favoris ❤️' : 'Retiré des favoris');
+    toast.success(now ? 'Ajouté aux favoris' : 'Retiré des favoris');
   };
 
   return (
@@ -33,38 +33,36 @@ export function ProductCard({ product }: { product: Product }) {
       className="pop-card wappe-lift group block overflow-hidden flex flex-col justify-between"
     >
       {/* Image Container with 4:5 mobile / square desktop aspect ratio - Full Image Visible */}
-      <div className="aspect-[4/5] sm:aspect-square bg-black/30 overflow-hidden relative w-full flex items-center justify-center p-2">
+      <div className="aspect-[4/5] sm:aspect-square bg-black/10 overflow-hidden relative w-full flex items-center justify-center p-2 rounded-t-[1.25rem]">
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out"
           onError={(e) => {
             (e.target as HTMLImageElement).src = AFI_FALLBACK_PRODUCT;
           }}
         />
 
-
-
-        {/* Favorite Heart Button - Always visible on mobile */}
+        {/* Favorite Heart Button - 44px Touch target */}
         <button
           onClick={handleFavorite}
           aria-label={fav ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-          className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center shadow-md backdrop-blur-md transition-all z-10 ${
-            fav ? 'bg-[#028444] text-white' : 'bg-black/60 text-white/70 hover:bg-black/80 hover:text-[#05a855]'
+          className={`absolute top-2.5 right-2.5 w-11 h-11 rounded-full cursor-pointer flex items-center justify-center shadow-md backdrop-blur-md transition-all duration-200 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#028444] ${
+            fav ? 'bg-[#028444] text-white' : 'bg-black/60 text-white/80 hover:bg-black/85 hover:text-[#05a855]'
           }`}
         >
-          <FiHeart className={`w-4 h-4 ${fav ? 'fill-current' : ''}`} />
+          <FiHeart className={`w-5 h-5 ${fav ? 'fill-current' : ''}`} />
         </button>
 
-        {/* Quick Add To Cart Floating Button */}
+        {/* Quick Add To Cart Floating Button - 44px Touch target */}
         <button
           onClick={handleAdd}
           disabled={!inStock}
           aria-label="Ajouter au panier"
-          className="absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-[#028444] hover:bg-[#05a855] text-white border-2 border-white/90 shadow-[2px_2px_0px_#000] flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-110 hover:rotate-12 z-10"
+          className="absolute bottom-2.5 right-2.5 w-11 h-11 rounded-full cursor-pointer bg-[#028444] hover:bg-[#05a855] text-white shadow-lg shadow-emerald-900/30 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 hover:scale-110 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#028444]"
         >
-          <FiShoppingCart className="w-4 h-4" />
+          <FiShoppingCart className="w-5 h-5" />
         </button>
 
         {/* Out of Stock Overlay */}
@@ -90,10 +88,11 @@ export function ProductCard({ product }: { product: Product }) {
         )}
 
         <div className="flex items-center justify-between pt-1">
-          <span className="font-black text-[#028444] text-xs sm:text-sm font-mono">
-            {product.price.toLocaleString('fr-FR')} FCFA
+          <span className="font-extrabold text-[#028444] text-xs sm:text-sm tracking-tight">
+            {product.price.toLocaleString('fr-FR')}{" "}
+            <span className="text-[10px] font-semibold text-neutral-500">FCFA</span>
           </span>
-          <span className={`text-[10px] font-bold flex items-center gap-1 ${inStock ? 'text-[#028444]' : 'text-rose-600'}`}>
+          <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1.5 ${inStock ? 'bg-emerald-500/10 text-[#028444]' : 'bg-rose-500/10 text-rose-600'}`}>
             {inStock ? (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#05a855] animate-pulse inline-block" />

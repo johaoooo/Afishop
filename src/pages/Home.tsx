@@ -17,7 +17,7 @@ import {
   FiBookOpen
 } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { productsApi, trainingsApi, type Product, type Training } from '../lib/api';
 import { ProductCard } from '../components/ProductCard';
 import { SectionBg } from '../components/SectionBg';
@@ -277,51 +277,6 @@ const HERO_AVATARS = [
   { name: "Bernadette M.", img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.53.13_syzpyy.jpg" },
 ];
 
-const HERO_GALLERY_ITEMS = [
-  {
-    id: 1,
-    title: "Sac Macramé Fuchsia & Naturel",
-    type: "Maroquinerie d'Art",
-    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573443/WhatsApp_Image_2026-08-01_at_08.31.11_1_mu9zgn.jpg",
-    url: "/boutique"
-  },
-  {
-    id: 2,
-    title: "Sac Banane Artisanal Tissé",
-    type: "Accessoires & Mode",
-    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785574438/WhatsApp_Image_2026-08-01_at_09.51.43_ykpwvs.jpg",
-    url: "/boutique"
-  },
-  {
-    id: 3,
-    title: "Atelier Macramé & Inclusion Sociale",
-    type: "CFP Dorcas",
-    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573442/WhatsApp_Image_2026-08-01_at_08.30.47_w1owpu.jpg",
-    url: "/formations"
-  },
-  {
-    id: 4,
-    title: "Klui-Klui d'Agonlin Croustillant",
-    type: "Terroir Béninois",
-    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785573444/WhatsApp_Image_2026-08-01_at_08.31.11_2_x6h3lg.jpg",
-    url: "/boutique"
-  },
-  {
-    id: 5,
-    title: "Exposition & Salons d'Art",
-    type: "Collection AFI",
-    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1779441621/WhatsApp_Image_2026-05-03_at_13.03.09_2_cujxnk.jpg",
-    url: "/boutique"
-  },
-  {
-    id: 6,
-    title: "Remise des Diplômes & Créations",
-    type: "Impact Social",
-    img: "https://res.cloudinary.com/dzxesa3wi/image/upload/v1785575610/WhatsApp_Image_2026-08-01_at_10.09.08_1_crzxkb.jpg",
-    url: "/formations"
-  }
-];
-
 function HeroSloganCycle({ index }: { index: number }) {
   const { before, highlight } = HERO_SLOGANS[index % HERO_SLOGANS.length];
 
@@ -350,92 +305,6 @@ function HeroSloganCycle({ index }: { index: number }) {
           </span>
         </motion.h1>
       </AnimatePresence>
-    </div>
-  );
-}
-
-function CircularProjectsGallery() {
-
-  const [active, setActive] = useState(0);
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % HERO_GALLERY_ITEMS.length), 2800);
-    return () => clearInterval(id);
-  }, [reduceMotion]);
-
-  const order = HERO_GALLERY_ITEMS.map((_, i) => {
-    let rel = i - active;
-    if (rel > HERO_GALLERY_ITEMS.length / 2) rel -= HERO_GALLERY_ITEMS.length;
-    if (rel < -HERO_GALLERY_ITEMS.length / 2) rel += HERO_GALLERY_ITEMS.length;
-    return rel;
-  });
-
-  const CARD_W = 320;
-  const CARD_H = 172;
-  const STEP = CARD_W * 0.72;
-
-  return (
-    <div className="relative h-[210px] sm:h-[235px] w-full max-w-[100vw] overflow-hidden flex items-center justify-center [perspective:1200px]">
-      {HERO_GALLERY_ITEMS.map((p, i) => {
-        const rel = order[i];
-        const abs = Math.abs(rel);
-        const x = rel * STEP;
-        const y = abs * 14;
-        const rot = rel * 8;
-        const scale = 1 - abs * 0.13;
-        const opacity = abs > 2 ? 0 : 1 - abs * 0.18;
-        const isActive = rel === 0;
-
-        return (
-          <motion.div
-            key={p.id}
-            animate={{ x, y, rotate: rot, scale, opacity }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            onClick={() => setActive(i)}
-            style={{
-              position: 'absolute',
-              width: CARD_W,
-              height: CARD_H,
-              borderRadius: 14,
-              overflow: 'hidden',
-              zIndex: 10 - abs,
-              cursor: 'pointer',
-              border: isActive
-                ? '2px solid #05a855'
-                : '1px solid rgba(255,255,255,0.14)',
-              boxShadow: isActive
-                ? '0 0 0 3px rgba(5, 168, 85, 0.35), 0 16px 40px rgba(0,0,0,0.85)'
-                : '0 6px 20px rgba(0,0,0,0.5)',
-              transformStyle: 'preserve-3d',
-            }}
-          >
-            <img
-              src={p.img}
-              alt={p.title}
-              className="w-full h-full object-cover object-center brightness-110"
-            />
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: isActive
-                  ? 'rgba(0, 0, 0, 0.50)'
-                  : 'rgba(0, 0, 0, 0.35)',
-              }}
-            />
-            <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3.5 text-left">
-              <div className="font-extrabold text-white text-xs sm:text-sm tracking-tight line-clamp-1">
-                {p.title}
-              </div>
-              <div className="text-[10px] sm:text-xs font-bold text-[#05a855] mt-0.5">
-                {p.type}
-              </div>
-            </div>
-          </motion.div>
-        );
-      })}
     </div>
   );
 }
@@ -487,17 +356,13 @@ export default function Home() {
   }, [heroPaused]);
 
   const heroMidRef = useRef<HTMLDivElement>(null);
-  const heroGalleryRef = useRef<HTMLDivElement>(null);
 
-  // Parallaxe souris partagée hero + bandeau galerie
+  // Parallaxe souris hero
   const handleHeroMouseMove = (e: React.MouseEvent) => {
     const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
     const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     if (heroMidRef.current) {
       heroMidRef.current.style.transform = `translate3d(${x * 16}px, ${y * 12}px, 0)`;
-    }
-    if (heroGalleryRef.current) {
-      heroGalleryRef.current.style.transform = `translate3d(${x * -18}px, ${y * -8}px, 0)`;
     }
   };
 
@@ -590,7 +455,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="text-white font-medium text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+            className="text-white font-medium text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
             style={{ textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 18px rgba(0,0,0,0.7)' }}
           >
             Sacs macramé, tissages, terroir béninois et formations d'excellence au CFP Dorcas.
@@ -615,14 +480,16 @@ export default function Home() {
               ))}
             </div>
             <div className="text-left">
-              <div className="font-black text-xs sm:text-sm text-white uppercase leading-tight tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
-                style={{ textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 18px rgba(0,0,0,0.7)' }}>
+              <div
+                className="font-black text-xs sm:text-sm text-white uppercase leading-tight tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+                style={{ textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 18px rgba(0,0,0,0.7)' }}
+              >
                 Artisanes & Maîtres d'art
               </div>
-              <div className="text-[11px] sm:text-xs font-bold text-[#2bff88]"
+              <div
+                className="text-[11px] sm:text-xs font-semibold text-[#f3e5ab]"
                 style={{
-                  textShadow:
-                    '0 1px 3px rgba(0,0,0,0.95), 0 0 14px rgba(0,0,0,0.9)',
+                  textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 12px rgba(243,229,171,0.3)',
                 }}
               >
                 150+ femmes formées & 500+ créations uniques
@@ -630,7 +497,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Boutons d'Action Néo-Brutalistes */}
+          {/* Boutons d'Action Principaux */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -658,7 +525,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="relative z-20 flex flex-col items-center opacity-40 pointer-events-none mt-2">
+        <div className="relative z-20 flex flex-col items-center opacity-40 pointer-events-none mt-2 pb-4">
           <span className="text-[9px] tracking-widest uppercase font-bold text-white mb-1">Scroll</span>
           <motion.div
             animate={{ scaleY: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
@@ -666,16 +533,6 @@ export default function Home() {
             className="w-0.5 h-6 bg-white/40 rounded-full"
           />
         </div>
-        </div>
-
-        {/* Galerie 3D : même fond que le hero (aucune séparation), visible au scroll */}
-        <div className="relative z-20 w-full pb-10">
-          <div
-            ref={heroGalleryRef}
-            className="w-full relative transition-transform duration-100 ease-out"
-          >
-            <CircularProjectsGallery />
-          </div>
         </div>
       </section>
 
@@ -736,7 +593,7 @@ export default function Home() {
                   transition={{ duration: 0.3, delay: (index % advantages.length) * 0.05 }}
                 >
                 <div>
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#028444] border-2 border-black shadow-[2px_2px_0px_#000] text-white flex items-center justify-center mb-3 group-hover:scale-105 group-hover:rotate-6 transition-transform">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#028444] to-[#016634] border border-white/25 shadow-md shadow-[#028444]/25 text-white flex items-center justify-center mb-3.5 group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-300">
                     <a.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <h3 className="text-xs sm:text-sm font-bold text-[#0f1f14] group-hover:text-[#028444] transition-colors leading-snug">
@@ -814,9 +671,9 @@ export default function Home() {
                 <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
                   <button 
                     onClick={() => setImpactSlideIndex(0)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all backdrop-blur-md border ${
+                    className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase transition-all backdrop-blur-md border cursor-pointer ${
                       impactSlideIndex === 0 
-                        ? 'bg-[#028444] text-white border-black shadow-[2px_2px_0px_#000]' 
+                        ? 'bg-[#028444] text-white border-white/40 shadow-md shadow-[#028444]/35' 
                         : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
                     }`}
                   >
@@ -824,9 +681,9 @@ export default function Home() {
                   </button>
                   <button 
                     onClick={() => setImpactSlideIndex(1)}
-                    className={`px-3 py-1 rounded-full text-[10px] font-black uppercase transition-all backdrop-blur-md border ${
+                    className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase transition-all backdrop-blur-md border cursor-pointer ${
                       impactSlideIndex === 1 
-                        ? 'bg-[#028444] text-white border-black shadow-[2px_2px_0px_#000]' 
+                        ? 'bg-[#028444] text-white border-white/40 shadow-md shadow-[#028444]/35' 
                         : 'bg-black/50 text-white/70 border-white/20 hover:bg-black/80'
                     }`}
                   >
@@ -972,7 +829,7 @@ export default function Home() {
                       alt={step.title} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute top-3 left-3 bg-[#028444] text-white text-xs font-black uppercase px-3 py-1 rounded-full border-2 border-black shadow-[2px_2px_0px_#000]">
+                    <div className="absolute top-3 left-3 bg-gradient-to-r from-[#028444] to-[#016634] text-white text-xs font-bold uppercase px-3.5 py-1 rounded-full shadow-lg shadow-black/25 border border-white/25 backdrop-blur-sm">
                       Étape {step.number}
                     </div>
                   </div>
@@ -1066,7 +923,7 @@ export default function Home() {
                   onClick={() => setActiveCategory(cat)}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wide shrink-0 transition-all cursor-pointer ${
                     activeCategory === cat
-                      ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000] scale-105'
+                      ? 'bg-gradient-to-r from-[#028444] to-[#016634] text-white shadow-md shadow-[#028444]/30 scale-105'
                       : 'bg-[#0f1f14]/5 text-[#0f1f14]/60 hover:bg-[#028444]/10 hover:text-[#028444] border border-[#0f1f14]/10'
                   }`}
                 >
@@ -1251,7 +1108,7 @@ export default function Home() {
                   </div>
 
                   <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-[#0f1f14]/10">
-                    <div className="w-9 h-9 rounded-full bg-[#028444] flex items-center justify-center text-white text-xs font-black shrink-0 border-2 border-black">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#028444] to-[#016634] flex items-center justify-center text-white text-xs font-bold shrink-0 border border-white/50 shadow-sm shadow-[#028444]/20">
                       {t.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
@@ -1301,7 +1158,7 @@ export default function Home() {
         <div className="pop-halftone absolute inset-0 opacity-[0.05] pointer-events-none" />
         <div className="container mx-auto px-4 md:px-12 relative">
           <motion.div
-            className="max-w-5xl mx-auto text-center p-8 sm:p-12 lg:p-16 rounded-3xl relative overflow-hidden bg-white border-2 border-[#028444]/40 shadow-[4px_4px_0px_#000] text-[#0f1f14]"
+            className="max-w-5xl mx-auto text-center p-8 sm:p-12 lg:p-16 rounded-3xl relative overflow-hidden bg-white/95 backdrop-blur-md border border-[#028444]/25 shadow-2xl shadow-[#028444]/15 text-[#0f1f14]"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

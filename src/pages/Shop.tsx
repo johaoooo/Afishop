@@ -66,9 +66,9 @@ const CategorySidebarContent: FC<CategorySidebarProps> = ({
     <div className="space-y-1">
       <button
         onClick={() => onSelectCategory('tous')}
-        className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
+        className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
           selectedCategory === 'tous'
-            ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000]'
+            ? 'bg-gradient-to-r from-[#028444] to-[#016634] text-white shadow-md shadow-[#028444]/25'
             : 'text-[#0f1f14]/60 hover:bg-[#028444]/10 hover:text-[#0f1f14]'
         }`}
       >
@@ -92,9 +92,9 @@ const CategorySidebarContent: FC<CategorySidebarProps> = ({
           <button
             key={cat.id}
             onClick={() => onSelectCategory(cat.id)}
-            className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${
+            className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer ${
               isActive
-                ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000] font-semibold'
+                ? 'bg-gradient-to-r from-[#028444] to-[#016634] text-white shadow-md shadow-[#028444]/25 font-semibold'
                 : 'text-[#0f1f14]/60 hover:bg-[#028444]/10 hover:text-[#0f1f14]'
             }`}
           >
@@ -463,7 +463,7 @@ export default function Shop() {
               <FiChevronLeft size={18} />
             </button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-              <button key={p} onClick={() => setPage(p)} className={`w-10 h-10 rounded-xl text-sm font-semibold transition ${p === page ? 'bg-[#028444] text-white shadow-[2px_2px_0px_#000]' : 'border border-[#0f1f14]/10 bg-white text-[#0f1f14]/70'}`}>
+              <button key={p} onClick={() => setPage(p)} className={`w-10 h-10 rounded-xl text-sm font-semibold transition cursor-pointer ${p === page ? 'bg-[#028444] text-white shadow-md shadow-[#028444]/25' : 'border border-[#0f1f14]/10 bg-white text-[#0f1f14]/70 hover:border-[#028444]/40'}`}>
                 {p}
               </button>
             ))}

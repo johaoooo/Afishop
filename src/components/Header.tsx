@@ -527,7 +527,7 @@ export function Header() {
                     className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#0f1f14]/10 hover:border-[#028444]/50 transition-colors shadow-sm"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="w-10 h-10 rounded-xl bg-[#028444] border-2 border-black shadow-[2px_2px_0px_#000] text-white flex items-center justify-center shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#028444] to-[#016634] shadow-md shadow-[#028444]/25 text-white flex items-center justify-center shrink-0">
                         <Home className="w-5 h-5" strokeWidth={2.25} />
                       </span>
                       <span className="font-bold text-sm text-[#0f1f14]">Accueil</span>

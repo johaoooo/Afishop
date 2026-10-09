@@ -65,7 +65,7 @@ export function AssistantWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Fermer l'assistant" : "Ouvrir l'assistant AFI"}
-        className="fixed left-4 bottom-4 z-[70] w-14 h-14 rounded-full bg-[#028444] hover:bg-[#05a855] text-white border-[3px] border-white shadow-[4px_4px_0px_#050505] flex items-center justify-center transition-all hover:scale-105"
+        className="fixed left-4 bottom-4 z-[70] w-14 h-14 rounded-full bg-gradient-to-br from-[#028444] to-[#016634] hover:from-[#05a855] hover:to-[#028444] text-white border border-white/40 shadow-xl shadow-[#028444]/35 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
       >
         {open ? <FiX className="w-6 h-6" /> : <RiCustomerService2Fill className="w-7 h-7" />}
       </button>
